@@ -1,0 +1,76 @@
+doctype html
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/main.css")
+        title Платформа обучения
+
+    body
+        include ../roles/guest/mixin_cards
+        include ../roles/guest/mixin_popup
+        include ../blocks/header
+
+        section.hero
+            img.hero__blob.hero__blob--left(src="/assets/svg/blob-left.svg" alt="" aria-hidden="true")
+            img.hero__blob.hero__blob--right(src="/assets/svg/blob-right.svg" alt="" aria-hidden="true")
+            .hero__content
+                h1.hero-title
+                    | Платформа для онлайн
+                    br
+                    | обучения все в одном.
+                button.btn-main.btn(type="button" onclick="openPopup('loginPopup')") Присоединиться
+
+            .features
+                .features__inner
+                    p.features__item
+                        | Курсы, вебинары
+                        br
+                        | все в одном месте.
+                    p.features__item
+                        | Учебные группы
+                        br
+                        | как в школе или вузе.
+                    p.features__item
+                        | Заменили 5 приложений
+                        br
+                        | одной платформой. Учитесь проще.
+                    p.features__item
+                        | Где знания становятся
+                        br
+                        | привычкой.
+
+        main
+            .main-container
+                .hero__shape.hero__shape--1
+                .hero__shape.hero__shape--2
+                .hero__shape.hero__shape--3
+
+                section.often-choose
+                    img.img
+                    img.img
+
+                section#popular.popular
+                    .popular__inner
+                        h2.popular__title Популярное
+
+                        .popular__track#popularTrack
+                            +categoryCard("Программирование", "", "PROGRAMMING_AND_IT")
+                            +categoryCard("Математика", "", "MATHEMATICS_AND_EXACT_SCIENCES")
+                            +categoryCard("Бизнес", "", "BUSINESS_AND_CAREER")
+                            +categoryCard("Дизайн", "", "DESIGN_AND_CREATIVITY")
+                            +categoryCard("Языки", "", "LANGUAGES_AND_HUMANITIES")
+                            +categoryCard("Саморазвитие", "", "PERSONAL_GROWTH_AND_HOBBIES")
+
+                        .popular__courses#coursesContainer
+                            h3.popular__selected-title#selectedCategoryTitle
+                                | Категория не выбрана
+                            p.popular__hint#coursesHint
+                                | Выберите категорию, чтобы увидеть курсы
+                            .popular__courses-grid#coursesGrid
+                            .popular__loading#coursesLoading(style="display: none;")
+                                | Загрузка курсов
+
+        include ../roles/guest/popups
+
+        script(type="module" src="js/main.min.js")

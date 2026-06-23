@@ -1,0 +1,12 @@
+@use "reset";
+@use "variables" as *;
+@use "mixins" as *;
+@use "header";
+@use "button";
+@use "popup";
+@use "index-main";
+@use "mixin_cards";
+@use "profile";
+@use "teacher_index";
+@use "teacher_course_create";
+@import 'course_view';

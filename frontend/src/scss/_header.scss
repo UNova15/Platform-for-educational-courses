@@ -1,0 +1,108 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 0 0 40px 40px;
+    height: 90px;
+    padding: 0 60px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+
+  &__img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  &-text {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 40px;
+  background: #cfd8e3;
+}
+
+/* поиск */
+.search-form {
+  display: flex;
+  position: relative;
+}
+
+.search-input {
+  width: 360px;
+  height: 44px;
+  padding: 0 50px 0 20px;
+  background: rgba(215, 239, 255, 1);
+  border-radius: 40px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #7a8a99;
+  }
+
+  &:focus {
+    border-color: #7b9fb8;
+    background: #fff;
+    outline: none;
+  }
+}
+
+.search-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #5b8cb7;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    color: #355c80;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-container {
+    padding: 0 20px;
+    height: 70px;
+  }
+
+  .search-input {
+    width: 180px;
+  }
+}

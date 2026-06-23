@@ -1,0 +1,212 @@
+include ../guest/mixin_popup
+
+
++popup('loginPopup', 'Авторизация')
+    form.form(onsubmit="handleLogin(event)")
+        .form-group
+            label.form-label(for="loginInput") Логин
+            input#loginInput(
+                type="text"
+                name="login"
+                placeholder="Ваш логин"
+                minlength="4"
+                maxlength="30"
+                required
+                autocomplete="username"
+            )
+
+        .form-group
+            label.form-label(for="loginPassword") Пароль
+            .password-wrapper
+                input#loginPassword(
+                    type="password"
+                    name="password"
+                    placeholder="••••••"
+                    required
+                    minlength="8"
+                    autocomplete="current-password"
+                )
+                button.password-toggle(
+                    type="button"
+                    onclick="togglePassword(this, 'loginPassword')"
+                ) Показать
+
+        .form-options
+            a.forgot-password(
+                href="#"
+                onclick="openPopup('resetPopup'); closePopup('loginPopup'); return false;"
+            ) Забыли пароль?
+            a.registration(
+                href="#"
+                onclick="openPopup('registrationPopup'); closePopup('loginPopup'); return false;"
+            ) Нет аккаунта? Зарегистрироваться
+
+        .form-error(style="display: none;")
+            p
+
+        .popup_footer
+            button.popup-submit(type="submit") Войти
+
+
+
++popup('registrationPopup', 'Регистрация')
+    form.form(onsubmit="handleRegister(event)")
+        .form-group
+            label.form-label(for="registerRole") Роль
+            select#registerRole.select(name="role")
+                option(value="STUDENT" selected) Студент
+                option(value="TEACHER") Преподаватель
+
+        .form-group
+            label.form-label(for="registerLogin") Логин
+            input#registerLogin(
+                type="text"
+                name="login"
+                placeholder="От 4 до 30 символов"
+                minlength="4"
+                maxlength="30"
+                required
+                autocomplete="username"
+            )
+
+        .form-group
+            label.form-label(for="registerPassword") Пароль
+            .password-wrapper
+                input#registerPassword(
+                    type="password"
+                    name="password"
+                    placeholder="Минимум 8 символов"
+                    minlength="8"
+                    required
+                    autocomplete="new-password"
+                )
+                button.password-toggle(
+                    type="button"
+                    onclick="togglePassword(this, 'registerPassword')"
+                ) Показать
+
+        .form-group
+            label.form-label(for="confirmPassword") Подтвердите пароль
+            input#confirmPassword(
+                type="password"
+                name="confirmPassword"
+                placeholder="Повторите пароль"
+                minlength="8"
+                required
+            )
+
+        .form-options
+            a.registration(
+                href="#"
+                onclick="openPopup('loginPopup'); closePopup('registrationPopup'); return false;"
+            ) Уже есть аккаунт? Войти
+
+        .form-error(style="display: none;")
+            p
+
+        .popup_footer
+            button.popup-submit(type="submit") Зарегистрироваться
+
+
+
++popup('resetPopup', 'Восстановление пароля')
+    form.form(onsubmit="handleResetPassword(event)")
+        p.form-info Введите ваш логин или email, и мы отправим инструкции по сбросу пароля.
+
+        .form-group
+            label.form-label(for="resetEmail") Email или логин
+            input#resetEmail(
+                type="text"
+                name="email"
+                placeholder="mail@example.com"
+                required
+            )
+
+        .form-options
+            a.registration(
+                href="#"
+                onclick="openPopup('loginPopup'); closePopup('resetPopup'); return false;"
+            ) Вспомнили пароль? Войти
+
+        .form-error(style="display: none;")
+            p
+
+        .popup_footer
+            button.popup-submit(type="submit") Отправить
+
+
+
++popup('applicationOnCourses', 'Заявка на курс')
+    form.form(onsubmit="handleCourseApplication(event)")
+        p.form-info Заполните заявку для записи на закрытый курс. Преподаватель рассмотрит её в ближайшее время.
+
+        .form-group
+            label.form-label(for="appName") Имя
+            input#appName(
+                type="text"
+                name="name"
+                placeholder="Ваше имя"
+                required
+            )
+
+        .form-group
+            label.form-label(for="appEmail") Email
+            input#appEmail(
+                type="email"
+                name="email"
+                placeholder="mail@example.com"
+                required
+                autocomplete="email"
+            )
+
+        .form-group
+            label.form-label(for="appMessage") Сообщение преподавателю (опционально)
+            textarea#appMessage(
+                name="message"
+                placeholder="Расскажите о себе и почему хотите попасть на курс"
+                rows="4"
+                maxlength="500"
+            )
+
+        .form-error(style="display: none;")
+            p
+
+        .popup_footer
+            button.popup-submit(type="submit") Подать заявку
+
+
++popup('changeRolePopup', 'Стать преподавателем')
+    form.form(onsubmit="handleBecomeTeacher(event)")
+        p.form-info Заполните данные о себе, чтобы получить статус преподавателя. После проверки администратором вы сможете создавать собственные курсы.
+
+        .form-group
+            label.form-label(for="teacherEducation") Образование
+            input#teacherEducation(
+                type="text"
+                name="education"
+                placeholder="Например: МГУ, факультет ВМК"
+            )
+
+        .form-group
+            label.form-label(for="teacherAchievements") Научные достижения
+            textarea#teacherAchievements(
+                name="achievements"
+                placeholder="Публикации, сертификаты, награды"
+                rows="3"
+                maxlength="500"
+            )
+
+        .form-group
+            label.form-label(for="teacherProjects") Опыт и проекты
+            textarea#teacherProjects(
+                name="projects"
+                placeholder="Расскажите о вашем опыте и реализованных проектах"
+                rows="4"
+                maxlength="1000"
+            )
+
+        .form-error(style="display: none;")
+            p
+
+        .popup_footer
+            button.popup-submit(type="submit") Отправить заявку

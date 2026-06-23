@@ -1,0 +1,190 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+enum Role {
+  STUDENT
+  TEACHER
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  GRADED
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  TEXT_INPUT
+}
+
+enum LessonContentType {
+  TEXT
+  VIDEO
+  TEST
+  MANUAL_ASSIGNMENT
+}
+
+class User {
+  -id: Long
+  -login: String
+  -passwordHash: String
+  -role: Role
+  -createdAt: LocalDateTime
+}
+
+class TeacherProfile {
+  -id: Long
+  -education: String
+  -achievements: String
+  -additionalInfo: String
+  -updatedAt: LocalDateTime
+}
+
+class StudentProfile {
+  -id: Long
+  -bio: String
+  -updatedAt: LocalDateTime
+}
+
+class Course {
+  -id: Long
+  -title: String
+  -description: String
+  -tag: String
+  -status: CourseStatus
+  -createdAt: LocalDateTime
+  -updatedAt: LocalDateTime
+}
+
+class Module {
+  -id: Long
+  -title: String
+  -description: String
+  -orderIndex: Integer
+}
+
+class Lesson {
+  -id: Long
+  -title: String
+  -orderIndex: Integer
+  -mandatory: boolean
+}
+
+abstract class LessonContent {
+  -id: Long
+  -type: LessonContentType
+}
+
+abstract class MaterialLessonContent {
+}
+
+abstract class TaskLessonContent {
+  -title: String
+  -description: String
+  -maxScore: Integer
+}
+
+class TextLessonContent {
+  -textBody: String
+}
+
+class VideoLessonContent {
+  -videoUrl: String
+  -videoDescription: String
+}
+
+class TestLessonContent {
+}
+
+class ManualAssignmentLessonContent {
+}
+
+class Question {
+  -id: Long
+  -text: String
+  -type: QuestionType
+  -orderIndex: Integer
+}
+
+class QuestionOption {
+  -id: Long
+  -text: String
+  -correct: boolean
+  -orderIndex: Integer
+}
+
+class RefreshToken {
+  -id: Long
+  -token: String
+  -expiresAt: LocalDateTime
+  -revoked: boolean
+  -createdAt: LocalDateTime
+}
+
+class Enrollment {
+  -id: Long
+  -enrolledAt: LocalDateTime
+  -status: EnrollmentStatus
+  -progressPercent: Double
+  -completedAt: LocalDateTime
+}
+
+class LessonProgress {
+  -id: Long
+  -completed: boolean
+  -completedAt: LocalDateTime
+}
+
+class AssignmentSubmission {
+  -id: Long
+  -submittedAt: LocalDateTime
+  -answerText: String
+  -status: SubmissionStatus
+  -score: Integer
+  -teacherComment: String
+  -gradedAt: LocalDateTime
+}
+
+LessonContent <|-- MaterialLessonContent
+LessonContent <|-- TaskLessonContent
+
+MaterialLessonContent <|-- TextLessonContent
+MaterialLessonContent <|-- VideoLessonContent
+
+TaskLessonContent <|-- TestLessonContent
+TaskLessonContent <|-- ManualAssignmentLessonContent
+
+User "1" -- "0..1" TeacherProfile : has
+User "1" -- "0..1" StudentProfile : has
+User "1" -- "0..*" RefreshToken : owns
+User "1" -- "0..*" Course : teaches
+
+Course "1" -- "0..*" Module : contains
+Module "1" -- "0..*" Lesson : contains
+Lesson "1" -- "1" LessonContent : has
+
+TestLessonContent "1" -- "0..*" Question : contains
+Question "1" -- "0..*" QuestionOption : contains
+
+User "1" -- "0..*" Enrollment : enrolls
+Course "1" -- "0..*" Enrollment : has
+
+Enrollment "1" -- "0..*" LessonProgress : tracks
+Lesson "1" -- "0..*" LessonProgress : progressFor
+
+Enrollment "1" -- "0..*" AssignmentSubmission : has
+TaskLessonContent "1" -- "0..*" AssignmentSubmission : submissions
+AssignmentSubmission "0..*" -- "0..1" User : gradedBy
+
+@enduml

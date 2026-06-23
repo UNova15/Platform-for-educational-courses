@@ -1,0 +1,7 @@
+mixin categoryCard(title, image, tag)
+    .category-card(data-tag=tag data-title=title)
+        if image
+            img.category-card__image(src=image alt=title)
+        else
+            .category-card__image--placeholder
+        h4.category-card__title= title

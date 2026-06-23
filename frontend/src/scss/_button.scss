@@ -1,0 +1,57 @@
+.btn {
+  font-weight: 500;
+  cursor: pointer;
+
+  &__profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(215, 239, 255, 1);
+    color: #1a1a1a;
+    font-size: 18px;
+    height: 50px;
+    padding: 0 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #c6e7fa;
+    }
+
+    .profile-icon {
+      flex-shrink: 0;
+    }
+  }
+
+  &-main {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 260px;
+    height: 60px;
+    padding: 0 40px;
+    background-color: rgba(86, 144, 171, 1);
+    border-radius: 50px;
+    font-size: 20px;
+    color: #fff;
+    margin: 40px auto 0;
+    border: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(86, 144, 171, 0.3);
+
+    &:hover {
+      background-color: #4a7f96;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(86, 144, 171, 0.4);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .btn__profile-btn span {
+    display: none; /* на мобиле — только иконка */
+  }
+}

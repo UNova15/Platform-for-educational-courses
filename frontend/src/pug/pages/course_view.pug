@@ -1,0 +1,35 @@
+doctype html
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/main.css")
+        title Курс | Platform
+    body
+        include ../blocks/header
+
+        main.course-view-page
+            .course-view-container
+                nav.breadcrumbs
+                    a.breadcrumbs__link(href="/index.html") Главная
+                    span.breadcrumbs__separator /
+                    span.breadcrumbs__current#breadcrumbsCourseTitle Курс
+
+                section.course-view__header
+                    span.course-view__tag#courseTag
+                    h1.course-view__title#courseTitle Загрузка...
+                    p.course-view__description#courseDescription
+
+                    button.btn-main.btn#enrollBtn(type="button" hidden) Записаться на курс
+                    .course-view__enrolled-badge#enrolledBadge(hidden) Вы записаны на курс
+
+                section.course-view__content#courseContent(hidden)
+                    h2.course-view__subtitle Содержание курса
+                    .course-view__modules#modulesList
+
+                .course-view__loading#courseLoading Загрузка...
+
+                .course-view__error#courseError(hidden) Не удалось загрузить курс
+
+        include ../roles/guest/popups
+        script(type="module" src="js/main.min.js")

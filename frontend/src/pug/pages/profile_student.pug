@@ -1,0 +1,71 @@
+doctype html
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/main.css")
+        title Профиль ученика | Platform
+    body
+        include ../blocks/header
+
+        main.profile-page
+            .profile-container
+                nav.breadcrumbs
+                    a.breadcrumbs__link(href="index.html") Главная
+                    span.breadcrumbs__separator /
+                    span.breadcrumbs__current профиль
+
+                section.profile-top
+                    .profile-info
+                        .profile-avatar#profileAvatar(role="button" tabindex="0" title="Сменить аватар")
+                            img.profile-avatar__img#profileAvatarImg(src="/assets/avatars/avatar-default.svg" alt="Аватар")
+                            .profile-avatar__overlay
+                                svg(width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+                                    path(d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z")
+                                    circle(cx="12" cy="13" r="4")
+                        .profile-info__name#profileName Ученик
+                        .profile-info__role#profileRole Студент
+                        button.profile-info__role-btn(type="button" onclick="openPopup('changeRolePopup')") Изменить роль
+                        button.profile-info__logout-btn#logoutBtn(type="button")
+                            svg(width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+                                path(d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4")
+                                polyline(points="16 17 21 12 16 7")
+                                line(x1="21" y1="12" x2="9" y2="12")
+                            span Выйти
+
+                    .profile-stats
+                        h2.profile-stats__title Мое обучение
+                        .profile-stats__counts
+                            p
+                                | Пройденные курсы:
+                                span#completedCount  0
+                            p
+                                | Активные курсы:
+                                span#activeCount  0
+                        .profile-stats__chart
+                            svg.donut-chart(viewBox="0 0 120 120")
+                                circle.donut-chart__bg(cx="60" cy="60" r="50")
+                                circle.donut-chart__fill#donutFill(cx="60" cy="60" r="50")
+
+                section.profile-section
+                    h3.profile-section__title Активные курсы
+                    .profile-courses-grid#activeCoursesGrid
+
+                section.profile-section
+                    h3.profile-section__title Завершенные курсы
+                    .profile-courses-grid#completedCoursesGrid
+
+        .popup-overlay#avatarPopup
+            .popup
+                button.close-popup(onclick="closePopup('avatarPopup')") ×
+                .popup_header
+                    h2.popup_title Выберите аватар
+                .avatar-grid
+                    button.avatar-grid__item(type="button" data-avatar="/assets/avatars/avatar-default.svg")
+                        img(src="/assets/avatars/avatar-default.svg" alt="Стандартный")
+                    button.avatar-grid__item(type="button" data-avatar="/assets/avatars/avatar-male.svg")
+                        img(src="/assets/avatars/avatar-male.svg" alt="Мужской")
+                    button.avatar-grid__item(type="button" data-avatar="/assets/avatars/avatar-female.svg")
+                        img(src="/assets/avatars/avatar-female.svg" alt="Женский")
+        include ../roles/guest/popups
+        script(type="module" src="js/main.min.js")

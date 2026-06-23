@@ -1,0 +1,21 @@
+doctype html
+html(lang="ru")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/main.css")
+        title Тест | Platform
+    body
+        include ../blocks/header
+
+        main.test-view-page
+            .test-view-container
+                a.lesson-view__back(href="javascript:history.back()") ← Назад
+                h1.lesson-view__title#testTitle Тест
+                .test-view__questions#testQuestions
+                button.btn-main.btn#submitTestBtn(type="button" hidden) Отправить ответы
+                .test-view__result#testResult(hidden)
+                .lesson-view__loading#testLoading Загрузка...
+                .lesson-view__error#testError(hidden) Не удалось загрузить тест
+
+        script(type="module" src="js/main.min.js")

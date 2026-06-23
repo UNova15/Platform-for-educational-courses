@@ -1,0 +1,9 @@
+mixin popup(id, title)
+    .popup-overlay(id=id)
+        .popup
+            .popup_header
+                h3.popup_title= title
+                button.close-popup(type="button", onclick=`closePopup('${id}')`) ×
+            .popup_body
+                if block
+                    block
