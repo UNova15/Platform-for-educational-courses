@@ -14,6 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Lesson {
     @Id
     private final Long id;
+
     private final Long moduleId;
     private String title;
     private ContentType type;
@@ -21,18 +22,27 @@ public class Lesson {
     private int orderIndex;
     private boolean mandatory;
 
-    public static Lesson createNew(long moduleId, String title, ContentType type, String content,
-                                   int orderIndex, boolean mandatory) {
-        if (moduleId < 0 || title == null || title.isBlank() || type == null
-                || content == null || content.isBlank() || orderIndex < 0) {
+    public static Lesson createNew(
+            long moduleId, String title, ContentType type, String content, int orderIndex, boolean mandatory) {
+        if (moduleId < 0
+                || title == null
+                || title.isBlank()
+                || type == null
+                || content == null
+                || content.isBlank()
+                || orderIndex < 0) {
             throw new IllegalArgumentException("Incorrect data to create lesson");
         }
         return new Lesson(null, moduleId, title, type, content, orderIndex, mandatory);
     }
 
     public void update(String title, ContentType type, String content, int orderIndex, boolean mandatory) {
-        if (title == null || title.isBlank() || type == null || content == null
-                || content.isBlank() || orderIndex < 0) {
+        if (title == null
+                || title.isBlank()
+                || type == null
+                || content == null
+                || content.isBlank()
+                || orderIndex < 0) {
             throw new IllegalArgumentException("Incorrect data to create lesson");
         }
 

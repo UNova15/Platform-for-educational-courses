@@ -34,7 +34,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-
 .popular__track::-webkit-scrollbar {
   height: 8px;
 }
@@ -48,7 +47,6 @@
   background: rgba(91, 140, 183, 1);
   border-radius: 999px;
 }
-
 
 .category-card {
   flex: 0 0 416px;
@@ -66,7 +64,9 @@
   gap: 18px;
   text-align: center;
   scroll-snap-align: start;
-  transition: transform 0.25s ease, 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    0.25s ease;
   appearance: none;
 }
 
@@ -80,7 +80,9 @@
 }
 
 .category-card.active {
-  box-shadow: 0 0 0 2px rgba(93, 142, 186, 1), 0 20px 40px rgba(93, 142, 186, 1);
+  box-shadow:
+    0 0 0 2px rgba(93, 142, 186, 1),
+    0 20px 40px rgba(93, 142, 186, 1);
 }
 
 .category-card__image {
@@ -107,7 +109,6 @@
   font-weight: 700;
   line-height: 1.2;
 }
-
 
 .popular__courses {
   margin-top: 36px;
@@ -147,7 +148,9 @@
   cursor: pointer;
   min-height: 220px;
   box-shadow: 0 4px 14px rgba(91, 140, 183, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .course-card:hover {
@@ -197,7 +200,6 @@
   font-size: 13px;
   color: #5b6b7b;
 }
-
 
 .course-card__meta {
   margin: 0;

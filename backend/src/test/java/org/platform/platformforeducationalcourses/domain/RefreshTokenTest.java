@@ -1,14 +1,14 @@
 package org.platform.platformforeducationalcourses.domain;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.platform.platformforeducationalcourses.domain.security.RefreshToken;
 import org.platform.platformforeducationalcourses.tokenutil.TokenHasher;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class RefreshTokenTest {
 

@@ -1,6 +1,15 @@
 package org.platform.platformforeducationalcourses.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import lombok.AllArgsConstructor;
+import org.platform.platformforeducationalcourses.creator.factory.LessonFactory;
+import org.platform.platformforeducationalcourses.creator.factory.ModuleFactory;
+import org.platform.platformforeducationalcourses.creator.factory.TestFactory;
 import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.domain.course.CourseModule;
 import org.platform.platformforeducationalcourses.domain.course.Lesson;
@@ -8,9 +17,6 @@ import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateResponse;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseCreateDto;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseModuleCreateDto;
-import org.platform.platformforeducationalcourses.creator.factory.LessonFactory;
-import org.platform.platformforeducationalcourses.creator.factory.ModuleFactory;
-import org.platform.platformforeducationalcourses.creator.factory.TestFactory;
 import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
 import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
 import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
@@ -18,17 +24,9 @@ import org.platform.platformforeducationalcourses.repository.course.TestReposito
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 /**
  * Сервис для выполнения операций взаимодействия с общей структурой курса
  */
-
 @Service
 @AllArgsConstructor
 public class CourseManagementService {
@@ -49,7 +47,7 @@ public class CourseManagementService {
 
         Map<Integer, Long> modulesOrder = getModulesOrder(savedModules);
 
-        saveContent(request,modulesOrder);
+        saveContent(request, modulesOrder);
 
         return new CourseCreateResponse(courseId, request.title(), LocalDateTime.now());
     }

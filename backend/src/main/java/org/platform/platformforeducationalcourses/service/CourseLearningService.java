@@ -1,5 +1,7 @@
 package org.platform.platformforeducationalcourses.service;
 
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.creator.assembler.TestAssembler;
@@ -21,13 +23,9 @@ import org.platform.platformforeducationalcourses.service.domain.TestService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * Сервис для взаимодействия студентов с курсом
  */
-
 @Service
 @AllArgsConstructor
 public class CourseLearningService {
@@ -53,7 +51,7 @@ public class CourseLearningService {
         return lessonService.findLesson(lessonId);
     }
 
-    //TODO создать unique индекс на бд на поля long userId, long testId
+    // TODO создать unique индекс на бд на поля long userId, long testId
     public TestFindResponse startAttempt(long userId, long testId) {
         if (!submissionsRepository.existsByUserIdAndTestId(userId, testId)) {
             TestSubmission submission = TestSubmission.createNew(userId, testId);
@@ -63,23 +61,22 @@ public class CourseLearningService {
         return testService.getTest(testId);
     }
 
-    //TODO исключение
+    // TODO исключение
     public void endAttempt(TestPostRequest request, long userId, long testId) {
         TestPostDto testPostDto = testMapper.toTestPostDto(request);
 
-        TestSubmission submission = submissionsRepository.findByUserIdAndTestId(userId, testId)
-                .orElseThrow();
+        TestSubmission submission =
+                submissionsRepository.findByUserIdAndTestId(userId, testId).orElseThrow();
 
-        //попытка уже была завершена
+        // попытка уже была завершена
         if (submission.getCompletedAt() != null) {
             throw new IllegalArgumentException();
         }
 
-        Test test = testRepository.findById(testId)
-                .orElseThrow();
+        Test test = testRepository.findById(testId).orElseThrow();
 
-        Map<Long, Question> questionsOrderById = test.getQuestions().stream()
-                .collect(Collectors.toMap(Question::getId, question -> question));
+        Map<Long, Question> questionsOrderById =
+                test.getQuestions().stream().collect(Collectors.toMap(Question::getId, question -> question));
 
         submission.submitAnswers(testPostDto.answers(), questionsOrderById, scoreCalculator, validator);
 
@@ -87,15 +84,14 @@ public class CourseLearningService {
     }
 
     public TestReview getTestReview(long userId, long testId) {
-        TestSubmission submission = submissionsRepository.findByUserIdAndTestId(userId,testId)
-                .orElseThrow();
+        TestSubmission submission =
+                submissionsRepository.findByUserIdAndTestId(userId, testId).orElseThrow();
 
-        if(submission.getCompletedAt() == null){
+        if (submission.getCompletedAt() == null) {
             throw new IllegalArgumentException();
         }
-        Test test = testRepository.findById(testId)
-                .orElseThrow();
+        Test test = testRepository.findById(testId).orElseThrow();
 
-        return testAssembler.createTestAttempt(test,submission);
+        return testAssembler.createTestAttempt(test, submission);
     }
 }

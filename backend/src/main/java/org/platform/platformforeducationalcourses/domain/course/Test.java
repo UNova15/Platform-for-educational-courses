@@ -1,5 +1,7 @@
 package org.platform.platformforeducationalcourses.domain.course;
 
+import java.util.Collections;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,9 +10,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.Collections;
-import java.util.Set;
-
 @Table(name = "test")
 @Getter
 @EqualsAndHashCode(of = "id")
@@ -18,6 +17,7 @@ import java.util.Set;
 public class Test {
     @Id
     private final Long id;
+
     private Long moduleId;
     private String description;
     private int orderIndex;
@@ -25,7 +25,7 @@ public class Test {
     @MappedCollection(idColumn = "test_id")
     private Set<Question> questions;
 
-    public Set<Question> getQuestions(){
+    public Set<Question> getQuestions() {
         return Collections.unmodifiableSet(questions);
     }
 
@@ -37,7 +37,11 @@ public class Test {
     }
 
     public void update(String description, int orderIndex, Set<Question> questions) {
-        if (description == null || description.isBlank() || orderIndex < 0 || questions == null || questions.isEmpty()) {
+        if (description == null
+                || description.isBlank()
+                || orderIndex < 0
+                || questions == null
+                || questions.isEmpty()) {
             throw new IllegalArgumentException("Incorrect data to update test");
         }
 
@@ -46,4 +50,3 @@ public class Test {
         this.questions = questions;
     }
 }
-

@@ -38,8 +38,7 @@ public class AuthService {
 
     public TokenDto login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.login(), request.password())
-        );
+                new UsernamePasswordAuthenticationToken(request.login(), request.password()));
 
         SecurityUser user = (SecurityUser) authentication.getPrincipal();
 

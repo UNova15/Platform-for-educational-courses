@@ -1,5 +1,6 @@
 package org.platform.platformforeducationalcourses.mapper;
 
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.platform.platformforeducationalcourses.domain.course.Course;
@@ -13,8 +14,6 @@ import org.platform.platformforeducationalcourses.dto.course.find.CourseModuleFi
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.dto.module.StudentModuleFindResponse;
 
-import java.util.List;
-
 @Mapper(uses = {ModuleMapper.class})
 public interface CourseMapper {
     CourseCreateDto toCourseDto(CourseCreateRequest request);
@@ -25,14 +24,14 @@ public interface CourseMapper {
 
     List<CourseEnrolledFindResponse> toCourseEnrolledFindResponse(List<Course> courses);
 
-    @Mapping(source = "modules",target = "modules")
+    @Mapping(source = "modules", target = "modules")
     StudentCourseFindResponse toStudentCourseFindResponse(Course course, List<StudentModuleFindResponse> modules);
 
-    @Mapping(source = "mappedModules",target = "modules")
+    @Mapping(source = "mappedModules", target = "modules")
     CourseFindResponse toCourseFindResponse(Course course, List<CourseModuleFindResponse> mappedModules);
 
     CoursePage toCoursePage(Course course);
 
-    @Mapping(source = "modules",target = "modules")
+    @Mapping(source = "modules", target = "modules")
     CourseCatalogResponse toCourseCatalogResponse(Course course, List<CourseModule> modules);
 }

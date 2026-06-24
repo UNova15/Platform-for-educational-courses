@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,21 +20,23 @@ import org.platform.platformforeducationalcourses.tokenutil.TokenHasher;
 import org.platform.platformforeducationalcourses.tokenutil.TokenUtil;
 import org.springframework.security.authentication.BadCredentialsException;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class TokenServiceTest {
 
-    @Mock private TokenGenerator generator;
-    @Mock private RefreshTokenRepository refreshTokenRepository;
-    @Mock private TokenHasher hasher;
-    @Mock private TokenUtil tokenUtil;
+    @Mock
+    private TokenGenerator generator;
 
-    @InjectMocks private TokenService tokenService;
+    @Mock
+    private RefreshTokenRepository refreshTokenRepository;
+
+    @Mock
+    private TokenHasher hasher;
+
+    @Mock
+    private TokenUtil tokenUtil;
+
+    @InjectMocks
+    private TokenService tokenService;
 
     private final Role DUMMY_ROLE = null;
 
@@ -83,7 +90,8 @@ class TokenServiceTest {
         when(tokenUtil.isValidToken("token")).thenReturn(true);
         when(tokenUtil.parseUserIdFromToken("token")).thenReturn(1L);
         when(hasher.hash("token")).thenReturn("hashed");
-        when(refreshTokenRepository.findByTokenAndUserId("hashed", 1L)).thenReturn(Optional.of(mock(RefreshToken.class)));
+        when(refreshTokenRepository.findByTokenAndUserId("hashed", 1L))
+                .thenReturn(Optional.of(mock(RefreshToken.class)));
 
         assertTrue(tokenService.isValidRefreshToken("token"));
     }

@@ -1,5 +1,12 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,22 +18,20 @@ import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import org.platform.platformforeducationalcourses.repository.EnrollmentRepository;
 import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class EnrollmentServiceTest {
 
-    @Mock private EnrollmentRepository enrollmentRepository;
-    @Mock private CourseRepository courseRepository;
-    @Mock private CourseMapper courseMapper;
+    @Mock
+    private EnrollmentRepository enrollmentRepository;
 
-    @InjectMocks private EnrollmentService service;
+    @Mock
+    private CourseRepository courseRepository;
+
+    @Mock
+    private CourseMapper courseMapper;
+
+    @InjectMocks
+    private EnrollmentService service;
 
     @Test
     void enrollToCourse_Success() {

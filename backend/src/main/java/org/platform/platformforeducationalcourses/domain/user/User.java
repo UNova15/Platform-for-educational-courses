@@ -13,16 +13,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
-    private final static int MIN_PASSWORD_LENGTH = 8;
+    private static final int MIN_PASSWORD_LENGTH = 8;
 
     @Id
     private final Long id;
+
     private String login;
     private String password;
     private final Role role;
 
     public static User createNew(String login, String password, Role role, PasswordEncoder passwordEncoder) {
-        if (login == null || login.isBlank() || password == null || password.isBlank() || password.length() < MIN_PASSWORD_LENGTH) {
+        if (login == null
+                || login.isBlank()
+                || password == null
+                || password.isBlank()
+                || password.length() < MIN_PASSWORD_LENGTH) {
             throw new IllegalArgumentException("Incorrect data to create user");
         }
 

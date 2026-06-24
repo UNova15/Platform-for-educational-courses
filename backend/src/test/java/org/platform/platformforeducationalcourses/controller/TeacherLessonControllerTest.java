@@ -1,5 +1,8 @@
 package org.platform.platformforeducationalcourses.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,16 +18,17 @@ import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class TeacherLessonControllerTest {
 
-    @Mock private LessonService lessonService;
-    @Mock private LessonMapper lessonMapper;
+    @Mock
+    private LessonService lessonService;
 
-    @InjectMocks private TeacherLessonController controller;
+    @Mock
+    private LessonMapper lessonMapper;
+
+    @InjectMocks
+    private TeacherLessonController controller;
 
     private SecurityUser mockUser;
 

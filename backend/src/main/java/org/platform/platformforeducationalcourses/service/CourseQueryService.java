@@ -1,5 +1,6 @@
 package org.platform.platformforeducationalcourses.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.creator.assembler.ModuleAssembler;
 import org.platform.platformforeducationalcourses.domain.course.*;
@@ -21,12 +22,9 @@ import org.platform.platformforeducationalcourses.service.domain.ProgressService
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Сервис для операций получения данных из группы агрегатов курса
  */
-
 @Service
 @RequiredArgsConstructor
 public class CourseQueryService {
@@ -41,12 +39,12 @@ public class CourseQueryService {
     private final ProgressService progressService;
     private final TestSubmissionService testSubmissionService;
 
-    //TODO возможно стоит вынести в course assembler
+    // TODO возможно стоит вынести в course assembler
     public CourseFindResponse getCourseForTeacher(long courseId) {
         CourseData courseData = getCourseStructure(courseId);
 
-        List<CourseModuleFindResponse> mappedModules = moduleAssembler.createCourseModuleFindResponse(courseData.lessons(),
-                courseData.tests(), courseData.modules());
+        List<CourseModuleFindResponse> mappedModules = moduleAssembler.createCourseModuleFindResponse(
+                courseData.lessons(), courseData.tests(), courseData.modules());
 
         return courseMapper.toCourseFindResponse(courseData.course(), mappedModules);
     }
@@ -54,32 +52,29 @@ public class CourseQueryService {
     public StudentCourseFindResponse getCourseForStudent(long userId, long courseId) {
         CourseData courseData = getCourseStructure(courseId);
 
-        List<LessonProgress> lessonProgresses = progressService.findLessonProgressByLessonsIds(userId, courseData.lessons());
+        List<LessonProgress> lessonProgresses =
+                progressService.findLessonProgressByLessonsIds(userId, courseData.lessons());
         List<TestSubmission> testSubmissions = testSubmissionService.findTestsSubmissions(userId, courseData.tests());
 
-        List<StudentModuleFindResponse> mappedModules = moduleAssembler.createStudentModuleFindResponse(courseData.modules(),
-                courseData.lessons(), lessonProgresses, courseData.tests(), testSubmissions);
+        List<StudentModuleFindResponse> mappedModules = moduleAssembler.createStudentModuleFindResponse(
+                courseData.modules(), courseData.lessons(), lessonProgresses, courseData.tests(), testSubmissions);
 
         return courseMapper.toStudentCourseFindResponse(courseData.course(), mappedModules);
     }
 
     public CourseCatalogResponse getCourseForCatalog(long courseId) {
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow();
+        Course course = courseRepository.findById(courseId).orElseThrow();
 
         List<CourseModule> modules = moduleRepository.findAllByCourseId(courseId);
 
-        return courseMapper.toCourseCatalogResponse(course,modules);
+        return courseMapper.toCourseCatalogResponse(course, modules);
     }
 
     private CourseData getCourseStructure(long courseId) {
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow();
+        Course course = courseRepository.findById(courseId).orElseThrow();
 
         List<CourseModule> modules = moduleRepository.findAllByCourseId(courseId);
-        List<Long> moduleIds = modules.stream()
-                .map(CourseModule::getId)
-                .toList();
+        List<Long> moduleIds = modules.stream().map(CourseModule::getId).toList();
 
         List<Lesson> lessons = lessonRepository.findAllByModuleIdIn(moduleIds);
         List<Test> tests = testRepository.findAllByModuleIdIn(moduleIds);

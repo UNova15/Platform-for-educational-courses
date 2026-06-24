@@ -1,5 +1,11 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,32 +24,33 @@ import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class CourseLearningServiceTest {
 
     @Mock
     private LessonService lessonService;
+
     @Mock
     private TestService testService;
+
     @Mock
     private SubmissionsRepository submissionsRepository;
+
     @Mock
     private ProgressRepository progressRepository;
+
     @Mock
     private TestRepository testRepository;
+
     @Mock
     private TestMapper testMapper;
+
     @Mock
     private TestAssembler testAssembler;
+
     @Mock
     private SubmissionValidator validator;
+
     @Mock
     private ScoreCalculator scoreCalculator;
 

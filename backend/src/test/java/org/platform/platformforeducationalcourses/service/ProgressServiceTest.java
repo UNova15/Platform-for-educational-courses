@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,18 +15,14 @@ import org.platform.platformforeducationalcourses.domain.progress.LessonProgress
 import org.platform.platformforeducationalcourses.repository.ProgressRepository;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class ProgressServiceTest {
 
-    @Mock private ProgressRepository progressRepository;
+    @Mock
+    private ProgressRepository progressRepository;
 
-    @InjectMocks private ProgressService progressService;
+    @InjectMocks
+    private ProgressService progressService;
 
     @Test
     void findLessonProgressByLessonsIds_Success() {

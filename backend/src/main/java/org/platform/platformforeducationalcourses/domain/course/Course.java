@@ -1,5 +1,8 @@
 package org.platform.platformforeducationalcourses.domain.course;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,10 +13,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Set;
-
 @Table(name = "courses")
 @Getter
 @EqualsAndHashCode(of = "id")
@@ -21,6 +20,7 @@ import java.util.Set;
 public class Course {
     @Id
     private final Long id;
+
     private Long teacherId;
     private String title;
     private String description;

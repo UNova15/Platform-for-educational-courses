@@ -1,11 +1,10 @@
 package org.platform.platformforeducationalcourses.mapper;
 
+import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
 import org.platform.platformforeducationalcourses.domain.course.Lesson;
-import org.platform.platformforeducationalcourses.dto.lesson.*;
 import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
-
-import java.time.LocalDateTime;
+import org.platform.platformforeducationalcourses.dto.lesson.*;
 
 @Mapper
 public interface LessonMapper {

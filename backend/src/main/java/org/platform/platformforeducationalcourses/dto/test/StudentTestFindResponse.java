@@ -1,6 +1,5 @@
 package org.platform.platformforeducationalcourses.dto.test;
 
-
 import java.time.LocalDateTime;
 
 public record StudentTestFindResponse(
@@ -10,6 +9,4 @@ public record StudentTestFindResponse(
         int orderIndex,
         LocalDateTime startedAt,
         LocalDateTime completedAt,
-        Integer score
-) {
-}
+        Integer score) {}

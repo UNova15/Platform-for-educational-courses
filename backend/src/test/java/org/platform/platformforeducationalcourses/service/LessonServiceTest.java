@@ -1,5 +1,11 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,18 +20,12 @@ import org.platform.platformforeducationalcourses.mapper.LessonMapper;
 import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class LessonServiceTest {
 
     @Mock
     private LessonRepository lessonRepository;
+
     @Mock
     private LessonMapper lessonMapper;
 

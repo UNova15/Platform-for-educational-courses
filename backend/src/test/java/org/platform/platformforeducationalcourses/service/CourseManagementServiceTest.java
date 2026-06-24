@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,27 +23,27 @@ import org.platform.platformforeducationalcourses.repository.course.LessonReposi
 import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
 import org.platform.platformforeducationalcourses.repository.course.TestRepository;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class CourseManagementServiceTest {
 
     @Mock
     private CourseRepository courseRepository;
+
     @Mock
     private ModuleRepository moduleRepository;
+
     @Mock
     private LessonRepository lessonRepository;
+
     @Mock
     private TestRepository testRepository;
+
     @Mock
     private ModuleFactory moduleFactory;
+
     @Mock
     private LessonFactory lessonFactory;
+
     @Mock
     private TestFactory testFactory;
 

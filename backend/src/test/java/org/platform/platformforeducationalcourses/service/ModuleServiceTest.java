@@ -1,5 +1,11 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,20 +18,17 @@ import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
 import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
 import org.platform.platformforeducationalcourses.service.domain.ModuleService;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class ModuleServiceTest {
 
-    @Mock private ModuleRepository moduleRepository;
-    @Mock private ModuleMapper moduleMapper;
+    @Mock
+    private ModuleRepository moduleRepository;
 
-    @InjectMocks private ModuleService moduleService;
+    @Mock
+    private ModuleMapper moduleMapper;
+
+    @InjectMocks
+    private ModuleService moduleService;
 
     @Test
     void findModule_Success() {

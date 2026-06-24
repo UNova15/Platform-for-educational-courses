@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,19 +21,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
 
-    @Mock private AuthService authService;
-    @Mock private TokenProperties configuration;
+    @Mock
+    private AuthService authService;
 
-    @InjectMocks private AuthController authController;
+    @Mock
+    private TokenProperties configuration;
+
+    @InjectMocks
+    private AuthController authController;
 
     @Test
     void userRegistration_ReturnsCreatedAndCookie() {

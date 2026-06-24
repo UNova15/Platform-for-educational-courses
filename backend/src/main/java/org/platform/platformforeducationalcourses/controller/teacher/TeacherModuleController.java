@@ -20,51 +20,47 @@ public class TeacherModuleController {
     private final ModuleService moduleService;
     private final ModuleMapper moduleMapper;
 
-
     @PostMapping
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
-    public ResponseEntity<ModuleCreateResponse> createModule(@PathVariable long courseId,
-                                                             @Valid @RequestBody ModuleCreateRequest request,
-                                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<ModuleCreateResponse> createModule(
+            @PathVariable long courseId,
+            @Valid @RequestBody ModuleCreateRequest request,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         ModuleCreateDto moduleDto = moduleMapper.toCreateModuleDto(courseId, request);
         ModuleCreateResponse response = moduleService.createModule(moduleDto);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
 
     @DeleteMapping("{moduleId}")
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public ResponseEntity<Void> deleteModule(@PathVariable long courseId,
-                                             @PathVariable long moduleId,
-                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<Void> deleteModule(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         moduleService.deleteModule(moduleId);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("{moduleId}")
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public ResponseEntity<Void> updateModule(@PathVariable long courseId,
-                                             @PathVariable long moduleId,
-                                             @Valid @RequestBody ModuleUpdateRequest request,
-                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<Void> updateModule(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @Valid @RequestBody ModuleUpdateRequest request,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
 
         ModuleUpdateDto updateDto = moduleMapper.toModuleUpdateDto(courseId, moduleId, request);
         moduleService.updateModule(updateDto);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("{moduleId}")
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public ResponseEntity<ModuleFindResponse> getModule(@PathVariable long courseId,
-                                                        @PathVariable long moduleId,
-                                                        @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<ModuleFindResponse> getModule(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         ModuleFindResponse module = moduleService.findModule(moduleId);
         return ResponseEntity.ok(module);
     }

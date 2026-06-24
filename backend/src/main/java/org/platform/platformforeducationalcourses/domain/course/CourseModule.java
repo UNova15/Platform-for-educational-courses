@@ -1,5 +1,7 @@
 package org.platform.platformforeducationalcourses.domain.course;
 
+import java.util.Collections;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -7,12 +9,8 @@ import lombok.Getter;
 import org.platform.platformforeducationalcourses.domain.course.reference.LessonRef;
 import org.platform.platformforeducationalcourses.domain.course.reference.TestRef;
 import org.springframework.data.annotation.Id;
-import org.platform.platformforeducationalcourses.domain.course.reference.ManualTestRef;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.util.Collections;
-import java.util.Set;
 
 @Table(name = "modules")
 @Getter
@@ -21,6 +19,7 @@ import java.util.Set;
 public class CourseModule {
     @Id
     private final Long id;
+
     private final Long courseId;
     private String title;
     private String description;

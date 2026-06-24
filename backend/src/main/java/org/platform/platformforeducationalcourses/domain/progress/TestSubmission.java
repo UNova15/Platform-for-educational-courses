@@ -1,5 +1,11 @@
 package org.platform.platformforeducationalcourses.domain.progress;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,13 +18,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Table("test_submissions")
 @Getter
 @EqualsAndHashCode(of = "id")
@@ -26,6 +25,7 @@ import java.util.stream.Collectors;
 public class TestSubmission {
     @Id
     private Long id;
+
     private final long userId;
     private final long testId;
     private final LocalDateTime startedAt;
@@ -47,8 +47,11 @@ public class TestSubmission {
         return new TestSubmission(null, userId, testId, LocalDateTime.now(), null, 0, null);
     }
 
-    public void submitAnswers(List<AnswerPostDto> answers, Map<Long, Question> questionsOrderById,
-                              ScoreCalculator calculator, SubmissionValidator validator) {
+    public void submitAnswers(
+            List<AnswerPostDto> answers,
+            Map<Long, Question> questionsOrderById,
+            ScoreCalculator calculator,
+            SubmissionValidator validator) {
         if (completedAt != null) {
             throw new IllegalArgumentException("Attempt has already been saved");
         }
@@ -57,10 +60,7 @@ public class TestSubmission {
         int testScore = calculator.calculate(answers, questionsOrderById);
 
         Set<TestAnswer> testAnswers = answers.stream()
-                .map(answer -> TestAnswer.createNew(
-                        answer.questionId(),
-                        answer.optionId())
-                )
+                .map(answer -> TestAnswer.createNew(answer.questionId(), answer.optionId()))
                 .collect(Collectors.toSet());
 
         completedAt = LocalDateTime.now();
