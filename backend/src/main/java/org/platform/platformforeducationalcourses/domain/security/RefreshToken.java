@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.platform.platformforeducationalcourses.tokenutil.TokenHasher;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(name = "refresh_tokens")
@@ -16,9 +15,9 @@ import org.springframework.data.relational.core.mapping.Table;
 public class RefreshToken {
     @Id
     private final Long id;
+
     private final Long userId;
     private final String token;
-
 
     public static RefreshToken createNew(long userId, String token, TokenHasher hasher) {
         if (token == null || token.isBlank()) {

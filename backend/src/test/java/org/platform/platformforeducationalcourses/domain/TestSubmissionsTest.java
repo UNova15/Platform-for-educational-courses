@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.domain;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.domain.course.Question;
@@ -7,12 +12,6 @@ import org.platform.platformforeducationalcourses.domain.progress.TestAnswer;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class TestSubmissionsTest {
 

@@ -19,7 +19,8 @@ public class CourseCatalogController {
     private final CourseQueryService courseQueryService;
 
     @GetMapping
-    public ResponseEntity<PageResponse<CoursePage>> getCourses(Pageable pageable, @RequestParam(required = false) Tag tag) {
+    public ResponseEntity<PageResponse<CoursePage>> getCourses(
+            Pageable pageable, @RequestParam(required = false) Tag tag) {
         PageResponse<CoursePage> page = courseService.findPageOfCourse(pageable, tag);
         return ResponseEntity.ok(page);
     }

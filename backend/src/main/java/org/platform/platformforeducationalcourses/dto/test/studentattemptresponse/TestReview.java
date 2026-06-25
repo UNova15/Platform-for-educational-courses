@@ -2,10 +2,4 @@ package org.platform.platformforeducationalcourses.dto.test.studentattemptrespon
 
 import java.util.List;
 
-public record TestReview(
-        long testId,
-        String description,
-        int orderIndex,
-        List<TestQuestion> questions
-) {
-}
+public record TestReview(long testId, String description, int orderIndex, List<TestQuestion> questions) {}

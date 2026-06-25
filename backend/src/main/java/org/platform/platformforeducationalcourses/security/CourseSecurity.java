@@ -22,32 +22,36 @@ public class CourseSecurity {
     }
 
     public boolean canManagedModule(long userId, long courseId, long moduleId) {
-        return moduleRepository.findModuleIfUserIsOwner(userId, courseId, moduleId)
+        return moduleRepository
+                .findModuleIfUserIsOwner(userId, courseId, moduleId)
                 .isPresent();
     }
 
     public boolean canManagedLesson(long userId, long courseId, long moduleId, long lessonId) {
-        return lessonRepository.findLessonIfUserIsOwner(lessonId, moduleId, courseId, userId)
+        return lessonRepository
+                .findLessonIfUserIsOwner(lessonId, moduleId, courseId, userId)
                 .isPresent();
     }
 
     public boolean canManagedTest(long userId, long courseId, long moduleId, long testId) {
-        return testRepository.findTestIfUserIsOwner(userId, courseId, moduleId, testId)
+        return testRepository
+                .findTestIfUserIsOwner(userId, courseId, moduleId, testId)
                 .isPresent();
     }
 
     public boolean canAccessCourse(long userId, long courseId) {
-        return enrollmentRepository.findByCourseIdAndUserId(courseId, userId)
-                .isPresent();
+        return enrollmentRepository.findByCourseIdAndUserId(courseId, userId).isPresent();
     }
 
     public boolean canAccessLesson(long userId, long courseId, long moduleId, long lessonId) {
-        return enrollmentRepository.findEnrollmentForLessonIfUserIsStudying(userId, courseId, moduleId, lessonId)
+        return enrollmentRepository
+                .findEnrollmentForLessonIfUserIsStudying(userId, courseId, moduleId, lessonId)
                 .isPresent();
     }
 
-    public boolean canAccessTest(long userId, long courseId, long moduleId, long testId){
-        return enrollmentRepository.findEnrollmentForTestIfUserIsStudying(userId,courseId,moduleId,testId)
+    public boolean canAccessTest(long userId, long courseId, long moduleId, long testId) {
+        return enrollmentRepository
+                .findEnrollmentForTestIfUserIsStudying(userId, courseId, moduleId, testId)
                 .isPresent();
     }
 }

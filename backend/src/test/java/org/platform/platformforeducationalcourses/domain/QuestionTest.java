@@ -1,13 +1,12 @@
 package org.platform.platformforeducationalcourses.domain;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.platform.platformforeducationalcourses.domain.course.AnswerOption;
 import org.platform.platformforeducationalcourses.domain.course.Question;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class QuestionTest {
 

@@ -1,5 +1,10 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,20 +21,20 @@ import org.platform.platformforeducationalcourses.service.domain.CourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
 
-    @Mock private CourseRepository courseRepository;
-    @Mock private CourseAssembler courseAssembler;
-    @Mock private CourseMapper courseMapper;
+    @Mock
+    private CourseRepository courseRepository;
 
-    @InjectMocks private CourseService courseService;
+    @Mock
+    private CourseAssembler courseAssembler;
+
+    @Mock
+    private CourseMapper courseMapper;
+
+    @InjectMocks
+    private CourseService courseService;
 
     @Test
     void updateCourse_Success() {
@@ -47,7 +52,8 @@ class CourseServiceTest {
     @Test
     void updateCourse_ThrowsException_IfNotFound() {
         when(courseRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(CourseNotFoundException.class, () -> courseService.updateCourse(mock(CourseUpdateDto.class), 10L, 1L));
+        assertThrows(
+                CourseNotFoundException.class, () -> courseService.updateCourse(mock(CourseUpdateDto.class), 10L, 1L));
     }
 
     @Test

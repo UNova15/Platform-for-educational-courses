@@ -1,8 +1,7 @@
 package org.platform.platformforeducationalcourses.dto.lesson;
 
-import org.platform.platformforeducationalcourses.domain.course.ContentType;
-
 import java.time.LocalDateTime;
+import org.platform.platformforeducationalcourses.domain.course.ContentType;
 
 public record StudentLessonFindResponse(
         long id,
@@ -11,6 +10,4 @@ public record StudentLessonFindResponse(
         ContentType type,
         int orderIndex,
         boolean mandatory,
-        LocalDateTime completedAt
-){
-}
+        LocalDateTime completedAt) {}

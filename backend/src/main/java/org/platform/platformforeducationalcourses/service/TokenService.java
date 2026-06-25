@@ -39,7 +39,8 @@ public class TokenService {
         }
 
         String oldHashedToken = hasher.hash(oldRawRefreshToken);
-        RefreshToken tokenFromDb = refreshTokenRepository.findByToken(oldHashedToken)
+        RefreshToken tokenFromDb = refreshTokenRepository
+                .findByToken(oldHashedToken)
                 .orElseThrow(() -> new BadCredentialsException("Refresh token not found in DB"));
 
         refreshTokenRepository.delete(tokenFromDb);
@@ -48,13 +49,15 @@ public class TokenService {
         ParsedToken parsedToken = tokenUtil.parseToken(oldRawRefreshToken);
 
         String newRawJwt = generator.generateJwtToken(userId, parsedToken.login(), parsedToken.role());
-        String newRawRefreshToken = generator.generateRefreshToken(parsedToken.userId(), parsedToken.login(), parsedToken.role());
+        String newRawRefreshToken =
+                generator.generateRefreshToken(parsedToken.userId(), parsedToken.login(), parsedToken.role());
 
         RefreshToken newRefreshToken = RefreshToken.createNew(parsedToken.userId(), newRawRefreshToken, hasher);
 
         refreshTokenRepository.save(newRefreshToken);
 
-        return new TokenDto(parsedToken.userId(), parsedToken.login(), parsedToken.role(), newRawJwt, newRawRefreshToken);
+        return new TokenDto(
+                parsedToken.userId(), parsedToken.login(), parsedToken.role(), newRawJwt, newRawRefreshToken);
     }
 
     public boolean isValidRefreshToken(String refreshToken) {
@@ -64,7 +67,8 @@ public class TokenService {
         long userId = tokenUtil.parseUserIdFromToken(refreshToken);
         String hashedRefreshToken = hasher.hash(refreshToken);
 
-        return refreshTokenRepository.findByTokenAndUserId(hashedRefreshToken, userId)
+        return refreshTokenRepository
+                .findByTokenAndUserId(hashedRefreshToken, userId)
                 .isPresent();
     }
 }

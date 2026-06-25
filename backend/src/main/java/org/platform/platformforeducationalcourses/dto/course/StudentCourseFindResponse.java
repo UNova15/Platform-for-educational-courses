@@ -1,10 +1,9 @@
 package org.platform.platformforeducationalcourses.dto.course;
 
-import org.platform.platformforeducationalcourses.domain.course.Tag;
-import org.platform.platformforeducationalcourses.dto.module.StudentModuleFindResponse;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import org.platform.platformforeducationalcourses.domain.course.Tag;
+import org.platform.platformforeducationalcourses.dto.module.StudentModuleFindResponse;
 
 public record StudentCourseFindResponse(
         Long id,
@@ -13,6 +12,4 @@ public record StudentCourseFindResponse(
         String description,
         Tag tag,
         LocalDateTime createdAt,
-        List<StudentModuleFindResponse> modules
-) {
-}
+        List<StudentModuleFindResponse> modules) {}

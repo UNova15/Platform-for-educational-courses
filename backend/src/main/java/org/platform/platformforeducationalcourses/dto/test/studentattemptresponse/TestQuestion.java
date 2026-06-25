@@ -3,10 +3,4 @@ package org.platform.platformforeducationalcourses.dto.test.studentattemptrespon
 import java.util.List;
 
 public record TestQuestion(
-        long questionId,
-        int orderIndex,
-        String question,
-        List<QuestionOption> options,
-        long selectedId
-) {
-}
+        long questionId, int orderIndex, String question, List<QuestionOption> options, long selectedId) {}

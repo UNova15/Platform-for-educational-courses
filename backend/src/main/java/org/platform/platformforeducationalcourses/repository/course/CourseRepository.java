@@ -1,14 +1,13 @@
 package org.platform.platformforeducationalcourses.repository.course;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.domain.course.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 public interface CourseRepository extends CrudRepository<Course, Long> {
     List<Course> findAllByTeacherId(long userId);

@@ -1,5 +1,9 @@
 package org.platform.platformforeducationalcourses.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,19 +24,20 @@ import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class StudentCourseControllerTest {
 
-    @Mock private CourseLearningService learningService;
-    @Mock private CourseQueryService courseQueryService;
-    @Mock private EnrollmentService enrollmentService;
+    @Mock
+    private CourseLearningService learningService;
 
-    @InjectMocks private StudentCourseController controller;
+    @Mock
+    private CourseQueryService courseQueryService;
+
+    @Mock
+    private EnrollmentService enrollmentService;
+
+    @InjectMocks
+    private StudentCourseController controller;
 
     private SecurityUser mockUser;
 

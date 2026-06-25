@@ -4,15 +4,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.platform.platformforeducationalcourses.properties.TokenProperties;
+import java.nio.charset.StandardCharsets;
+import javax.crypto.SecretKey;
 import org.platform.platformforeducationalcourses.domain.user.Role;
 import org.platform.platformforeducationalcourses.dto.auth.ParsedToken;
+import org.platform.platformforeducationalcourses.properties.TokenProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 
 @Component
 public class TokenUtil {
@@ -45,10 +44,7 @@ public class TokenUtil {
             return new ParsedToken(
                     Long.parseLong(parsedToken.getSubject()),
                     parsedToken.get("login", String.class),
-                    Role.valueOf(
-                            parsedToken.get("role", String.class)
-                    )
-            );
+                    Role.valueOf(parsedToken.get("role", String.class)));
 
         } catch (JwtException | IllegalArgumentException exception) {
             throw new BadCredentialsException("Некорректный токен: " + token);

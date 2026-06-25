@@ -1,16 +1,16 @@
-import { createCourse } from './api.js';
-import { requireTeacher } from './guards.js';
+import { createCourse } from "./api.js";
+import { requireTeacher } from "./guards.js";
 
 let moduleCounter = 0;
 let lessonCounter = 0;
 
 function createLessonBlock() {
-    lessonCounter++;
-    const block = document.createElement('div');
-    block.classList.add('lesson-block');
-    block.dataset.lessonId = `lesson-${lessonCounter}`;
+  lessonCounter++;
+  const block = document.createElement("div");
+  block.classList.add("lesson-block");
+  block.dataset.lessonId = `lesson-${lessonCounter}`;
 
-    block.innerHTML = `
+  block.innerHTML = `
         <button type="button" class="lesson-block__delete" title="Удалить урок">✕</button>
         <input type="text" class="lesson-block__title-input"
                placeholder="Название урока" maxlength="100" required>
@@ -24,18 +24,18 @@ function createLessonBlock() {
         </label>
     `;
 
-    block.querySelector('.lesson-block__delete').addEventListener('click', () => {
-        block.remove();
-    });
+  block.querySelector(".lesson-block__delete").addEventListener("click", () => {
+    block.remove();
+  });
 
-    return block;
+  return block;
 }
 
 function createTestBlock() {
-    const block = document.createElement('div');
-    block.classList.add('test-block');
+  const block = document.createElement("div");
+  block.classList.add("test-block");
 
-    block.innerHTML = `
+  block.innerHTML = `
         <div class="test-block__header">
             <span class="test-block__label">Тест</span>
             <button type="button" class="test-block__delete" title="Удалить тест">✕</button>
@@ -48,26 +48,28 @@ function createTestBlock() {
         </button>
     `;
 
-    const questionsContainer = block.querySelector('[data-questions]');
+  const questionsContainer = block.querySelector("[data-questions]");
 
-    block.querySelector('[data-action="add-question"]').addEventListener('click', () => {
-        questionsContainer.appendChild(createQuestionBlock());
+  block
+    .querySelector('[data-action="add-question"]')
+    .addEventListener("click", () => {
+      questionsContainer.appendChild(createQuestionBlock());
     });
 
-    block.querySelector('.test-block__delete').addEventListener('click', () => {
-        block.remove();
-    });
+  block.querySelector(".test-block__delete").addEventListener("click", () => {
+    block.remove();
+  });
 
-    questionsContainer.appendChild(createQuestionBlock());
+  questionsContainer.appendChild(createQuestionBlock());
 
-    return block;
+  return block;
 }
 
 function createQuestionBlock() {
-    const block = document.createElement('div');
-    block.classList.add('question-block');
+  const block = document.createElement("div");
+  block.classList.add("question-block");
 
-    block.innerHTML = `
+  block.innerHTML = `
         <div class="question-block__header">
             <input type="text" class="question-block__input"
                    placeholder="Текст вопроса" maxlength="100" required>
@@ -79,49 +81,53 @@ function createQuestionBlock() {
         </button>
     `;
 
-    const optionsContainer = block.querySelector('[data-options]');
+  const optionsContainer = block.querySelector("[data-options]");
 
-    block.querySelector('[data-action="add-option"]').addEventListener('click', () => {
-        optionsContainer.appendChild(createOptionBlock());
+  block
+    .querySelector('[data-action="add-option"]')
+    .addEventListener("click", () => {
+      optionsContainer.appendChild(createOptionBlock());
     });
 
-    block.querySelector('.question-block__delete').addEventListener('click', () => {
-        block.remove();
+  block
+    .querySelector(".question-block__delete")
+    .addEventListener("click", () => {
+      block.remove();
     });
 
-    optionsContainer.appendChild(createOptionBlock(true));
-    optionsContainer.appendChild(createOptionBlock(false));
+  optionsContainer.appendChild(createOptionBlock(true));
+  optionsContainer.appendChild(createOptionBlock(false));
 
-    return block;
+  return block;
 }
 
 function createOptionBlock(isCorrect = false) {
-    const block = document.createElement('div');
-    block.classList.add('option-block');
+  const block = document.createElement("div");
+  block.classList.add("option-block");
 
-    block.innerHTML = `
+  block.innerHTML = `
         <label class="option-block__correct-label">
-            <input type="checkbox" class="option-block__correct" ${isCorrect ? 'checked' : ''}>
+            <input type="checkbox" class="option-block__correct" ${isCorrect ? "checked" : ""}>
         </label>
         <input type="text" class="option-block__text"
                placeholder="Вариант ответа" maxlength="100" required>
         <button type="button" class="option-block__delete" title="Удалить">✕</button>
     `;
 
-    block.querySelector('.option-block__delete').addEventListener('click', () => {
-        block.remove();
-    });
+  block.querySelector(".option-block__delete").addEventListener("click", () => {
+    block.remove();
+  });
 
-    return block;
+  return block;
 }
 
 function createModuleBlock() {
-    moduleCounter++;
-    const block = document.createElement('div');
-    block.classList.add('module-block');
-    block.dataset.moduleId = `module-${moduleCounter}`;
+  moduleCounter++;
+  const block = document.createElement("div");
+  block.classList.add("module-block");
+  block.dataset.moduleId = `module-${moduleCounter}`;
 
-    block.innerHTML = `
+  block.innerHTML = `
         <button type="button" class="module-block__delete" title="Удалить модуль">✕</button>
         <div class="module-block__header">
             <input type="text" class="module-block__title-input"
@@ -143,190 +149,209 @@ function createModuleBlock() {
         </div>
     `;
 
-    const lessonsContainer = block.querySelector('[data-lessons]');
-    const testsContainer = block.querySelector('[data-tests]');
+  const lessonsContainer = block.querySelector("[data-lessons]");
+  const testsContainer = block.querySelector("[data-tests]");
 
-    block.querySelector('[data-action="add-lesson"]').addEventListener('click', () => {
-        lessonsContainer.appendChild(createLessonBlock());
+  block
+    .querySelector('[data-action="add-lesson"]')
+    .addEventListener("click", () => {
+      lessonsContainer.appendChild(createLessonBlock());
     });
 
-    block.querySelector('[data-action="add-test"]').addEventListener('click', () => {
-        testsContainer.appendChild(createTestBlock());
+  block
+    .querySelector('[data-action="add-test"]')
+    .addEventListener("click", () => {
+      testsContainer.appendChild(createTestBlock());
     });
 
-    block.querySelector('.module-block__delete').addEventListener('click', () => {
-        if (confirm('Удалить модуль со всеми уроками и тестами?')) {
-            block.remove();
-        }
-    });
-    lessonsContainer.appendChild(createLessonBlock());
+  block.querySelector(".module-block__delete").addEventListener("click", () => {
+    if (confirm("Удалить модуль со всеми уроками и тестами?")) {
+      block.remove();
+    }
+  });
+  lessonsContainer.appendChild(createLessonBlock());
 
-    return block;
+  return block;
 }
 
 function collectFormData() {
-    const title = document.getElementById('courseTitle').value.trim();
-    const description = document.getElementById('courseDescription').value.trim();
-    const tag = document.getElementById('courseTag').value;
+  const title = document.getElementById("courseTitle").value.trim();
+  const description = document.getElementById("courseDescription").value.trim();
+  const tag = document.getElementById("courseTag").value;
 
-    if (!title) {
-        alert('Введите название курса');
+  if (!title) {
+    alert("Введите название курса");
+    return null;
+  }
+
+  const moduleBlocks = document.querySelectorAll(".module-block");
+  const modules = [];
+
+  let moduleIndex = 0;
+  for (const moduleBlock of moduleBlocks) {
+    const moduleTitle = moduleBlock
+      .querySelector(".module-block__title-input")
+      .value.trim();
+    const moduleDesc =
+      moduleBlock.querySelector(".module-block__desc-input")?.value.trim() ||
+      "";
+
+    if (!moduleTitle) {
+      alert("Заполните название модуля");
+      return null;
+    }
+
+    const lessonBlocks = moduleBlock.querySelectorAll(
+      ":scope > [data-lessons] > .lesson-block",
+    );
+    const lessons = [];
+    let lessonIndex = 0;
+
+    for (const lb of lessonBlocks) {
+      const lTitle = lb
+        .querySelector(".lesson-block__title-input")
+        .value.trim();
+      const lContent = lb
+        .querySelector(".lesson-block__content-input")
+        .value.trim();
+      const lType = "TEXT";
+      const lMandatory =
+        lb.querySelector(".lesson-block__mandatory-checkbox")?.checked ?? true;
+
+      if (!lTitle || !lContent) {
+        alert("Заполните название и контент каждого урока");
         return null;
+      }
+
+      lessons.push({
+        title: lTitle,
+        type: lType,
+        content: lContent,
+        orderIndex: lessonIndex,
+        mandatory: lMandatory,
+      });
+      lessonIndex++;
     }
 
-    const moduleBlocks = document.querySelectorAll('.module-block');
-    const modules = [];
+    const testBlocks = moduleBlock.querySelectorAll(
+      ":scope > [data-tests] > .test-block",
+    );
+    const tests = [];
+    let testIndex = 0;
 
-    let moduleIndex = 0;
-    for (const moduleBlock of moduleBlocks) {
-        const moduleTitle = moduleBlock.querySelector('.module-block__title-input').value.trim();
-        const moduleDesc = moduleBlock.querySelector('.module-block__desc-input')?.value.trim() || '';
+    for (const tb of testBlocks) {
+      const tDesc =
+        tb.querySelector(".test-block__desc-input")?.value.trim() || "";
+      const questionBlocks = tb.querySelectorAll(".question-block");
+      const questions = [];
 
-        if (!moduleTitle) {
-            alert('Заполните название модуля');
+      for (const qb of questionBlocks) {
+        const qText = qb.querySelector(".question-block__input").value.trim();
+        if (!qText) {
+          alert("Заполните текст вопроса");
+          return null;
+        }
+
+        const optionBlocks = qb.querySelectorAll(".option-block");
+        const options = [];
+
+        for (const ob of optionBlocks) {
+          const oText = ob.querySelector(".option-block__text").value.trim();
+          const oCorrect = ob.querySelector(".option-block__correct").checked;
+
+          if (!oText) {
+            alert("Заполните текст варианта ответа");
             return null;
+          }
+
+          options.push({ option: oText, isCorrect: oCorrect });
         }
 
-
-        const lessonBlocks = moduleBlock.querySelectorAll(':scope > [data-lessons] > .lesson-block');
-        const lessons = [];
-        let lessonIndex = 0;
-
-        for (const lb of lessonBlocks) {
-            const lTitle = lb.querySelector('.lesson-block__title-input').value.trim();
-            const lContent = lb.querySelector('.lesson-block__content-input').value.trim();
-            const lType = 'TEXT';
-            const lMandatory = lb.querySelector('.lesson-block__mandatory-checkbox')?.checked ?? true;
-
-            if (!lTitle || !lContent) {
-                alert('Заполните название и контент каждого урока');
-                return null;
-            }
-
-            lessons.push({
-                title: lTitle,
-                type: lType,
-                content: lContent,
-                orderIndex: lessonIndex,
-                mandatory: lMandatory
-            });
-            lessonIndex++;
+        if (options.length < 2) {
+          alert("Добавьте минимум 2 варианта ответа");
+          return null;
         }
 
-        const testBlocks = moduleBlock.querySelectorAll(':scope > [data-tests] > .test-block');
-        const tests = [];
-        let testIndex = 0;
-
-        for (const tb of testBlocks) {
-            const tDesc = tb.querySelector('.test-block__desc-input')?.value.trim() || '';
-            const questionBlocks = tb.querySelectorAll('.question-block');
-            const questions = [];
-
-            for (const qb of questionBlocks) {
-                const qText = qb.querySelector('.question-block__input').value.trim();
-                if (!qText) {
-                    alert('Заполните текст вопроса');
-                    return null;
-                }
-
-                const optionBlocks = qb.querySelectorAll('.option-block');
-                const options = [];
-
-                for (const ob of optionBlocks) {
-                    const oText = ob.querySelector('.option-block__text').value.trim();
-                    const oCorrect = ob.querySelector('.option-block__correct').checked;
-
-                    if (!oText) {
-                        alert('Заполните текст варианта ответа');
-                        return null;
-                    }
-
-                    options.push({ option: oText, isCorrect: oCorrect });
-                }
-
-                if (options.length < 2) {
-                    alert('Добавьте минимум 2 варианта ответа');
-                    return null;
-                }
-
-                if (!options.some(o => o.isCorrect)) {
-                    alert('Отметьте хотя бы один правильный ответ');
-                    return null;
-                }
-
-                questions.push({ question: qText, options });
-            }
-
-            if (questions.length === 0) {
-                alert('Добавьте хотя бы один вопрос в тест');
-                return null;
-            }
-
-            tests.push({
-                description: tDesc,
-                orderIndex: testIndex,
-                questions
-            });
-            testIndex++;
+        if (!options.some((o) => o.isCorrect)) {
+          alert("Отметьте хотя бы один правильный ответ");
+          return null;
         }
 
-        modules.push({
-            title: moduleTitle,
-            description: moduleDesc,
-            orderIndex: moduleIndex,
-            lessons,
-            tests
-        });
-        moduleIndex++;
+        questions.push({ question: qText, options });
+      }
+
+      if (questions.length === 0) {
+        alert("Добавьте хотя бы один вопрос в тест");
+        return null;
+      }
+
+      tests.push({
+        description: tDesc,
+        orderIndex: testIndex,
+        questions,
+      });
+      testIndex++;
     }
 
-    return {
-        title,
-        description: description || null,
-        tag: tag || null,
-        modules
-    };
+    modules.push({
+      title: moduleTitle,
+      description: moduleDesc,
+      orderIndex: moduleIndex,
+      lessons,
+      tests,
+    });
+    moduleIndex++;
+  }
+
+  return {
+    title,
+    description: description || null,
+    tag: tag || null,
+    modules,
+  };
 }
 
 async function handleSubmit(e) {
-    e.preventDefault();
-    const submitBtn = document.querySelector('.btn-submit');
-    const data = collectFormData();
-    if (!data) return;
+  e.preventDefault();
+  const submitBtn = document.querySelector(".btn-submit");
+  const data = collectFormData();
+  if (!data) return;
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Создание...';
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Создание...";
 
-    try {
-        await createCourse(data);
-        alert('Курс успешно создан!');
-        window.location.href = '/teacher_index.html';
-    } catch (error) {
-        console.error('Ошибка создания курса:', error);
-        alert('Не удалось создать курс: ' + (error.message || 'Неизвестная ошибка'));
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Добавить курс';
-    }
+  try {
+    await createCourse(data);
+    alert("Курс успешно создан!");
+    window.location.href = "/teacher_index.html";
+  } catch (error) {
+    console.error("Ошибка создания курса:", error);
+    alert(
+      "Не удалось создать курс: " + (error.message || "Неизвестная ошибка"),
+    );
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Добавить курс";
+  }
 }
 
 export function initCourseCreatePage() {
-    if (!document.querySelector('.course-create-page')) return;
-    if (!requireTeacher()) return;
+  if (!document.querySelector(".course-create-page")) return;
+  if (!requireTeacher()) return;
 
-    const modulesContainer = document.getElementById('modulesContainer');
-    const addModuleBtn = document.getElementById('addModuleBtn');
-    const form = document.getElementById('courseForm');
+  const modulesContainer = document.getElementById("modulesContainer");
+  const addModuleBtn = document.getElementById("addModuleBtn");
+  const form = document.getElementById("courseForm");
 
-    if (!modulesContainer || !addModuleBtn || !form) {
-        console.error('Элементы формы не найдены');
-        return;
-    }
+  if (!modulesContainer || !addModuleBtn || !form) {
+    console.error("Элементы формы не найдены");
+    return;
+  }
 
+  modulesContainer.appendChild(createModuleBlock());
+
+  addModuleBtn.addEventListener("click", () => {
     modulesContainer.appendChild(createModuleBlock());
+  });
 
-    addModuleBtn.addEventListener('click', () => {
-        modulesContainer.appendChild(createModuleBlock());
-    });
-
-    form.addEventListener('submit', handleSubmit);
+  form.addEventListener("submit", handleSubmit);
 }

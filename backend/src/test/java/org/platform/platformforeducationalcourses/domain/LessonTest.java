@@ -1,10 +1,10 @@
 package org.platform.platformforeducationalcourses.domain;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.platform.platformforeducationalcourses.domain.course.ContentType;
 import org.platform.platformforeducationalcourses.domain.course.Lesson;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LessonTest {
 
@@ -20,11 +20,14 @@ class LessonTest {
     @Test
     void createNew_ThrowsException_WhenDataIsInvalid() {
         assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> Lesson.createNew(-1L, "T", DUMMY_TYPE, "C", 0, true)),
-                () -> assertThrows(IllegalArgumentException.class, () -> Lesson.createNew(1L, "", DUMMY_TYPE, "C", 0, true)),
+                () -> assertThrows(
+                        IllegalArgumentException.class, () -> Lesson.createNew(-1L, "T", DUMMY_TYPE, "C", 0, true)),
+                () -> assertThrows(
+                        IllegalArgumentException.class, () -> Lesson.createNew(1L, "", DUMMY_TYPE, "C", 0, true)),
                 () -> assertThrows(IllegalArgumentException.class, () -> Lesson.createNew(1L, "T", null, "C", 0, true)),
-                () -> assertThrows(IllegalArgumentException.class, () -> Lesson.createNew(1L, "T", DUMMY_TYPE, "", 0, true)),
-                () -> assertThrows(IllegalArgumentException.class, () -> Lesson.createNew(1L, "T", DUMMY_TYPE, "C", -1, true))
-        );
+                () -> assertThrows(
+                        IllegalArgumentException.class, () -> Lesson.createNew(1L, "T", DUMMY_TYPE, "", 0, true)),
+                () -> assertThrows(
+                        IllegalArgumentException.class, () -> Lesson.createNew(1L, "T", DUMMY_TYPE, "C", -1, true)));
     }
 }

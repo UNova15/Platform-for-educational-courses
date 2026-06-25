@@ -1,5 +1,14 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,29 +23,26 @@ import org.platform.platformforeducationalcourses.mapper.TestMapper;
 import org.platform.platformforeducationalcourses.repository.course.TestRepository;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class TestServiceTest {
 
-    @Mock private TestRepository testRepository;
-    @Mock private TestMapper testMapper;
-    @Mock private TestFactory testFactory;
+    @Mock
+    private TestRepository testRepository;
 
-    @InjectMocks private TestService testService;
+    @Mock
+    private TestMapper testMapper;
+
+    @Mock
+    private TestFactory testFactory;
+
+    @InjectMocks
+    private TestService testService;
 
     @Test
     void createTest_Success() {
         TestCreateDto dto = mock(TestCreateDto.class);
-        org.platform.platformforeducationalcourses.domain.course.Test mockTest = mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
+        org.platform.platformforeducationalcourses.domain.course.Test mockTest =
+                mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
 
         when(testFactory.createTestFromCreateDto(dto, 1L)).thenReturn(mockTest);
         when(testRepository.save(mockTest)).thenReturn(mockTest);
@@ -51,7 +57,8 @@ class TestServiceTest {
 
     @Test
     void deleteTest_Success() {
-        org.platform.platformforeducationalcourses.domain.course.Test mockTest = mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
+        org.platform.platformforeducationalcourses.domain.course.Test mockTest =
+                mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
         when(testRepository.findById(1L)).thenReturn(Optional.of(mockTest));
 
         testService.deleteTest(1L);
@@ -61,7 +68,8 @@ class TestServiceTest {
 
     @Test
     void updateTest_Success() {
-        org.platform.platformforeducationalcourses.domain.course.Test mockTest = mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
+        org.platform.platformforeducationalcourses.domain.course.Test mockTest =
+                mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
         when(mockTest.getId()).thenReturn(100L);
         when(testRepository.findById(1L)).thenReturn(Optional.of(mockTest));
 
@@ -81,7 +89,8 @@ class TestServiceTest {
 
     @Test
     void getTest_Success() {
-        org.platform.platformforeducationalcourses.domain.course.Test mockTest = mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
+        org.platform.platformforeducationalcourses.domain.course.Test mockTest =
+                mock(org.platform.platformforeducationalcourses.domain.course.Test.class);
         when(testRepository.findById(1L)).thenReturn(Optional.of(mockTest));
 
         TestFindResponse expectedResponse = mock(TestFindResponse.class);

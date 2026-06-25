@@ -1,8 +1,8 @@
 package org.platform.platformforeducationalcourses.controller.authentication;
 
 import jakarta.validation.Valid;
-import org.platform.platformforeducationalcourses.properties.TokenProperties;
 import org.platform.platformforeducationalcourses.dto.auth.*;
+import org.platform.platformforeducationalcourses.properties.TokenProperties;
 import org.platform.platformforeducationalcourses.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,8 +35,7 @@ public class AuthController {
                 .maxAge(configuration.refreshTtl())
                 .build();
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(response);
     }
@@ -53,8 +52,7 @@ public class AuthController {
                 .maxAge(configuration.refreshTtl())
                 .build();
 
-        return ResponseEntity
-                .ok()
+        return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(response);
     }
@@ -71,8 +69,7 @@ public class AuthController {
                 .maxAge(configuration.refreshTtl())
                 .build();
 
-        return ResponseEntity
-                .ok()
+        return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(response);
     }

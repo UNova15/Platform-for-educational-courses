@@ -20,7 +20,6 @@
   }
 }
 
-
 .popup {
   position: relative;
   width: 100%;
@@ -59,7 +58,6 @@
   }
 }
 
-
 .close-popup {
   position: absolute;
   top: 14px;
@@ -78,7 +76,6 @@
     background: rgba(0, 0, 0, 0.06);
   }
 }
-
 
 .popup .form {
   display: flex;
@@ -106,7 +103,6 @@
   font-weight: 500;
   padding-left: 4px;
 }
-
 
 .popup input,
 .popup textarea {
@@ -166,7 +162,6 @@
   }
 }
 
-
 .password-wrapper {
   position: relative;
   display: flex;
@@ -189,7 +184,6 @@
     text-decoration: underline;
   }
 }
-
 
 .form-options {
   display: flex;
@@ -214,7 +208,6 @@
   }
 }
 
-
 .form-error {
   color: #e74c3c;
   font-size: 13px;
@@ -225,7 +218,6 @@
     margin: 0;
   }
 }
-
 
 .popup-submit {
   min-width: 240px;
@@ -256,7 +248,6 @@
   }
 }
 
-
 @keyframes popupShow {
   from {
     opacity: 0;
@@ -267,7 +258,6 @@
     transform: translateY(0) scale(1);
   }
 }
-
 
 @media (max-width: 520px) {
   .popup {

@@ -7,5 +7,4 @@ import jakarta.validation.constraints.Size;
 public record ModuleUpdateRequest(
         @NotBlank @Size(max = 100) String title,
         @Size(max = 500) String description,
-        @PositiveOrZero int order_index) {
-}
+        @PositiveOrZero int order_index) {}

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TokenHasher {
-    public String hash(String token){
+    public String hash(String token) {
         return DigestUtils.sha256Hex(token);
     }
 }

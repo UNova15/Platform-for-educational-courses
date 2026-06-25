@@ -96,7 +96,6 @@
   }
 }
 
-
 .module-block {
   background: #b9d4ec;
   border-radius: 12px;
@@ -169,9 +168,6 @@
   }
 }
 
-
-
-
 .lesson-block {
   display: flex;
   flex-direction: column;
@@ -190,7 +186,9 @@
     color: #000;
     outline: none;
 
-    &::placeholder { color: #8a98a7; }
+    &::placeholder {
+      color: #8a98a7;
+    }
   }
 
   &__desc-input {
@@ -208,7 +206,9 @@
     min-height: 60px;
     font-family: inherit;
 
-    &::placeholder { color: #8a98a7; }
+    &::placeholder {
+      color: #8a98a7;
+    }
   }
 
   &__content-input {
@@ -225,7 +225,9 @@
     min-height: 140px;
     font-family: inherit;
 
-    &::placeholder { color: #8a98a7; }
+    &::placeholder {
+      color: #8a98a7;
+    }
   }
 
   &__test-input {
@@ -243,7 +245,9 @@
     min-height: 80px;
     font-family: inherit;
 
-    &::placeholder { color: #8a98a7; }
+    &::placeholder {
+      color: #8a98a7;
+    }
   }
 
   &__type-select {
@@ -290,9 +294,7 @@
       box-shadow: 0 4px 12px rgba(91, 140, 183, 0.35);
     }
   }
-  }
-
-
+}
 
 .btn-add {
   display: inline-flex;
@@ -306,7 +308,9 @@
   font-weight: 500;
   color: #000;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
     background: #f0f4f8;
@@ -334,7 +338,9 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
     background: #a3c5e0;
@@ -398,7 +404,6 @@
   scrollbar-color: #5b8cb7 transparent;
 }
 
-
 .test-block {
   background: transparent;
   border: none;
@@ -447,7 +452,6 @@
     }
   }
 
-
   &__desc-input {
     width: 100%;
     padding: 14px 20px;
@@ -479,8 +483,6 @@
     gap: 12px;
   }
 }
-
-
 
 .question-block {
   background: #fff;
@@ -549,7 +551,6 @@
     padding-left: 8px;
   }
 }
-
 
 .option-block {
   display: flex;

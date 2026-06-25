@@ -11,5 +11,4 @@ public class TeacherInformation extends UserInformation {
     private String educationInformation;
     private String scientificAchievements;
     private String additionalInformation;
-
 }

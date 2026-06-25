@@ -1,9 +1,8 @@
 package org.platform.platformforeducationalcourses.dto.module;
 
+import java.util.List;
 import org.platform.platformforeducationalcourses.dto.lesson.StudentLessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.StudentTestFindResponse;
-
-import java.util.List;
 
 public record StudentModuleFindResponse(
         Long id,
@@ -12,6 +11,4 @@ public record StudentModuleFindResponse(
         String description,
         int orderIndex,
         List<StudentLessonFindResponse> lessons,
-        List<StudentTestFindResponse> tests
-) {
-}
+        List<StudentTestFindResponse> tests) {}

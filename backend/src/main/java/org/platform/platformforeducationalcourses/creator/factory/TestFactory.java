@@ -1,6 +1,8 @@
 package org.platform.platformforeducationalcourses.creator.factory;
 
-
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.domain.course.AnswerOption;
 import org.platform.platformforeducationalcourses.domain.course.Question;
@@ -8,22 +10,16 @@ import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.dto.test.*;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 /**
  * Фабрика для создания доменных объектов Test из dto
  */
-
 @Component
 @AllArgsConstructor
 public class TestFactory {
 
     public Test createTestFromCreateDto(TestCreateDto test, long moduleId) {
-        Set<Question> questions = test.questions().stream()
-                .map(this::createQuestionFromCreateDto)
-                .collect(Collectors.toSet());
+        Set<Question> questions =
+                test.questions().stream().map(this::createQuestionFromCreateDto).collect(Collectors.toSet());
         return Test.createNew(moduleId, test.description(), test.orderIndex(), questions);
     }
 
@@ -46,10 +42,7 @@ public class TestFactory {
 
     private Question createQuestionFromCreateDto(TestQuestionCreateDto question) {
         Set<AnswerOption> options = question.options().stream()
-                .map(option -> AnswerOption.createNew(
-                        option.option(),
-                        option.isCorrect()
-                ))
+                .map(option -> AnswerOption.createNew(option.option(), option.isCorrect()))
                 .collect(Collectors.toSet());
         return Question.createNew(question.question(), options, question.orderIndex());
     }

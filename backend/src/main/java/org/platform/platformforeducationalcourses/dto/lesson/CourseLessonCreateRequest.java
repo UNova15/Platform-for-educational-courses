@@ -11,5 +11,4 @@ public record CourseLessonCreateRequest(
         @NotNull ContentType type,
         @NotBlank String content,
         @PositiveOrZero int orderIndex,
-        boolean mandatory) {
-}
+        boolean mandatory) {}

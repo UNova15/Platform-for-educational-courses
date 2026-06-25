@@ -1,5 +1,11 @@
 package org.platform.platformforeducationalcourses.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,26 +22,35 @@ import org.platform.platformforeducationalcourses.repository.course.TestReposito
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class CourseQueryServiceTest {
 
-    @Mock private CourseRepository courseRepository;
-    @Mock private ModuleRepository moduleRepository;
-    @Mock private LessonRepository lessonRepository;
-    @Mock private TestRepository testRepository;
-    @Mock private CourseMapper courseMapper;
-    @Mock private ModuleAssembler moduleAssembler;
-    @Mock private ProgressService progressService;
-    @Mock private TestSubmissionService testSubmissionService;
+    @Mock
+    private CourseRepository courseRepository;
 
-    @InjectMocks private CourseQueryService service;
+    @Mock
+    private ModuleRepository moduleRepository;
+
+    @Mock
+    private LessonRepository lessonRepository;
+
+    @Mock
+    private TestRepository testRepository;
+
+    @Mock
+    private CourseMapper courseMapper;
+
+    @Mock
+    private ModuleAssembler moduleAssembler;
+
+    @Mock
+    private ProgressService progressService;
+
+    @Mock
+    private TestSubmissionService testSubmissionService;
+
+    @InjectMocks
+    private CourseQueryService service;
 
     @Test
     void getCourseForCatalog_Success() {

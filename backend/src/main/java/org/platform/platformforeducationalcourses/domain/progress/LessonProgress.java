@@ -1,14 +1,12 @@
 package org.platform.platformforeducationalcourses.domain.progress;
 
-
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDateTime;
 
 @Table("lessons_progress")
 @Getter
@@ -17,6 +15,7 @@ import java.time.LocalDateTime;
 public class LessonProgress {
     @Id
     private Long id;
+
     private long userId;
     private long lessonId;
     private final LocalDateTime completedAt;

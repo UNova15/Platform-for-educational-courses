@@ -14,6 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class AnswerOption {
     @Id
     private Long id;
+
     private Long questionId;
     private String option;
     private boolean isCorrect;

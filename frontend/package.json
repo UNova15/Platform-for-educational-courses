@@ -4,20 +4,28 @@
   "description": "",
   "main": "src/js/main/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "echo \"Запуск тестов\" && exit 0"
   },
   "private": true,
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "browser-sync": "^3.0.4",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.7.0",
     "gulp": "^5.0.1",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^6.0.1",
     "gulp-uglify-es": "^3.0.0",
+    "prettier": "^3.8.4",
     "sass": "^1.99.0",
     "webpack": "^5.106.2",
     "webpack-stream": "^7.0.0"

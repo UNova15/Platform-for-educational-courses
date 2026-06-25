@@ -17,11 +17,9 @@ public class EnrollmentController {
     private final EnrollmentService enrollmentService;
 
     @PostMapping("{courseId}")
-    public ResponseEntity<Void> enrollInCourse(@PathVariable long courseId,
-                                         @AuthenticationPrincipal SecurityUser securityUser) {
+    public ResponseEntity<Void> enrollInCourse(
+            @PathVariable long courseId, @AuthenticationPrincipal SecurityUser securityUser) {
         enrollmentService.enrollToCourse(securityUser.getId(), courseId);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -32,8 +32,14 @@
 
 @media (max-width: 1200px) {
   .hero__blob {
-    &--left  { width: 360px; left: -140px; }
-    &--right { width: 400px; right: -160px; }
+    &--left {
+      width: 360px;
+      left: -140px;
+    }
+    &--right {
+      width: 400px;
+      right: -160px;
+    }
   }
 }
 
@@ -45,7 +51,7 @@
 }
 
 .hero-title {
-  font-family: 'Georgia', 'Playfair Display', 'Times New Roman', serif;
+  font-family: "Georgia", "Playfair Display", "Times New Roman", serif;
   font-weight: 500;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.15;

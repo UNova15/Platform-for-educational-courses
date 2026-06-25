@@ -23,51 +23,49 @@ public class TeacherLessonController {
 
     @PostMapping
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public ResponseEntity<LessonCreateResponse> createLesson(@PathVariable long courseId,
-                                                             @PathVariable long moduleId,
-                                                             @Valid @RequestBody CourseLessonCreateRequest request,
-                                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<LessonCreateResponse> createLesson(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @Valid @RequestBody CourseLessonCreateRequest request,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         LessonCreateDto createDto = lessonMapper.toLessonCreateDto(moduleId, request);
         LessonCreateResponse response = lessonService.createLesson(createDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("{lessonId}")
     @PreAuthorize("@courseSecurity.canManagedLesson(#userPrincipal.id,#courseId,#moduleId,#lessonId)")
-    public ResponseEntity<Void> updateLesson(@PathVariable long courseId,
-                                             @PathVariable long moduleId,
-                                             @PathVariable long lessonId,
-                                             @Valid @RequestBody LessonUpdateRequest request,
-                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<Void> updateLesson(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @PathVariable long lessonId,
+            @Valid @RequestBody LessonUpdateRequest request,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         LessonUpdateDto updateDto = lessonMapper.toLessonUpdateDto(lessonId, moduleId, request);
         lessonService.updateLesson(updateDto);
 
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("{lessonId}")
     @PreAuthorize("@courseSecurity.canManagedLesson(#userPrincipal.id,#courseId,#moduleId,#lessonId)")
-    public ResponseEntity<Void> deleteLesson(@PathVariable long courseId,
-                                             @PathVariable long moduleId,
-                                             @PathVariable long lessonId,
-                                             @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<Void> deleteLesson(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @PathVariable long lessonId,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         lessonService.deleteLesson(lessonId);
 
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("{lessonId}")
     @PreAuthorize("@courseSecurity.canManagedLesson(#userPrincipal.id,#courseId,#moduleId,#lessonId)")
-    public ResponseEntity<LessonFindResponse> getLesson(@PathVariable long courseId,
-                                               @PathVariable long moduleId,
-                                               @PathVariable long lessonId,
-                                               @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public ResponseEntity<LessonFindResponse> getLesson(
+            @PathVariable long courseId,
+            @PathVariable long moduleId,
+            @PathVariable long lessonId,
+            @AuthenticationPrincipal SecurityUser userPrincipal) {
         LessonFindResponse lesson = lessonService.findLesson(lessonId);
         return ResponseEntity.ok(lesson);
     }

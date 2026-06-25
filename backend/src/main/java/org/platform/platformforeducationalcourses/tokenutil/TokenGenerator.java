@@ -3,15 +3,14 @@ package org.platform.platformforeducationalcourses.tokenutil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.platform.platformforeducationalcourses.properties.TokenProperties;
-import org.platform.platformforeducationalcourses.domain.user.Role;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Date;
+import javax.crypto.SecretKey;
+import org.platform.platformforeducationalcourses.domain.user.Role;
+import org.platform.platformforeducationalcourses.properties.TokenProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class TokenGenerator {

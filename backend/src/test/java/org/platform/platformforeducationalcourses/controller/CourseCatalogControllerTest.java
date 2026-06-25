@@ -1,5 +1,9 @@
 package org.platform.platformforeducationalcourses.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,17 +20,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class CourseCatalogControllerTest {
 
-    @Mock private CourseService courseService;
-    @Mock private CourseQueryService courseQueryService;
+    @Mock
+    private CourseService courseService;
 
-    @InjectMocks private CourseCatalogController controller;
+    @Mock
+    private CourseQueryService courseQueryService;
+
+    @InjectMocks
+    private CourseCatalogController controller;
 
     @Test
     @SuppressWarnings("unchecked")

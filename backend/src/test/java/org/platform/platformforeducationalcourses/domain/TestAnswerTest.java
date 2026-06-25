@@ -1,9 +1,9 @@
 package org.platform.platformforeducationalcourses.domain;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.platform.platformforeducationalcourses.domain.progress.TestAnswer;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TestAnswerTest {
 
@@ -21,7 +21,6 @@ class TestAnswerTest {
     void createNew_ThrowsException_WhenIdsAreNegative() {
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> TestAnswer.createNew(-1L, 200L)),
-                () -> assertThrows(IllegalArgumentException.class, () -> TestAnswer.createNew(100L, -1L))
-        );
+                () -> assertThrows(IllegalArgumentException.class, () -> TestAnswer.createNew(100L, -1L)));
     }
 }

@@ -1,5 +1,6 @@
 package org.platform.platformforeducationalcourses.service;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.domain.progress.Enrollment;
@@ -9,8 +10,6 @@ import org.platform.platformforeducationalcourses.repository.EnrollmentRepositor
 import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class EnrollmentService {
@@ -18,12 +17,11 @@ public class EnrollmentService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
-    //TODO добавить исключение
+    // TODO добавить исключение
     public void enrollToCourse(long userId, long courseId) {
-        enrollmentRepository.findByCourseIdAndUserId(courseId, userId)
-                .ifPresent(enrollment -> {
-                    throw new IllegalArgumentException();
-                });
+        enrollmentRepository.findByCourseIdAndUserId(courseId, userId).ifPresent(enrollment -> {
+            throw new IllegalArgumentException();
+        });
 
         Enrollment enrollment = Enrollment.createNew(userId, courseId);
         enrollmentRepository.save(enrollment);
@@ -32,12 +30,9 @@ public class EnrollmentService {
     public List<CourseEnrolledFindResponse> getCoursesForStudent(long userId) {
         List<Enrollment> enrollments = enrollmentRepository.findEnrollmentByUserId(userId);
 
-        List<Long> courseIds = enrollments.stream()
-                .map(Enrollment::getCourseId)
-                .toList();
+        List<Long> courseIds = enrollments.stream().map(Enrollment::getCourseId).toList();
 
         List<Course> courses = courseRepository.findCoursesByIdIn(courseIds);
         return courseMapper.toCourseEnrolledFindResponse(courses);
     }
-
 }

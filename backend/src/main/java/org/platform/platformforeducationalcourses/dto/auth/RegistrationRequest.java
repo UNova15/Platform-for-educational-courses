@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.platform.platformforeducationalcourses.domain.user.Role;
 
-//TODO пока удалил доп информацию о пользователе
+// TODO пока удалил доп информацию о пользователе
 public record RegistrationRequest(
         @NotBlank(message = "Логин не может быть пустым")
         @Size(min = 4, max = 30, message = "Длина логина должна быть от 4 до 30 символов")
@@ -16,5 +16,4 @@ public record RegistrationRequest(
         String password,
 
         @NotNull(message = "У пользователя должна быть роль")
-        Role role) {
-}
+        Role role) {}
