@@ -53,10 +53,11 @@ public class TestAssembler {
 
         List<TestQuestion> testQuestions = new ArrayList<>(test.getQuestions().size());
         for (var question : test.getQuestions()) {
-            long selectedId = answerOrderByQuestionId.get(question.getId()).getAnswerId();
+            List<Long> selectedIds =
+                    answerOrderByQuestionId.get(question.getId()).getAnswerIds();
 
             List<QuestionOption> options = answerQuestionMapper.toQuestionOption(question.getAnswerOptions());
-            TestQuestion testQuestion = questionMapper.toTestQuestion(question, options, selectedId);
+            TestQuestion testQuestion = questionMapper.toTestQuestion(question, options, selectedIds);
             testQuestions.add(testQuestion);
         }
         return testMapper.toTestAttempt(test, testQuestions);

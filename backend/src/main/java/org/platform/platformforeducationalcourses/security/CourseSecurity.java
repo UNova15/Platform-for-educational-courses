@@ -1,11 +1,11 @@
 package org.platform.platformforeducationalcourses.security;
 
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.repository.EnrollmentRepository;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
-import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
-import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
-import org.platform.platformforeducationalcourses.repository.course.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.EnrollmentRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
 import org.springframework.stereotype.Component;
 
 @Component

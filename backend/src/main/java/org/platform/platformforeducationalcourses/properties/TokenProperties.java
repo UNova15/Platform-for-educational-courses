@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "app.token")
+// TODO вынести настройки пароля/логина
+@ConfigurationProperties(prefix = "app.security")
 public record TokenProperties(
         @NotBlank String key,
         @NotNull Duration jwtTtl,
-        @NotNull Duration refreshTtl) {}
+        @NotNull Duration refreshTtl,
+        @NotBlank String minPasswordLength) {}

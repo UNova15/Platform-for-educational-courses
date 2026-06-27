@@ -2,9 +2,9 @@ package org.platform.platformforeducationalcourses.controller.teacher;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
 import org.platform.platformforeducationalcourses.dto.module.*;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
+import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.domain.ModuleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

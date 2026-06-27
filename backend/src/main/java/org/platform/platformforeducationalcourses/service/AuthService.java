@@ -1,18 +1,17 @@
 package org.platform.platformforeducationalcourses.service;
 
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
+import org.platform.platformforeducationalcourses.domain.ports.persistance.UserRepository;
+import org.platform.platformforeducationalcourses.domain.ports.security.SecurityPort;
+import org.platform.platformforeducationalcourses.domain.user.Login;
+import org.platform.platformforeducationalcourses.domain.user.Password;
 import org.platform.platformforeducationalcourses.domain.user.User;
-import org.platform.platformforeducationalcourses.dto.auth.LoginRequest;
-import org.platform.platformforeducationalcourses.dto.auth.RegistrationRequest;
+import org.platform.platformforeducationalcourses.dto.auth.login.LoginDto;
 import org.platform.platformforeducationalcourses.dto.auth.TokenDto;
+import org.platform.platformforeducationalcourses.dto.auth.registration.RegistrationDto;
+import org.platform.platformforeducationalcourses.exception.AuthenticationException;
 import org.platform.platformforeducationalcourses.exception.UserAlreadyExistException;
-import org.platform.platformforeducationalcourses.repository.UserRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.platform.platformforeducationalcourses.security.hash.PasswordHasher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,35 +19,35 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
-    private final AuthenticationManager authenticationManager;
+
+    private final PasswordHasher encoder;
+    private final SecurityPort authenticationManager;
     private final TokenService tokenService;
 
     @Transactional
-    public TokenDto registration(RegistrationRequest request) {
+    public TokenDto registration(RegistrationDto request) {
         if (userRepository.findByLogin(request.login()).isPresent()) {
             throw new UserAlreadyExistException(request.login());
         }
 
-        User user = User.createNew(request.login(), request.password(), request.role(), encoder);
+        Login login = Login.create(request.login());
+        Password password = Password.create(request.password(), encoder);
+        User user = User.createNew(login, password, request.role());
+
         long userId = userRepository.save(user).getId();
 
         return tokenService.createTokens(userId, request.login(), request.role());
     }
 
-    public TokenDto login(LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.login(), request.password()));
+    public TokenDto login(LoginDto request) {
+        User user = authenticationManager.identify(request.login(), request.password());
 
-        SecurityUser user = (SecurityUser) authentication.getPrincipal();
-
-        return tokenService.createTokens(user.getId(), user.getUsername(), user.getRole());
+        return tokenService.createTokens(user.getId(), user.getLogin(), user.getRole());
     }
 
     public TokenDto refresh(String refreshToken) {
-
         if (!tokenService.isValidRefreshToken(refreshToken)) {
-            throw new BadCredentialsException("Некорректный refresh - токен");
+            throw new AuthenticationException("Invalid refresh token");
         }
 
         return tokenService.recreateTokens(refreshToken);

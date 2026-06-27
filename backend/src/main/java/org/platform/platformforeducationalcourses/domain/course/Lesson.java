@@ -2,17 +2,11 @@ package org.platform.platformforeducationalcourses.domain.course;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table("lessons")
 @Getter
-@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Lesson {
-    @Id
     private final Long id;
 
     private final Long moduleId;

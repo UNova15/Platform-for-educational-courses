@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.platform.platformforeducationalcourses.domain.user.Role;
 import org.platform.platformforeducationalcourses.domain.user.User;
+import org.platform.platformforeducationalcourses.security.entity.SecurityRole;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserTest {
-    private final Role DUMMY_ROLE = null;
+    private final SecurityRole DUMMY_ROLE = null;
 
     @Test
     void createNew_Success() {

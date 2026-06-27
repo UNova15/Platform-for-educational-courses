@@ -2,27 +2,21 @@ package org.platform.platformforeducationalcourses.domain.course;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "test_questions")
 @Getter
-@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Question {
-    @Id
     private final Long id;
 
     private final Long testId;
     private String question;
     private int orderIndex;
 
-    @MappedCollection(idColumn = "question_id")
+    @Getter(value = AccessLevel.NONE)
     private Set<AnswerOption> answerOptions;
 
     public Set<AnswerOption> getAnswerOptions() {
@@ -40,12 +34,11 @@ public class Question {
         return new Question(null, null, question, orderIndex, answerOptions);
     }
 
-    // TODO fix it
-    public Long getCorrectAnswerOptionsId() {
+    // TODO добавить функция выбора множества правильных ответов
+    public Set<Long> getCorrectAnswerOptionsIds() {
         return answerOptions.stream()
                 .filter(AnswerOption::isCorrect)
                 .map(AnswerOption::getId)
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .collect(Collectors.toSet());
     }
 }

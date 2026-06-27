@@ -7,7 +7,7 @@ import org.platform.platformforeducationalcourses.domain.course.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.springframework.stereotype.Component;
 
-// TODO исключения
+// TODO исключения + оптимизация
 @Component
 public class SubmissionValidator {
     // проверить что в questions есть такой questionId и проверить что в нем есть такой optionId
@@ -21,7 +21,7 @@ public class SubmissionValidator {
             }
             boolean isExist = question.getAnswerOptions().stream()
                     .map(AnswerOption::getId)
-                    .anyMatch(id -> id == answer.optionId());
+                    .anyMatch(id -> answer.optionIds().contains(id));
             if (!isExist) {
                 throw new IllegalArgumentException();
             }

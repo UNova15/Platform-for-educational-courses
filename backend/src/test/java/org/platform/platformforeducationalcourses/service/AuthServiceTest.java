@@ -10,13 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
 import org.platform.platformforeducationalcourses.domain.user.User;
-import org.platform.platformforeducationalcourses.dto.auth.LoginRequest;
-import org.platform.platformforeducationalcourses.dto.auth.RegistrationRequest;
+import org.platform.platformforeducationalcourses.dto.auth.login.LoginRequest;
 import org.platform.platformforeducationalcourses.dto.auth.TokenDto;
+import org.platform.platformforeducationalcourses.dto.auth.registration.RegistrationRequest;
 import org.platform.platformforeducationalcourses.exception.UserAlreadyExistException;
-import org.platform.platformforeducationalcourses.repository.UserRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.DataUserRepository;
+import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class AuthServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private DataUserRepository userRepository;
 
     @Mock
     private PasswordEncoder encoder;

@@ -15,10 +15,10 @@ import org.platform.platformforeducationalcourses.creator.assembler.ModuleAssemb
 import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
-import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
-import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
-import org.platform.platformforeducationalcourses.repository.course.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 

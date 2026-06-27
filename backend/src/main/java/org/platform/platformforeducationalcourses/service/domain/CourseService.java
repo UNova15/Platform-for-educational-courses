@@ -11,7 +11,7 @@ import org.platform.platformforeducationalcourses.dto.course.CoursePage;
 import org.platform.platformforeducationalcourses.dto.course.CourseUpdateDto;
 import org.platform.platformforeducationalcourses.exception.CourseNotFoundException;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class CourseService {
         Course course =
                 courseRepository.findById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId, teacherId));
 
-        course.updateCourse(courseUpdateRequest);
+        course.updateCourse(courseUpdateRequest.title(), courseUpdateRequest.description(), courseUpdateRequest.tag());
 
         courseRepository.save(course);
     }

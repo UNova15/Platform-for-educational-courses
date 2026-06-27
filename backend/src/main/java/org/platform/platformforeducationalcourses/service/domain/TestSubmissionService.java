@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
-import org.platform.platformforeducationalcourses.repository.SubmissionsRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.SubmissionsRepository;
 import org.springframework.stereotype.Service;
 
 @Service

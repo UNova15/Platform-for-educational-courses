@@ -17,10 +17,10 @@ import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateResponse;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseCreateDto;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseModuleCreateDto;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
-import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
-import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
-import org.platform.platformforeducationalcourses.repository.course.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

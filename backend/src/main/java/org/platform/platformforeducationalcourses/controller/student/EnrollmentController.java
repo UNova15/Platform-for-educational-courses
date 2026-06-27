@@ -1,7 +1,7 @@
 package org.platform.platformforeducationalcourses.controller.student;
 
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
+import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

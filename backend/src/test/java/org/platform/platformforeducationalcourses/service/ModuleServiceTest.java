@@ -15,7 +15,7 @@ import org.platform.platformforeducationalcourses.domain.course.CourseModule;
 import org.platform.platformforeducationalcourses.dto.module.ModuleCreateDto;
 import org.platform.platformforeducationalcourses.dto.module.ModuleUpdateDto;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
-import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
 import org.platform.platformforeducationalcourses.service.domain.ModuleService;
 
 @ExtendWith(MockitoExtension.class)

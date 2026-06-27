@@ -2,36 +2,37 @@ package org.platform.platformforeducationalcourses.domain.user;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Table(name = "users")
 @Getter
-@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
-    private static final int MIN_PASSWORD_LENGTH = 8;
-
-    @Id
     private final Long id;
 
-    private String login;
-    private String password;
-    private final Role role;
+    @Getter(value = AccessLevel.NONE)
+    private Login login;
 
-    public static User createNew(String login, String password, Role role, PasswordEncoder passwordEncoder) {
-        if (login == null
-                || login.isBlank()
-                || password == null
-                || password.isBlank()
-                || password.length() < MIN_PASSWORD_LENGTH) {
-            throw new IllegalArgumentException("Incorrect data to create user");
+    @Getter(value = AccessLevel.NONE)
+    private Password password;
+
+    private final UserRole role;
+
+    public static User createNew(Login login, Password password, UserRole role) {
+        if (login == null || password == null) {
+            throw new IllegalArgumentException("Empty data to create user");
         }
+        return new User(null, login, password, role);
+    }
 
-        String hashedPassword = passwordEncoder.encode(password);
-        return new User(null, login, hashedPassword, role);
+    public static User restore(long id, String password, String login, UserRole role) {
+        return new User(id, Login.restore(login), Password.restore(password), role);
+    }
+
+    public String getLogin() {
+        return login.getLogin();
+    }
+
+    public String getPassword() {
+        return password.getPassword();
     }
 }

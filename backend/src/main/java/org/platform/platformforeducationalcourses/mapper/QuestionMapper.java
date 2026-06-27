@@ -15,6 +15,5 @@ public interface QuestionMapper {
 
     AnswerPostDto toAnswerPostDto(PostAnswerOptionRequest answerOptionRequest);
 
-    // @Mapping(source = "options", target = "options")
-    TestQuestion toTestQuestion(Question question, List<QuestionOption> options, long selectedId);
+    TestQuestion toTestQuestion(Question question, List<QuestionOption> options, List<Long> selectedIds);
 }

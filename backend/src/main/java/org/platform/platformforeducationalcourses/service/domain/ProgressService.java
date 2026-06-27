@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.domain.course.Lesson;
 import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
-import org.platform.platformforeducationalcourses.repository.ProgressRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ProgressRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -16,7 +16,7 @@ import org.platform.platformforeducationalcourses.domain.course.Tag;
 import org.platform.platformforeducationalcourses.dto.course.CourseUpdateDto;
 import org.platform.platformforeducationalcourses.exception.CourseNotFoundException;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
 import org.platform.platformforeducationalcourses.service.domain.CourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

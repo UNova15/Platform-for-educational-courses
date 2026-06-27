@@ -36,7 +36,7 @@ class QuestionTest {
 
         Question question = Question.createNew("Q", Set.of(wrongOption, correctOption), 1);
 
-        long correctId = question.getCorrectAnswerOptionsId();
+        long correctId = question.getCorrectAnswerOptionsIds();
         assertEquals(100L, correctId);
     }
 
@@ -45,6 +45,6 @@ class QuestionTest {
         AnswerOption wrongOption = AnswerOption.createNew("Wrong", false);
         Question question = Question.createNew("Q", Set.of(wrongOption), 1);
 
-        assertThrows(IllegalStateException.class, question::getCorrectAnswerOptionsId);
+        assertThrows(IllegalStateException.class, question::getCorrectAnswerOptionsIds);
     }
 }

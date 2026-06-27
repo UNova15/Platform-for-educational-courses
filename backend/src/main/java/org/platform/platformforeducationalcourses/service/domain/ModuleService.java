@@ -7,7 +7,7 @@ import org.platform.platformforeducationalcourses.dto.module.ModuleCreateRespons
 import org.platform.platformforeducationalcourses.dto.module.ModuleFindResponse;
 import org.platform.platformforeducationalcourses.dto.module.ModuleUpdateDto;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
-import org.platform.platformforeducationalcourses.repository.course.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
 import org.springframework.stereotype.Service;
 
 @Service

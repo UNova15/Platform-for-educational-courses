@@ -12,11 +12,13 @@ server:
   servlet:
     context-path: /api
 
-#flyway.enabled=true
-#flyway.locations=classpath:db/migration
-
 app:
-  token:
+  security:
     key: ${JWT_KEY}
     jwt-ttl: 1h
     refresh-ttl: 2d
+
+    min-password-length: 8
+
+
+

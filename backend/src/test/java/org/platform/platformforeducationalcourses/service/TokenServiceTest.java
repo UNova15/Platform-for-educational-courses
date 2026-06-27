@@ -10,14 +10,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.platform.platformforeducationalcourses.domain.security.RefreshToken;
-import org.platform.platformforeducationalcourses.domain.user.Role;
 import org.platform.platformforeducationalcourses.dto.auth.ParsedToken;
 import org.platform.platformforeducationalcourses.dto.auth.TokenDto;
-import org.platform.platformforeducationalcourses.repository.RefreshTokenRepository;
-import org.platform.platformforeducationalcourses.tokenutil.TokenGenerator;
-import org.platform.platformforeducationalcourses.tokenutil.TokenHasher;
-import org.platform.platformforeducationalcourses.tokenutil.TokenUtil;
+import org.platform.platformforeducationalcourses.persistance.entity.security.RefreshTokenEntity;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.RefreshTokenRepository;
+import org.platform.platformforeducationalcourses.security.entity.SecurityRole;
+import org.platform.platformforeducationalcourses.security.hash.TokenHasher;
+import org.platform.platformforeducationalcourses.util.token.TokenGenerator;
+import org.platform.platformforeducationalcourses.util.token.TokenUtil;
 import org.springframework.security.authentication.BadCredentialsException;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +38,7 @@ class TokenServiceTest {
     @InjectMocks
     private TokenService tokenService;
 
-    private final Role DUMMY_ROLE = null;
+    private final SecurityRole DUMMY_ROLE = null;
 
     @Test
     void createTokens_Success() {
@@ -50,7 +50,7 @@ class TokenServiceTest {
 
         assertEquals("jwt", result.jwtToken());
         assertEquals("refresh", result.refreshToken());
-        verify(refreshTokenRepository).save(any(RefreshToken.class));
+        verify(refreshTokenRepository).save(any(RefreshTokenEntity.class));
     }
 
     @Test
@@ -59,7 +59,7 @@ class TokenServiceTest {
         when(tokenUtil.isValidToken(oldRefresh)).thenReturn(true);
         when(hasher.hash(oldRefresh)).thenReturn("hashed_old");
 
-        RefreshToken mockTokenFromDb = mock(RefreshToken.class);
+        RefreshTokenEntity mockTokenFromDb = mock(RefreshTokenEntity.class);
         when(mockTokenFromDb.getUserId()).thenReturn(1L);
         when(refreshTokenRepository.findByToken("hashed_old")).thenReturn(Optional.of(mockTokenFromDb));
 
@@ -76,7 +76,7 @@ class TokenServiceTest {
 
         assertNotNull(result);
         verify(refreshTokenRepository).delete(mockTokenFromDb);
-        verify(refreshTokenRepository).save(any(RefreshToken.class));
+        verify(refreshTokenRepository).save(any(RefreshTokenEntity.class));
     }
 
     @Test
@@ -91,7 +91,7 @@ class TokenServiceTest {
         when(tokenUtil.parseUserIdFromToken("token")).thenReturn(1L);
         when(hasher.hash("token")).thenReturn("hashed");
         when(refreshTokenRepository.findByTokenAndUserId("hashed", 1L))
-                .thenReturn(Optional.of(mock(RefreshToken.class)));
+                .thenReturn(Optional.of(mock(RefreshTokenEntity.class)));
 
         assertTrue(tokenService.isValidRefreshToken("token"));
     }

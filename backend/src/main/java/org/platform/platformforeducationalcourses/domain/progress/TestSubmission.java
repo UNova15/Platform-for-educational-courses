@@ -8,22 +8,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.domain.course.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table("test_submissions")
 @Getter
-@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestSubmission {
-    @Id
     private Long id;
 
     private final long userId;
@@ -32,8 +25,7 @@ public class TestSubmission {
     private LocalDateTime completedAt;
     private int score;
 
-    @MappedCollection(idColumn = "test_submission_id")
-    Set<TestAnswer> answers;
+    private Set<TestAnswer> answers;
 
     public Set<TestAnswer> getAnswers() {
         return Collections.unmodifiableSet(answers);
@@ -60,7 +52,7 @@ public class TestSubmission {
         int testScore = calculator.calculate(answers, questionsOrderById);
 
         Set<TestAnswer> testAnswers = answers.stream()
-                .map(answer -> TestAnswer.createNew(answer.questionId(), answer.optionId()))
+                .map(answer -> TestAnswer.createNew(answer.questionId(), answer.optionIds()))
                 .collect(Collectors.toSet());
 
         completedAt = LocalDateTime.now();

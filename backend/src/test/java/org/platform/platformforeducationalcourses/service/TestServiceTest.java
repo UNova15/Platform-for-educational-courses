@@ -20,7 +20,7 @@ import org.platform.platformforeducationalcourses.dto.test.TestCreateResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestUpdateDto;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.repository.course.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 
 @ExtendWith(MockitoExtension.class)

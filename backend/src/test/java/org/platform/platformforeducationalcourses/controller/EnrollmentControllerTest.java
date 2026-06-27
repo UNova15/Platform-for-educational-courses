@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.controller.student.EnrollmentController;
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
+import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

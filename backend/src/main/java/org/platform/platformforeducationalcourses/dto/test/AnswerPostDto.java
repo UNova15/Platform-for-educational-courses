@@ -1,3 +1,5 @@
 package org.platform.platformforeducationalcourses.dto.test;
 
-public record AnswerPostDto(long questionId, long optionId) {}
+import java.util.List;
+
+public record AnswerPostDto(long questionId, List<Long> optionIds) {}

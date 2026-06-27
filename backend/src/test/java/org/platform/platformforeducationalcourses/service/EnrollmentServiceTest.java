@@ -15,8 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.domain.progress.Enrollment;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.repository.EnrollmentRepository;
-import org.platform.platformforeducationalcourses.repository.course.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.EnrollmentRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
 
 @ExtendWith(MockitoExtension.class)
 class EnrollmentServiceTest {

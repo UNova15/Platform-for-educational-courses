@@ -8,7 +8,7 @@ import org.platform.platformforeducationalcourses.dto.lesson.LessonCreateRespons
 import org.platform.platformforeducationalcourses.dto.lesson.LessonUpdateDto;
 import org.platform.platformforeducationalcourses.exception.LessonNotFoundException;
 import org.platform.platformforeducationalcourses.mapper.LessonMapper;
-import org.platform.platformforeducationalcourses.repository.course.LessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
 import org.springframework.stereotype.Service;
 
 /**

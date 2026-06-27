@@ -1,7 +1,7 @@
 package org.platform.platformforeducationalcourses.security;
 
-import org.platform.platformforeducationalcourses.domain.user.SecurityUser;
-import org.platform.platformforeducationalcourses.repository.UserRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.jdbc.DataUserRepository;
+import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,7 +48,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
+    public UserDetailsService userDetailsService(DataUserRepository userRepository) {
         return login -> SecurityUser.fromUser(
                 userRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(login)));
     }
