@@ -1,21 +1,21 @@
 package org.platform.platformforeducationalcourses.security;
 
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.EnrollmentRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataEnrollmentRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class CourseSecurity {
-    private final EnrollmentRepository enrollmentRepository;
-    private final CourseRepository courseRepository;
-    private final ModuleRepository moduleRepository;
-    private final LessonRepository lessonRepository;
-    private final TestRepository testRepository;
+    private final DataEnrollmentRepository enrollmentRepository;
+    private final DataCourseRepository courseRepository;
+    private final DataModuleRepository moduleRepository;
+    private final DataLessonRepository lessonRepository;
+    private final DataTestRepository testRepository;
 
     public boolean canManagedCourse(long userId, long courseId) {
         return courseRepository.findByIdAndTeacherId(userId, courseId).isPresent();

@@ -17,14 +17,14 @@ import org.platform.platformforeducationalcourses.dto.lesson.LessonCreateDto;
 import org.platform.platformforeducationalcourses.dto.lesson.LessonUpdateDto;
 import org.platform.platformforeducationalcourses.exception.LessonNotFoundException;
 import org.platform.platformforeducationalcourses.mapper.LessonMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 
 @ExtendWith(MockitoExtension.class)
 class LessonServiceTest {
 
     @Mock
-    private LessonRepository lessonRepository;
+    private DataLessonRepository lessonRepository;
 
     @Mock
     private LessonMapper lessonMapper;

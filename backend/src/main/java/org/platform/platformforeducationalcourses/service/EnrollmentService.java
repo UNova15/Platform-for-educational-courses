@@ -6,15 +6,15 @@ import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.domain.progress.Enrollment;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.EnrollmentRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataEnrollmentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class EnrollmentService {
-    private final EnrollmentRepository enrollmentRepository;
-    private final CourseRepository courseRepository;
+    private final DataEnrollmentRepository enrollmentRepository;
+    private final DataCourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
     // TODO добавить исключение

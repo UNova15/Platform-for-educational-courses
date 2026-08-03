@@ -9,15 +9,15 @@ import org.platform.platformforeducationalcourses.domain.course.Question;
 import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
-import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestPostDto;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestReview;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ProgressRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.SubmissionsRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataProgressRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
@@ -32,9 +32,9 @@ public class CourseLearningService {
     private final LessonService lessonService;
     private final TestService testService;
 
-    private final SubmissionsRepository submissionsRepository;
-    private final ProgressRepository progressRepository;
-    private final TestRepository testRepository;
+    private final DataSubmissionsRepository submissionsRepository;
+    private final DataProgressRepository progressRepository;
+    private final DataTestRepository testRepository;
 
     private final TestMapper testMapper;
     private final TestAssembler testAssembler;

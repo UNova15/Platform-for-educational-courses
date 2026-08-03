@@ -10,14 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.SubmissionsRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 
 @ExtendWith(MockitoExtension.class)
 class TestSubmissionServiceTest {
 
     @Mock
-    private SubmissionsRepository submissionsRepository;
+    private DataSubmissionsRepository submissionsRepository;
 
     @InjectMocks
     private TestSubmissionService service;

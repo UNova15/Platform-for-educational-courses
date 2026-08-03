@@ -6,73 +6,66 @@ import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.course.*;
 import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateRequest;
 import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateResponse;
-import org.platform.platformforeducationalcourses.dto.course.createdto.CourseCreateDto;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
-import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
-import org.platform.platformforeducationalcourses.service.CourseManagementService;
-import org.platform.platformforeducationalcourses.service.CourseQueryService;
+import org.platform.platformforeducationalcourses.service.CourseStructureManagementService;
+import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.platform.platformforeducationalcourses.service.domain.CourseService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("teacher/courses")
 @PreAuthorize("hasRole('TEACHER')")
 public class TeacherCoursesController {
-    private final CourseQueryService courseQueryService;
-    private final CourseManagementService courseManagementService;
+    private final CourseStructureQueryService courseQueryService;
+    private final CourseStructureManagementService courseManagementService;
     private final CourseService courseService;
-    private final CourseMapper courseMapper;
 
     // TODO перенести проверки авторизации в сервисный слой
     @PostMapping
-    public ResponseEntity<CourseCreateResponse> createCourse(
+    @ResponseStatus(HttpStatus.CREATED)
+    public CourseCreateResponse createCourse(
             @AuthenticationPrincipal SecurityUser userPrincipal, @Valid @RequestBody CourseCreateRequest request) {
-        CourseCreateDto courseDto = courseMapper.toCourseDto(request);
-        CourseCreateResponse response =
-                courseManagementService.createCourseWithContent(courseDto, userPrincipal.getId());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return courseManagementService.createCourseWithContent(request, userPrincipal.getId());
     }
 
     @PutMapping("{courseId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
-    public ResponseEntity<Void> updateCourse(
+    public void updateCourse(
             @PathVariable long courseId,
             @Valid @RequestBody CourseUpdateRequest request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
-        CourseUpdateDto courseUpdateDto = courseMapper.toCourseUpdateDto(request, userPrincipal.getId(), courseId);
-        courseService.updateCourse(courseUpdateDto, userPrincipal.getId(), courseId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        courseService.updateCourseInfo(request, userPrincipal.getId(), courseId);
     }
 
     @DeleteMapping("{courseId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
-    public ResponseEntity<Void> deleteCourse(
-            @PathVariable long courseId, @AuthenticationPrincipal SecurityUser userPrincipal) {
+    public void deleteCourse(@PathVariable long courseId, @AuthenticationPrincipal SecurityUser userPrincipal) {
 
         courseService.deleteCourse(userPrincipal.getId(), courseId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseInfo>> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
-        List<CourseInfo> courses = courseService.findTeachersCoursesInfo(userPrincipal.getId());
+    @ResponseStatus(HttpStatus.OK)
+    public List<CourseInfo> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        return ResponseEntity.ok(courses);
+        return courseService.findTeachersCoursesInfo(userPrincipal.getId());
     }
 
     @GetMapping("{courseId}")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
-    public ResponseEntity<CourseFindResponse> getCourse(
+    public CourseFindResponse getCourse(
             @PathVariable long courseId, @AuthenticationPrincipal SecurityUser userPrincipal) {
-        CourseFindResponse response = courseQueryService.getCourseForTeacher(courseId);
 
-        return ResponseEntity.ok(response);
+        return courseQueryService.findCourseForTeacher(courseId);
     }
 }

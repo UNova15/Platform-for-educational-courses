@@ -17,24 +17,23 @@ import org.platform.platformforeducationalcourses.dto.course.create.CourseCreate
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseCreateDto;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
-import org.platform.platformforeducationalcourses.service.CourseManagementService;
-import org.platform.platformforeducationalcourses.service.CourseQueryService;
-import org.platform.platformforeducationalcourses.service.domain.CourseService;
+import org.platform.platformforeducationalcourses.service.CourseStructureManagementService;
+import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherCoursesControllerTest {
 
     @Mock
-    private CourseQueryService courseQueryService;
+    private CourseStructureQueryService courseQueryService;
 
     @Mock
-    private CourseManagementService courseManagementService;
+    private org.platform.platformforeducationalcourses.service.CourseManagementService courseManagementService;
 
     @Mock
-    private CourseService courseService;
+    private CourseStructureManagementService courseService;
 
     @Mock
     private CourseMapper courseMapper;
@@ -75,7 +74,7 @@ class TeacherCoursesControllerTest {
         ResponseEntity<Void> response = controller.updateCourse(100L, request, mockUser);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(courseService).updateCourse(dto, 1L, 100L);
+        verify(courseService).updateCourseInfo(dto, 1L, 100L);
     }
 
     @Test
@@ -100,7 +99,7 @@ class TeacherCoursesControllerTest {
     @Test
     void getCourse_ReturnsOk() {
         CourseFindResponse expectedResponse = mock(CourseFindResponse.class);
-        when(courseQueryService.getCourseForTeacher(100L)).thenReturn(expectedResponse);
+        when(courseQueryService.findCourseForTeacher(100L)).thenReturn(expectedResponse);
 
         ResponseEntity<CourseFindResponse> response = controller.getCourse(100L, mockUser);
 

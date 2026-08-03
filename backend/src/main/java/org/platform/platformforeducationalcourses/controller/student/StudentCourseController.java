@@ -4,18 +4,18 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.course.StudentCourseFindResponse;
-import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestReview;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 /**
  * Контроллер для взаимодействия пользователя со своими курсами
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class StudentCourseController {
     private final CourseLearningService learningService;
-    private final CourseQueryService courseQueryService;
+    private final CourseStructureQueryService courseQueryService;
     private final EnrollmentService enrollmentService;
 
     @GetMapping
@@ -40,7 +40,7 @@ public class StudentCourseController {
     @PreAuthorize("@courseSecurity.canAccessCourse(#securityUser.id,#courseId)")
     public ResponseEntity<StudentCourseFindResponse> getCourse(
             @PathVariable long courseId, @AuthenticationPrincipal SecurityUser securityUser) {
-        StudentCourseFindResponse response = courseQueryService.getCourseForStudent(securityUser.getId(), courseId);
+        StudentCourseFindResponse response = courseQueryService.findCourseForStudent(securityUser.getId(), courseId);
         return ResponseEntity.ok(response);
     }
 

@@ -34,6 +34,11 @@ public class Question {
         return new Question(null, null, question, orderIndex, answerOptions);
     }
 
+    public static Question restore(
+            Long id, Long testId, String question, int orderIndex, Set<AnswerOption> answerOptions) {
+        return new Question(id, testId, question, orderIndex, answerOptions);
+    }
+
     // TODO добавить функция выбора множества правильных ответов
     public Set<Long> getCorrectAnswerOptionsIds() {
         return answerOptions.stream()

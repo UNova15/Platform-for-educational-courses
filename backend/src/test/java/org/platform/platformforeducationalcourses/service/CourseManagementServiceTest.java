@@ -18,25 +18,25 @@ import org.platform.platformforeducationalcourses.domain.course.CourseModule;
 import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateResponse;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseCreateDto;
 import org.platform.platformforeducationalcourses.dto.course.createdto.CourseModuleCreateDto;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CourseManagementServiceTest {
 
     @Mock
-    private CourseRepository courseRepository;
+    private DataCourseRepository courseRepository;
 
     @Mock
-    private ModuleRepository moduleRepository;
+    private DataModuleRepository moduleRepository;
 
     @Mock
-    private LessonRepository lessonRepository;
+    private DataLessonRepository lessonRepository;
 
     @Mock
-    private TestRepository testRepository;
+    private DataTestRepository testRepository;
 
     @Mock
     private ModuleFactory moduleFactory;

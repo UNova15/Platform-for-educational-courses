@@ -1,13 +1,13 @@
 package org.platform.platformforeducationalcourses.controller.student;
 
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @RestController
 @PreAuthorize("hasRole('STUDENT')")

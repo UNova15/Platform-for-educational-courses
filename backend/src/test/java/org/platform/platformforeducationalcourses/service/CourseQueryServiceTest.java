@@ -15,10 +15,10 @@ import org.platform.platformforeducationalcourses.creator.assembler.ModuleAssemb
 import org.platform.platformforeducationalcourses.domain.course.Course;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.LessonRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 
@@ -26,16 +26,16 @@ import org.platform.platformforeducationalcourses.service.domain.TestSubmissionS
 class CourseQueryServiceTest {
 
     @Mock
-    private CourseRepository courseRepository;
+    private DataCourseRepository courseRepository;
 
     @Mock
-    private ModuleRepository moduleRepository;
+    private DataModuleRepository moduleRepository;
 
     @Mock
-    private LessonRepository lessonRepository;
+    private DataLessonRepository lessonRepository;
 
     @Mock
-    private TestRepository testRepository;
+    private DataTestRepository testRepository;
 
     @Mock
     private CourseMapper courseMapper;
@@ -50,10 +50,10 @@ class CourseQueryServiceTest {
     private TestSubmissionService testSubmissionService;
 
     @InjectMocks
-    private CourseQueryService service;
+    private CourseStructureQueryService service;
 
     @Test
-    void getCourseForCatalog_Success() {
+    void findCourseForCatalog_Success() {
         Course course = mock(Course.class);
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
         when(moduleRepository.findAllByCourseId(1L)).thenReturn(List.of());
@@ -61,15 +61,15 @@ class CourseQueryServiceTest {
         CourseCatalogResponse expectedResponse = mock(CourseCatalogResponse.class);
         when(courseMapper.toCourseCatalogResponse(eq(course), anyList())).thenReturn(expectedResponse);
 
-        CourseCatalogResponse response = service.getCourseForCatalog(1L);
+        CourseCatalogResponse response = service.findCourseForCatalog(1L);
 
         assertEquals(expectedResponse, response);
     }
 
     @Test
-    void getCourseForCatalog_ThrowsException_IfNotFound() {
+    void findCourseForCatalog_ThrowsException_IfNotFound() {
         when(courseRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(Exception.class, () -> service.getCourseForCatalog(1L));
+        assertThrows(Exception.class, () -> service.findCourseForCatalog(1L));
     }
 
     @Test
@@ -77,7 +77,7 @@ class CourseQueryServiceTest {
         Course course = mock(Course.class);
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
 
-        service.getCourseForTeacher(1L);
+        service.findCourseForTeacher(1L);
 
         verify(moduleRepository).findAllByCourseId(1L);
         verify(lessonRepository).findAllByModuleIdIn(anyList());

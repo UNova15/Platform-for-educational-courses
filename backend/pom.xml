@@ -276,7 +276,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.platform.platformforeducationalcourses.PlatformForEducationalCoursesApplication</mainClass>
+                    <mainClass>refactor.PlatformForEducationalCoursesApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

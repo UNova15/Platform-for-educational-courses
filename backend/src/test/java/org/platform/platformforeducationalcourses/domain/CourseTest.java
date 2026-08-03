@@ -47,7 +47,7 @@ class CourseTest {
         when(dto.description()).thenReturn("New Desc");
         when(dto.tag()).thenReturn(DUMMY_TAG);
 
-        course.updateCourse(dto);
+        course.updateCourseInfo(dto);
 
         assertEquals("New Title", course.getTitle());
         assertEquals("New Desc", course.getDescription());
@@ -61,6 +61,6 @@ class CourseTest {
         CourseUpdateDto dto = mock(CourseUpdateDto.class);
         when(dto.title()).thenReturn(invalidTitle);
 
-        assertThrows(IllegalArgumentException.class, () -> course.updateCourse(dto));
+        assertThrows(IllegalArgumentException.class, () -> course.updateCourseInfo(dto));
     }
 }

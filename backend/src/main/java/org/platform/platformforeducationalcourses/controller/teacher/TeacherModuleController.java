@@ -4,13 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.module.*;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.domain.ModuleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @RestController
 @RequestMapping("teacher/courses/{courseId}/modules")

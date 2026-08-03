@@ -1,6 +1,7 @@
 package org.platform.platformforeducationalcourses.dto.course.find;
 
 import java.util.List;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 
 public record CourseModuleFindResponse(

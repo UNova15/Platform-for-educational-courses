@@ -15,17 +15,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.domain.progress.Enrollment;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.EnrollmentRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataEnrollmentRepository;
 
 @ExtendWith(MockitoExtension.class)
 class EnrollmentServiceTest {
 
     @Mock
-    private EnrollmentRepository enrollmentRepository;
+    private DataEnrollmentRepository enrollmentRepository;
 
     @Mock
-    private CourseRepository courseRepository;
+    private DataCourseRepository courseRepository;
 
     @Mock
     private CourseMapper courseMapper;

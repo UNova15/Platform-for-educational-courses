@@ -10,35 +10,35 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.platform.platformforeducationalcourses.controller.authentication.AuthController;
 import org.platform.platformforeducationalcourses.dto.auth.AuthResponse;
-import org.platform.platformforeducationalcourses.dto.auth.login.LoginRequest;
-import org.platform.platformforeducationalcourses.dto.auth.TokenDto;
-import org.platform.platformforeducationalcourses.dto.auth.registration.RegistrationRequest;
-import org.platform.platformforeducationalcourses.properties.TokenProperties;
-import org.platform.platformforeducationalcourses.service.AuthService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import refactor.user.adapter.in.web.TokenUpdateController;
+import refactor.user.adapter.out.token.TokenProperties;
+import refactor.user.application.ports.in.command.LoginCommand;
+import refactor.user.application.ports.in.command.PairOfTokens;
+import refactor.user.application.ports.in.command.RegistrationCommand;
+import refactor.user.application.service.LoginService;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
 
     @Mock
-    private AuthService authService;
+    private LoginService loginService;
 
     @Mock
     private TokenProperties configuration;
 
     @InjectMocks
-    private AuthController authController;
+    private TokenUpdateController authController;
 
     @Test
     void userRegistration_ReturnsCreatedAndCookie() {
-        RegistrationRequest request = mock(RegistrationRequest.class);
-        TokenDto mockTokenDto = mock(TokenDto.class);
+        RegistrationCommand request = mock(RegistrationCommand.class);
+        PairOfTokens mockTokenDto = mock(PairOfTokens.class);
         when(mockTokenDto.refreshToken()).thenReturn("dummy-refresh-token");
-        when(authService.registration(request)).thenReturn(mockTokenDto);
+        when(loginService.registration(request)).thenReturn(mockTokenDto);
 
         when(configuration.refreshTtl()).thenReturn(Duration.of(3600, ChronoUnit.MILLIS));
 
@@ -52,10 +52,10 @@ class AuthControllerTest {
 
     @Test
     void userLogin_ReturnsOkAndCookie() {
-        LoginRequest request = mock(LoginRequest.class);
-        TokenDto mockTokenDto = mock(TokenDto.class);
+        LoginCommand request = mock(LoginCommand.class);
+        PairOfTokens mockTokenDto = mock(PairOfTokens.class);
         when(mockTokenDto.refreshToken()).thenReturn("dummy-refresh-token");
-        when(authService.login(request)).thenReturn(mockTokenDto);
+        when(loginService.login(request)).thenReturn(mockTokenDto);
         when(configuration.refreshTtl()).thenReturn(Duration.of(3600, ChronoUnit.MILLIS));
 
         ResponseEntity<AuthResponse> response = authController.userLogin(request);
@@ -68,9 +68,9 @@ class AuthControllerTest {
     @Test
     void refresh_ReturnsOkAndCookie() {
         String oldToken = "old-token";
-        TokenDto mockTokenDto = mock(TokenDto.class);
+        PairOfTokens mockTokenDto = mock(PairOfTokens.class);
         when(mockTokenDto.refreshToken()).thenReturn("new-refresh-token");
-        when(authService.refresh(oldToken)).thenReturn(mockTokenDto);
+        when(loginService.refresh(oldToken)).thenReturn(mockTokenDto);
         when(configuration.refreshTtl()).thenReturn(Duration.of(3600, ChronoUnit.MILLIS));
 
         ResponseEntity<AuthResponse> response = authController.refresh(oldToken);

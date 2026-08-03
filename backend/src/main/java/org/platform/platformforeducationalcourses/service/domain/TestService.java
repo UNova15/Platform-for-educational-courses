@@ -8,13 +8,13 @@ import org.platform.platformforeducationalcourses.domain.course.Test;
 import org.platform.platformforeducationalcourses.dto.test.*;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class TestService {
-    private final TestRepository testRepository;
+    private final DataTestRepository testRepository;
     private final TestMapper testMapper;
     private final TestFactory testFactory;
 

@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.test.*;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @RestController
 @RequestMapping("teacher/courses/{courseId}/modules/{moduleId}")

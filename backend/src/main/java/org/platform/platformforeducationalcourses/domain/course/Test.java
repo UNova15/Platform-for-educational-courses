@@ -28,6 +28,10 @@ public class Test {
         return new Test(null, moduleId, description, orderIndex, questions);
     }
 
+    public static Test restore(Long id, Long moduleId, String description, int orderIndex, Set<Question> questions) {
+        return new Test(id, moduleId, description, orderIndex, questions);
+    }
+
     public void update(String description, int orderIndex, Set<Question> questions) {
         if (description == null
                 || description.isBlank()

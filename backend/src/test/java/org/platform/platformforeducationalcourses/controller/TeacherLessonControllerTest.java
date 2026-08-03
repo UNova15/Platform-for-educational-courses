@@ -10,13 +10,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.controller.teacher.TeacherLessonController;
-import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.lesson.*;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
+import org.platform.platformforeducationalcourses.dto.lesson.create.LessonCreateRequest;
+import org.platform.platformforeducationalcourses.dto.lesson.create.LessonCreateResponse;
 import org.platform.platformforeducationalcourses.mapper.LessonMapper;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherLessonControllerTest {
@@ -40,7 +42,7 @@ class TeacherLessonControllerTest {
 
     @Test
     void createLesson_ReturnsCreated() {
-        CourseLessonCreateRequest request = mock(CourseLessonCreateRequest.class);
+        LessonCreateRequest request = mock(LessonCreateRequest.class);
         LessonCreateDto dto = mock(LessonCreateDto.class);
         LessonCreateResponse expectedResponse = mock(LessonCreateResponse.class);
 

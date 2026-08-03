@@ -16,8 +16,7 @@ import org.platform.platformforeducationalcourses.domain.course.Tag;
 import org.platform.platformforeducationalcourses.dto.course.CourseUpdateDto;
 import org.platform.platformforeducationalcourses.exception.CourseNotFoundException;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.CourseRepository;
-import org.platform.platformforeducationalcourses.service.domain.CourseService;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataCourseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,7 +24,7 @@ import org.springframework.data.domain.Pageable;
 class CourseServiceTest {
 
     @Mock
-    private CourseRepository courseRepository;
+    private DataCourseRepository courseRepository;
 
     @Mock
     private CourseAssembler courseAssembler;
@@ -34,7 +33,7 @@ class CourseServiceTest {
     private CourseMapper courseMapper;
 
     @InjectMocks
-    private CourseService courseService;
+    private CourseStructureManagementService courseService;
 
     @Test
     void updateCourse_Success() {
@@ -43,9 +42,9 @@ class CourseServiceTest {
 
         CourseUpdateDto updateDto = mock(CourseUpdateDto.class);
 
-        courseService.updateCourse(updateDto, 10L, 1L);
+        courseService.updateCourseInfo(updateDto, 10L, 1L);
 
-        verify(mockCourse).updateCourse(updateDto);
+        verify(mockCourse).updateCourseInfo(updateDto);
         verify(courseRepository).save(mockCourse);
     }
 
@@ -53,7 +52,8 @@ class CourseServiceTest {
     void updateCourse_ThrowsException_IfNotFound() {
         when(courseRepository.findById(1L)).thenReturn(Optional.empty());
         assertThrows(
-                CourseNotFoundException.class, () -> courseService.updateCourse(mock(CourseUpdateDto.class), 10L, 1L));
+                CourseNotFoundException.class,
+                () -> courseService.updateCourseInfo(mock(CourseUpdateDto.class), 10L, 1L));
     }
 
     @Test
@@ -73,7 +73,7 @@ class CourseServiceTest {
 
         courseService.findTeachersCoursesInfo(10L);
 
-        verify(courseMapper, times(1)).toCourseGetResponse(mockCourse);
+        verify(courseMapper, times(1)).toCourseInfo(mockCourse);
     }
 
     @Test

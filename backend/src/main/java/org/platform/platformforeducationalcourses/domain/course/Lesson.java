@@ -46,4 +46,9 @@ public class Lesson {
         this.type = type;
         this.title = title;
     }
+
+    public static Lesson restore(
+            Long id, Long moduleId, String title, ContentType type, String content, int orderIndex, boolean mandatory) {
+        return new Lesson(id, moduleId, title, type, content, orderIndex, mandatory);
+    }
 }

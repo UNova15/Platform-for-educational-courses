@@ -20,4 +20,8 @@ public class AnswerOption {
 
         return new AnswerOption(null, null, option, isCorrect);
     }
+
+    public static AnswerOption restore(Long id, Long questionId, String option, boolean isCorrect) {
+        return new AnswerOption(id, questionId, option, isCorrect);
+    }
 }

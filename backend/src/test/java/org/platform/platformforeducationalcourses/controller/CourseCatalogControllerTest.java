@@ -11,11 +11,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.controller.general.CourseCatalogController;
 import org.platform.platformforeducationalcourses.domain.course.Tag;
-import org.platform.platformforeducationalcourses.dto.PageResponse;
+import org.platform.platformforeducationalcourses.dto.common.PageResponse;
 import org.platform.platformforeducationalcourses.dto.course.CoursePage;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
-import org.platform.platformforeducationalcourses.service.CourseQueryService;
-import org.platform.platformforeducationalcourses.service.domain.CourseService;
+import org.platform.platformforeducationalcourses.service.CourseStructureManagementService;
+import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +24,10 @@ import org.springframework.http.ResponseEntity;
 class CourseCatalogControllerTest {
 
     @Mock
-    private CourseService courseService;
+    private CourseStructureManagementService courseService;
 
     @Mock
-    private CourseQueryService courseQueryService;
+    private CourseStructureQueryService courseQueryService;
 
     @InjectMocks
     private CourseCatalogController controller;
@@ -50,7 +50,7 @@ class CourseCatalogControllerTest {
     @Test
     void getCourseDetails_ReturnsOk() {
         CourseCatalogResponse mockResponse = mock(CourseCatalogResponse.class);
-        when(courseQueryService.getCourseForCatalog(1L)).thenReturn(mockResponse);
+        when(courseQueryService.findCourseForCatalog(1L)).thenReturn(mockResponse);
 
         ResponseEntity<CourseCatalogResponse> response = controller.getCourseDetails(1L);
 

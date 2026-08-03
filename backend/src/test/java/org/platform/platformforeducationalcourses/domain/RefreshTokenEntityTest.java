@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.platform.platformforeducationalcourses.persistance.entity.security.RefreshTokenEntity;
-import org.platform.platformforeducationalcourses.security.hash.TokenHasher;
+import refactor.user.adapter.out.persistence.token.RefreshTokenEntity;
+import refactor.user.adapter.out.security.hashing.TokenHasher;
 
 class RefreshTokenEntityTest {
 

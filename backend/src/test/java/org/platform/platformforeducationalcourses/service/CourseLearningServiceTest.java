@@ -14,12 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.creator.assembler.TestAssembler;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
-import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ProgressRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.SubmissionsRepository;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.TestRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataProgressRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.platform.platformforeducationalcourses.service.domain.TestService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
@@ -34,13 +34,13 @@ class CourseLearningServiceTest {
     private TestService testService;
 
     @Mock
-    private SubmissionsRepository submissionsRepository;
+    private DataSubmissionsRepository submissionsRepository;
 
     @Mock
-    private ProgressRepository progressRepository;
+    private DataProgressRepository progressRepository;
 
     @Mock
-    private TestRepository testRepository;
+    private DataTestRepository testRepository;
 
     @Mock
     private TestMapper testMapper;

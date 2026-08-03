@@ -7,13 +7,13 @@ import org.platform.platformforeducationalcourses.dto.module.ModuleCreateRespons
 import org.platform.platformforeducationalcourses.dto.module.ModuleFindResponse;
 import org.platform.platformforeducationalcourses.dto.module.ModuleUpdateDto;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
-import org.platform.platformforeducationalcourses.persistance.repository.jdbc.ModuleRepository;
+import org.platform.platformforeducationalcourses.persistance.repository.provader.DataModuleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ModuleService {
-    private final ModuleRepository moduleRepository;
+    private final DataModuleRepository moduleRepository;
     private final ModuleMapper moduleMapper;
 
     public ModuleFindResponse findModule(long moduleId) {

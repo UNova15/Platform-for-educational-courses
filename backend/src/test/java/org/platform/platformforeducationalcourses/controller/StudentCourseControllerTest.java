@@ -12,17 +12,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.platform.platformforeducationalcourses.controller.student.StudentCourseController;
 import org.platform.platformforeducationalcourses.dto.course.StudentCourseFindResponse;
-import org.platform.platformforeducationalcourses.dto.course.find.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
+import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestReview;
-import org.platform.platformforeducationalcourses.security.entity.SecurityUser;
 import org.platform.platformforeducationalcourses.service.CourseLearningService;
-import org.platform.platformforeducationalcourses.service.CourseQueryService;
+import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import refactor.user.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class StudentCourseControllerTest {
@@ -31,7 +31,7 @@ class StudentCourseControllerTest {
     private CourseLearningService learningService;
 
     @Mock
-    private CourseQueryService courseQueryService;
+    private CourseStructureQueryService courseQueryService;
 
     @Mock
     private EnrollmentService enrollmentService;
@@ -61,7 +61,7 @@ class StudentCourseControllerTest {
     @Test
     void getCourse_ReturnsOk() {
         StudentCourseFindResponse expectedResponse = mock(StudentCourseFindResponse.class);
-        when(courseQueryService.getCourseForStudent(1L, 100L)).thenReturn(expectedResponse);
+        when(courseQueryService.findCourseForStudent(1L, 100L)).thenReturn(expectedResponse);
 
         ResponseEntity<StudentCourseFindResponse> response = controller.getCourse(100L, mockUser);
 
