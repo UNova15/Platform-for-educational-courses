@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.platform.platformforeducationalcourses.security.entity.SecurityRole;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import refactor.user.domain.user.User;
+import refactor.auth.domain.user.User;
 
 class UserTest {
     private final SecurityRole DUMMY_ROLE = null;

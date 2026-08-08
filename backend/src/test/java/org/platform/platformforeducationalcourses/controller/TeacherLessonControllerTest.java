@@ -18,7 +18,7 @@ import org.platform.platformforeducationalcourses.mapper.LessonMapper;
 import org.platform.platformforeducationalcourses.service.domain.LessonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import refactor.user.adapter.out.security.model.SecurityUser;
+import refactor.auth.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherLessonControllerTest {

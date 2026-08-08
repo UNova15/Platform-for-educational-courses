@@ -14,12 +14,12 @@ import org.platform.platformforeducationalcourses.security.entity.SecurityRole;
 import org.platform.platformforeducationalcourses.util.token.TokenGenerator;
 import org.platform.platformforeducationalcourses.util.token.TokenUtil;
 import org.springframework.security.authentication.BadCredentialsException;
-import refactor.user.adapter.out.persistence.token.OrmRefreshTokenRepository;
-import refactor.user.adapter.out.persistence.token.RefreshTokenEntity;
-import refactor.user.adapter.out.security.hashing.TokenHasher;
-import refactor.user.application.ports.in.command.PairOfTokens;
-import refactor.user.application.ports.out.token.model.TokenPayload;
-import refactor.user.application.service.TokenService;
+import refactor.auth.adapter.out.persistence.token.OrmRefreshTokenRepository;
+import refactor.auth.adapter.out.persistence.token.RefreshTokenEntity;
+import refactor.auth.adapter.out.security.hashing.TokenHasher;
+import refactor.auth.application.ports.in.usecase.PairOfTokens;
+import refactor.infrastructure.accesstoken.TokenPayload;
+import refactor.auth.application.service.TokenService;
 
 @ExtendWith(MockitoExtension.class)
 class TokenServiceTest {

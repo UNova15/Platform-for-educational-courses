@@ -15,14 +15,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import refactor.user.adapter.out.persistence.user.OrmUserRepository;
-import refactor.user.adapter.out.security.model.SecurityUser;
-import refactor.user.application.ports.in.command.LoginCommand;
-import refactor.user.application.ports.in.command.PairOfTokens;
-import refactor.user.application.ports.in.command.RegistrationCommand;
-import refactor.user.application.service.LoginService;
-import refactor.user.application.service.TokenService;
-import refactor.user.domain.user.User;
+import refactor.auth.adapter.out.persistence.user.OrmUserRepository;
+import refactor.auth.adapter.out.security.model.SecurityUser;
+import refactor.auth.application.ports.in.usecase.LoginCommand;
+import refactor.auth.application.ports.in.usecase.PairOfTokens;
+import refactor.auth.application.ports.in.usecase.RegistrationCommand;
+import refactor.auth.application.service.LoginService;
+import refactor.auth.application.service.TokenService;
+import refactor.auth.domain.user.User;
 
 @ExtendWith(MockitoExtension.class)
 class LoginServiceTest {

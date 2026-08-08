@@ -14,12 +14,12 @@ import org.platform.platformforeducationalcourses.dto.auth.AuthResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import refactor.user.adapter.in.web.TokenUpdateController;
-import refactor.user.adapter.out.token.TokenProperties;
-import refactor.user.application.ports.in.command.LoginCommand;
-import refactor.user.application.ports.in.command.PairOfTokens;
-import refactor.user.application.ports.in.command.RegistrationCommand;
-import refactor.user.application.service.LoginService;
+import refactor.auth.adapter.in.web.TokenUpdateController;
+import refactor.auth.adapter.out.token.TokenProperties;
+import refactor.auth.application.ports.in.usecase.LoginCommand;
+import refactor.auth.application.ports.in.usecase.PairOfTokens;
+import refactor.auth.application.ports.in.usecase.RegistrationCommand;
+import refactor.auth.application.service.LoginService;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {

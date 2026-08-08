@@ -21,7 +21,7 @@ import org.platform.platformforeducationalcourses.service.CourseStructureManagem
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import refactor.user.adapter.out.security.model.SecurityUser;
+import refactor.auth.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherCoursesControllerTest {

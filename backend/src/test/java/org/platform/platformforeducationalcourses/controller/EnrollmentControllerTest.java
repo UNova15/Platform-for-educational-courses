@@ -14,7 +14,7 @@ import org.platform.platformforeducationalcourses.controller.student.EnrollmentC
 import org.platform.platformforeducationalcourses.service.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import refactor.user.adapter.out.security.model.SecurityUser;
+import refactor.auth.adapter.out.security.model.SecurityUser;
 
 @ExtendWith(MockitoExtension.class)
 class EnrollmentControllerTest {
