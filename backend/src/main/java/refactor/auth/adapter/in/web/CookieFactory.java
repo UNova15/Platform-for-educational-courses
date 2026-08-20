@@ -3,7 +3,7 @@ package refactor.auth.adapter.in.web;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import refactor.auth.application.ports.in.usecase.PairOfTokens;
+import refactor.auth.application.ports.in.PairOfTokens;
 
 @Component
 @AllArgsConstructor

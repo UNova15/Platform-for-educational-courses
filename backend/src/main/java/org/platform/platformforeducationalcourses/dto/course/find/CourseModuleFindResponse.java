@@ -1,13 +1,13 @@
 package org.platform.platformforeducationalcourses.dto.course.find;
 
 import java.util.List;
-import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
-import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
+import refactor.course.application.port.in.lesson.query.LessonQueryResult;
+import refactor.course.application.port.in.test.query.TestQueryResult;
 
 public record CourseModuleFindResponse(
         long id,
         String title,
         String description,
         int orderIndex,
-        List<TestFindResponse> tests,
-        List<LessonFindResponse> lessons) {}
+        List<TestQueryResult> tests,
+        List<LessonQueryResult> lessons) {}

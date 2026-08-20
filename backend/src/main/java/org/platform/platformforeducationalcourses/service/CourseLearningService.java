@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.creator.assembler.TestAssembler;
-import org.platform.platformforeducationalcourses.domain.course.Question;
-import org.platform.platformforeducationalcourses.domain.course.Test;
+import refactor.course.domain.question.Question;
+import refactor.course.domain.test.Test;
 import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
-import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
-import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
+import refactor.course.application.port.in.lesson.query.LessonQueryResult;
+import refactor.course.application.port.in.test.query.TestQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.TestPostDto;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestReview;
@@ -18,8 +18,8 @@ import org.platform.platformforeducationalcourses.mapper.TestMapper;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataProgressRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
-import org.platform.platformforeducationalcourses.service.domain.LessonService;
-import org.platform.platformforeducationalcourses.service.domain.TestService;
+import refactor.course.application.service.LessonRemoveService;
+import refactor.course.application.service.command.TestManageService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CourseLearningService {
-    private final LessonService lessonService;
-    private final TestService testService;
+    private final LessonRemoveService lessonRemoveService;
+    private final TestManageService testManageService;
 
     private final DataSubmissionsRepository submissionsRepository;
     private final DataProgressRepository progressRepository;
@@ -42,23 +42,23 @@ public class CourseLearningService {
     private final SubmissionValidator validator;
     private final ScoreCalculator scoreCalculator;
 
-    public LessonFindResponse getLesson(long userId, long lessonId) {
+    public LessonQueryResult getLesson(long userId, long lessonId) {
         if (!progressRepository.existsByUserIdAndLessonId(userId, lessonId)) {
             LessonProgress lessonProgress = LessonProgress.createNew(userId, lessonId);
             progressRepository.save(lessonProgress);
         }
 
-        return lessonService.findLesson(lessonId);
+        return lessonRemoveService.findLesson(lessonId);
     }
 
     // TODO создать unique индекс на бд на поля long userId, long testId
-    public TestFindResponse startAttempt(long userId, long testId) {
+    public TestQueryResult startAttempt(long userId, long testId) {
         if (!submissionsRepository.existsByUserIdAndTestId(userId, testId)) {
             TestSubmission submission = TestSubmission.createNew(userId, testId);
             submissionsRepository.save(submission);
         }
 
-        return testService.getTest(testId);
+        return testManageService.getTest(testId);
     }
 
     // TODO исключение
@@ -76,7 +76,7 @@ public class CourseLearningService {
         Test test = testRepository.findById(testId).orElseThrow();
 
         Map<Long, Question> questionsOrderById =
-                test.getQuestions().stream().collect(Collectors.toMap(Question::getId, question -> question));
+                test.questions().stream().collect(Collectors.toMap(Question::getId, question -> question));
 
         submission.submitAnswers(testPostDto.answers(), questionsOrderById, scoreCalculator, validator);
 

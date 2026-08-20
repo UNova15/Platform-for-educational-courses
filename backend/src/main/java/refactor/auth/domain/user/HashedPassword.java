@@ -3,11 +3,13 @@ package refactor.auth.domain.user;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Getter
+@Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HashedPassword {
-    private final String hashedPassword;
+    private final String value;
 
     public static HashedPassword of(String hashedPassword) {
         if (hashedPassword == null || hashedPassword.isBlank()) {

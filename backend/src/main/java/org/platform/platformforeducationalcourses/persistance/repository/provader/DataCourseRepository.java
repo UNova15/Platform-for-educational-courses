@@ -3,7 +3,7 @@ package org.platform.platformforeducationalcourses.persistance.repository.provad
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.platform.platformforeducationalcourses.domain.course.Tag;
+import refactor.course.domain.course.Tag;
 import org.platform.platformforeducationalcourses.persistance.entity.course.CourseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

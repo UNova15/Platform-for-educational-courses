@@ -5,11 +5,11 @@ import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
 import refactor.auth.domain.user.HashedPassword;
 import refactor.auth.domain.user.RawPassword;
 import refactor.common.exception.auth.InvalidPasswordException;
-import refactor.common.exception.notfound.UserNotFoundException;
+import refactor.common.exception.domain.UserNotFoundException;
 import org.springframework.stereotype.Service;
-import refactor.auth.application.ports.in.usecase.LoginCommand;
-import refactor.auth.application.ports.in.usecase.PairOfTokens;
-import refactor.auth.application.ports.in.usecase.LoginUseCase;
+import refactor.auth.application.ports.in.LoginCommand;
+import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.LoginUseCase;
 import refactor.auth.application.ports.out.persistance.UserLoadPort;
 import refactor.auth.domain.user.User;
 
@@ -27,7 +27,7 @@ class LoginService implements LoginUseCase {
                 .orElseThrow(() -> new UserNotFoundException(request.login()));
 
         RawPassword inputPassword = RawPassword.of(request.password());
-        HashedPassword hashedPassword = user.getPassword();
+        HashedPassword hashedPassword = user.password();
 
         boolean isCorrectPassword = passwordHasherPort.matches(inputPassword,hashedPassword);
 
@@ -35,6 +35,6 @@ class LoginService implements LoginUseCase {
             throw new InvalidPasswordException(request.login());
         }
 
-        return tokenService.createTokens(user.getId(), user.getLogin(), user.getRole());
+        return tokenService.createTokens(user.id(), user.login().value(), user.role());
     }
 }

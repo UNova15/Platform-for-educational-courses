@@ -24,11 +24,11 @@ class RefreshTokenAdapter implements RefreshTokenRepositoryPort {
 
     @Override
     public void remove(RefreshToken token) {
-        repository.deleteById(token.getId());
+        repository.deleteById(token.id());
     }
 
     @Override
     public Optional<RefreshToken> load(HashedToken token) {
-        return repository.findByToken(token.getHashedToken()).map(mapper::toDomain);
+        return repository.findByToken(token.value()).map(mapper::toDomain);
     }
 }

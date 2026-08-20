@@ -2,16 +2,16 @@ package org.platform.platformforeducationalcourses.mapper;
 
 import java.util.List;
 import org.mapstruct.Mapper;
-import org.platform.platformforeducationalcourses.domain.course.Question;
+import refactor.course.domain.question.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.platform.platformforeducationalcourses.dto.test.PostAnswerOptionRequest;
-import org.platform.platformforeducationalcourses.dto.test.QuestionFindResponse;
+import refactor.course.application.port.in.test.query.QuestionQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.QuestionOption;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestQuestion;
 
 @Mapper(uses = {AnswerQuestionMapper.class})
 public interface QuestionMapper {
-    QuestionFindResponse toCourseQuestionFindResponse(Question question);
+    QuestionQueryResult toCourseQuestionFindResponse(Question question);
 
     AnswerPostDto toAnswerPostDto(PostAnswerOptionRequest answerOptionRequest);
 

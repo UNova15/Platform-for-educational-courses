@@ -2,8 +2,8 @@ package org.platform.platformforeducationalcourses.domain.ports.persistance;
 
 import java.util.List;
 import java.util.Optional;
-import org.platform.platformforeducationalcourses.domain.course.Course;
-import org.platform.platformforeducationalcourses.domain.course.Tag;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.course.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

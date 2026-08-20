@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
-import org.platform.platformforeducationalcourses.domain.course.Question;
+import refactor.course.domain.question.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
 

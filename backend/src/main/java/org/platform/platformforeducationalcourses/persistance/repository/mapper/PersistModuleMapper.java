@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.platform.platformforeducationalcourses.domain.course.CourseModule;
+import refactor.course.domain.module.CourseModule;
 import org.platform.platformforeducationalcourses.persistance.entity.course.ModuleEntity;
 import org.platform.platformforeducationalcourses.persistance.entity.reference.LessonRef;
 import org.platform.platformforeducationalcourses.persistance.entity.reference.TestRef;

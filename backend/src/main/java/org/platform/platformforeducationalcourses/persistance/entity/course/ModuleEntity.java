@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.platform.platformforeducationalcourses.domain.course.CourseModule;
+import refactor.course.domain.module.CourseModule;
 import org.platform.platformforeducationalcourses.persistance.entity.reference.LessonRef;
 import org.platform.platformforeducationalcourses.persistance.entity.reference.TestRef;
 import org.springframework.data.annotation.Id;
@@ -43,9 +43,9 @@ public class ModuleEntity {
 
     public static ModuleEntity fromModule(CourseModule module) {
         Set<LessonRef> lessonRefs =
-                module.getLessonsIds().stream().map(LessonRef::new).collect(Collectors.toSet());
+                module.lessonsIds().stream().map(LessonRef::new).collect(Collectors.toSet());
         Set<TestRef> autoTestsRefs =
-                module.getAutoTestsIds().stream().map(TestRef::new).collect(Collectors.toSet());
+                module.autoTestsIds().stream().map(TestRef::new).collect(Collectors.toSet());
 
         return new ModuleEntity(
                 module.getId(),

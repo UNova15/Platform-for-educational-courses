@@ -3,13 +3,14 @@ package org.platform.platformforeducationalcourses.controller.teacher;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.dto.course.*;
-import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateRequest;
-import org.platform.platformforeducationalcourses.dto.course.create.CourseCreateResponse;
+import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
+import refactor.course.application.port.in.course.command.create.CourseCreateResult;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
-import org.platform.platformforeducationalcourses.service.CourseStructureManagementService;
+import refactor.course.application.port.in.course.query.CourseQueryResult;
+import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
+import refactor.course.application.service.command.CourseBulkCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
-import org.platform.platformforeducationalcourses.service.domain.CourseService;
+import refactor.course.application.service.command.CourseManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,14 +23,14 @@ import refactor.auth.adapter.out.security.model.SecurityUser;
 @PreAuthorize("hasRole('TEACHER')")
 public class TeacherCoursesController {
     private final CourseStructureQueryService courseQueryService;
-    private final CourseStructureManagementService courseManagementService;
-    private final CourseService courseService;
+    private final CourseBulkCreateService courseManagementService;
+    private final CourseManageService courseManageService;
 
     // TODO перенести проверки авторизации в сервисный слой
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CourseCreateResponse createCourse(
-            @AuthenticationPrincipal SecurityUser userPrincipal, @Valid @RequestBody CourseCreateRequest request) {
+    public CourseCreateResult createCourse(
+            @AuthenticationPrincipal SecurityUser userPrincipal, @Valid @RequestBody CourseCreateCommand request) {
 
         return courseManagementService.createCourseWithContent(request, userPrincipal.getId());
     }
@@ -39,10 +40,10 @@ public class TeacherCoursesController {
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
     public void updateCourse(
             @PathVariable long courseId,
-            @Valid @RequestBody CourseUpdateRequest request,
+            @Valid @RequestBody CourseUpdateCommand request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        courseService.updateCourseInfo(request, userPrincipal.getId(), courseId);
+        courseManageService.updateCourseMetadata(request, userPrincipal.getId(), courseId);
     }
 
     @DeleteMapping("{courseId}")
@@ -50,14 +51,14 @@ public class TeacherCoursesController {
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
     public void deleteCourse(@PathVariable long courseId, @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        courseService.deleteCourse(userPrincipal.getId(), courseId);
+        courseManageService.removeCourse(userPrincipal.getId(), courseId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CourseInfo> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
+    public List<CourseQueryResult> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        return courseService.findTeachersCoursesInfo(userPrincipal.getId());
+        return courseManageService.findTeachersCoursesInfo(userPrincipal.getId());
     }
 
     @GetMapping("{courseId}")

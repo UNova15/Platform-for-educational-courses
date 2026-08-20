@@ -3,7 +3,7 @@ package org.platform.platformforeducationalcourses.persistance.repository.adapte
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.course.Lesson;
+import refactor.course.domain.lesson.Lesson;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.LessonRepository;
 import org.platform.platformforeducationalcourses.persistance.entity.course.LessonEntity;
 import org.platform.platformforeducationalcourses.persistance.repository.mapper.PersistLessonMapper;

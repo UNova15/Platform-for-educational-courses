@@ -3,9 +3,12 @@ package org.platform.platformforeducationalcourses.controller.teacher;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.test.*;
-import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
+import refactor.course.application.port.in.test.query.TestQueryResult;
 import org.platform.platformforeducationalcourses.mapper.TestMapper;
-import org.platform.platformforeducationalcourses.service.domain.TestService;
+import refactor.course.application.port.in.test.command.create.TestCreateCommand;
+import refactor.course.application.port.in.test.command.create.TestCreateResult;
+import refactor.course.application.port.in.test.command.update.TestUpdateCommand;
+import refactor.course.application.service.command.TestManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,18 +21,18 @@ import refactor.auth.adapter.out.security.model.SecurityUser;
 @PreAuthorize("hasRole('TEACHER')")
 @AllArgsConstructor
 public class TeacherTestController {
-    private final TestService testService;
+    private final TestManageService testManageService;
     private final TestMapper testMapper;
 
     @PostMapping
     @PreAuthorize("@courseSecurity.canManagedModule(#securityUser.id,#courseId,#moduleId)")
-    public ResponseEntity<TestCreateResponse> createTest(
+    public ResponseEntity<TestCreateResult> createTest(
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @AuthenticationPrincipal SecurityUser securityUser,
-            @Valid @RequestBody TestCreateRequest request) {
+            @Valid @RequestBody TestCreateCommand request) {
         TestCreateDto dto = testMapper.toTestCreateDto(request);
-        TestCreateResponse response = testService.createTest(dto, moduleId);
+        TestCreateResult response = testManageService.createTest(dto, moduleId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -40,7 +43,7 @@ public class TeacherTestController {
             @PathVariable long moduleId,
             @PathVariable long courseId,
             @AuthenticationPrincipal SecurityUser securityUser) {
-        testService.deleteTest(testId);
+        testManageService.removeTest(testId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -52,8 +55,8 @@ public class TeacherTestController {
             @PathVariable long courseId,
             @Valid @RequestBody TestUpdateRequest updateRequest,
             @AuthenticationPrincipal SecurityUser securityUser) {
-        TestUpdateDto updateDto = testMapper.toTestUpdateDto(updateRequest, testId, moduleId);
-        testService.updateTest(updateDto);
+        TestUpdateCommand updateDto = testMapper.toTestUpdateDto(updateRequest, testId, moduleId);
+        testManageService.updateTest(updateDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -64,7 +67,7 @@ public class TeacherTestController {
             @PathVariable long moduleId,
             @PathVariable long courseId,
             @AuthenticationPrincipal SecurityUser securityUser) {
-        TestFindResponse response = testService.getTest(testId);
+        TestQueryResult response = testManageService.getTest(testId);
         return ResponseEntity.ok(response);
     }
 }

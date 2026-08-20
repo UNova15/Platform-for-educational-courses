@@ -1,11 +1,11 @@
 package org.platform.platformforeducationalcourses.controller.general;
 
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.course.Tag;
-import org.platform.platformforeducationalcourses.dto.common.PageResponse;
-import org.platform.platformforeducationalcourses.dto.course.CoursePage;
+import refactor.course.domain.course.Tag;
+import refactor.common.wrapper.CursorPageResponse;
+import refactor.course.application.port.in.course.query.CourseCursorResult;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
-import org.platform.platformforeducationalcourses.service.CourseStructureManagementService;
+import refactor.course.application.service.command.CourseBulkCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/courses")
 @AllArgsConstructor
 public class CourseCatalogController {
-    private final CourseStructureManagementService courseService;
+    private final CourseBulkCreateService courseService;
     private final CourseStructureQueryService courseQueryService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public PageResponse<CoursePage> getCourses(Pageable pageable, @RequestParam(required = false) Tag tag) {
+    public CursorPageResponse<CourseCursorResult> getCourses(Pageable pageable, @RequestParam(required = false) Tag tag) {
         return courseService.findPageOfCourse(pageable, tag);
     }
 

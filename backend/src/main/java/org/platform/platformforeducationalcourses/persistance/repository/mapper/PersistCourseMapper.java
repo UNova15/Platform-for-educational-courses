@@ -3,7 +3,7 @@ package org.platform.platformforeducationalcourses.persistance.repository.mapper
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.platform.platformforeducationalcourses.domain.course.Course;
+import refactor.course.domain.course.Course;
 import org.platform.platformforeducationalcourses.persistance.entity.course.CourseEntity;
 import org.platform.platformforeducationalcourses.persistance.entity.reference.ModuleRef;
 import org.springframework.stereotype.Component;

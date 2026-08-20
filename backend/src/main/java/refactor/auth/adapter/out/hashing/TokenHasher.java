@@ -11,6 +11,6 @@ class TokenHasher implements TokenHashingPort {
 
     @Override
     public HashedToken hash(RawToken token) {
-        return HashedToken.of(DigestUtils.sha256Hex(token.getToken()));
+        return HashedToken.of(DigestUtils.sha256Hex(token.value()));
     }
 }

@@ -2,8 +2,8 @@ package org.platform.platformforeducationalcourses.validator;
 
 import java.util.List;
 import java.util.Map;
-import org.platform.platformforeducationalcourses.domain.course.AnswerOption;
-import org.platform.platformforeducationalcourses.domain.course.Question;
+import refactor.course.domain.option.AnswerOption;
+import refactor.course.domain.question.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class SubmissionValidator {
             if (question == null) {
                 throw new IllegalArgumentException();
             }
-            boolean isExist = question.getAnswerOptions().stream()
+            boolean isExist = question.answerOptions().stream()
                     .map(AnswerOption::getId)
                     .anyMatch(id -> answer.optionIds().contains(id));
             if (!isExist) {

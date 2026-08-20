@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.platform.platformforeducationalcourses.domain.course.Question;
+import refactor.course.domain.question.Question;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
@@ -32,7 +32,7 @@ public class QuestionEntity {
     }
 
     public static QuestionEntity fromQuestion(Question question) {
-        Set<AnswerOptionEntity> options = question.getAnswerOptions().stream()
+        Set<AnswerOptionEntity> options = question.answerOptions().stream()
                 .map(AnswerOptionEntity::fromAnswerOption)
                 .collect(Collectors.toSet());
         return new QuestionEntity(

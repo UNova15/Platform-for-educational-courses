@@ -3,7 +3,6 @@ package org.platform.platformforeducationalcourses.service;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.creator.assembler.ModuleAssembler;
-import org.platform.platformforeducationalcourses.domain.course.*;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.CourseRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.LessonRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.ModuleRepository;
@@ -20,6 +19,10 @@ import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 import org.springframework.stereotype.Service;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.test.Test;
 
 /**
  * Сервис для выполнения операций взаимодействия с общей структурой курса

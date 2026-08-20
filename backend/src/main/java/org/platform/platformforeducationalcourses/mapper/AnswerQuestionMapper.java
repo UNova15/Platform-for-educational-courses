@@ -3,13 +3,13 @@ package org.platform.platformforeducationalcourses.mapper;
 import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
-import org.platform.platformforeducationalcourses.domain.course.AnswerOption;
-import org.platform.platformforeducationalcourses.dto.test.AnswerFindResponse;
+import refactor.course.domain.option.AnswerOption;
+import refactor.course.application.port.in.test.query.AnswerQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.QuestionOption;
 
 @Mapper()
 public interface AnswerQuestionMapper {
-    AnswerFindResponse toAnswerFindResponse(AnswerOption answerOptions);
+    AnswerQueryResult toAnswerFindResponse(AnswerOption answerOptions);
 
     List<QuestionOption> toQuestionOption(Set<AnswerOption> answerOption);
 }

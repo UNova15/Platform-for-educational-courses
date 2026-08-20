@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.exception.UserAlreadyExistException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refactor.auth.application.ports.in.usecase.PairOfTokens;
-import refactor.auth.application.ports.in.usecase.RegistrationCommand;
-import refactor.auth.application.ports.in.usecase.RegistrationUseCase;
+import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.RegistrationCommand;
+import refactor.auth.application.ports.in.RegistrationUseCase;
 import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
 import refactor.auth.application.ports.out.persistance.UserLoadPort;
 import refactor.auth.application.ports.out.persistance.UserSavePort;
@@ -38,7 +38,7 @@ class RegistrationService implements RegistrationUseCase {
 
         User user = User.createNew(login, hashedPassword, request.role());
 
-        long userId = userSavePort.save(user).getId();
+        long userId = userSavePort.save(user).id();
 
         return tokenService.createTokens(userId, request.login(), request.role());
     }

@@ -14,11 +14,11 @@ class PasswordHasher implements PasswordHasherPort {
 
     @Override
     public HashedPassword hashPassword(RawPassword password) {
-        return HashedPassword.of(encoder.encode(password.getPassword()));
+        return HashedPassword.of(encoder.encode(password.value()));
     }
 
     @Override
     public boolean matches(RawPassword password, HashedPassword hashedPassword) {
-        return encoder.matches(password.getPassword(), hashedPassword.getHashedPassword());
+        return encoder.matches(password.value(), hashedPassword.value());
     }
 }

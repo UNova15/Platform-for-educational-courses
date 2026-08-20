@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import refactor.auth.application.ports.in.usecase.PairOfTokens;
-import refactor.auth.application.ports.in.usecase.RegistrationCommand;
-import refactor.auth.application.ports.in.usecase.RegistrationUseCase;
+import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.RegistrationCommand;
+import refactor.auth.application.ports.in.RegistrationUseCase;
 
 @RestController
 @RequestMapping("/auth")

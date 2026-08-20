@@ -10,8 +10,8 @@ class RefreshTokenMapper {
         return RefreshToken.restore(entity.getId(), entity.getUserId(), entity.getToken());
     }
 
-    public RefreshTokenEntity toEntity(RefreshToken token) {
+    public RefreshTokenEntity toEntity(RefreshToken refreshToken) {
         return new RefreshTokenEntity(
-                token.getId(), token.getUserId(), token.getToken().getHashedToken());
+                refreshToken.id(), refreshToken.userId(), refreshToken.token().value());
     }
 }

@@ -4,7 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.module.*;
 import org.platform.platformforeducationalcourses.mapper.ModuleMapper;
-import org.platform.platformforeducationalcourses.service.domain.ModuleService;
+import refactor.course.application.port.in.module.command.create.ModuleCreateCommand;
+import refactor.course.application.port.in.module.command.create.ModuleCreateResult;
+import refactor.course.application.port.in.module.query.ModuleQueryResult;
+import refactor.course.application.port.in.module.command.update.ModuleUpdateCommand;
+import refactor.course.application.service.ModuleManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,17 +21,17 @@ import refactor.auth.adapter.out.security.model.SecurityUser;
 @PreAuthorize("hasRole('TEACHER')")
 @RequiredArgsConstructor
 public class TeacherModuleController {
-    private final ModuleService moduleService;
+    private final ModuleManageService moduleManageService;
     private final ModuleMapper moduleMapper;
 
     @PostMapping
     @PreAuthorize("@courseSecurity.canManagedCourse(#userPrincipal.id,#courseId)")
-    public ResponseEntity<ModuleCreateResponse> createModule(
+    public ResponseEntity<ModuleCreateResult> createModule(
             @PathVariable long courseId,
             @Valid @RequestBody ModuleCreateRequest request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
-        ModuleCreateDto moduleDto = moduleMapper.toCreateModuleDto(courseId, request);
-        ModuleCreateResponse response = moduleService.createModule(moduleDto);
+        ModuleCreateCommand moduleDto = moduleMapper.toCreateModuleDto(courseId, request);
+        ModuleCreateResult response = moduleManageService.createModule(moduleDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -38,7 +42,7 @@ public class TeacherModuleController {
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
-        moduleService.deleteModule(moduleId);
+        moduleManageService.removeModule(moduleId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -50,18 +54,18 @@ public class TeacherModuleController {
             @Valid @RequestBody ModuleUpdateRequest request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        ModuleUpdateDto updateDto = moduleMapper.toModuleUpdateDto(courseId, moduleId, request);
-        moduleService.updateModule(updateDto);
+        ModuleUpdateCommand updateDto = moduleMapper.toModuleUpdateDto(courseId, moduleId, request);
+        moduleManageService.updateModule(updateDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("{moduleId}")
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public ResponseEntity<ModuleFindResponse> getModule(
+    public ResponseEntity<ModuleQueryResult> getModule(
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
-        ModuleFindResponse module = moduleService.findModule(moduleId);
+        ModuleQueryResult module = moduleManageService.findModule(moduleId);
         return ResponseEntity.ok(module);
     }
 }

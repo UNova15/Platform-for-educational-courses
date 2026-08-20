@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import refactor.auth.application.ports.in.usecase.PairOfTokens;
-import refactor.auth.application.ports.in.usecase.UpdateTokenUseCase;
+import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.UpdateTokenUseCase;
 
 @RestController
 @RequestMapping("/auth")

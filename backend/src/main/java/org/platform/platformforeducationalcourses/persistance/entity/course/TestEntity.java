@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.platform.platformforeducationalcourses.domain.course.Test;
+import refactor.course.domain.test.Test;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
@@ -28,8 +28,8 @@ public class TestEntity {
 
     public static TestEntity fromTest(Test test) {
         Set<QuestionEntity> questionEntities =
-                test.getQuestions().stream().map(QuestionEntity::fromQuestion).collect(Collectors.toSet());
+                test.questions().stream().map(QuestionEntity::fromQuestion).collect(Collectors.toSet());
         return new TestEntity(
-                test.getId(), test.getModuleId(), test.getDescription(), test.getOrderIndex(), questionEntities);
+                test.getId(), test.getModuleId(), test.description(), test.getOrderIndex(), questionEntities);
     }
 }

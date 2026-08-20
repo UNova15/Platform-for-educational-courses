@@ -1,7 +1,7 @@
 package org.platform.platformforeducationalcourses.dto.lesson;
 
 import java.time.LocalDateTime;
-import org.platform.platformforeducationalcourses.domain.course.ContentType;
+import refactor.course.domain.lesson.ContentType;
 
 public record StudentLessonFindResponse(
         long id,

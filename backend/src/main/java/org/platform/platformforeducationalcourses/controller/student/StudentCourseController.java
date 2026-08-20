@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.dto.course.StudentCourseFindResponse;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
-import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
-import org.platform.platformforeducationalcourses.dto.test.TestFindResponse;
+import refactor.course.application.port.in.lesson.query.LessonQueryResult;
+import refactor.course.application.port.in.test.query.TestQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.TestPostRequest;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestReview;
 import org.platform.platformforeducationalcourses.service.*;
@@ -46,12 +46,12 @@ public class StudentCourseController {
 
     @GetMapping("{courseId}/modules/{moduleId}/lessons/{lessonId}")
     @PreAuthorize("@courseSecurity.canAccessLesson(#securityUser.id,#courseId,#moduleId,#lessonId)")
-    public ResponseEntity<LessonFindResponse> getLesson(
+    public ResponseEntity<LessonQueryResult> getLesson(
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @PathVariable long lessonId,
             @AuthenticationPrincipal SecurityUser securityUser) {
-        LessonFindResponse response = learningService.getLesson(securityUser.getId(), lessonId);
+        LessonQueryResult response = learningService.getLesson(securityUser.getId(), lessonId);
         return ResponseEntity.ok(response);
     }
 
@@ -70,12 +70,12 @@ public class StudentCourseController {
     // создание попытки теста и получение теста
     @PostMapping("{courseId}/modules/{moduleId}/tests/{testId}/attempts")
     @PreAuthorize("@courseSecurity.canAccessTest(#securityUser.id,#courseId,#moduleId,#testId)")
-    public ResponseEntity<TestFindResponse> startTestAttempt(
+    public ResponseEntity<TestQueryResult> startTestAttempt(
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @PathVariable long testId,
             @AuthenticationPrincipal SecurityUser securityUser) {
-        TestFindResponse response = learningService.startAttempt(testId, securityUser.getId());
+        TestQueryResult response = learningService.startAttempt(testId, securityUser.getId());
         return ResponseEntity.ok(response);
     }
 

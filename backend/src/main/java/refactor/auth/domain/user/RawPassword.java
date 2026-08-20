@@ -1,24 +1,27 @@
 package refactor.auth.domain.user;
 
-import static org.platform.platformforeducationalcourses.properties.constatnts.UserValidationConstants.MAX_PASSWORD_LENGTH;
-import static org.platform.platformforeducationalcourses.properties.constatnts.UserValidationConstants.MIN_PASSWORD_LENGTH;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.Accessors;
+import refactor.common.exception.domain.DomainValidationException;
 
 @Getter
+@Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RawPassword {
-    private final String password;
+    public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MAX_PASSWORD_LENGTH = 40;
+
+    private final String value;
 
     public static RawPassword of(String password) {
         if (password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Empty data to create raw password");
+            throw new DomainValidationException("Empty data to create raw password");
         }
 
         if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
-            throw new IllegalArgumentException("Incorrect password length: %d . Expected length: min: %d; max: %d"
+            throw new DomainValidationException("Incorrect password length: %d . Expected length: min: %d; max: %d"
                     .formatted(password.length(), MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH));
         }
 

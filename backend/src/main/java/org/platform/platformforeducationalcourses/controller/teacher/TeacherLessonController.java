@@ -2,11 +2,11 @@ package org.platform.platformforeducationalcourses.controller.teacher;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.dto.lesson.*;
-import org.platform.platformforeducationalcourses.dto.lesson.LessonFindResponse;
-import org.platform.platformforeducationalcourses.dto.lesson.create.LessonCreateRequest;
-import org.platform.platformforeducationalcourses.dto.lesson.create.LessonCreateResponse;
-import org.platform.platformforeducationalcourses.service.domain.LessonService;
+import refactor.course.application.port.in.lesson.query.LessonQueryResult;
+import refactor.course.application.port.in.course.command.create.CourseBulkLessonCommand;
+import refactor.course.application.port.in.lesson.command.create.LessonCreateResult;
+import refactor.course.application.port.in.lesson.command.update.LessonUpdateCommand;
+import refactor.course.application.service.LessonRemoveService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,18 +18,18 @@ import refactor.auth.adapter.out.security.model.SecurityUser;
 @PreAuthorize("hasRole('TEACHER')")
 @RequiredArgsConstructor
 public class TeacherLessonController {
-    private final LessonService lessonService;
+    private final LessonRemoveService lessonRemoveService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@courseSecurity.canManagedModule(#userPrincipal.id,#courseId,#moduleId)")
-    public LessonCreateResponse createLesson(
+    public LessonCreateResult createLesson(
             @PathVariable long courseId,
             @PathVariable long moduleId,
-            @Valid @RequestBody LessonCreateRequest request,
+            @Valid @RequestBody CourseBulkLessonCommand request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        return lessonService.createLesson(request, moduleId);
+        return lessonRemoveService.createLesson(request, moduleId);
     }
 
     @PutMapping("{lessonId}")
@@ -39,10 +39,10 @@ public class TeacherLessonController {
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @PathVariable long lessonId,
-            @Valid @RequestBody LessonUpdateRequest request,
+            @Valid @RequestBody LessonUpdateCommand request,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        lessonService.updateLesson(request, moduleId, lessonId);
+        lessonRemoveService.updateLesson(request, moduleId, lessonId);
     }
 
     @DeleteMapping("{lessonId}")
@@ -54,18 +54,18 @@ public class TeacherLessonController {
             @PathVariable long lessonId,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        lessonService.deleteLesson(lessonId);
+        lessonRemoveService.deleteLesson(lessonId);
     }
 
     @GetMapping("{lessonId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@courseSecurity.canManagedLesson(#userPrincipal.id,#courseId,#moduleId,#lessonId)")
-    public LessonFindResponse getLesson(
+    public LessonQueryResult getLesson(
             @PathVariable long courseId,
             @PathVariable long moduleId,
             @PathVariable long lessonId,
             @AuthenticationPrincipal SecurityUser userPrincipal) {
 
-        return lessonService.findLesson(lessonId);
+        return lessonRemoveService.findLesson(lessonId);
     }
 }

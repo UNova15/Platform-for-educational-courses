@@ -11,6 +11,6 @@ class UserMapper {
     }
 
     public UserEntity toEntity(User user) {
-        return new UserEntity(user.getId(), user.getLogin(), user.getPassword().getHashedPassword(), user.getRole());
+        return new UserEntity(user.id(), user.login().value(), user.password().value(), user.role());
     }
 }

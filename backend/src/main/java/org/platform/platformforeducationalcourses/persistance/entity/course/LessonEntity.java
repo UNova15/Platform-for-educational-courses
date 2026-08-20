@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.platform.platformforeducationalcourses.domain.course.ContentType;
-import org.platform.platformforeducationalcourses.domain.course.Lesson;
+import refactor.course.domain.lesson.ContentType;
+import refactor.course.domain.lesson.Lesson;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 

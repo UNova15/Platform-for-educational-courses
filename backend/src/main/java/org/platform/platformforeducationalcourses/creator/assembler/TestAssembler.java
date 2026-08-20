@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.platform.platformforeducationalcourses.domain.course.Test;
+import refactor.course.domain.test.Test;
 import org.platform.platformforeducationalcourses.domain.progress.TestAnswer;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
 import org.platform.platformforeducationalcourses.dto.test.StudentTestFindResponse;
@@ -51,12 +51,12 @@ public class TestAssembler {
         Map<Long, TestAnswer> answerOrderByQuestionId = testSubmission.getAnswers().stream()
                 .collect(Collectors.toMap(TestAnswer::getQuestionId, answer -> answer));
 
-        List<TestQuestion> testQuestions = new ArrayList<>(test.getQuestions().size());
-        for (var question : test.getQuestions()) {
+        List<TestQuestion> testQuestions = new ArrayList<>(test.questions().size());
+        for (var question : test.questions()) {
             List<Long> selectedIds =
                     answerOrderByQuestionId.get(question.getId()).getAnswerIds();
 
-            List<QuestionOption> options = answerQuestionMapper.toQuestionOption(question.getAnswerOptions());
+            List<QuestionOption> options = answerQuestionMapper.toQuestionOption(question.answerOptions());
             TestQuestion testQuestion = questionMapper.toTestQuestion(question, options, selectedIds);
             testQuestions.add(testQuestion);
         }

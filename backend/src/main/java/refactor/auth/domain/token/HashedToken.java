@@ -3,11 +3,13 @@ package refactor.auth.domain.token;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Getter
+@Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HashedToken {
-    private final String hashedToken;
+    private final String value;
 
     public static HashedToken of(String hashedToken) {
         if (hashedToken == null || hashedToken.isBlank()) {

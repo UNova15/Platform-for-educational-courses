@@ -3,9 +3,13 @@ package org.platform.platformforeducationalcourses.mapper;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.platform.platformforeducationalcourses.domain.course.CourseModule;
-import org.platform.platformforeducationalcourses.domain.course.Lesson;
-import org.platform.platformforeducationalcourses.domain.course.Test;
+import refactor.course.application.port.in.module.command.create.ModuleCreateCommand;
+import refactor.course.application.port.in.module.command.create.ModuleCreateResult;
+import refactor.course.application.port.in.module.query.ModuleQueryResult;
+import refactor.course.application.port.in.module.command.update.ModuleUpdateCommand;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.test.Test;
 import org.platform.platformforeducationalcourses.dto.course.catalog.ModuleCatalogResponse;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseModuleFindResponse;
 import org.platform.platformforeducationalcourses.dto.lesson.StudentLessonFindResponse;
@@ -16,14 +20,14 @@ import org.platform.platformforeducationalcourses.dto.test.StudentTestFindRespon
 @Mapper(uses = {LessonMapper.class, TestMapper.class})
 public interface ModuleMapper {
 
-    ModuleCreateDto toCreateModuleDto(long courseId, ModuleCreateRequest request);
+    ModuleCreateCommand toCreateModuleDto(long courseId, ModuleCreateRequest request);
 
     @Mapping(source = "id", target = "moduleId")
-    ModuleCreateResponse toCreateModuleResponse(CourseModule savedCourse);
+    ModuleCreateResult toCreateModuleResponse(CourseModule savedCourse);
 
-    ModuleUpdateDto toModuleUpdateDto(long courseId, long moduleId, ModuleUpdateRequest request);
+    ModuleUpdateCommand toModuleUpdateDto(long courseId, long moduleId, ModuleUpdateRequest request);
 
-    ModuleFindResponse toModuleFindResponse(CourseModule courseModule);
+    ModuleQueryResult toModuleFindResponse(CourseModule courseModule);
 
     StudentModuleFindResponse toStudentModuleFindResponse(
             CourseModule module, List<StudentLessonFindResponse> lessons, List<StudentTestFindResponse> tests);
