@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface CourseLoadPort {
     Optional<Course> loadById(long id);
+
+    boolean isExist(long id);
 }

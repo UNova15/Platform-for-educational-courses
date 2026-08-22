@@ -2,11 +2,11 @@ package refactor.course.application.port.out.persistance.access;
 
 public interface CourseAccessPort {
 
-    boolean canManageLesson(long requesterId, long lessonId);
+    boolean isLessonOwner(long requesterId, long lessonId);
 
-    boolean canManageModule(long requesterId, long moduleId);
+    boolean isModuleOwner(long requesterId, long moduleId);
 
-    boolean canManageCourse(long requesterId, long courseId);
+    boolean isCourseOwner(long requesterId, long courseId);
 
-    boolean canManageTest(long requesterId,long testId);
+    boolean isTestOwner(long requesterId, long testId);
 }

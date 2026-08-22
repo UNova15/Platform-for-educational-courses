@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import refactor.course.application.port.in.test.command.create.AnswerOptionUpdateCommand;
 import refactor.course.application.port.in.test.command.create.QuestionCreateCommand;
 import refactor.course.application.port.in.test.command.create.QuestionUpdateCommand;
-import refactor.course.application.port.in.test.command.create.TestCreateCommand;
+import refactor.course.application.port.in.test.create.TestCreateCommand;
 import refactor.course.domain.option.AnswerOption;
 import refactor.course.domain.option.Option;
 import refactor.course.domain.question.Question;

@@ -5,6 +5,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import refactor.course.domain.course.Tag;
 
 public record CursorCourseQuery(
-        @PositiveOrZero long cursor,
+        @PositiveOrZero Long cursor,
         @PositiveOrZero @Max(100) int limit,
         Tag tag) {}

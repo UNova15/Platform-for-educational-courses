@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import refactor.common.exception.access.CourseAccessException;
 import refactor.common.exception.access.ModuleAccessException;
 import refactor.common.exception.domain.ModuleNotFoundException;
-import refactor.course.application.port.in.module.command.create.ModuleCreateCommand;
-import refactor.course.application.port.in.module.command.create.ModuleCreateResult;
-import refactor.course.application.port.in.module.command.create.ModuleCreateUseCase;
-import refactor.course.application.port.in.module.command.remove.ModuleRemoveCommand;
-import refactor.course.application.port.in.module.command.remove.ModuleRemoveUseCase;
-import refactor.course.application.port.in.module.command.update.ModuleUpdateCommand;
-import refactor.course.application.port.in.module.command.update.ModuleUpdateUseCase;
+import refactor.course.application.port.in.module.create.ModuleCreateCommand;
+import refactor.course.application.port.in.module.create.ModuleCreateResult;
+import refactor.course.application.port.in.module.create.ModuleCreateUseCase;
+import refactor.course.application.port.in.module.remove.ModuleRemoveUseCase;
+import refactor.course.application.port.in.module.update.ModuleUpdateCommand;
+import refactor.course.application.port.in.module.update.ModuleUpdateUseCase;
 import refactor.course.application.port.out.persistance.access.CourseAccessPort;
 import refactor.course.application.port.out.persistance.module.ModuleLoadPort;
 import refactor.course.application.port.out.persistance.module.ModuleRemovePort;
@@ -29,15 +28,14 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     private final ModuleLoadPort loadPort;
 
     @Override
-    public ModuleCreateResult createModule(ModuleCreateCommand createCommand) {
-        if (!accessPort.canManageCourse(createCommand.teacherId(), createCommand.courseId())) {
-            throw new CourseAccessException(createCommand.courseId(), createCommand.teacherId());
+    public ModuleCreateResult createModule(ModuleCreateCommand createCommand, long courseId, long teacherId) {
+        if (!accessPort.isCourseOwner(teacherId, courseId)) {
+            throw new CourseAccessException(courseId, teacherId);
         }
         var title = ModuleTitle.of(createCommand.title());
         var description = ModuleDescription.of(createCommand.description());
 
-        CourseModule module =
-                CourseModule.createNew(createCommand.courseId(), title, description, createCommand.orderIndex());
+        CourseModule module = CourseModule.createNew(courseId, title, description, createCommand.orderIndex());
 
         CourseModule savedModule = savePort.save(module);
 
@@ -45,12 +43,12 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     }
 
     @Override
-    public void updateModule(ModuleUpdateCommand updateCommand) {
-        CourseModule module = loadPort.loadById(updateCommand.moduleId())
-                .orElseThrow(() -> new ModuleNotFoundException(updateCommand.moduleId(), updateCommand.teacherId()));
+    public void updateModule(ModuleUpdateCommand updateCommand, long moduleId, long teacherId) {
+        CourseModule module =
+                loadPort.loadById(moduleId).orElseThrow(() -> new ModuleNotFoundException(moduleId, teacherId));
 
-        if (!accessPort.canManageModule(updateCommand.teacherId(), updateCommand.moduleId())) {
-            throw new ModuleAccessException(updateCommand.moduleId(), updateCommand.teacherId());
+        if (!accessPort.isModuleOwner(teacherId, moduleId)) {
+            throw new ModuleAccessException(moduleId, teacherId);
         }
 
         var title = ModuleTitle.of(updateCommand.title());
@@ -61,14 +59,14 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     }
 
     @Override
-    public void removeModule(ModuleRemoveCommand removeCommand) {
-        if (!loadPort.isExistModule(removeCommand.moduleId())) {
-            throw new ModuleNotFoundException(removeCommand.moduleId(), removeCommand.teacherId());
+    public void removeModule(long moduleId, long teacherId) {
+        if (!loadPort.isExistModule(moduleId)) {
+            throw new ModuleNotFoundException(moduleId, teacherId);
         }
 
-        if (!accessPort.canManageModule(removeCommand.teacherId(), removeCommand.moduleId())) {
-            throw new ModuleAccessException(removeCommand.moduleId(), removeCommand.teacherId());
+        if (!accessPort.isModuleOwner(teacherId, moduleId)) {
+            throw new ModuleAccessException(moduleId, teacherId);
         }
-        removePort.removeById(removeCommand.moduleId());
+        removePort.removeById(moduleId);
     }
 }

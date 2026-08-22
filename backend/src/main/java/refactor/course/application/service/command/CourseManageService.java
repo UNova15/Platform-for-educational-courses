@@ -2,7 +2,6 @@ package refactor.course.application.service.command;
 
 import lombok.AllArgsConstructor;
 import refactor.course.application.port.in.course.command.remove.CourseRemoveUseCase;
-import refactor.course.application.port.in.course.command.remove.CourseRemoveCommand;
 import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
 import refactor.course.application.port.in.course.command.update.CourseUpdateUseCase;
 import refactor.course.application.port.out.persistance.course.CourseLoadPort;
@@ -22,22 +21,21 @@ public class CourseManageService implements CourseRemoveUseCase, CourseUpdateUse
     private final CourseSavePort courseSavePort;
 
     @Override
-    public void removeCourse(CourseRemoveCommand removeCommand) {
-        Course course = courseLoadPort
-                .loadById(removeCommand.courseId())
-                .orElseThrow(() -> new CourseNotFoundException(removeCommand.courseId(), removeCommand.teacherId()));
+    public void removeCourse(long teacherId, long courseId) {
+        Course course =
+                courseLoadPort.loadById(courseId).orElseThrow(() -> new CourseNotFoundException(courseId, teacherId));
 
-        course.verifyOwnership(removeCommand.teacherId());
+        course.verifyOwnership(teacherId);
         courseRemovePort.remove(course);
     }
 
     @Override
-    public void updateCourse(CourseUpdateCommand updateCommand) {
+    public void updateCourse(CourseUpdateCommand updateCommand, long courseId,long userId) {
         Course course = courseLoadPort
-                .loadById(updateCommand.courseId())
-                .orElseThrow(() -> new CourseNotFoundException(updateCommand.courseId(), updateCommand.teacherId()));
+                .loadById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException(courseId, userId));
 
-        course.verifyOwnership(updateCommand.teacherId());
+        course.verifyOwnership(userId);
 
         var title = CourseTitle.of(updateCommand.title());
         var description = CourseDescription.of(updateCommand.description());

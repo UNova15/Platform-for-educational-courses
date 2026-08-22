@@ -5,13 +5,12 @@ import org.springframework.stereotype.Service;
 import refactor.common.exception.access.LessonAccessException;
 import refactor.common.exception.access.ModuleAccessException;
 import refactor.common.exception.domain.LessonNotFoundException;
-import refactor.course.application.port.in.lesson.command.create.LessonCreateCommand;
-import refactor.course.application.port.in.lesson.command.create.LessonCreateResult;
-import refactor.course.application.port.in.lesson.command.create.LessonCreateUseCase;
-import refactor.course.application.port.in.lesson.command.remove.LessonRemoveCommand;
-import refactor.course.application.port.in.lesson.command.remove.LessonRemoveUseCase;
-import refactor.course.application.port.in.lesson.command.update.LessonUpdateCommand;
-import refactor.course.application.port.in.lesson.command.update.LessonUpdateUseCase;
+import refactor.course.application.port.in.lesson.create.LessonCreateCommand;
+import refactor.course.application.port.in.lesson.create.LessonCreateResult;
+import refactor.course.application.port.in.lesson.create.LessonCreateUseCase;
+import refactor.course.application.port.in.lesson.remove.LessonRemoveUseCase;
+import refactor.course.application.port.in.lesson.update.LessonUpdateCommand;
+import refactor.course.application.port.in.lesson.update.LessonUpdateUseCase;
 import refactor.course.application.port.out.persistance.access.CourseAccessPort;
 import refactor.course.application.port.out.persistance.lesson.LessonLoadPort;
 import refactor.course.application.port.out.persistance.lesson.LessonRemovePort;
@@ -29,43 +28,42 @@ public class LessonManageService implements LessonCreateUseCase, LessonRemoveUse
     private final LessonRemovePort removePort;
 
     @Override
-    public LessonCreateResult createLesson(LessonCreateCommand createCommand) {
-        if (!accessPort.canManageModule(createCommand.teacherId(), createCommand.moduleId())) {
-            throw new ModuleAccessException(createCommand.moduleId(), createCommand.teacherId());
+    public LessonCreateResult createLesson(LessonCreateCommand createCommand, long teacherId, long moduleId) {
+        if (!accessPort.isModuleOwner(teacherId, moduleId)) {
+            throw new ModuleAccessException(moduleId, teacherId);
         }
 
         var title = LessonTitle.of(createCommand.title());
         var content = Content.of(createCommand.type(), createCommand.content());
 
-        Lesson lesson = Lesson.createNew(
-                createCommand.moduleId(), title, content, createCommand.orderIndex(), createCommand.mandatory());
+        Lesson lesson =
+                Lesson.createNew(moduleId, title, content, createCommand.orderIndex(), createCommand.mandatory());
 
         Lesson savedLesson = savePort.save(lesson);
         return new LessonCreateResult(
-                savedLesson.id(), createCommand.moduleId(), savedLesson.title().value());
+                savedLesson.id(), moduleId, savedLesson.title().value());
     }
 
     @Override
-    public void removeLesson(LessonRemoveCommand command) {
-        if (!loadPort.isExist(command.lessonId())) {
-            throw new LessonNotFoundException(command.lessonId());
+    public void removeLesson(long teacherId, long lessonId) {
+        if (!loadPort.isExist(lessonId)) {
+            throw new LessonNotFoundException(lessonId);
         }
 
-        if (!accessPort.canManageLesson(command.teacherId(), command.lessonId())) {
-            throw new LessonAccessException(command.lessonId(), command.teacherId());
+        if (!accessPort.isLessonOwner(teacherId, lessonId)) {
+            throw new LessonAccessException(lessonId, teacherId);
         }
 
-        removePort.removeById(command.lessonId());
+        removePort.removeById(lessonId);
     }
 
     @Override
-    public void updateLesson(LessonUpdateCommand updateCommand) {
-        if (!accessPort.canManageLesson(updateCommand.teacherId(), updateCommand.lessonId())) {
-            throw new LessonAccessException(updateCommand.lessonId(), updateCommand.lessonId());
+    public void updateLesson(LessonUpdateCommand updateCommand, long lessonId, long teacherId) {
+        if (!accessPort.isLessonOwner(teacherId, lessonId)) {
+            throw new LessonAccessException(lessonId, lessonId);
         }
 
-        Lesson lesson = loadPort.loadLessonById(updateCommand.lessonId())
-                .orElseThrow(() -> new LessonNotFoundException(updateCommand.lessonId()));
+        Lesson lesson = loadPort.loadLessonById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
 
         var title = LessonTitle.of(updateCommand.title());
         var content = Content.of(updateCommand.type(), updateCommand.content());

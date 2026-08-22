@@ -1,3 +1,0 @@
-package refactor.course.application.port.in.test.command.create;
-
-public record TestCreateResult(long id, long moduleId, String description, int orderIndex) {}

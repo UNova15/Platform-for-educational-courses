@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import refactor.course.domain.lesson.Lesson;
 import org.platform.platformforeducationalcourses.dto.lesson.*;
 import refactor.course.application.port.in.lesson.query.LessonQueryResult;
-import refactor.course.application.port.in.lesson.command.create.LessonCreateResult;
+import refactor.course.application.port.in.lesson.create.LessonCreateResult;
 
 @Mapper
 public interface LessonMapper {

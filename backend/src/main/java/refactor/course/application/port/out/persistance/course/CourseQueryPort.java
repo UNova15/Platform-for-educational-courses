@@ -1,14 +1,17 @@
 package refactor.course.application.port.out.persistance.course;
 
 import refactor.common.wrapper.CursorPageResponse;
-import refactor.course.application.port.in.course.query.CourseCursorResult;
-import refactor.course.application.port.in.course.query.CourseQueryResult;
-import refactor.course.application.port.in.course.query.CursorCourseQuery;
+import refactor.course.application.port.in.course.query.*;
 
-import java.util.List;
+import java.util.Optional;
+
 
 public interface CourseQueryPort {
-    List<CourseQueryResult> findTeachersCourses(long teacherId);
+    OwnedCoursesListView findTeachersCourses(long teacherId);
 
-    CursorPageResponse<CourseCursorResult> findCoursesByCursor(CursorCourseQuery query);
+    CursorPageResponse<CourseCursorView> findCoursesByCursor(CursorCourseQuery query);
+
+    Optional<TeacherCourseView> findTeachersCourseById(long courseId);
+
+    StudentCourseView findStudentCourseById(long courseId);
 }

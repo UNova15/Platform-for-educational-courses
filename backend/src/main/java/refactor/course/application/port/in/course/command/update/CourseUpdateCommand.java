@@ -8,9 +8,6 @@ import refactor.course.domain.course.CourseTitle;
 import refactor.course.domain.course.Tag;
 
 public record CourseUpdateCommand(
-        @PositiveOrZero long teacherId,
-        @PositiveOrZero long courseId,
-
         @NotBlank @Size(max = CourseTitle.MAX_COURSE_TITLE_SIZE)
         String title,
 

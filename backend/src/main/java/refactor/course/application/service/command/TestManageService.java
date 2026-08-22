@@ -5,13 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 import refactor.common.exception.access.ModuleAccessException;
 import refactor.common.exception.access.TestAccessException;
 import refactor.common.exception.domain.TestNotFoundException;
-import refactor.course.application.port.in.test.command.create.TestCreateCommand;
-import refactor.course.application.port.in.test.command.create.TestCreateResult;
-import refactor.course.application.port.in.test.command.create.TestCreateUseCase;
-import refactor.course.application.port.in.test.command.remove.RemoveTestCommand;
-import refactor.course.application.port.in.test.command.remove.TestRemoveUseCase;
-import refactor.course.application.port.in.test.command.update.TestUpdateCommand;
-import refactor.course.application.port.in.test.command.update.TestUpdateUseCase;
+import refactor.course.application.port.in.test.create.TestCreateCommand;
+import refactor.course.application.port.in.test.create.TestCreateResult;
+import refactor.course.application.port.in.test.create.TestCreateUseCase;
+import refactor.course.application.port.in.test.remove.TestRemoveUseCase;
+import refactor.course.application.port.in.test.update.TestUpdateCommand;
+import refactor.course.application.port.in.test.update.TestUpdateUseCase;
 import refactor.course.application.port.out.persistance.access.CourseAccessPort;
 import refactor.course.application.port.out.persistance.test.TestLoadPort;
 import refactor.course.application.port.out.persistance.test.TestRemovePort;
@@ -36,9 +35,9 @@ public class TestManageService implements TestCreateUseCase, TestRemoveUseCase, 
     private final TestFactory testFactory;
 
     @Override
-    public TestCreateResult createTest(TestCreateCommand command) {
-        if (!accessPort.canManageModule(command.teacherId(), command.moduleId())) {
-            throw new ModuleAccessException(command.moduleId(), command.teacherId());
+    public TestCreateResult createTest(TestCreateCommand command, long teacherId, long moduleId) {
+        if (!accessPort.isModuleOwner(teacherId, moduleId)) {
+            throw new ModuleAccessException(moduleId, teacherId);
         }
         Test test = testFactory.fromTestCreateCommand(command);
 
@@ -49,25 +48,25 @@ public class TestManageService implements TestCreateUseCase, TestRemoveUseCase, 
     }
 
     @Override
-    public void removeTest(RemoveTestCommand command) {
-        if (!loadPort.isExist(command.testId())) {
-            throw new TestNotFoundException(command.testId());
+    public void removeTest(long teacherId, long testId) {
+        if (!loadPort.isExist(testId)) {
+            throw new TestNotFoundException(testId);
         }
 
-        if (!accessPort.canManageTest(command.requesterId(), command.testId())) {
-            throw new TestAccessException(command.testId(), command.requesterId());
+        if (!accessPort.isTestOwner(teacherId, testId)) {
+            throw new TestAccessException(testId, teacherId);
         }
 
-        removePort.removeTestById(command.testId());
+        removePort.removeTestById(testId);
     }
 
     @Override
     @Transactional
-    public void updateTest(TestUpdateCommand command) {
-        Test test = loadPort.loadById(command.testId()).orElseThrow(() -> new TestNotFoundException(command.testId()));
+    public void updateTest(TestUpdateCommand command, long testId, long teacherId) {
+        Test test = loadPort.loadById(testId).orElseThrow(() -> new TestNotFoundException(testId));
 
-        if (!accessPort.canManageTest(command.teacherId(), command.testId())) {
-            throw new TestAccessException(command.testId(), command.teacherId());
+        if (!accessPort.isTestOwner(teacherId, testId)) {
+            throw new TestAccessException(testId, teacherId);
         }
 
         var title = TestTitle.of(command.title());

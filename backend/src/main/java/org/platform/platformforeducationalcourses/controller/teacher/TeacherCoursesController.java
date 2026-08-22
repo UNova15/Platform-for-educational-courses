@@ -6,16 +6,15 @@ import lombok.RequiredArgsConstructor;
 import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
 import refactor.course.application.port.in.course.command.create.CourseCreateResult;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
-import refactor.course.application.port.in.course.query.CourseQueryResult;
+import refactor.course.application.port.in.course.query.OwnedCoursesListView;
 import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
-import refactor.course.application.service.command.CourseBulkCreateService;
+import refactor.course.application.service.command.CourseCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import refactor.course.application.service.command.CourseManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import refactor.auth.adapter.out.security.model.SecurityUser;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ import refactor.auth.adapter.out.security.model.SecurityUser;
 @PreAuthorize("hasRole('TEACHER')")
 public class TeacherCoursesController {
     private final CourseStructureQueryService courseQueryService;
-    private final CourseBulkCreateService courseManagementService;
+    private final CourseCreateService courseManagementService;
     private final CourseManageService courseManageService;
 
     // TODO перенести проверки авторизации в сервисный слой
@@ -56,7 +55,7 @@ public class TeacherCoursesController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CourseQueryResult> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
+    public List<OwnedCoursesListView> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
 
         return courseManageService.findTeachersCoursesInfo(userPrincipal.getId());
     }

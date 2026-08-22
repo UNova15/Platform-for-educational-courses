@@ -15,13 +15,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig {
 
+    //TODO отредактировать после рефакторинга
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AccessAuthenticationFilter filter) {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/auth/**")
-                        .permitAll()
-                        .requestMatchers("/api/courses")
                         .permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                         .permitAll()

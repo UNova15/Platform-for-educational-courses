@@ -5,11 +5,14 @@ import jakarta.validation.constraints.PositiveOrZero;
 import refactor.common.wrapper.CursorPageResponse;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
 
 @Validated
 public interface CourseQueryUseCase {
-    List<CourseQueryResult> findTeachersCoursesInfo(@PositiveOrZero long teacherId);
+    OwnedCoursesListView findTeachersCourses(@PositiveOrZero long teacherId);
 
-    CursorPageResponse<CourseCursorResult> findCoursesByCursor(@Valid CursorCourseQuery query);
+    CursorPageResponse<CourseCursorView> findCoursesByCursor(@Valid CursorCourseQuery query);
+
+    TeacherCourseView findTeachersCourseById(@PositiveOrZero long teacherId, @PositiveOrZero long courseId);
+
+    StudentCourseView findStudentCourseById(@PositiveOrZero long requesterId, @PositiveOrZero long courseId);
 }
