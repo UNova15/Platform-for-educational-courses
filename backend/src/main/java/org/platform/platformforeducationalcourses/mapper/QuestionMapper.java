@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.mapper;
 
 import java.util.List;
 import org.mapstruct.Mapper;
-import refactor.course.domain.question.Question;
+import refactor.course.domain.internal.test.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.platform.platformforeducationalcourses.dto.test.PostAnswerOptionRequest;
 import refactor.course.application.port.in.test.query.QuestionQueryResult;

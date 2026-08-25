@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import refactor.course.domain.question.Question;
+import refactor.course.domain.internal.test.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class SimpleScoreCalculator implements ScoreCalculator {
             Question currentQuestion = questionsOrderById.get(questionId);
 
             Set<Long> currentOptionsIds = new HashSet<>(answer.optionIds());
-            if (currentQuestion.getCorrectAnswerOptionsIds().equals(currentOptionsIds)) {
+            if (currentQuestion.calculateCorrectOptionsIds().equals(currentOptionsIds)) {
                 score++;
             }
         }

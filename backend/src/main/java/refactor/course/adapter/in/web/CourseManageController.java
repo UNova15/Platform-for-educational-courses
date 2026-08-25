@@ -6,12 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.common.domain.Id;
 import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
 import refactor.course.application.port.in.course.command.create.CourseCreateResult;
 import refactor.course.application.port.in.course.command.create.CourseCreateUseCase;
 import refactor.course.application.port.in.course.command.remove.CourseRemoveUseCase;
 import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
 import refactor.course.application.port.in.course.command.update.CourseUpdateUseCase;
+import refactor.course.domain.external.User;
+import refactor.course.domain.internal.course.Course;
 import refactor.infrastructure.accesstoken.TokenPayload;
 
 @RestController
@@ -28,23 +31,28 @@ public class CourseManageController {
     public CourseCreateResult createCourse(
             @Valid @RequestBody CourseCreateCommand command, @AuthenticationPrincipal TokenPayload token) {
 
-        return createUseCase.createCourseWithContent(command, token.userId());
+        Id<User> userId = Id.of(token.userId());
+        return createUseCase.createCourseWithContent(command, userId);
     }
 
     @DeleteMapping("/{courseId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeCourse(@PathVariable long courseId, @AuthenticationPrincipal TokenPayload token) {
+    public void removeCourse(@PathVariable("courseId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
+        Id<User> userId = Id.of(token.userId());
+        Id<Course> courseId = Id.of(resourceId);
 
-        removeUseCase.removeCourse(token.userId(), courseId);
+        removeUseCase.removeCourse(userId, courseId);
     }
 
     @PutMapping("/{courseId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCourse(
             @Valid @RequestBody CourseUpdateCommand command,
-            @PathVariable long courseId,
+            @PathVariable("courseId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
+        Id<User> userId = Id.of(token.userId());
+        Id<Course> courseId = Id.of(resourceId);
 
-        updateUseCase.updateCourse(command, courseId, token.userId());
+        updateUseCase.updateCourse(command, courseId, userId);
     }
 }

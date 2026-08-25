@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.persistance.repository.provad
 
 import java.util.List;
 import java.util.Optional;
-import org.platform.platformforeducationalcourses.persistance.entity.course.ModuleEntity;
+import refactor.course.adapter.out.persistance.module.ModuleEntity;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

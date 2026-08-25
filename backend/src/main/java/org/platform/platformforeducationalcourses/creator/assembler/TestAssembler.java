@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.test.Test;
+import refactor.course.domain.internal.test.Test;
 import org.platform.platformforeducationalcourses.domain.progress.TestAnswer;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
 import org.platform.platformforeducationalcourses.dto.test.StudentTestFindResponse;

@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.creator.assembler.TestAssembler;
-import refactor.course.domain.question.Question;
-import refactor.course.domain.test.Test;
+import refactor.course.domain.internal.test.Question;
+import refactor.course.domain.internal.test.Test;
 import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
 import refactor.course.application.port.in.lesson.query.LessonQueryResult;
@@ -19,7 +19,7 @@ import org.platform.platformforeducationalcourses.persistance.repository.provade
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import refactor.course.application.service.LessonRemoveService;
-import refactor.course.application.service.command.TestManageService;
+import refactor.course.application.service.TestManageService;
 import org.platform.platformforeducationalcourses.validator.SubmissionValidator;
 import org.springframework.stereotype.Service;
 

@@ -3,14 +3,14 @@ package refactor.course.application.port.in.module.update;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import refactor.course.domain.module.ModuleDescription;
-import refactor.course.domain.module.ModuleTitle;
+import refactor.course.domain.internal.common.Description;
+import refactor.course.domain.internal.common.Title;
 
 public record ModuleUpdateCommand(
-        @NotBlank @Size(max = ModuleTitle.MAX_MODULE_TITLE_SIZE)
+        @NotBlank @Size(max = Title.MAX_LENGTH)
         String title,
 
-        @Size(max = ModuleDescription.MAX_MODULE_DESCRIPTION_SIZE)
+        @Size(max = Description.MAX_LENGTH)
         String description,
 
         @PositiveOrZero int orderIndex) {}

@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import refactor.course.domain.option.AnswerOption;
-import refactor.course.domain.question.Question;
-import refactor.course.domain.test.Test;
-import org.platform.platformforeducationalcourses.persistance.entity.course.AnswerOptionEntity;
-import org.platform.platformforeducationalcourses.persistance.entity.course.QuestionEntity;
-import org.platform.platformforeducationalcourses.persistance.entity.course.TestEntity;
+import refactor.course.domain.internal.test.AnswerOption;
+import refactor.course.domain.internal.test.Question;
+import refactor.course.domain.internal.test.Test;
+import refactor.course.adapter.out.persistance.test.AnswerOptionEntity;
+import refactor.course.adapter.out.persistance.test.QuestionEntity;
+import refactor.course.adapter.out.persistance.test.TestEntity;
 import org.springframework.stereotype.Component;
 
 @Component

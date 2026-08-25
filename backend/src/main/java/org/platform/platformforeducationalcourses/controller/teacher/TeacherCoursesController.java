@@ -8,9 +8,9 @@ import refactor.course.application.port.in.course.command.create.CourseCreateRes
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
 import refactor.course.application.port.in.course.query.OwnedCoursesListView;
 import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
-import refactor.course.application.service.command.CourseCreateService;
+import refactor.course.application.service.CourseCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
-import refactor.course.application.service.command.CourseManageService;
+import refactor.course.application.service.CourseManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -2,7 +2,7 @@ package refactor.course.application.port.in.course.query;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.PositiveOrZero;
-import refactor.course.domain.course.Tag;
+import refactor.course.domain.internal.course.Tag;
 
 public record CursorCourseQuery(
         @PositiveOrZero Long cursor,

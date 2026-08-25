@@ -1,7 +1,7 @@
 package refactor.course.application.port.in.course.query;
 
-import refactor.course.domain.course.Tag;
-import refactor.course.domain.lesson.ContentType;
+import refactor.course.domain.internal.course.Tag;
+import refactor.course.domain.internal.lesson.ContentType;
 
 import java.time.LocalDateTime;
 import java.util.List;

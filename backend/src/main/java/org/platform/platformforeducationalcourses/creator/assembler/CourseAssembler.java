@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.creator.assembler;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.course.Course;
+import refactor.course.domain.internal.course.Course;
 import refactor.common.wrapper.CursorPageResponse;
 import refactor.course.application.port.in.course.query.CourseCursorView;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;

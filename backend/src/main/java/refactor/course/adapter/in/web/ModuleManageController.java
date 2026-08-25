@@ -6,12 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import refactor.common.domain.Id;
 import refactor.course.application.port.in.module.create.ModuleCreateCommand;
 import refactor.course.application.port.in.module.create.ModuleCreateResult;
 import refactor.course.application.port.in.module.create.ModuleCreateUseCase;
 import refactor.course.application.port.in.module.remove.ModuleRemoveUseCase;
 import refactor.course.application.port.in.module.update.ModuleUpdateCommand;
 import refactor.course.application.port.in.module.update.ModuleUpdateUseCase;
+import refactor.course.domain.external.User;
+import refactor.course.domain.internal.course.Course;
+import refactor.course.domain.internal.module.CourseModule;
 import refactor.infrastructure.accesstoken.TokenPayload;
 
 @RestController
@@ -26,16 +30,22 @@ public class ModuleManageController {
     @ResponseStatus(HttpStatus.CREATED)
     public ModuleCreateResult createModule(
             @Valid @RequestBody ModuleCreateCommand createCommand,
-            @PathVariable long courseId,
+            @PathVariable("courseId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        return createUseCase.createModule(createCommand, courseId, token.userId());
+        Id<User> userId = Id.of(token.userId());
+        Id<Course> courseId = Id.of(resourceId);
+
+        return createUseCase.createModule(createCommand, courseId, userId);
     }
 
     @DeleteMapping("/modules/{moduleId}")
     @PreAuthorize("hasRole('TEACHER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeModule(@PathVariable long moduleId, @AuthenticationPrincipal TokenPayload token) {
-        removeUseCase.removeModule(moduleId, token.userId());
+    public void removeModule(@PathVariable("moduleId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
+        Id<User> userId = Id.of(token.userId());
+        Id<CourseModule> moduleId = Id.of(resourceId);
+
+        removeUseCase.removeModule(moduleId, userId);
     }
 
     @PutMapping("/modules/{moduleId}")
@@ -43,8 +53,11 @@ public class ModuleManageController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateModule(
             @Valid @RequestBody ModuleUpdateCommand command,
-            @PathVariable long moduleId,
+            @PathVariable("moduleId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        updateUseCase.updateModule(command, moduleId, token.userId());
+        Id<User> userId = Id.of(token.userId());
+        Id<CourseModule> moduleId = Id.of(resourceId);
+
+        updateUseCase.updateModule(command, moduleId, userId);
     }
 }

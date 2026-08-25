@@ -8,7 +8,7 @@ import org.platform.platformforeducationalcourses.mapper.TestMapper;
 import refactor.course.application.port.in.test.create.TestCreateCommand;
 import refactor.course.application.port.in.test.create.TestCreateResult;
 import refactor.course.application.port.in.test.update.TestUpdateCommand;
-import refactor.course.application.service.command.TestManageService;
+import refactor.course.application.service.TestManageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

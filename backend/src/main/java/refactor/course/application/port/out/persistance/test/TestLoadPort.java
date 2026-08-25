@@ -1,11 +1,12 @@
 package refactor.course.application.port.out.persistance.test;
 
-import refactor.course.domain.test.Test;
+import refactor.common.domain.Id;
+import refactor.course.domain.internal.test.Test;
 
 import java.util.Optional;
 
 public interface TestLoadPort {
-    Optional<Test> loadById(long testId);
+    Optional<Test> loadById(Id<Test> testId);
 
-    boolean isExist(long testId);
+    boolean isExist(Id<Test> testId);
 }

@@ -1,11 +1,12 @@
 package refactor.course.application.port.out.persistance.module;
 
-import refactor.course.domain.module.CourseModule;
+import refactor.common.domain.Id;
+import refactor.course.domain.internal.module.CourseModule;
 
 import java.util.Optional;
 
 public interface ModuleLoadPort {
-    Optional<CourseModule> loadById(long moduleId);
+    Optional<CourseModule> loadById(Id<CourseModule> moduleId);
 
-    boolean isExistModule(long moduleId);
+    boolean isExistModule(Id<CourseModule> moduleId);
 }

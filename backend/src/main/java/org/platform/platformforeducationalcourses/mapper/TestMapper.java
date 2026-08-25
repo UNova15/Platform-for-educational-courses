@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 import refactor.course.application.port.in.test.create.TestCreateCommand;
 import refactor.course.application.port.in.test.create.TestCreateResult;
 import refactor.course.application.port.in.test.update.TestUpdateCommand;
-import refactor.course.domain.test.Test;
+import refactor.course.domain.internal.test.Test;
 import org.platform.platformforeducationalcourses.dto.test.*;
 import refactor.course.application.port.in.test.query.TestQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestQuestion;

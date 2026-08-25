@@ -2,21 +2,20 @@ package refactor.course.application.service.factory;
 
 import java.util.List;
 
+import refactor.common.domain.Id;
 import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
-import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.internal.common.Description;
+import refactor.course.domain.internal.common.Title;
+import refactor.course.domain.internal.course.Course;
+import refactor.course.domain.internal.module.CourseModule;
 import org.springframework.stereotype.Component;
-import refactor.course.domain.module.ModuleDescription;
-import refactor.course.domain.module.ModuleTitle;
 
 @Component
 public class ModuleFactory {
-    public List<CourseModule> fromCommand(List<CourseCreateCommand.ModuleCommand> modules, long courseId) {
+    public List<CourseModule> fromCommand(List<CourseCreateCommand.ModuleCommand> modules, Id<Course> courseId) {
         return modules.stream()
                 .map(module -> CourseModule.createNew(
-                        courseId,
-                        ModuleTitle.of(module.title()),
-                        ModuleDescription.of(module.description()),
-                        module.orderIndex()))
+                        courseId, Title.of(module.title()), Description.of(module.description()), module.orderIndex()))
                 .toList();
     }
 }
