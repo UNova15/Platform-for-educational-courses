@@ -1,7 +1,7 @@
 package org.platform.platformforeducationalcourses.domain.ports.persistance;
 
 import java.util.List;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.test.Test;
 
 public interface TestRepository {
 

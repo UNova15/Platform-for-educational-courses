@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.persistance.repository.mapper
 
 import java.util.List;
 import java.util.stream.StreamSupport;
-import refactor.course.domain.internal.lesson.Lesson;
+import refactor.course.domain.lesson.Lesson;
 import refactor.course.adapter.out.persistance.lesson.LessonEntity;
 import org.springframework.stereotype.Component;
 

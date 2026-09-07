@@ -19,10 +19,10 @@ import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 import org.springframework.stereotype.Service;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.lesson.Lesson;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.test.Test;
 
 /**
  * Сервис для выполнения операций взаимодействия с общей структурой курса

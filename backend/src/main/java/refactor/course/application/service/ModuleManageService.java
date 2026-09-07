@@ -17,12 +17,12 @@ import refactor.course.application.port.out.persistance.course.CourseLoadPort;
 import refactor.course.application.port.out.persistance.module.ModuleLoadPort;
 import refactor.course.application.port.out.persistance.module.ModuleRemovePort;
 import refactor.course.application.port.out.persistance.module.ModuleSavePort;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
 import org.springframework.stereotype.Service;
-import refactor.course.domain.external.User;
+import refactor.course.domain.user.Account;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     private final CourseLoadPort courseLoadPort;
 
     @Override
-    public ModuleCreateResult createModule(ModuleCreateCommand createCommand, Id<Course> courseId, Id<User> teacherId) {
+    public ModuleCreateResult createModule(ModuleCreateCommand createCommand, Id<Course> courseId, Id<Account> teacherId) {
         if (!courseLoadPort.isExist(courseId)) {
             throw new CourseNotFoundException(courseId, teacherId);
         }
@@ -54,7 +54,7 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     }
 
     @Override
-    public void updateModule(ModuleUpdateCommand updateCommand, Id<CourseModule> moduleId, Id<User> teacherId) {
+    public void updateModule(ModuleUpdateCommand updateCommand, Id<CourseModule> moduleId, Id<Account> teacherId) {
         CourseModule module =
                 loadPort.loadById(moduleId).orElseThrow(() -> new ModuleNotFoundException(moduleId, teacherId));
 
@@ -70,7 +70,7 @@ class ModuleManageService implements ModuleCreateUseCase, ModuleRemoveUseCase, M
     }
 
     @Override
-    public void removeModule(Id<CourseModule> moduleId, Id<User> teacherId) {
+    public void removeModule(Id<CourseModule> moduleId, Id<Account> teacherId) {
         if (!loadPort.isExistModule(moduleId)) {
             throw new ModuleNotFoundException(moduleId, teacherId);
         }

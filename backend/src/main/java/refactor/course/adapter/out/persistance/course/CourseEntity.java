@@ -3,13 +3,15 @@ package refactor.course.adapter.out.persistance.course;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import refactor.course.domain.internal.course.Tag;
+import lombok.experimental.Accessors;
+import refactor.course.domain.course.Tag;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(name = "courses")
 @Getter
+@Accessors(fluent = true)
 @AllArgsConstructor
 public class CourseEntity {
     @Id

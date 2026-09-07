@@ -2,29 +2,43 @@ package refactor.course.adapter.out.persistance.course;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import refactor.common.domain.Id;
 import refactor.course.application.port.out.persistance.course.CourseLoadPort;
-import refactor.course.domain.internal.course.Course;
+import refactor.course.application.port.out.persistance.course.CourseRemovePort;
+import refactor.course.application.port.out.persistance.course.CourseSavePort;
+import refactor.course.domain.course.Course;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
-public class CoursePersistenceAdapter implements CourseLoadPort {
+public class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, CourseRemovePort {
     private final DataCourseRepository courseRepository;
-
+    private final CourseMapper mapper;
 
     @Override
-    public Optional<Course> loadById(long id) {
-        Optional<CourseEntity> entity = courseRepository.findById(id);
-
-        if (entity.isEmpty()) return Optional.empty();
-
-        Set<Long> modulesIds =
+    public boolean isExist(Id<Course> id) {
+        return courseRepository.existsById(id.value());
     }
 
     @Override
-    public boolean isExist(long id) {
-        return false;
+    public Optional<Course> loadById(Id<Course> id) {
+        Optional<CourseEntity> entity = courseRepository.findById(id.value());
+
+        if (entity.isEmpty()) return Optional.empty();
+
+        return entity.map(mapper::toDomain);
+    }
+
+    @Override
+    public void remove(Course course) {
+        courseRepository.deleteById(course.id().value());
+    }
+
+    @Override
+    public Course save(Course course) {
+        CourseEntity entity = mapper.toEntity(course);
+        CourseEntity saved = courseRepository.save(entity);
+        return mapper.toDomain(saved);
     }
 }

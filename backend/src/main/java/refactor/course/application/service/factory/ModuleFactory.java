@@ -3,11 +3,11 @@ package refactor.course.application.service.factory;
 import java.util.List;
 
 import refactor.common.domain.Id;
-import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.application.port.in.course.create.CourseCreateCommand;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
 import org.springframework.stereotype.Component;
 
 @Component

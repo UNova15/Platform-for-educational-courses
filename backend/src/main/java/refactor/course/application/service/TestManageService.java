@@ -19,12 +19,12 @@ import refactor.course.application.port.out.persistance.test.TestLoadPort;
 import refactor.course.application.port.out.persistance.test.TestRemovePort;
 import refactor.course.application.port.out.persistance.test.TestSavePort;
 import refactor.course.application.service.factory.TestFactory;
-import refactor.course.domain.external.User;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.test.Question;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.user.Account;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.test.Question;
+import refactor.course.domain.test.Test;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -41,7 +41,7 @@ public class TestManageService implements TestCreateUseCase, TestRemoveUseCase, 
     private final TestFactory testFactory;
 
     @Override
-    public TestCreateResult createTest(TestCreateCommand command, Id<User> teacherId, Id<CourseModule> moduleId) {
+    public TestCreateResult createTest(TestCreateCommand command, Id<Account> teacherId, Id<CourseModule> moduleId) {
         if (!moduleLoadPort.isExistModule(moduleId)) {
             throw new ModuleNotFoundException(moduleId, teacherId);
         }
@@ -61,7 +61,7 @@ public class TestManageService implements TestCreateUseCase, TestRemoveUseCase, 
     }
 
     @Override
-    public void removeTest(Id<User> teacherId, Id<Test> testId) {
+    public void removeTest(Id<Account> teacherId, Id<Test> testId) {
         if (!loadPort.isExist(testId)) {
             throw new TestNotFoundException(testId);
         }
@@ -75,7 +75,7 @@ public class TestManageService implements TestCreateUseCase, TestRemoveUseCase, 
 
     @Override
     @Transactional
-    public void updateTest(TestUpdateCommand command, Id<Test> testId, Id<User> teacherId) {
+    public void updateTest(TestUpdateCommand command, Id<Test> testId, Id<Account> teacherId) {
         Test test = loadPort.loadById(testId).orElseThrow(() -> new TestNotFoundException(testId));
 
         if (!accessPort.isTestOwner(teacherId, testId)) {

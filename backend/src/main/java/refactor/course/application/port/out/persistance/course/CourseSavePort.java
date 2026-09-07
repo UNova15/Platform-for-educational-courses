@@ -1,6 +1,6 @@
 package refactor.course.application.port.out.persistance.course;
 
-import refactor.course.domain.internal.course.Course;
+import refactor.course.domain.course.Course;
 
 public interface CourseSavePort {
 

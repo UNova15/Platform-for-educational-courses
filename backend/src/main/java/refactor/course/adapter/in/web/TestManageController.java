@@ -14,9 +14,9 @@ import refactor.course.application.port.in.test.create.TestCreateUseCase;
 import refactor.course.application.port.in.test.remove.TestRemoveUseCase;
 import refactor.course.application.port.in.test.update.TestUpdateCommand;
 import refactor.course.application.port.in.test.update.TestUpdateUseCase;
-import refactor.course.domain.external.User;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.user.Account;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.test.Test;
 import refactor.infrastructure.accesstoken.TokenPayload;
 
 @RestController
@@ -33,7 +33,7 @@ public class TestManageController {
             @Valid @RequestBody TestCreateCommand command,
             @PathVariable("moduleId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
         return createUseCase.createTest(command, userId, moduleId);
@@ -43,7 +43,7 @@ public class TestManageController {
     @PreAuthorize("hasRole('TEACHER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeTest(@PathVariable("testId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
 
         removeUseCase.removeTest(userId, testId);
@@ -56,7 +56,7 @@ public class TestManageController {
             @Valid @RequestBody TestUpdateCommand command,
             @PathVariable("testId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
 
         updateUseCase.updateTest(command, testId, userId);

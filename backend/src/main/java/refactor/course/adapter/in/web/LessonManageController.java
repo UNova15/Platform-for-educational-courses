@@ -13,9 +13,9 @@ import refactor.course.application.port.in.lesson.create.LessonCreateUseCase;
 import refactor.course.application.port.in.lesson.remove.LessonRemoveUseCase;
 import refactor.course.application.port.in.lesson.update.LessonUpdateCommand;
 import refactor.course.application.port.in.lesson.update.LessonUpdateUseCase;
-import refactor.course.domain.external.User;
-import refactor.course.domain.internal.lesson.Lesson;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.domain.user.Account;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.module.CourseModule;
 import refactor.infrastructure.accesstoken.TokenPayload;
 
 @RestController
@@ -32,7 +32,7 @@ public class LessonManageController {
             @Valid @RequestBody LessonCreateCommand createCommand,
             @PathVariable("moduleId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
         return createUseCase.createLesson(createCommand, userId, moduleId);
@@ -42,7 +42,7 @@ public class LessonManageController {
     @PreAuthorize("hasRole('TEACHER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeLesson(@PathVariable("lessonId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
         removeUseCase.removeLesson(userId, lessonId);
@@ -55,7 +55,7 @@ public class LessonManageController {
             @Valid @RequestBody LessonUpdateCommand command,
             @PathVariable("lessonId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
         updateUseCase.updateLesson(command, lessonId, userId);

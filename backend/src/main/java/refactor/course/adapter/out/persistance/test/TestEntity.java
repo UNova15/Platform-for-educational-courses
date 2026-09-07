@@ -1,35 +1,27 @@
 package refactor.course.adapter.out.persistance.test;
 
 import java.util.Set;
-import java.util.stream.Collectors;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import refactor.course.domain.internal.test.Test;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "test")
+@Table(name = "tests")
 @Getter
-@EqualsAndHashCode(of = "id")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Accessors(fluent = true)
+@AllArgsConstructor
 public class TestEntity {
     @Id
     private final Long id;
 
     private Long moduleId;
+    private String title;
     private String description;
     private int orderIndex;
 
+
     @MappedCollection(idColumn = "test_id")
     private Set<QuestionEntity> questions;
-
-    public static TestEntity fromTest(Test test) {
-        Set<QuestionEntity> questionEntities =
-                test.questions().stream().map(QuestionEntity::fromQuestion).collect(Collectors.toSet());
-        return new TestEntity(
-                test.getId(), test.getModuleId(), test.description(), test.getOrderIndex(), questionEntities);
-    }
 }

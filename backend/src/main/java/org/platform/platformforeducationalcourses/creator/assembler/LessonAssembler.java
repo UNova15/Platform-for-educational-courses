@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.internal.lesson.Lesson;
+import refactor.course.domain.lesson.Lesson;
 import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
 import org.platform.platformforeducationalcourses.dto.lesson.StudentLessonFindResponse;
 import org.platform.platformforeducationalcourses.mapper.LessonMapper;

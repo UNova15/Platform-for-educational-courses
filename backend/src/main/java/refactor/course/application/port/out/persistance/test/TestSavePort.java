@@ -1,11 +1,11 @@
 package refactor.course.application.port.out.persistance.test;
 
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.test.Test;
 
 import java.util.List;
 
 public interface TestSavePort {
-    List<Test> saveAll(Iterable<Test> tests);
+    List<Test> saveAll(List<Test> tests);
 
     Test save(Test test);
 }

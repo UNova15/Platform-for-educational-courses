@@ -1,19 +1,19 @@
 package refactor.course.application.port.out.persistance.access;
 
 import refactor.common.domain.Id;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.lesson.Lesson;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.test.Test;
-import refactor.course.domain.external.User;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.test.Test;
+import refactor.course.domain.user.Account;
 
 public interface CourseAccessPort {
 
-    boolean isLessonOwner(Id<User> requesterId, Id<Lesson> lessonId);
+    boolean isLessonOwner(Id<Account> requesterId, Id<Lesson> lessonId);
 
-    boolean isModuleOwner(Id<User> requesterId, Id<CourseModule> moduleId);
+    boolean isModuleOwner(Id<Account> requesterId, Id<CourseModule> moduleId);
 
-    boolean isCourseOwner(Id<User> requesterId, Id<Course> courseId);
+    boolean isCourseOwner(Id<Account> requesterId, Id<Course> courseId);
 
-    boolean isTestOwner(Id<User> requesterId, Id<Test> testId);
+    boolean isTestOwner(Id<Account> requesterId, Id<Test> testId);
 }

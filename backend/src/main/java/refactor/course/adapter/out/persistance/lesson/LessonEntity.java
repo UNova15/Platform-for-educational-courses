@@ -1,18 +1,16 @@
 package refactor.course.adapter.out.persistance.lesson;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import refactor.course.domain.internal.lesson.ContentType;
-import refactor.course.domain.internal.lesson.Lesson;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import refactor.course.domain.lesson.ContentType;
 
 @Table("lessons")
 @Getter
-@EqualsAndHashCode(of = "id")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Accessors(fluent = true)
+@AllArgsConstructor
 public class LessonEntity {
     @Id
     private final Long id;
@@ -23,15 +21,4 @@ public class LessonEntity {
     private String content;
     private int orderIndex;
     private boolean mandatory;
-
-    public static LessonEntity fromLesson(Lesson lesson) {
-        return new LessonEntity(
-                lesson.getId(),
-                lesson.getModuleId(),
-                lesson.getTitle(),
-                lesson.getType(),
-                lesson.getContent(),
-                lesson.getOrderIndex(),
-                lesson.isMandatory());
-    }
 }

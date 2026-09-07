@@ -1,6 +1,6 @@
 package refactor.course.application.port.out.persistance.module;
 
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.domain.module.CourseModule;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ public interface ModuleSavePort {
 
     CourseModule save(CourseModule module);
 
-    List<CourseModule> saveAll(Iterable<CourseModule> modules);
+    List<CourseModule> saveAll(List<CourseModule> modules);
 }

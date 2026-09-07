@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.test.Question;
-import refactor.course.domain.internal.test.valueobject.Option;
-import refactor.course.domain.internal.test.valueobject.QuestionContent;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.test.Question;
+import refactor.course.domain.test.valueobject.Option;
+import refactor.course.domain.test.valueobject.QuestionContent;
+import refactor.course.domain.test.Test;
 
 import java.util.List;
 

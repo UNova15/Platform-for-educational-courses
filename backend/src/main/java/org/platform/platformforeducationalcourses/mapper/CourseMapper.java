@@ -3,10 +3,10 @@ package org.platform.platformforeducationalcourses.mapper;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import refactor.course.application.port.in.course.query.CourseCursorView;
-import refactor.course.application.port.in.course.query.OwnedCoursesListView;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.application.port.in.query.catalog.CourseCursorView;
+import refactor.course.application.port.in.query.owned.OwnedCoursesView;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
 import org.platform.platformforeducationalcourses.dto.course.*;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
@@ -17,7 +17,7 @@ import org.platform.platformforeducationalcourses.dto.module.StudentModuleFindRe
 @Mapper(uses = {ModuleMapper.class})
 public interface CourseMapper {
 
-    List<OwnedCoursesListView> toCourseInfo(List<Course> course);
+    List<OwnedCoursesView> toCourseInfo(List<Course> course);
 
     List<CourseEnrolledFindResponse> toCourseEnrolledFindResponse(List<Course> courses);
 

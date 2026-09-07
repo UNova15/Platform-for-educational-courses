@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import refactor.course.domain.internal.test.AnswerOption;
-import refactor.course.domain.internal.test.Question;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.test.AnswerOption;
+import refactor.course.domain.test.Question;
+import refactor.course.domain.test.Test;
 import refactor.course.adapter.out.persistance.test.AnswerOptionEntity;
 import refactor.course.adapter.out.persistance.test.QuestionEntity;
 import refactor.course.adapter.out.persistance.test.TestEntity;
@@ -37,7 +37,7 @@ public class PersistTestMapper {
                         entity.getTestId(),
                         entity.getQuestion(),
                         entity.getOrderIndex(),
-                        toAnswerOption(entity.getAnswerOptions())))
+                        toAnswerOption(entity.answerOptions())))
                 .collect(Collectors.toSet());
     }
 

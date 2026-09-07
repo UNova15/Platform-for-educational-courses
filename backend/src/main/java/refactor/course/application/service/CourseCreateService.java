@@ -6,25 +6,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import refactor.common.domain.Id;
-import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
-import refactor.course.application.port.in.course.command.create.CourseCreateResult;
+import refactor.course.application.port.in.course.create.CourseCreateCommand;
+import refactor.course.application.port.in.course.create.CourseCreateResult;
 import refactor.course.application.service.factory.LessonFactory;
 import refactor.course.application.service.factory.TestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refactor.course.application.port.in.course.command.create.CourseCreateUseCase;
+import refactor.course.application.port.in.course.create.CourseCreateUseCase;
 import refactor.course.application.port.out.persistance.course.CourseSavePort;
 import refactor.course.application.port.out.persistance.lesson.LessonSavePort;
 import refactor.course.application.port.out.persistance.module.ModuleSavePort;
 import refactor.course.application.port.out.persistance.test.TestSavePort;
 import refactor.course.application.service.factory.ModuleFactory;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.lesson.Lesson;
-import refactor.course.domain.internal.test.Test;
-import refactor.course.domain.external.User;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.test.Test;
+import refactor.course.domain.user.Account;
 
 // В текущем варианте валидный курс обязательно содержит 1 модуль и 1 урок. В будущем введется понятие статуса
 // курса (DRAFT,PUBLISHED, ARCHIVED). Тогда доменный класс Course будет иметь метод publish и принимать список курсов и
@@ -45,7 +45,7 @@ public class CourseCreateService implements CourseCreateUseCase {
 
     @Override
     @Transactional
-    public CourseCreateResult createCourseWithContent(CourseCreateCommand command, Id<User> userId) {
+    public CourseCreateResult createCourseWithContent(CourseCreateCommand command, Id<Account> userId) {
         Course course = Course.createNew(
                 userId, Title.of(command.title()), Description.of(command.description()), command.tag());
         Course savedCourse = courseSavePort.save(course);

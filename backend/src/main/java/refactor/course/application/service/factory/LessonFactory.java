@@ -3,12 +3,12 @@ package refactor.course.application.service.factory;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import refactor.common.domain.Id;
-import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.lesson.Content;
-import refactor.course.domain.internal.lesson.Lesson;
+import refactor.course.application.port.in.course.create.CourseCreateCommand;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.lesson.Content;
+import refactor.course.domain.lesson.Lesson;
 import org.springframework.stereotype.Component;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.domain.module.CourseModule;
 
 @Component
 @AllArgsConstructor

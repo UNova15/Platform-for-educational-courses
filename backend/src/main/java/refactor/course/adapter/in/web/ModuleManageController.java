@@ -13,9 +13,9 @@ import refactor.course.application.port.in.module.create.ModuleCreateUseCase;
 import refactor.course.application.port.in.module.remove.ModuleRemoveUseCase;
 import refactor.course.application.port.in.module.update.ModuleUpdateCommand;
 import refactor.course.application.port.in.module.update.ModuleUpdateUseCase;
-import refactor.course.domain.external.User;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.internal.module.CourseModule;
+import refactor.course.domain.user.Account;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.module.CourseModule;
 import refactor.infrastructure.accesstoken.TokenPayload;
 
 @RestController
@@ -32,7 +32,7 @@ public class ModuleManageController {
             @Valid @RequestBody ModuleCreateCommand createCommand,
             @PathVariable("courseId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
 
         return createUseCase.createModule(createCommand, courseId, userId);
@@ -42,7 +42,7 @@ public class ModuleManageController {
     @PreAuthorize("hasRole('TEACHER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeModule(@PathVariable("moduleId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
         removeUseCase.removeModule(moduleId, userId);
@@ -55,7 +55,7 @@ public class ModuleManageController {
             @Valid @RequestBody ModuleUpdateCommand command,
             @PathVariable("moduleId") long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
-        Id<User> userId = Id.of(token.userId());
+        Id<Account> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
         updateUseCase.updateModule(command, moduleId, userId);

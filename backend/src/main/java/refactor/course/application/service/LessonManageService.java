@@ -19,11 +19,11 @@ import refactor.course.application.port.out.persistance.lesson.LessonLoadPort;
 import refactor.course.application.port.out.persistance.lesson.LessonRemovePort;
 import refactor.course.application.port.out.persistance.lesson.LessonSavePort;
 import refactor.course.application.port.out.persistance.module.ModuleLoadPort;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.lesson.Content;
-import refactor.course.domain.internal.lesson.Lesson;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.external.User;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.lesson.Content;
+import refactor.course.domain.lesson.Lesson;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.user.Account;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +36,7 @@ public class LessonManageService implements LessonCreateUseCase, LessonRemoveUse
 
     @Override
     public LessonCreateResult createLesson(
-            LessonCreateCommand createCommand, Id<User> teacherId, Id<CourseModule> moduleId) {
+            LessonCreateCommand createCommand, Id<Account> teacherId, Id<CourseModule> moduleId) {
         if (!moduleLoadPort.isExistModule(moduleId)) {
             throw new ModuleNotFoundException(moduleId, teacherId);
         }
@@ -64,7 +64,7 @@ public class LessonManageService implements LessonCreateUseCase, LessonRemoveUse
     }
 
     @Override
-    public void removeLesson(Id<User> teacherId, Id<Lesson> lessonId) {
+    public void removeLesson(Id<Account> teacherId, Id<Lesson> lessonId) {
         if (!loadPort.isExist(lessonId)) {
             throw new LessonNotFoundException(lessonId);
         }
@@ -77,7 +77,7 @@ public class LessonManageService implements LessonCreateUseCase, LessonRemoveUse
     }
 
     @Override
-    public void updateLesson(LessonUpdateCommand updateCommand, Id<Lesson> lessonId, Id<User> teacherId) {
+    public void updateLesson(LessonUpdateCommand updateCommand, Id<Lesson> lessonId, Id<Account> teacherId) {
         Lesson lesson = loadPort.loadLessonById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
 
         if (!accessPort.isLessonOwner(teacherId, lessonId)) {

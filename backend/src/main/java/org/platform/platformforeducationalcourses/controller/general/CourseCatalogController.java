@@ -1,9 +1,9 @@
 package org.platform.platformforeducationalcourses.controller.general;
 
 import lombok.AllArgsConstructor;
-import refactor.course.domain.internal.course.Tag;
-import refactor.common.wrapper.CursorPageResponse;
-import refactor.course.application.port.in.course.query.CourseCursorView;
+import refactor.course.domain.course.Tag;
+import refactor.common.wrapper.CursorResponse;
+import refactor.course.application.port.in.query.catalog.CourseCursorView;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
 import refactor.course.application.service.CourseCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
@@ -21,7 +21,7 @@ public class CourseCatalogController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public CursorPageResponse<CourseCursorView> getCourses(Pageable pageable, @RequestParam(required = false) Tag tag) {
+    public CursorResponse<CourseCursorView> getCourses(Pageable pageable, @RequestParam(required = false) Tag tag) {
         return courseService.findPageOfCourse(pageable, tag);
     }
 

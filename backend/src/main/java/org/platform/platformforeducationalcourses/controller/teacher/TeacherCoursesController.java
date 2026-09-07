@@ -3,11 +3,11 @@ package org.platform.platformforeducationalcourses.controller.teacher;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
-import refactor.course.application.port.in.course.command.create.CourseCreateResult;
+import refactor.course.application.port.in.course.create.CourseCreateCommand;
+import refactor.course.application.port.in.course.create.CourseCreateResult;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseFindResponse;
-import refactor.course.application.port.in.course.query.OwnedCoursesListView;
-import refactor.course.application.port.in.course.command.update.CourseUpdateCommand;
+import refactor.course.application.port.in.query.owned.OwnedCoursesView;
+import refactor.course.application.port.in.course.update.CourseUpdateCommand;
 import refactor.course.application.service.CourseCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import refactor.course.application.service.CourseManageService;
@@ -55,7 +55,7 @@ public class TeacherCoursesController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<OwnedCoursesListView> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
+    public List<OwnedCoursesView> getCourses(@AuthenticationPrincipal SecurityUser userPrincipal) {
 
         return courseManageService.findTeachersCoursesInfo(userPrincipal.getId());
     }

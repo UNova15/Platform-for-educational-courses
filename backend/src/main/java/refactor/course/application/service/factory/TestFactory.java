@@ -5,17 +5,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import refactor.common.domain.Id;
-import refactor.course.application.port.in.course.command.create.CourseCreateCommand;
+import refactor.course.application.port.in.course.create.CourseCreateCommand;
 import refactor.course.application.port.in.test.create.TestCreateCommand;
 import refactor.course.application.port.in.test.update.TestUpdateCommand;
-import refactor.course.domain.internal.common.Description;
-import refactor.course.domain.internal.common.Title;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.internal.test.AnswerOption;
-import refactor.course.domain.internal.test.Test;
-import refactor.course.domain.internal.test.valueobject.Option;
-import refactor.course.domain.internal.test.Question;
-import refactor.course.domain.internal.test.valueobject.QuestionContent;
+import refactor.course.domain.common.Description;
+import refactor.course.domain.common.Title;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.test.AnswerOption;
+import refactor.course.domain.test.Test;
+import refactor.course.domain.test.valueobject.Option;
+import refactor.course.domain.test.Question;
+import refactor.course.domain.test.valueobject.QuestionContent;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,12 +1,16 @@
 package refactor.common.exception.domain;
 
 import refactor.common.domain.Id;
-import refactor.course.domain.internal.module.CourseModule;
-import refactor.course.domain.external.User;
+import refactor.course.domain.module.CourseModule;
+import refactor.course.domain.user.Account;
 
-public class ModuleNotFoundException extends NotFoundException {
+public class ModuleNotFoundException extends EntityNotFoundException {
 
-    public ModuleNotFoundException(Id<CourseModule> moduleId, Id<User> requesterId) {
+    public ModuleNotFoundException(Id<CourseModule> moduleId, Id<Account> requesterId) {
         super("Module with ID: %d for user with ID %d not found".formatted(moduleId.value(), requesterId.value()));
+    }
+
+    public ModuleNotFoundException(Id<CourseModule> moduleId) {
+        super("Module with ID: %d for user not found".formatted(moduleId.value()));
     }
 }

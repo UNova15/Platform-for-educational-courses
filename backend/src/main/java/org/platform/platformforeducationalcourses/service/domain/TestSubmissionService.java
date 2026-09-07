@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.service.domain;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.internal.test.Test;
+import refactor.course.domain.test.Test;
 import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataSubmissionsRepository;
 import org.springframework.stereotype.Service;

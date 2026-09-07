@@ -1,9 +1,9 @@
 package refactor.course.application.port.out.external;
 
 import refactor.common.domain.Id;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.external.User;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.user.Account;
 
 public interface EnrollmentCheckPort {
-    boolean isUserEnrolledInCourse(Id<User> studentId, Id<Course> courseId);
+    boolean isUserEnrolledInCourse(Id<Account> studentId, Id<Course> courseId);
 }

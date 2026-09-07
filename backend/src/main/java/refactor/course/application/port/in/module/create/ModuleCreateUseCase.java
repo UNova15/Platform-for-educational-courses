@@ -4,11 +4,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import refactor.common.domain.Id;
-import refactor.course.domain.internal.course.Course;
-import refactor.course.domain.external.User;
+import refactor.course.domain.course.Course;
+import refactor.course.domain.user.Account;
 
 @Validated
 public interface ModuleCreateUseCase {
     ModuleCreateResult createModule(
-            @Valid ModuleCreateCommand createCommand, @NotNull Id<Course> courseId, @NotNull Id<User> teacherId);
+            @Valid ModuleCreateCommand createCommand, @NotNull Id<Course> courseId, @NotNull Id<Account> teacherId);
 }
