@@ -3,14 +3,14 @@ package refactor.auth.adapter.in.web;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.AuthResult;
 
 @Component
 @AllArgsConstructor
 class CookieFactory {
     private final CookieProperties cookieProperties;
 
-    public ResponseCookie createDefaultRefreshCookie(PairOfTokens token) {
+    public ResponseCookie createDefaultRefreshCookie(AuthResult token) {
         return ResponseCookie.from("refreshToken", token.refreshToken())
                 .httpOnly(true)
                 .path("/auth/refresh")

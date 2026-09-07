@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
-import refactor.auth.domain.user.HashedPassword;
-import refactor.auth.domain.user.RawPassword;
+import refactor.auth.domain.user.valueobject.HashedPassword;
+import refactor.auth.domain.user.valueobject.RawPassword;
 
 @Component
 @AllArgsConstructor

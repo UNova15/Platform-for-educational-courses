@@ -1,4 +1,4 @@
-package refactor.auth.adapter.out.token;
+package refactor.auth.adapter.out.tokengenerator;
 
 import java.security.SecureRandom;
 import java.util.Base64;

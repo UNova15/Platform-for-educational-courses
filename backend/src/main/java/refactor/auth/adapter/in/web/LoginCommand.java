@@ -1,4 +1,4 @@
-package refactor.auth.application.ports.in;
+package refactor.auth.adapter.in.web;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -4,16 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.platform.platformforeducationalcourses.exception.UserAlreadyExistException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refactor.auth.application.ports.in.PairOfTokens;
-import refactor.auth.application.ports.in.RegistrationCommand;
+import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.RegistrationUseCase;
 import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
 import refactor.auth.application.ports.out.persistance.UserLoadPort;
 import refactor.auth.application.ports.out.persistance.UserSavePort;
-import refactor.auth.domain.user.HashedPassword;
-import refactor.auth.domain.user.Login;
-import refactor.auth.domain.user.RawPassword;
+import refactor.auth.domain.user.valueobject.HashedPassword;
+import refactor.auth.domain.user.valueobject.Login;
+import refactor.auth.domain.user.valueobject.RawPassword;
 import refactor.auth.domain.user.User;
+import refactor.auth.domain.user.valueobject.UserRole;
+import refactor.common.domain.Id;
 
 @Service
 @RequiredArgsConstructor
@@ -24,22 +25,18 @@ class RegistrationService implements RegistrationUseCase {
     private final PasswordHasherPort passwordHasher;
     private final TokenService tokenService;
 
-    @Transactional
     @Override
-    public PairOfTokens registration(RegistrationCommand request) {
-        if (userLoadPort.loadUserByLogin(request.login()).isPresent()) {
-            throw new UserAlreadyExistException(request.login());
+    @Transactional
+    public AuthResult registration(Login login, RawPassword password, UserRole role) {
+        if (userLoadPort.isExistUserByLogin(login)) {
+            throw new UserAlreadyExistException(login.value());
         }
 
-        Login login = Login.of(request.login());
-        RawPassword password = RawPassword.of(request.password());
-
         HashedPassword hashedPassword = passwordHasher.hashPassword(password);
+        User user = User.createNew(login, hashedPassword, role);
 
-        User user = User.createNew(login, hashedPassword, request.role());
+        Id<User> userId = userSavePort.save(user).id();
 
-        long userId = userSavePort.save(user).id();
-
-        return tokenService.createTokens(userId, request.login(), request.role());
+        return tokenService.createTokens(userId, login, role);
     }
 }

@@ -1,4 +1,4 @@
-package refactor.auth.domain.user;
+package refactor.auth.domain.user.valueobject;
 
 import lombok.AccessLevel;
 import lombok.Getter;

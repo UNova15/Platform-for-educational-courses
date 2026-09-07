@@ -1,14 +1,14 @@
-package refactor.auth.application.ports.in;
+package refactor.auth.adapter.in.web;
 
-import static refactor.auth.domain.user.Login.MAX_LOGIN_LENGTH;
-import static refactor.auth.domain.user.Login.MIN_LOGIN_LENGTH;
-import static refactor.auth.domain.user.RawPassword.MAX_PASSWORD_LENGTH;
-import static refactor.auth.domain.user.RawPassword.MIN_PASSWORD_LENGTH;
+import static refactor.auth.domain.user.valueobject.Login.MAX_LOGIN_LENGTH;
+import static refactor.auth.domain.user.valueobject.Login.MIN_LOGIN_LENGTH;
+import static refactor.auth.domain.user.valueobject.RawPassword.MAX_PASSWORD_LENGTH;
+import static refactor.auth.domain.user.valueobject.RawPassword.MIN_PASSWORD_LENGTH;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import refactor.auth.domain.user.UserRole;
+import refactor.auth.domain.user.valueobject.UserRole;
 
 public record RegistrationCommand(
         @NotBlank(message = "The username cannot be empty")

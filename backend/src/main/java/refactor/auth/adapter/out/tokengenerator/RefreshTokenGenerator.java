@@ -1,9 +1,10 @@
-package refactor.auth.adapter.out.token;
+package refactor.auth.adapter.out.tokengenerator;
 
 import java.security.SecureRandom;
 import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import refactor.auth.application.ports.out.token.RefreshTokenGeneratePort;
+import refactor.auth.domain.token.valueobject.RawRefreshToken;
 
 @RequiredArgsConstructor
 class RefreshTokenGenerator implements RefreshTokenGeneratePort {
@@ -12,9 +13,11 @@ class RefreshTokenGenerator implements RefreshTokenGeneratePort {
     private final int tokenLength;
 
     @Override
-    public String generateRefreshToken() {
+    public RawRefreshToken generateRefreshToken() {
         byte[] bytes = new byte[tokenLength];
         secureRandom.nextBytes(bytes);
-        return encoder.encodeToString(bytes);
+        String encoded = encoder.encodeToString(bytes);
+
+        return RawRefreshToken.of(encoded);
     }
 }

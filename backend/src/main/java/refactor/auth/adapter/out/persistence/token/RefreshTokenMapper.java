@@ -2,16 +2,21 @@ package refactor.auth.adapter.out.persistence.token;
 
 import org.springframework.stereotype.Component;
 import refactor.auth.domain.token.RefreshToken;
+import refactor.auth.domain.token.valueobject.HashedRefreshToken;
+import refactor.common.domain.Id;
 
 @Component
 class RefreshTokenMapper {
 
     public RefreshToken toDomain(RefreshTokenEntity entity) {
-        return RefreshToken.restore(entity.getId(), entity.getUserId(), entity.getToken());
+        HashedRefreshToken token = HashedRefreshToken.restoreFromHash(entity.getToken());
+        return RefreshToken.restore(Id.of(entity.getId()), Id.of(entity.getUserId()), token);
     }
 
     public RefreshTokenEntity toEntity(RefreshToken refreshToken) {
         return new RefreshTokenEntity(
-                refreshToken.id(), refreshToken.userId(), refreshToken.token().value());
+                refreshToken.id().value(),
+                refreshToken.userId().value(),
+                refreshToken.token().value());
     }
 }

@@ -1,4 +1,4 @@
-package refactor.auth.adapter.out.token;
+package refactor.auth.adapter.out.tokengenerator;
 
 import jakarta.validation.constraints.Min;
 import org.springframework.boot.context.properties.ConfigurationProperties;

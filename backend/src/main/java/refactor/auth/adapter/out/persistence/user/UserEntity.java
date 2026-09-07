@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import refactor.auth.domain.user.UserRole;
+import refactor.auth.domain.user.valueobject.UserRole;
 
 @Table(name = "users")
 @Getter

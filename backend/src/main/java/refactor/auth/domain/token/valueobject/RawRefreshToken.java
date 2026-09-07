@@ -1,4 +1,4 @@
-package refactor.auth.domain.token;
+package refactor.auth.domain.token.valueobject;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,13 +9,13 @@ import refactor.common.exception.auth.InvalidTokenException;
 @Getter
 @Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class RawToken {
+public class RawRefreshToken {
     private final String value;
 
-    public static RawToken of(String token) {
+    public static RawRefreshToken of(String token) {
         if (token == null || token.isBlank()) {
             throw new InvalidTokenException("Token can not be empty");
         }
-        return new RawToken(token);
+        return new RawRefreshToken(token);
     }
 }

@@ -4,15 +4,13 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import refactor.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
-import refactor.auth.domain.token.HashedToken;
+import refactor.auth.domain.token.valueobject.HashedRefreshToken;
 import refactor.auth.domain.token.RefreshToken;
-
-// TODO исправить на Valkey вместо бд (+ в данный момент нет контроля ttl)
 
 @Repository
 @RequiredArgsConstructor
 class RefreshTokenAdapter implements RefreshTokenRepositoryPort {
-    private final OrmRefreshTokenRepository repository;
+    private final RefreshTokenRepository repository;
     private final RefreshTokenMapper mapper;
 
     @Override
@@ -24,11 +22,11 @@ class RefreshTokenAdapter implements RefreshTokenRepositoryPort {
 
     @Override
     public void remove(RefreshToken token) {
-        repository.deleteById(token.id());
+        repository.deleteById(token.id().value());
     }
 
     @Override
-    public Optional<RefreshToken> load(HashedToken token) {
+    public Optional<RefreshToken> load(HashedRefreshToken token) {
         return repository.findByToken(token.value()).map(mapper::toDomain);
     }
 }

@@ -1,8 +1,8 @@
 package refactor.auth.application.ports.out.crypto;
 
-import refactor.auth.domain.token.HashedToken;
-import refactor.auth.domain.token.RawToken;
+import refactor.auth.domain.token.valueobject.HashedRefreshToken;
+import refactor.auth.domain.token.valueobject.RawRefreshToken;
 
 public interface TokenHashingPort {
-    HashedToken hash(RawToken rawToken);
+    HashedRefreshToken hash(RawRefreshToken rawRefreshToken);
 }

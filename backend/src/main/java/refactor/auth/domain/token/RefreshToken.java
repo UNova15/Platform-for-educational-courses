@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import refactor.auth.domain.token.valueobject.HashedRefreshToken;
+import refactor.auth.domain.user.User;
+import refactor.common.domain.Id;
 
 @Getter
 @Accessors(fluent = true)
@@ -11,19 +14,19 @@ import lombok.experimental.Accessors;
 public class RefreshToken {
     public static final int MIN_REFRESH_TOKEN_LENGTH = 32;
 
-    private final Long id;
-    private final Long userId;
-    private final HashedToken token;
+    private final Id<RefreshToken> id;
+    private final Id<User> userId;
+    private final HashedRefreshToken token;
 
-    public static RefreshToken createNew(long userId, HashedToken token) {
+    public static RefreshToken createNew(Id<User> userId, HashedRefreshToken token) {
         if (token == null) {
-            throw new IllegalArgumentException("Empty token for user: %d".formatted(userId));
+            throw new IllegalArgumentException("Empty token for user: %d".formatted(userId.value()));
         }
 
         return new RefreshToken(null, userId, token);
     }
 
-    public static RefreshToken restore(long id, long userId, String token) {
-        return new RefreshToken(id, userId, HashedToken.restoreFromHash(token));
+    public static RefreshToken restore(Id<RefreshToken> id, Id<User> userId, HashedRefreshToken token) {
+        return new RefreshToken(id, userId, token);
     }
 }

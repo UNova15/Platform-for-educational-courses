@@ -4,12 +4,16 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import refactor.auth.domain.user.valueobject.HashedPassword;
+import refactor.auth.domain.user.valueobject.Login;
+import refactor.auth.domain.user.valueobject.UserRole;
+import refactor.common.domain.Id;
 
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
-    private final Long id;
+    private final Id<User> id;
     private Login login;
     private HashedPassword password;
     private final UserRole role;
@@ -21,7 +25,7 @@ public class User {
         return new User(null, login, password, role);
     }
 
-    public static User restore(long id, String password, String login, UserRole role) {
+    public static User restore(Id<User> id, String password, String login, UserRole role) {
         return new User(id, Login.restore(login), HashedPassword.restoreFromHash(password), role);
     }
 }

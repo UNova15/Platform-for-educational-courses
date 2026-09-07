@@ -1,7 +1,7 @@
 package refactor.auth.application.ports.out.crypto;
 
-import refactor.auth.domain.user.HashedPassword;
-import refactor.auth.domain.user.RawPassword;
+import refactor.auth.domain.user.valueobject.HashedPassword;
+import refactor.auth.domain.user.valueobject.RawPassword;
 
 public interface PasswordHasherPort {
     HashedPassword hashPassword(RawPassword password);

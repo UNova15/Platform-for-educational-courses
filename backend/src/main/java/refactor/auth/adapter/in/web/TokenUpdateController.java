@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.UpdateTokenUseCase;
+import refactor.auth.domain.token.valueobject.RawRefreshToken;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,12 +20,14 @@ class TokenUpdateController {
     private final CookieFactory cookieFactory;
 
     @PostMapping("/refresh")
-    public ResponseEntity<PairOfTokens> refresh(@CookieValue("refreshToken") String refreshToken) {
-        PairOfTokens pairOfTokens = updateTokenUseCase.updateTokens(refreshToken);
+    public ResponseEntity<AuthResult> refresh(@CookieValue("refreshToken") String refreshToken) {
+        RawRefreshToken token = RawRefreshToken.of(refreshToken);
 
-        ResponseCookie responseCookie = cookieFactory.createDefaultRefreshCookie(pairOfTokens);
+        AuthResult authResult = updateTokenUseCase.updateTokens(token);
+
+        ResponseCookie responseCookie = cookieFactory.createDefaultRefreshCookie(authResult);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .body(pairOfTokens);
+                .body(authResult);
     }
 }

@@ -3,19 +3,22 @@ package refactor.auth.application.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import refactor.auth.domain.token.valueobject.AccessToken;
+import refactor.auth.domain.user.valueobject.Login;
+import refactor.common.domain.Id;
 import refactor.common.exception.auth.InvalidTokenException;
-import refactor.auth.application.ports.in.PairOfTokens;
+import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.UpdateTokenUseCase;
 import refactor.auth.application.ports.out.token.AccessTokenGeneratePort;
 import refactor.auth.application.ports.out.token.RefreshTokenGeneratePort;
 import refactor.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
 import refactor.auth.application.ports.out.crypto.TokenHashingPort;
 import refactor.auth.application.ports.out.persistance.UserLoadPort;
-import refactor.auth.domain.token.HashedToken;
-import refactor.auth.domain.token.RawToken;
+import refactor.auth.domain.token.valueobject.HashedRefreshToken;
+import refactor.auth.domain.token.valueobject.RawRefreshToken;
 import refactor.auth.domain.token.RefreshToken;
 import refactor.auth.domain.user.User;
-import refactor.auth.domain.user.UserRole;
+import refactor.auth.domain.user.valueobject.UserRole;
 
 @Service
 @AllArgsConstructor
@@ -28,22 +31,22 @@ class TokenService implements UpdateTokenUseCase {
     private final AccessTokenGeneratePort accessTokenGeneratePort;
     private final RefreshTokenGeneratePort refreshTokenGeneratePort;
 
-    public PairOfTokens createTokens(long userId, String login, UserRole role) {
-        String jwt = accessTokenGeneratePort.generateAccessToken(userId, login, role);
-        String refresh = refreshTokenGeneratePort.generateRefreshToken();
+    public AuthResult createTokens(Id<User> userId, Login login, UserRole role) {
 
-        HashedToken hashedToken = hashingPort.hash(RawToken.of(refresh));
+        AccessToken access = accessTokenGeneratePort.generateAccessToken(userId, login, role);
+        RawRefreshToken refresh = refreshTokenGeneratePort.generateRefreshToken();
+
+        HashedRefreshToken hashedToken = hashingPort.hash(refresh);
 
         RefreshToken refreshToken = RefreshToken.createNew(userId, hashedToken);
         refreshTokenRepositoryPort.save(refreshToken);
 
-        return new PairOfTokens(userId, login, role, jwt, refresh);
+        return AuthResult.createFrom(userId, login, role, access, refresh);
     }
 
     @Transactional
-    public PairOfTokens updateTokens(String oldRawRefreshToken) {
-        RawToken oldRefresh = RawToken.of(oldRawRefreshToken);
-        HashedToken oldHashedToken = hashingPort.hash(oldRefresh);
+    public AuthResult updateTokens(RawRefreshToken oldRefresh) {
+        HashedRefreshToken oldHashedToken = hashingPort.hash(oldRefresh);
 
         RefreshToken refreshToken = refreshTokenRepositoryPort
                 .load(oldHashedToken)
@@ -51,22 +54,21 @@ class TokenService implements UpdateTokenUseCase {
 
         refreshTokenRepositoryPort.remove(refreshToken);
 
-        long userId = refreshToken.userId();
+        Id<User> userId = refreshToken.userId();
 
         User user = userLoadPort
                 .loadUserById(userId)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Non-existent user with id: %d and token: %s".formatted(userId, oldHashedToken)));
+                        "Non-existent user with id: %d and token: %s".formatted(userId.value(), oldHashedToken)));
 
-        String newAccessToken =
-                accessTokenGeneratePort.generateAccessToken(userId, user.login().value(), user.role());
-        String newRefreshToken = refreshTokenGeneratePort.generateRefreshToken();
+        AccessToken newAccessToken = accessTokenGeneratePort.generateAccessToken(userId, user.login(), user.role());
+        RawRefreshToken newRefreshToken = refreshTokenGeneratePort.generateRefreshToken();
 
-        HashedToken hashedToken = hashingPort.hash(RawToken.of(newRefreshToken));
+        HashedRefreshToken hashedToken = hashingPort.hash(newRefreshToken);
         RefreshToken newHashedRefreshToken = RefreshToken.createNew(userId, hashedToken);
 
         refreshTokenRepositoryPort.save(newHashedRefreshToken);
 
-        return new PairOfTokens(userId, user.login().value(), user.role(), newAccessToken, newRefreshToken);
+        return AuthResult.createFrom(userId, user.login(), user.role(), newAccessToken, newRefreshToken);
     }
 }

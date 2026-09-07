@@ -1,4 +1,4 @@
-package refactor.auth.domain.token;
+package refactor.auth.domain.token.valueobject;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,17 +8,17 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class HashedToken {
+public class HashedRefreshToken {
     private final String value;
 
-    public static HashedToken of(String hashedToken) {
+    public static HashedRefreshToken of(String hashedToken) {
         if (hashedToken == null || hashedToken.isBlank()) {
             throw new IllegalArgumentException("Hashed token can not be empty");
         }
-        return new HashedToken(hashedToken);
+        return new HashedRefreshToken(hashedToken);
     }
 
-    public static HashedToken restoreFromHash(String hashedToken) {
-        return new HashedToken(hashedToken);
+    public static HashedRefreshToken restoreFromHash(String hashedToken) {
+        return new HashedRefreshToken(hashedToken);
     }
 }
