@@ -1,11 +1,8 @@
 package refactor.common.exception.domain;
 
-import refactor.common.domain.Id;
-import refactor.course.domain.course.Course;
-import refactor.course.domain.user.Account;
-
+//TODO сделать общие исключения в модуле common и отедльные иерархии с нужными типами id в каждом модуле
 public class CourseNotFoundException extends EntityNotFoundException {
-    public CourseNotFoundException(Id<Course> courseId, Id<Account> teacherId) {
-        super("Not found course with id: %s and teacher id: %s".formatted(courseId.value(), teacherId.value()));
+    public CourseNotFoundException(long courseId, long requesterId) {
+        super("Not found course with id: %s for user with id: %s".formatted(courseId, requesterId));
     }
 }

@@ -12,7 +12,7 @@ import refactor.common.exception.domain.DomainModificationException;
 import refactor.common.domain.Id;
 import refactor.course.domain.common.Description;
 import refactor.course.domain.common.Title;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 
 @Getter
 @Accessors(fluent = true)

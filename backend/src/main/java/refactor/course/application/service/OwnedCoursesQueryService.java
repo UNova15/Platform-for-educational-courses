@@ -17,7 +17,7 @@ import refactor.course.domain.course.Course;
 import refactor.course.domain.lesson.Lesson;
 import refactor.course.domain.module.CourseModule;
 import refactor.course.domain.test.Test;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 
 import java.util.List;
 

@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import refactor.course.domain.module.CourseModule;
 import refactor.course.domain.lesson.Lesson;
 import refactor.course.domain.test.Test;
-import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
-import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
+import refactor.progress.domain.lessonprogress.LessonProgress;
+import refactor.progress.domain.testprogress.TestAttempt;
 import org.platform.platformforeducationalcourses.dto.course.find.CourseModuleFindResponse;
 import org.platform.platformforeducationalcourses.dto.lesson.StudentLessonFindResponse;
 import org.platform.platformforeducationalcourses.dto.module.StudentModuleFindResponse;
@@ -47,10 +47,10 @@ public class ModuleAssembler {
             List<Lesson> lessons,
             List<LessonProgress> lessonProgresses,
             List<Test> tests,
-            List<TestSubmission> testSubmissions) {
+            List<TestAttempt> testAttempts) {
         List<StudentLessonFindResponse> findLessons =
                 lessonAssembler.createStudentLessonFindResponse(lessons, lessonProgresses);
-        List<StudentTestFindResponse> mappedTests = testAssembler.createStudentTestFindResponse(tests, testSubmissions);
+        List<StudentTestFindResponse> mappedTests = testAssembler.createStudentTestFindResponse(tests, testAttempts);
         // группировка тестов по id модуля
         Map<Long, List<StudentTestFindResponse>> testsOrderByModuleId =
                 mappedTests.stream().collect(Collectors.groupingBy(StudentTestFindResponse::moduleId));

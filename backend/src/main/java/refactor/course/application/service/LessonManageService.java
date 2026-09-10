@@ -23,7 +23,7 @@ import refactor.course.domain.common.Title;
 import refactor.course.domain.lesson.Content;
 import refactor.course.domain.lesson.Lesson;
 import refactor.course.domain.module.CourseModule;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 
 @Service
 @RequiredArgsConstructor

@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import refactor.course.domain.test.Test;
-import org.platform.platformforeducationalcourses.domain.progress.TestAnswer;
-import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
+import refactor.progress.domain.testprogress.TestAnswer;
+import refactor.progress.domain.testprogress.TestAttempt;
 import org.platform.platformforeducationalcourses.dto.test.StudentTestFindResponse;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.QuestionOption;
 import org.platform.platformforeducationalcourses.dto.test.studentattemptresponse.TestQuestion;
@@ -25,14 +25,14 @@ public class TestAssembler {
     private final AnswerQuestionMapper answerQuestionMapper;
 
     public List<StudentTestFindResponse> createStudentTestFindResponse(
-            List<Test> tests, List<TestSubmission> testSubmissions) {
-        Map<Long, TestSubmission> submissionOrderByTestId =
-                testSubmissions.stream().collect(Collectors.toMap(TestSubmission::getTestId, submission -> submission));
+            List<Test> tests, List<TestAttempt> testAttempts) {
+        Map<Long, TestAttempt> submissionOrderByTestId =
+                testAttempts.stream().collect(Collectors.toMap(TestAttempt::getTestId, submission -> submission));
 
         List<StudentTestFindResponse> mappedTests = new ArrayList<>(tests.size());
         for (var test : tests) {
             long testId = test.getId();
-            TestSubmission submission = submissionOrderByTestId.get(testId);
+            TestAttempt submission = submissionOrderByTestId.get(testId);
 
             StudentTestFindResponse testFindResponse;
 
@@ -47,8 +47,8 @@ public class TestAssembler {
         return mappedTests;
     }
 
-    public TestReview createTestAttempt(Test test, TestSubmission testSubmission) {
-        Map<Long, TestAnswer> answerOrderByQuestionId = testSubmission.getAnswers().stream()
+    public TestReview createTestAttempt(Test test, TestAttempt testAttempt) {
+        Map<Long, TestAnswer> answerOrderByQuestionId = testAttempt.answers().stream()
                 .collect(Collectors.toMap(TestAnswer::getQuestionId, answer -> answer));
 
         List<TestQuestion> testQuestions = new ArrayList<>(test.questions().size());

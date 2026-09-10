@@ -14,7 +14,7 @@ import refactor.course.application.port.in.test.create.TestCreateUseCase;
 import refactor.course.application.port.in.test.remove.TestRemoveUseCase;
 import refactor.course.application.port.in.test.update.TestUpdateCommand;
 import refactor.course.application.port.in.test.update.TestUpdateUseCase;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 import refactor.course.domain.module.CourseModule;
 import refactor.course.domain.test.Test;
 import refactor.infrastructure.accesstoken.TokenPayload;

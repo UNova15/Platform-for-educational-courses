@@ -22,7 +22,7 @@ import refactor.course.domain.common.Title;
 import refactor.course.domain.course.Course;
 import refactor.course.domain.module.CourseModule;
 import org.springframework.stereotype.Service;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 
 @Service
 @RequiredArgsConstructor

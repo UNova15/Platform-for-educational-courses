@@ -2,7 +2,7 @@ package refactor.common.exception.domain;
 
 import refactor.common.domain.Id;
 import refactor.course.domain.module.CourseModule;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 
 public class ModuleNotFoundException extends EntityNotFoundException {
 

@@ -7,8 +7,8 @@ import org.platform.platformforeducationalcourses.domain.ports.persistance.Cours
 import org.platform.platformforeducationalcourses.domain.ports.persistance.LessonRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.ModuleRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.TestRepository;
-import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
-import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
+import refactor.progress.domain.lessonprogress.LessonProgress;
+import refactor.progress.domain.testprogress.TestAttempt;
 import org.platform.platformforeducationalcourses.dto.common.CourseData;
 import org.platform.platformforeducationalcourses.dto.course.StudentCourseFindResponse;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
@@ -55,10 +55,10 @@ public class CourseStructureQueryService {
 
         List<LessonProgress> lessonProgresses =
                 progressService.findLessonProgressByLessonsIds(userId, courseData.lessons());
-        List<TestSubmission> testSubmissions = testSubmissionService.findTestsSubmissions(userId, courseData.tests());
+        List<TestAttempt> testAttempts = testSubmissionService.findTestsSubmissions(userId, courseData.tests());
 
         List<StudentModuleFindResponse> mappedModules = moduleAssembler.createStudentModuleFindResponse(
-                courseData.modules(), courseData.lessons(), lessonProgresses, courseData.tests(), testSubmissions);
+                courseData.modules(), courseData.lessons(), lessonProgresses, courseData.tests(), testAttempts);
 
         return courseMapper.toStudentCourseFindResponse(courseData.course(), mappedModules);
     }

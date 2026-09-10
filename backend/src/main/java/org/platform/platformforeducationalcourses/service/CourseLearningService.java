@@ -7,8 +7,8 @@ import org.platform.platformforeducationalcourses.courseutil.ScoreCalculator;
 import org.platform.platformforeducationalcourses.creator.assembler.TestAssembler;
 import refactor.course.domain.test.Question;
 import refactor.course.domain.test.Test;
-import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
-import org.platform.platformforeducationalcourses.domain.progress.TestSubmission;
+import refactor.progress.domain.lessonprogress.LessonProgress;
+import refactor.progress.domain.testprogress.TestAttempt;
 import refactor.course.application.port.in.lesson.query.LessonQueryResult;
 import refactor.course.application.port.in.test.query.TestQueryResult;
 import org.platform.platformforeducationalcourses.dto.test.TestPostDto;
@@ -54,7 +54,7 @@ public class CourseLearningService {
     // TODO создать unique индекс на бд на поля long userId, long testId
     public TestQueryResult startAttempt(long userId, long testId) {
         if (!submissionsRepository.existsByUserIdAndTestId(userId, testId)) {
-            TestSubmission submission = TestSubmission.createNew(userId, testId);
+            TestAttempt submission = TestAttempt.createNew(userId, testId);
             submissionsRepository.save(submission);
         }
 
@@ -65,7 +65,7 @@ public class CourseLearningService {
     public void endAttempt(TestPostRequest request, long userId, long testId) {
         TestPostDto testPostDto = testMapper.toTestPostDto(request);
 
-        TestSubmission submission =
+        TestAttempt submission =
                 submissionsRepository.findByUserIdAndTestId(userId, testId).orElseThrow();
 
         // попытка уже была завершена
@@ -84,7 +84,7 @@ public class CourseLearningService {
     }
 
     public TestReview getTestReview(long userId, long testId) {
-        TestSubmission submission =
+        TestAttempt submission =
                 submissionsRepository.findByUserIdAndTestId(userId, testId).orElseThrow();
 
         if (submission.getCompletedAt() == null) {

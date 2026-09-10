@@ -19,7 +19,7 @@ import refactor.course.application.port.out.persistance.test.TestLoadPort;
 import refactor.course.application.port.out.persistance.test.TestRemovePort;
 import refactor.course.application.port.out.persistance.test.TestSavePort;
 import refactor.course.application.service.factory.TestFactory;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 import refactor.course.domain.common.Description;
 import refactor.course.domain.common.Title;
 import refactor.course.domain.module.CourseModule;

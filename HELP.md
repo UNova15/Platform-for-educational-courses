@@ -1,18 +1,14 @@
-# Getting Started
+Для запуска необходимо создавать в корневой директории проекта файл .env и определить в нем следующие переменные:
 
-### Reference Documentation
+- DB_USER - имя пользователя бд
+- DB_PASSWORD - пароль к бд
+- DB_NAME - имя бд
+- JWT_SECRET - случайный индефикатор размером от 16 символов (лучше использовать 32) который будет использоваться для
+  генерации jwt - токенов
 
-For further reference, please consider the following sections:
+Запуск осуществляется путем запуска docker compose файла с помощью команды:
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/4.0.3/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/4.0.3/maven-plugin/build-image.html)
+ - `docker compose up --build`
 
-### Maven Parent overrides
-
-Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the
-parent.
-To prevent this, the project POM contains empty overrides for these elements.
-If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+Для запуска необходимы установленные docker, docker compose
 

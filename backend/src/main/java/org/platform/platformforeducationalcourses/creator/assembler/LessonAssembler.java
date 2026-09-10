@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import refactor.course.domain.lesson.Lesson;
-import org.platform.platformforeducationalcourses.domain.progress.LessonProgress;
+import refactor.progress.domain.lessonprogress.LessonProgress;
 import org.platform.platformforeducationalcourses.dto.lesson.StudentLessonFindResponse;
 import org.platform.platformforeducationalcourses.mapper.LessonMapper;
 import org.springframework.stereotype.Component;

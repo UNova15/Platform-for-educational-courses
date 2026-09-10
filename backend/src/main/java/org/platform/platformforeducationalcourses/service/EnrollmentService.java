@@ -3,7 +3,7 @@ package org.platform.platformforeducationalcourses.service;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import refactor.course.domain.course.Course;
-import org.platform.platformforeducationalcourses.domain.progress.Enrollment;
+import refactor.progress.domain.enrollment.Enrollment;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import refactor.course.adapter.out.persistance.course.DataCourseRepository;

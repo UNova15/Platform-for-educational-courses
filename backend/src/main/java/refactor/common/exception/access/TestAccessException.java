@@ -1,7 +1,7 @@
 package refactor.common.exception.access;
 
 import refactor.common.domain.Id;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 import refactor.course.domain.test.Test;
 
 public class TestAccessException extends AccessException {

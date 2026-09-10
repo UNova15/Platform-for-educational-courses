@@ -3,7 +3,7 @@ package refactor.course.adapter.out.persistance.course;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import refactor.common.domain.Id;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 import refactor.course.domain.common.Description;
 import refactor.course.domain.common.Title;
 import refactor.course.domain.course.Course;

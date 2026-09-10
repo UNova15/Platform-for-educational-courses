@@ -13,7 +13,7 @@ import refactor.course.application.port.in.lesson.create.LessonCreateUseCase;
 import refactor.course.application.port.in.lesson.remove.LessonRemoveUseCase;
 import refactor.course.application.port.in.lesson.update.LessonUpdateCommand;
 import refactor.course.application.port.in.lesson.update.LessonUpdateUseCase;
-import refactor.course.domain.user.Account;
+import refactor.course.domain.markers.Account;
 import refactor.course.domain.lesson.Lesson;
 import refactor.course.domain.module.CourseModule;
 import refactor.infrastructure.accesstoken.TokenPayload;
