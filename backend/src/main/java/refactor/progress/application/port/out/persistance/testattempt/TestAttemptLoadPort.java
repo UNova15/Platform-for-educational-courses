@@ -1,4 +1,4 @@
-package refactor.progress.application.port.out.persistance;
+package refactor.progress.application.port.out.persistance.testattempt;
 
 import refactor.common.domain.Id;
 import refactor.progress.domain.markers.Test;

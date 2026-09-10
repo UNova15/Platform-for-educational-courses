@@ -1,7 +1,8 @@
-package refactor.progress.application.port.out.persistance;
+package refactor.progress.application.port.out.persistance.enrollment;
 
 import refactor.common.domain.Id;
 import refactor.progress.domain.markers.Course;
+import refactor.progress.domain.markers.CourseModule;
 import refactor.progress.domain.markers.User;
 
 public interface EnrollmentLoadPort {

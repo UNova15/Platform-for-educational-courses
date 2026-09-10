@@ -1,4 +1,4 @@
-package refactor.progress.application.port.out.persistance;
+package refactor.progress.application.port.out.persistance.lessonprogress;
 
 import refactor.progress.domain.lessonprogress.LessonProgress;
 
