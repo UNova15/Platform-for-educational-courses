@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import refactor.common.exception.auth.InvalidTokenException;
+import refactor.auth.application.exceptions.InvalidTokenException;
 
 @Getter
 @Accessors(fluent = true)
@@ -14,7 +14,7 @@ public class RawRefreshToken {
 
     public static RawRefreshToken of(String token) {
         if (token == null || token.isBlank()) {
-            throw new InvalidTokenException("Token can not be empty");
+            throw new InvalidTokenException();
         }
         return new RawRefreshToken(token);
     }

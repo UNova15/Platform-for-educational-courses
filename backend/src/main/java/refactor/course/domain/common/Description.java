@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import refactor.common.exception.domain.DomainValidationException;
+import refactor.common.exception.DomainValidationException;
 
 // Используется общий Value object(Vo) для description т.к. инвариант для всех доменных классов использующих данный Vo
 // одинаковый (совпадают требования к данному полю). Как только изменится требование для данного поля в каком либо

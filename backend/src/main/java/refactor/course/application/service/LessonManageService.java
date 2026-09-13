@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import refactor.common.domain.Id;
 import refactor.common.exception.access.LessonAccessException;
 import refactor.common.exception.access.ModuleAccessException;
-import refactor.common.exception.domain.DomainModificationException;
+import refactor.common.exception.DomainModificationException;
 import refactor.common.exception.domain.LessonNotFoundException;
 import refactor.common.exception.domain.ModuleNotFoundException;
 import refactor.course.application.port.in.lesson.create.LessonCreateCommand;

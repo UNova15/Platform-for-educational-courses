@@ -1,16 +1,14 @@
 package refactor.common.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 import lombok.experimental.Accessors;
-import refactor.common.exception.domain.DomainModificationException;
+import refactor.common.exception.DomainModificationException;
 
 //Id класс с фантомными типами для обеспечения типобезопасности разных Id
 @Getter
 @Accessors(fluent = true)
 @EqualsAndHashCode
+@ToString
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Id<T> {
     private final long value;

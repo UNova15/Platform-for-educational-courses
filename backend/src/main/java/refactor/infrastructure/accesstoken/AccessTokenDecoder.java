@@ -1,6 +1,6 @@
 package refactor.infrastructure.accesstoken;
 
-import refactor.common.exception.auth.InvalidTokenException;
+import refactor.auth.application.exceptions.InvalidTokenException;
 
 public interface AccessTokenDecoder {
     TokenPayload parseAccessToken(String token) throws InvalidTokenException;

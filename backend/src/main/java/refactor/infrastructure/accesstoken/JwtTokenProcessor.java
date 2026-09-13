@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import refactor.common.exception.auth.InvalidTokenException;
+import refactor.auth.application.exceptions.InvalidTokenException;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {

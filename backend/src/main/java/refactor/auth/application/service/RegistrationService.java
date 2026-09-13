@@ -1,9 +1,9 @@
 package refactor.auth.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.platform.platformforeducationalcourses.exception.UserAlreadyExistException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import refactor.auth.application.exceptions.UserAlreadyExistException;
 import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.RegistrationUseCase;
 import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
@@ -29,7 +29,7 @@ class RegistrationService implements RegistrationUseCase {
     @Transactional
     public AuthResult registration(Login login, RawPassword password, UserRole role) {
         if (userLoadPort.isExistUserByLogin(login)) {
-            throw new UserAlreadyExistException(login.value());
+            throw new UserAlreadyExistException(login);
         }
 
         HashedPassword hashedPassword = passwordHasher.hashPassword(password);

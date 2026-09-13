@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import refactor.common.exception.DomainValidationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -13,7 +14,7 @@ public class HashedPassword {
 
     public static HashedPassword of(String hashedPassword) {
         if (hashedPassword == null || hashedPassword.isBlank()) {
-            throw new IllegalArgumentException("Hashed password cannot be empty");
+            throw new DomainValidationException("Hashed password cannot be empty");
         }
 
         return new HashedPassword(hashedPassword);

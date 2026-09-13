@@ -3,10 +3,11 @@ package refactor.auth.application.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import refactor.auth.application.exceptions.UserNotFoundExceptions;
 import refactor.auth.domain.token.valueobject.AccessToken;
 import refactor.auth.domain.user.valueobject.Login;
 import refactor.common.domain.Id;
-import refactor.common.exception.auth.InvalidTokenException;
+import refactor.auth.application.exceptions.InvalidTokenException;
 import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.UpdateTokenUseCase;
 import refactor.auth.application.ports.out.token.AccessTokenGeneratePort;
@@ -48,18 +49,14 @@ class TokenService implements UpdateTokenUseCase {
     public AuthResult updateTokens(RawRefreshToken oldRefresh) {
         HashedRefreshToken oldHashedToken = hashingPort.hash(oldRefresh);
 
-        RefreshToken refreshToken = refreshTokenRepositoryPort
-                .load(oldHashedToken)
-                .orElseThrow(() -> new InvalidTokenException("Invalid refresh token: %s".formatted(oldHashedToken)));
+        RefreshToken refreshToken =
+                refreshTokenRepositoryPort.load(oldHashedToken).orElseThrow(InvalidTokenException::new);
 
         refreshTokenRepositoryPort.remove(refreshToken);
 
         Id<User> userId = refreshToken.userId();
 
-        User user = userLoadPort
-                .loadUserById(userId)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Non-existent user with id: %d and token: %s".formatted(userId.value(), oldHashedToken)));
+        User user = userLoadPort.loadUserById(userId).orElseThrow(() -> new UserNotFoundExceptions(userId));
 
         AccessToken newAccessToken = accessTokenGeneratePort.generateAccessToken(userId, user.login(), user.role());
         RawRefreshToken newRefreshToken = refreshTokenGeneratePort.generateRefreshToken();

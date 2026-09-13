@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import refactor.auth.domain.token.valueobject.HashedRefreshToken;
 import refactor.auth.domain.user.User;
 import refactor.common.domain.Id;
+import refactor.common.exception.DomainValidationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -20,7 +21,7 @@ public class RefreshToken {
 
     public static RefreshToken createNew(Id<User> userId, HashedRefreshToken token) {
         if (token == null) {
-            throw new IllegalArgumentException("Empty token for user: %d".formatted(userId.value()));
+            throw new DomainValidationException("Token cannot be empty");
         }
 
         return new RefreshToken(null, userId, token);

@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import refactor.common.domain.Id;
-import refactor.common.exception.domain.DomainValidationException;
+import refactor.common.exception.DomainValidationException;
 import refactor.progress.domain.markers.Test;
 import refactor.progress.domain.markers.User;
 import refactor.progress.domain.testprogress.valueobject.AnswerKey;

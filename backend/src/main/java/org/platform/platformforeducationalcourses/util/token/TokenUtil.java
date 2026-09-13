@@ -8,7 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import javax.crypto.SecretKey;
 
-import refactor.common.exception.auth.InvalidTokenException;
+import refactor.auth.application.exceptions.InvalidTokenException;
 import refactor.user.domain.user.UserRole;
 import refactor.user.application.ports.out.auth.model.TokenPayload;
 import refactor.user.adapter.out.token.TokenProperties;

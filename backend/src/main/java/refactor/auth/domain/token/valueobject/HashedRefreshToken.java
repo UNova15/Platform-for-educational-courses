@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import refactor.common.exception.DomainValidationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -13,7 +14,7 @@ public class HashedRefreshToken {
 
     public static HashedRefreshToken of(String hashedToken) {
         if (hashedToken == null || hashedToken.isBlank()) {
-            throw new IllegalArgumentException("Hashed token can not be empty");
+            throw new DomainValidationException("Hashed token can not be empty");
         }
         return new HashedRefreshToken(hashedToken);
     }

@@ -5,8 +5,7 @@ import refactor.auth.application.ports.out.crypto.PasswordHasherPort;
 import refactor.auth.domain.user.valueobject.HashedPassword;
 import refactor.auth.domain.user.valueobject.Login;
 import refactor.auth.domain.user.valueobject.RawPassword;
-import refactor.common.exception.auth.InvalidPasswordException;
-import refactor.common.exception.domain.UserNotFoundException;
+import refactor.auth.application.exceptions.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import refactor.auth.application.ports.in.AuthResult;
 import refactor.auth.application.ports.in.LoginUseCase;
@@ -23,14 +22,14 @@ class LoginService implements LoginUseCase {
     @Override
     public AuthResult login(Login login, RawPassword password) {
 
-        User user = userLoadPort.loadUserByLogin(login).orElseThrow(() -> new UserNotFoundException(login.value()));
+        User user = userLoadPort.loadUserByLogin(login).orElseThrow(() -> new BadCredentialsException(login));
 
         HashedPassword hashedPassword = user.password();
 
         boolean isCorrectPassword = passwordHasherPort.matches(password, hashedPassword);
 
         if (!isCorrectPassword) {
-            throw new InvalidPasswordException(login.value());
+            throw new BadCredentialsException(login);
         }
 
         return tokenService.createTokens(user.id(), user.login(), user.role());

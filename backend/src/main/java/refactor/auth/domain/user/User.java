@@ -8,6 +8,7 @@ import refactor.auth.domain.user.valueobject.HashedPassword;
 import refactor.auth.domain.user.valueobject.Login;
 import refactor.auth.domain.user.valueobject.UserRole;
 import refactor.common.domain.Id;
+import refactor.common.exception.DomainValidationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -20,7 +21,7 @@ public class User {
 
     public static User createNew(Login login, HashedPassword password, UserRole role) {
         if (login == null || password == null) {
-            throw new IllegalArgumentException("Empty data to create user");
+            throw new DomainValidationException("Empty login or password to create user");
         }
         return new User(null, login, password, role);
     }
