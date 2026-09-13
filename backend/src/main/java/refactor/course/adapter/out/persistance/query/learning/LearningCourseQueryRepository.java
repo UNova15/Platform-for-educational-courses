@@ -4,7 +4,7 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import refactor.course.adapter.out.persistance.course.CourseEntity;
-import refactor.course.application.port.in.query.learning.EnrolledCourse;
+import refactor.course.application.port.in.query.learning.UserCourseView;
 import refactor.course.application.port.in.query.learning.StudentsCourseView;
 
 import java.util.List;
@@ -16,5 +16,5 @@ public interface LearningCourseQueryRepository extends CrudRepository<CourseEnti
     Optional<StudentsCourseView> findStudentsCourseViewById(@Param("courseId") Long courseId);
 
     @Query("SELECT id,teacher_id,tag,created_at,title FROM courses c WHERE c.id IN :coursesIds")
-    List<EnrolledCourse> findEnrolledCoursesByCoursesIds(@Param("coursesIds") List<Long> coursesIds);
+    List<UserCourseView> findEnrolledCoursesByCoursesIds(@Param("coursesIds") List<Long> coursesIds);
 }

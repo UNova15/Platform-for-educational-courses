@@ -4,4 +4,4 @@ import refactor.course.domain.course.Tag;
 
 import java.time.LocalDateTime;
 
-public record EnrolledCourse(long id, long teacherId, Tag tag, LocalDateTime createdAt, String title) {}
+public record UserCourseView(long id, long teacherId, Tag tag, LocalDateTime createdAt, String title) {}

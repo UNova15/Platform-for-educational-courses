@@ -19,7 +19,7 @@ public interface OwnedCoursesQueryUseCase {
 
     TeachersLessonView findTeachersLessonById(@NotNull Id<Account> teacherId, @NotNull Id<Lesson> lessonId);
 
-    TeachersTestView findTeachersTestById(@NotNull Id<Account> teacherId, @NotNull Id<Test> testId);
+    FullTestView findFullTestById(@NotNull Id<Account> teacherId, @NotNull Id<Test> testId);
 
     List<OwnedCoursesView> findTeachersCourses(@NotNull Id<Account> teacherId);
 }

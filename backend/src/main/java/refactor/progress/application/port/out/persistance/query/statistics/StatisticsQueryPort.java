@@ -1,4 +1,4 @@
-package refactor.progress.application.port.out.persistance.query;
+package refactor.progress.application.port.out.persistance.query.statistics;
 
 import refactor.common.domain.Id;
 import refactor.progress.application.port.in.query.analytics.CompletedTestStudentsResult;

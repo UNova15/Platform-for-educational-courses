@@ -65,11 +65,11 @@ public class OwnedCoursesQueryPersistenceAdapter implements OwnedCoursesQueryPor
     }
 
     @Override
-    public Optional<TeachersTestView> findTeachersTestById(Id<Test> testId) {
-        Optional<TeachersTestView> view = testQueryRepository.findTeachersTestViewById(testId.value());
+    public Optional<FullTestView> findFullTestById(Id<Test> testId) {
+        Optional<FullTestView> view = testQueryRepository.findTeachersTestViewById(testId.value());
 
         view.ifPresent(test -> {
-            List<TeachersTestView.Question> questions = testQueryRepository.findAllQuestionsInTestByTestId(test.id());
+            List<FullTestView.Question> questions = testQueryRepository.findAllQuestionsInTestByTestId(test.id());
 
             if (questions.isEmpty()) {
                 test.questions(List.of());
@@ -77,15 +77,15 @@ public class OwnedCoursesQueryPersistenceAdapter implements OwnedCoursesQueryPor
             }
 
             List<Long> questionIds =
-                    questions.stream().map(TeachersTestView.Question::id).toList();
+                    questions.stream().map(FullTestView.Question::id).toList();
 
-            List<TeachersTestView.Option> options = testQueryRepository.findAllOptionsInTestByQuestionIds(questionIds);
+            List<FullTestView.Option> options = testQueryRepository.findAllOptionsInTestByQuestionIds(questionIds);
 
-            Map<Long, List<TeachersTestView.Option>> optionsByQuestionId =
-                    options.stream().collect(Collectors.groupingBy(TeachersTestView.Option::questionId));
+            Map<Long, List<FullTestView.Option>> optionsByQuestionId =
+                    options.stream().collect(Collectors.groupingBy(FullTestView.Option::questionId));
 
             for (var question : questions) {
-                List<TeachersTestView.Option> foundOptions = optionsByQuestionId.getOrDefault(question.id(), List.of());
+                List<FullTestView.Option> foundOptions = optionsByQuestionId.getOrDefault(question.id(), List.of());
                 question.options(foundOptions);
             }
 

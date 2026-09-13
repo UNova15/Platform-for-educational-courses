@@ -25,7 +25,7 @@ public class LearningQueryAdapter implements LearningQueryPort {
     private final LearningTestQueryRepository testQueryRepository;
 
     @Override
-    public List<EnrolledCourse> findEnrolledCoursesByIds(List<Id<Course>> ids) {
+    public List<UserCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids) {
         List<Long> coursesIds = ids.stream().map(Id::value).toList();
 
         return courseQueryRepository.findEnrolledCoursesByCoursesIds(coursesIds);

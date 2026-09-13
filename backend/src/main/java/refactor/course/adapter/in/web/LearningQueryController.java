@@ -27,10 +27,10 @@ public class LearningQueryController {
     //получение списка курсов на которые записан пользователь
     @GetMapping("/courses")
     @PreAuthorize("hasAnyRole('TEACHER','STUDENT')")
-    public List<EnrolledCourse> findEnrolledCourses(@AuthenticationPrincipal TokenPayload token) {
+    public List<UserCourseView> findEnrolledCourses(@AuthenticationPrincipal TokenPayload token) {
         Id<Account> userId = Id.of(token.userId());
 
-        return queryUseCase.findEnrolledCourses(userId);
+        return queryUseCase.findCoursesThatUsersIsEnrolledIn(userId);
     }
 
     // поиск конкретного курса для студента/преподавателя по id. Возвращает скелет курса

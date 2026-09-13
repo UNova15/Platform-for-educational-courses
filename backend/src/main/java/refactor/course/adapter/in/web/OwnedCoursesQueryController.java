@@ -59,12 +59,12 @@ public class OwnedCoursesQueryController {
     // возвращает полную информацию о тесте
     @GetMapping("/tests/{testId}")
     @PreAuthorize("hasRole('TEACHER')")
-    public TeachersTestView findTeachersCoursesTestById(
+    public FullTestView findTeachersCoursesTestById(
             @PathVariable("testId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<Account> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersTestById(userId, testId);
+        return queryUseCase.findFullTestById(userId, testId);
     }
 
     // возвращает полную информацию о уроке

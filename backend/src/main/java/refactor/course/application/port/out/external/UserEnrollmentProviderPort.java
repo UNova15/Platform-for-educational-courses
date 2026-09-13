@@ -7,5 +7,5 @@ import refactor.course.domain.markers.Account;
 import java.util.List;
 
 public interface UserEnrollmentProviderPort {
-    List<Id<Course>> findEnrolledCourseIds(Id<Account> userId);
+    List<Id<Course>> findCoursesIdsThatUsersIsEnrolledIn(Id<Account> userId);
 }

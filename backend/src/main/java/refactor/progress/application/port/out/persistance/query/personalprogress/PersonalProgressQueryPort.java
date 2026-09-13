@@ -1,4 +1,4 @@
-package refactor.progress.application.port.out.persistance.query;
+package refactor.progress.application.port.out.persistance.query.personalprogress;
 
 import refactor.common.domain.Id;
 import refactor.progress.application.port.in.query.personalprogress.LessonProgressSummary;
@@ -13,5 +13,5 @@ import java.util.Set;
 public interface PersonalProgressQueryPort {
     List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId);
 
-    List<TestProgressSummary> findTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId);
+    List<TestProgressSummary> findCompletedTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId);
 }

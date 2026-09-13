@@ -5,8 +5,8 @@ import refactor.course.application.port.in.query.owned.*;
 import refactor.course.domain.course.Course;
 import refactor.course.domain.lesson.Lesson;
 import refactor.course.domain.module.CourseModule;
-import refactor.course.domain.test.Test;
 import refactor.course.domain.markers.Account;
+import refactor.course.domain.test.Test;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,5 +20,5 @@ public interface OwnedCoursesQueryPort {
 
     Optional<TeachersLessonView> findTeachersLessonById(Id<Lesson> lessonId);
 
-    Optional<TeachersTestView> findTeachersTestById(Id<Test> testId);
+    Optional<FullTestView> findFullTestById(Id<Test> testId);
 }

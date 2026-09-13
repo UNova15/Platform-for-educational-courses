@@ -1,6 +1,7 @@
 package refactor.course.application.port.in.query.learning;
 
 import jakarta.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 import refactor.common.domain.Id;
 import refactor.course.domain.course.Course;
 import refactor.course.domain.lesson.Lesson;
@@ -10,9 +11,10 @@ import refactor.course.domain.markers.Account;
 
 import java.util.List;
 
+@Validated
 public interface LearningQueryUseCase {
 
-    List<EnrolledCourse> findEnrolledCourses(@NotNull Id<Account> requesterId);
+    List<UserCourseView> findCoursesThatUsersIsEnrolledIn(@NotNull Id<Account> requesterId);
 
     StudentsCourseView findStudentsCourse(@NotNull Id<Account> requesterId, @NotNull Id<Course> courseId);
 

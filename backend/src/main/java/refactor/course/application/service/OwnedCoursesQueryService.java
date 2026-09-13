@@ -70,9 +70,8 @@ public class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     }
 
     @Override
-    public TeachersTestView findTeachersTestById(Id<Account> teacherId, Id<Test> testId) {
-        TeachersTestView view =
-                queryPort.findTeachersTestById(testId).orElseThrow(() -> new TestNotFoundException(testId));
+    public FullTestView findFullTestById(Id<Account> teacherId, Id<Test> testId) {
+        FullTestView view = queryPort.findFullTestById(testId).orElseThrow(() -> new TestNotFoundException(testId));
         if (view.teacherId() != teacherId.value()) {
             throw new TestAccessException(testId, teacherId);
         }

@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Accessors(fluent = true)
 @RequiredArgsConstructor
-public class TeachersTestView {
+public class FullTestView {
     private final long id;
 
     private final long moduleId;

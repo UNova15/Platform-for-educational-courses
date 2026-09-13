@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import refactor.common.domain.Id;
 import refactor.common.exception.access.CourseAccessException;
+import refactor.common.exception.access.TestNotStartedException;
 import refactor.common.exception.domain.CourseNotFoundException;
 import refactor.common.exception.domain.LessonNotFoundException;
 import refactor.common.exception.domain.ModuleNotFoundException;
 import refactor.common.exception.domain.TestNotFoundException;
 import refactor.course.application.port.in.query.learning.*;
 import refactor.course.application.port.out.external.EnrollmentCheckPort;
+import refactor.course.application.port.out.external.TestCompletionCheckPort;
 import refactor.course.application.port.out.external.UserEnrollmentProviderPort;
 import refactor.course.application.port.out.persistance.query.LearningQueryPort;
 import refactor.course.domain.course.Course;
@@ -26,16 +28,17 @@ public class LearningQueryService implements LearningQueryUseCase {
     private final LearningQueryPort learningQueryPort;
     private final EnrollmentCheckPort enrollmentCheckPort;
     private final UserEnrollmentProviderPort enrolmentCoursesPort;
+    private final TestCompletionCheckPort testCompletionCheckPort;
 
     @Override
-    public List<EnrolledCourse> findEnrolledCourses(Id<Account> requesterId) {
-        List<Id<Course>> coursesIds = enrolmentCoursesPort.findEnrolledCourseIds(requesterId);
+    public List<UserCourseView> findCoursesThatUsersIsEnrolledIn(Id<Account> requesterId) {
+        List<Id<Course>> coursesIds = enrolmentCoursesPort.findCoursesIdsThatUsersIsEnrolledIn(requesterId);
 
         if (coursesIds.isEmpty()) {
             return List.of();
         }
 
-        return learningQueryPort.findEnrolledCoursesByIds(coursesIds);
+        return learningQueryPort.findCoursesThatUsersIsEnrolledIn(coursesIds);
     }
 
     @Override
@@ -92,6 +95,10 @@ public class LearningQueryService implements LearningQueryUseCase {
             throw new CourseAccessException(courseId, requesterId);
         }
 
+        if (!testCompletionCheckPort.isTestCompleted(requesterId, testId)
+                || !testCompletionCheckPort.isStudentPassTest(requesterId, testId)) {
+            throw new TestNotStartedException(requesterId, testId);
+        }
         return view;
     }
 }

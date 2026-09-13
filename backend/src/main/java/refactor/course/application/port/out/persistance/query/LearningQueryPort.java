@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface LearningQueryPort {
 
-    List<EnrolledCourse> findEnrolledCoursesByIds(List<Id<Course>> ids);
+    List<UserCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids);
 
     Optional<StudentsCourseView> findStudentsCourseViewById(Id<Course> id);
 

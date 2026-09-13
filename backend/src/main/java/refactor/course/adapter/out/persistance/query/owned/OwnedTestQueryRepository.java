@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import refactor.course.adapter.out.persistance.test.TestEntity;
 import refactor.course.application.port.in.query.owned.TeachersModuleView;
-import refactor.course.application.port.in.query.owned.TeachersTestView;
+import refactor.course.application.port.in.query.owned.FullTestView;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,11 +23,11 @@ public interface OwnedTestQueryRepository extends CrudRepository<TestEntity, Lon
             JOIN courses c ON c.id = m.course_id 
             WHERE t.id = :id 
             """)
-    Optional<TeachersTestView> findTeachersTestViewById(@Param("id") Long id);
+    Optional<FullTestView> findTeachersTestViewById(@Param("id") Long id);
 
     @Query("SELECT id,test_id,question,order_index FROM questions q WHERE q.test_id = :id")
-    List<TeachersTestView.Question> findAllQuestionsInTestByTestId(@Param("id") Long id);
+    List<FullTestView.Question> findAllQuestionsInTestByTestId(@Param("id") Long id);
 
     @Query("SELECT id,question_id,option,is_correct FROM options o WHERE o.question_id IN :ids")
-    List<TeachersTestView.Option> findAllOptionsInTestByQuestionIds(@Param("ids") Collection<Long> ids);
+    List<FullTestView.Option> findAllOptionsInTestByQuestionIds(@Param("ids") Collection<Long> ids);
 }
