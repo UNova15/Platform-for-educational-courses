@@ -7,8 +7,8 @@ import org.platform.platformforeducationalcourses.domain.ports.persistance.Cours
 import org.platform.platformforeducationalcourses.domain.ports.persistance.LessonRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.ModuleRepository;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.TestRepository;
-import refactor.progress.domain.lessonprogress.LessonProgress;
-import refactor.progress.domain.testprogress.TestAttempt;
+import refactor.progress.implementation.domain.lessonprogress.LessonProgress;
+import refactor.progress.implementation.domain.testprogress.TestAttempt;
 import org.platform.platformforeducationalcourses.dto.common.CourseData;
 import org.platform.platformforeducationalcourses.dto.course.StudentCourseFindResponse;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
@@ -19,10 +19,10 @@ import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import org.platform.platformforeducationalcourses.service.domain.ProgressService;
 import org.platform.platformforeducationalcourses.service.domain.TestSubmissionService;
 import org.springframework.stereotype.Service;
-import refactor.course.domain.course.Course;
-import refactor.course.domain.module.CourseModule;
-import refactor.course.domain.lesson.Lesson;
-import refactor.course.domain.test.Test;
+import refactor.course.implementation.domain.course.Course;
+import refactor.course.implementation.domain.module.CourseModule;
+import refactor.course.implementation.domain.lesson.Lesson;
+import refactor.course.implementation.domain.test.Test;
 
 /**
  * Сервис для выполнения операций взаимодействия с общей структурой курса

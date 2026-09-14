@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.dto.course.find;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import refactor.course.domain.course.Tag;
+import refactor.course.implementation.domain.course.Tag;
 
 public record CourseFindResponse(
         long id,

@@ -2,11 +2,11 @@ package org.platform.platformforeducationalcourses.service;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.course.Course;
-import refactor.progress.domain.enrollment.Enrollment;
+import refactor.course.implementation.domain.course.Course;
+import refactor.progress.implementation.domain.enrollment.Enrollment;
 import org.platform.platformforeducationalcourses.dto.enrollment.CourseEnrolledFindResponse;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
-import refactor.course.adapter.out.persistance.course.DataCourseRepository;
+import refactor.course.implementation.adapter.out.persistance.course.DataCourseRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataEnrollmentRepository;
 import org.springframework.stereotype.Service;
 

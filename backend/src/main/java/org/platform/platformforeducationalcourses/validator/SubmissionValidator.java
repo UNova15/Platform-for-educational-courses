@@ -2,8 +2,8 @@ package org.platform.platformforeducationalcourses.validator;
 
 import java.util.List;
 import java.util.Map;
-import refactor.course.domain.test.AnswerOption;
-import refactor.course.domain.test.Question;
+import refactor.course.implementation.domain.test.AnswerOption;
+import refactor.course.implementation.domain.test.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.springframework.stereotype.Component;
 

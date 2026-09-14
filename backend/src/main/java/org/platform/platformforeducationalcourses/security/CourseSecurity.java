@@ -1,7 +1,7 @@
 package org.platform.platformforeducationalcourses.security;
 
 import lombok.RequiredArgsConstructor;
-import refactor.course.adapter.out.persistance.course.DataCourseRepository;
+import refactor.course.implementation.adapter.out.persistance.course.DataCourseRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataEnrollmentRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataModuleRepository;

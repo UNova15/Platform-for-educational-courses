@@ -2,7 +2,7 @@ package org.platform.platformforeducationalcourses.domain.ports.persistance;
 
 import java.util.List;
 import java.util.Optional;
-import refactor.course.domain.lesson.Lesson;
+import refactor.course.implementation.domain.lesson.Lesson;
 
 public interface LessonRepository {
 

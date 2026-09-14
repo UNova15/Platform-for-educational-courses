@@ -1,11 +1,11 @@
 package org.platform.platformforeducationalcourses.controller.general;
 
 import lombok.AllArgsConstructor;
-import refactor.course.domain.course.Tag;
+import refactor.course.implementation.domain.course.Tag;
 import refactor.common.wrapper.CursorResponse;
-import refactor.course.application.port.in.query.catalog.CourseCursorView;
+import refactor.course.implementation.application.port.in.query.catalog.CourseCursorView;
 import org.platform.platformforeducationalcourses.dto.course.catalog.CourseCatalogResponse;
-import refactor.course.application.service.CourseCreateService;
+import refactor.course.implementation.application.service.CourseCreateService;
 import org.platform.platformforeducationalcourses.service.CourseStructureQueryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

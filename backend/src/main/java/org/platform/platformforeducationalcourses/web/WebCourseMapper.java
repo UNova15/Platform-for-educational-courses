@@ -2,9 +2,9 @@ package org.platform.platformforeducationalcourses.web;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.course.Course;
+import refactor.course.implementation.domain.course.Course;
 import refactor.common.wrapper.CursorResponse;
-import refactor.course.application.port.in.query.catalog.CourseCursorView;
+import refactor.course.implementation.application.port.in.query.catalog.CourseCursorView;
 import org.platform.platformforeducationalcourses.mapper.CourseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;

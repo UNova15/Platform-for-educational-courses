@@ -2,9 +2,9 @@ package org.platform.platformforeducationalcourses.persistance.repository.adapte
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.test.Test;
+import refactor.course.implementation.domain.test.Test;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.TestRepository;
-import refactor.course.adapter.out.persistance.test.TestEntity;
+import refactor.course.implementation.adapter.out.persistance.test.TestEntity;
 import org.platform.platformforeducationalcourses.persistance.repository.mapper.PersistTestMapper;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataTestRepository;
 import org.springframework.stereotype.Repository;

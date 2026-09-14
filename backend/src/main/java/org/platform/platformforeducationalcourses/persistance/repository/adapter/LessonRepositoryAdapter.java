@@ -3,9 +3,9 @@ package org.platform.platformforeducationalcourses.persistance.repository.adapte
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.lesson.Lesson;
+import refactor.course.implementation.domain.lesson.Lesson;
 import org.platform.platformforeducationalcourses.domain.ports.persistance.LessonRepository;
-import refactor.course.adapter.out.persistance.lesson.LessonEntity;
+import refactor.course.implementation.adapter.out.persistance.lesson.LessonEntity;
 import org.platform.platformforeducationalcourses.persistance.repository.mapper.PersistLessonMapper;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataLessonRepository;
 import org.springframework.stereotype.Repository;

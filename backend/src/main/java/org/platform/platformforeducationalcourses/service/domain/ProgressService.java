@@ -2,8 +2,8 @@ package org.platform.platformforeducationalcourses.service.domain;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import refactor.course.domain.lesson.Lesson;
-import refactor.progress.domain.lessonprogress.LessonProgress;
+import refactor.course.implementation.domain.lesson.Lesson;
+import refactor.progress.implementation.domain.lessonprogress.LessonProgress;
 import org.platform.platformforeducationalcourses.persistance.repository.provader.DataProgressRepository;
 import org.springframework.stereotype.Service;
 

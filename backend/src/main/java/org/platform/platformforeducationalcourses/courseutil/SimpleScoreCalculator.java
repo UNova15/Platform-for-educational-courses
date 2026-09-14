@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import refactor.course.domain.test.Question;
+import refactor.course.implementation.domain.test.Question;
 import org.platform.platformforeducationalcourses.dto.test.AnswerPostDto;
 import org.springframework.stereotype.Component;
 
