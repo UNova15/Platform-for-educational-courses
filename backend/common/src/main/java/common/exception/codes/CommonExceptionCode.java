@@ -5,7 +5,7 @@ public enum CommonExceptionCode implements ExceptionCode {
     DOMAIN_VALIDATION_EXCEPTION,
     DOMAIN_MODIFICATION_EXCEPTION,
     ACCESS_EXCEPTION,
-    MOT_FOUND_EXCEPTION,
+    NOT_FOUND_EXCEPTION,
     ALREADY_EXIST_EXCEPTION;
 
     @Override

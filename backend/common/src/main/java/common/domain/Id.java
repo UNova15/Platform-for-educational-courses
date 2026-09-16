@@ -13,9 +13,9 @@ import common.exception.DomainModificationException;
 public class Id<T> {
     private final long value;
 
-    public static <T> Id<T> of(long id) {
-        if (id < 0) {
-            throw new DomainModificationException("Id cannot be negative");
+    public static <T> Id<T> of(Long id) {
+        if (id == null || id < 0) {
+            throw new DomainModificationException("Id cannot be empty or negative");
         }
 
         return new Id<>(id);
