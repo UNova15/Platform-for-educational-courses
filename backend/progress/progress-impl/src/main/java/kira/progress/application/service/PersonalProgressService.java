@@ -4,7 +4,7 @@ import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
 import kira.progress.application.exceptions.ProgressExceptionCode;
-import kira.progress.application.port.in.query.TestAnswersView;
+import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.PersonalProgressUseCase;
 import kira.progress.application.port.in.query.personalprogress.ProgressSummary;

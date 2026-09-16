@@ -1,5 +1,5 @@
 package kira.progress.application.port.in.testprogress;
 
 public interface EndTestAttemptUseCase {
-    void endTestAttempt(EndTestAttemptCommand command);
+    TestResult endTestAttempt(EndTestAttemptCommand command);
 }

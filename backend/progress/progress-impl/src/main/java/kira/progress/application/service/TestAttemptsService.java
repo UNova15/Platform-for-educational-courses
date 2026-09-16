@@ -8,6 +8,7 @@ import kira.progress.application.exceptions.TestAlreadyCompletedException;
 import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
 import kira.progress.application.port.in.testprogress.EndTestAttemptUseCase;
 import kira.progress.application.port.in.testprogress.StartTestAttemptUseCase;
+import kira.progress.application.port.in.testprogress.TestResult;
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.external.TestAnswerKeyProviderPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
@@ -60,7 +61,7 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
     }
 
     @Override
-    public void endTestAttempt(EndTestAttemptCommand command) {
+    public TestResult endTestAttempt(EndTestAttemptCommand command) {
         TestAttempt attempt = loadPort.loadByUserIdAndTestId(command.userId(), command.testId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         ProgressExceptionCode.TEST_ATTEMPT_NOT_FOUND_EXCEPTION, Test.class, command.testId()));
@@ -75,5 +76,6 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
 
         attempt.submitAnswers(command.answers(), key);
         savePort.save(attempt);
+        return new TestResult(attempt.score());
     }
 }

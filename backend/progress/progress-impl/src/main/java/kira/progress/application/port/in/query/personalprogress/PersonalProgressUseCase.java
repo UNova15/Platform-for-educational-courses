@@ -1,7 +1,7 @@
 package kira.progress.application.port.in.query.personalprogress;
 
 import common.domain.Id;
-import kira.progress.application.port.in.query.TestAnswersView;
+import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.domain.markers.CourseModule;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
