@@ -1,4 +1,4 @@
-package kira.course.application.service;
+package kira.course.application.service.core;
 
 import common.wrapper.CursorResponse;
 import kira.course.application.port.in.query.catalog.CourseCatalogQueryUseCase;

@@ -1,4 +1,4 @@
-package kira.course.application.service;
+package kira.course.application.service.core;
 
 import common.domain.Id;
 import common.exception.DomainModificationException;

@@ -1,4 +1,4 @@
-package kira.progress.application.service;
+package kira.progress.application.service.core;
 
 import common.domain.Id;
 import common.exception.ResourceAccessException;

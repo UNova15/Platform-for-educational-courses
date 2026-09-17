@@ -1,8 +1,8 @@
-package kira.progress.application.service;
+package kira.progress.application.service.core;
 
 import common.domain.Id;
-import common.exception.ResourceAlreadyExistException;
 import common.exception.ResourceNotFoundException;
+import kira.progress.application.exceptions.EnrollmentExistException;
 import kira.progress.application.exceptions.ProgressExceptionCode;
 import kira.progress.application.port.in.enrollment.UserEnrollmentUseCase;
 import kira.progress.application.port.out.external.CourseExistCheckPort;
@@ -13,8 +13,6 @@ import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,13 +27,8 @@ public class UserEnrollService implements UserEnrollmentUseCase {
                     ProgressExceptionCode.COURSE_NOT_FOUND_EXCEPTION, Course.class, courseId);
         }
 
-        //TODO code smell: create factory class for create exception logic)
         if (enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
-            throw new ResourceAlreadyExistException(
-                    ProgressExceptionCode.ENROLLMENT_ALREADY_EXIST_EXCEPTION,
-                    "User with ID: %s already have enrollment on course with ID: %s "
-                            .formatted(userId.value(), courseId.value()),
-                    Map.of("userId", userId.value(), "courseId", courseId.value()));
+            throw new EnrollmentExistException(userId, courseId);
         }
 
         Enrollment enrollment = Enrollment.createNew(userId, courseId);

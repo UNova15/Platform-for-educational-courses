@@ -14,7 +14,7 @@ public class ResourceAlreadyExistException extends BaseApplicationException {
         setProperty("resourceId", resourceId.value());
     }
 
-    public ResourceAlreadyExistException(ExceptionCode exceptionCode, String message, Map<String, Object> args) {
-        super(exceptionCode, message, args);
+    public ResourceAlreadyExistException(ExceptionCode exceptionCode, String message) {
+        super(exceptionCode, message);
     }
 }

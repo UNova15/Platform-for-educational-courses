@@ -26,6 +26,10 @@
             <groupId>org.platform</groupId>
             <artifactId>infrastructure-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.platform</groupId>
+            <artifactId>course-api</artifactId>
+        </dependency>
 
         <!-- Фреймворки -->
         <dependency>
