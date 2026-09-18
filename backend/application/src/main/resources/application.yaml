@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: Kira
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  config:
+    import:
+      - optional:classpath:application-infrastructure.yaml
+      - optional:classpath:application-auth.yaml
+      - optional:classpath:application-course.yaml
+      - optional:classpath:application-progress.yaml
+
+  flyway:
+    enabled: false
+
+server:
+  servlet:
+    context-path: /api
+

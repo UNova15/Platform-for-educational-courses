@@ -1,11 +1,13 @@
 package kira.auth.adapter.in.web;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseCookie;
-import org.springframework.stereotype.Component;
 import kira.auth.application.ports.in.AuthResult;
 
-@Component
+@Configuration
+@EnableConfigurationProperties(CookieProperties.class)
 @AllArgsConstructor
 class CookieFactory {
     private final CookieProperties cookieProperties;
