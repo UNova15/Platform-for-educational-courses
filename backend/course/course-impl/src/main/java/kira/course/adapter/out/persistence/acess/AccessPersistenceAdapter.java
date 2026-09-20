@@ -19,9 +19,9 @@ public class AccessPersistenceAdapter implements CourseAccessPort {
     @Override
     public boolean isLessonOwner(Id<User> requesterId, Id<Lesson> lessonId) {
         return dbClient.sql("""
-            SELECT EXISTS(SELECT 1 FROM courses c
-            JOIN modules m ON m.course_id = c.id
-            JOIN lessons l ON l.module_id = m.id
+            SELECT EXISTS(SELECT 1 FROM course.courses c
+            JOIN course.modules m ON m.course_id = c.id
+            JOIN course.lessons l ON l.module_id = m.id
             WHERE l.id = :lessonId AND c.teacher_id = :requesterId)
             """)
                 .param("lessonId", lessonId.value())
@@ -33,8 +33,8 @@ public class AccessPersistenceAdapter implements CourseAccessPort {
     @Override
     public boolean isModuleOwner(Id<User> requesterId, Id<CourseModule> moduleId) {
         return dbClient.sql("""
-            SELECT EXISTS(SELECT 1 FROM courses c
-            JOIN modules m ON c.id = m.course_id
+            SELECT EXISTS(SELECT 1 FROM course.courses c
+            JOIN course.modules m ON c.id = m.course_id
             WHERE m.id = :moduleId AND c.teacher_id = :requesterId)
             """)
                 .param("moduleId", moduleId.value())
@@ -46,7 +46,7 @@ public class AccessPersistenceAdapter implements CourseAccessPort {
     @Override
     public boolean isCourseOwner(Id<User> requesterId, Id<Course> courseId) {
         return dbClient.sql("""
-            SELECT EXISTS(SELECT 1 FROM courses c
+            SELECT EXISTS(SELECT 1 FROM course.courses c
             WHERE c.id = :courseId AND c.teacher_id = :requesterId)
             """)
                 .param("courseId", courseId.value())
@@ -58,9 +58,9 @@ public class AccessPersistenceAdapter implements CourseAccessPort {
     @Override
     public boolean isTestOwner(Id<User> requesterId, Id<Test> testId) {
         return dbClient.sql("""
-            SELECT EXISTS(SELECT 1 FROM courses c
-            JOIN modules m ON m.course_id = c.id
-            JOIN tests t ON t.module_id = m.id
+            SELECT EXISTS(SELECT 1 FROM course.courses c
+            JOIN course.modules m ON m.course_id = c.id
+            JOIN course.tests t ON t.module_id = m.id
             WHERE t.id = :testId AND c.teacher_id = :requesterId)
             """)
                 .param("testId", testId.value())

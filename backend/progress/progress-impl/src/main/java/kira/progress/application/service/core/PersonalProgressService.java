@@ -12,8 +12,8 @@ import kira.progress.application.port.in.query.personalprogress.TestProgressSumm
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.external.ModuleStructure;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
-import kira.progress.application.port.out.persistance.query.personalprogress.PersonalProgressQueryPort;
-import kira.progress.application.port.out.persistance.query.shared.TestAnswersViewQueryPort;
+import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
+import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.CourseModule;
 import kira.progress.domain.markers.Test;

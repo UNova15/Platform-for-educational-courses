@@ -6,14 +6,14 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "question_options")
+@Table(name = "course.question_options")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
 public class AnswerOptionEntity {
     @Id
-    private Long id;
+    private final Long id;
 
-    private String option;
-    private boolean isCorrect;
+    private final String option;
+    private final boolean isCorrect;
 }

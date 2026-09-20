@@ -1,6 +1,5 @@
 package kira.progress.application.port.out.persistance.lessonprogress;
 
-
 import common.domain.Id;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;

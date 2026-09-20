@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public interface LearningModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
 
-    @Query("SELECT title,id,order_index FROM modules m WHERE m.course_id = :courseId ")
+    @Query("SELECT title,id,order_index FROM course.modules m WHERE m.course_id = :courseId ")
     List<StudentsCourseView.Module> findStudentsCourseModuleViewByCourseId(@Param("courseId") Long courseId);
 
-    @Query("SELECT id,course_id,order_index,title,description FROM modules m WHERE m.id = :moduleId")
+    @Query("SELECT id,course_id,order_index,title,description FROM course.modules m WHERE m.id = :moduleId")
     Optional<StudentsModuleView> findStudentsModuleView(@Param("moduleId") Long moduleId);
 }

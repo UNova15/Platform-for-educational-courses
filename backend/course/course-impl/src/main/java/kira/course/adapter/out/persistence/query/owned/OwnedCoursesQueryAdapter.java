@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class OwnedCoursesQueryPersistenceAdapter implements OwnedCoursesQueryPort {
+public class OwnedCoursesQueryAdapter implements OwnedCoursesQueryPort {
     private final OwnedCourseQueryRepository courseRepository;
     private final OwnedModuleQueryRepository moduleQueryRepository;
     private final OwnedLessonQueryRepository lessonQueryRepository;

@@ -9,17 +9,13 @@ import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-@EqualsAndHashCode(of = "questionId")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestAnswer {
-    private Id<TestAnswer> id;
-
     private final Id<TestAttempt> testSubmissionId;
     private final Id<Question> questionId;
 
@@ -35,6 +31,11 @@ public class TestAnswer {
         if (questionId == null || answerIds == null || testSubmissionId == null) {
             throw new DomainValidationException("Incorrect data to create test answer");
         }
-        return new TestAnswer(null, testSubmissionId, questionId, answerIds);
+        return new TestAnswer(testSubmissionId, questionId, answerIds);
+    }
+
+    public static TestAnswer restore(
+            Id<TestAttempt> testSubmissionId, Id<Question> questionId, Set<Id<AnswerOption>> selectedOptionsIds) {
+        return new TestAnswer(testSubmissionId, questionId, selectedOptionsIds);
     }
 }

@@ -17,8 +17,8 @@ public class CourseDynamicQueryRepository {
 
     // в случае расширение количества условий изменить jdbc client на jooq
     public List<CourseCursorView> findCoursesByCursor(CursorCourseQuery query) {
-        StringBuilder sql =
-                new StringBuilder("SELECT id,teacher_id,title,description,tag,createdAt FROM courses c WHERE 1=1 ");
+        StringBuilder sql = new StringBuilder(
+                "SELECT id,teacher_id,title,description,tag,createdAt FROM course.courses c WHERE 1=1 ");
 
         Map<String, Object> params = new HashMap<>();
 

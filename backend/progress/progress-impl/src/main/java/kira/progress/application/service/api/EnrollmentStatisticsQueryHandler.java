@@ -4,7 +4,7 @@ import common.domain.Id;
 import kira.progress.api.EnrollmentProviderQuery;
 import kira.progress.api.EnrollmentStatusQuery;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
-import kira.progress.application.port.out.persistance.enrollment.EnrollmentStatisticsPort;
+import kira.progress.application.port.out.persistance.query.CourseStatisticsQueryPort;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EnrollmentStatisticsQueryHandler implements EnrollmentProviderQuery, EnrollmentStatusQuery {
     private final EnrollmentLoadPort loadPort;
-    private final EnrollmentStatisticsPort statisticsPort;
+    private final CourseStatisticsQueryPort statisticsPort;
 
     @Override
     public List<Long> findCoursesIdsThatUsersIsEnrolledIn(long userId) {

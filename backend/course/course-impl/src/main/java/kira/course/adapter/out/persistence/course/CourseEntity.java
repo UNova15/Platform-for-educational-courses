@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "courses")
+@Table(name = "course.courses")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
@@ -18,9 +18,9 @@ public class CourseEntity {
     @Id
     private final Long id;
 
-    private Long teacherId;
-    private String title;
-    private String description;
-    private Tag tag;
-    private LocalDateTime createdAt;
+    private final Long teacherId;
+    private final String title;
+    private final String description;
+    private final Tag tag;
+    private final LocalDateTime createdAt;
 }

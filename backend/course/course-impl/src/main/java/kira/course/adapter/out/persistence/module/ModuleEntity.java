@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "modules")
+@Table(name = "course.modules")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
@@ -15,7 +15,7 @@ public class ModuleEntity {
     private final Long id;
 
     private final Long courseId;
-    private String title;
-    private String description;
-    private int orderIndex;
+    private final String title;
+    private final String description;
+    private final int orderIndex;
 }

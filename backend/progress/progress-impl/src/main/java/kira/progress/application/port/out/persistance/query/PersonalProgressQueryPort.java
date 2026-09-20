@@ -1,4 +1,4 @@
-package kira.progress.application.port.out.persistance.query.personalprogress;
+package kira.progress.application.port.out.persistance.query;
 
 import common.domain.Id;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;

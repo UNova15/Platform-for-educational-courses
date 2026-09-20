@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("lessons")
+@Table("course.lessons")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
@@ -16,9 +16,9 @@ public class LessonEntity {
     private final Long id;
 
     private final Long moduleId;
-    private String title;
-    private ContentType type;
-    private String content;
-    private int orderIndex;
-    private boolean mandatory;
+    private final String title;
+    private final ContentType type;
+    private final String content;
+    private final int orderIndex;
+    private final boolean mandatory;
 }

@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public interface LearningLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
 
-    @Query("SELECT id,title,module_id,order_index,mandatory FROM lessons l WHERE l.module_id = :moduleId")
+    @Query("SELECT id,title,module_id,order_index,mandatory FROM course.lessons l WHERE l.module_id = :moduleId")
     List<StudentsModuleView.Lesson> findStudentsModuleLessonView(@Param("moduleId") Long moduleId);
 
     @Query("""
             SELECT l.id,l.module_id,m.course_id,l.order_index,l.mandatory,l.title,l.type,l.content
-            FROM lessons l
-            JOIN modules m ON l.module_id = m.id
+            FROM course.lessons l
+            JOIN course.modules m ON l.module_id = m.id
             WHERE l.id = :lessonId
             """)
     Optional<StudentsLessonView> findStudentsLessonView(@Param("lessonId") Long lessonId);

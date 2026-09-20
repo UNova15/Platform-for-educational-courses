@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public interface OwnedCourseQueryRepository extends CrudRepository<CourseEntity, Long> {
 
-    @Query("SELECT id,title,description,tag,createdAt FROM  courses c WHERE c.teacher_id = :teacherId ")
+    @Query("SELECT id,title,description,tag,createdAt FROM  course.courses c WHERE c.teacher_id = :teacherId ")
     List<OwnedCoursesView> findOwnedCoursesViewByTeacherId(@Param("teacherId") Long teacherId);
 
-    @Query("SELECT id,teacher_id,tag,created_at,title,description FROM courses c WHERE c.course_id = :courseId ")
+    @Query("SELECT id,teacher_id,tag,created_at,title,description FROM course.courses c WHERE c.course_id = :courseId ")
     Optional<TeacherCourseView> findTeacherCourseViewById(@Param("courseId") Long courseId);
 }

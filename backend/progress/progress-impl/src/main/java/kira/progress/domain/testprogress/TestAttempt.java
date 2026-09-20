@@ -46,7 +46,7 @@ public class TestAttempt {
         return new TestAttempt(null, userId, testId, LocalDateTime.now(), null, 0, Set.of());
     }
 
-    public boolean isCompleted(){
+    public boolean isCompleted() {
         return completedAt != null;
     }
 
@@ -68,5 +68,16 @@ public class TestAttempt {
         this.completedAt = LocalDateTime.now();
         this.score = score;
         this.answers = answers;
+    }
+
+    public static TestAttempt restore(
+            Id<TestAttempt> id,
+            Id<User> userId,
+            Id<Test> testId,
+            LocalDateTime startedAt,
+            LocalDateTime completedAt,
+            int score,
+            Set<TestAnswer> answers) {
+        return new TestAttempt(id, userId, testId, startedAt, completedAt, score, answers);
     }
 }

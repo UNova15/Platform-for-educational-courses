@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public interface LearningCourseQueryRepository extends CrudRepository<CourseEntity, Long> {
 
-    @Query("SELECT id,teacher_id,tag,created_at,title,description FROM courses c WHERE c.id = :courseId")
+    @Query("SELECT id,teacher_id,tag,created_at,title,description FROM course.courses c WHERE c.id = :courseId")
     Optional<StudentsCourseView> findStudentsCourseViewById(@Param("courseId") Long courseId);
 
-    @Query("SELECT id,teacher_id,tag,created_at,title FROM courses c WHERE c.id IN :coursesIds")
+    @Query("SELECT id,teacher_id,tag,created_at,title FROM course.courses c WHERE c.id IN :coursesIds")
     List<UserCourseView> findEnrolledCoursesByCoursesIds(@Param("coursesIds") List<Long> coursesIds);
 }

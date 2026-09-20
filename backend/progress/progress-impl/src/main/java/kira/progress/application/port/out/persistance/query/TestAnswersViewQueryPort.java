@@ -1,4 +1,4 @@
-package kira.progress.application.port.out.persistance.query.shared;
+package kira.progress.application.port.out.persistance.query;
 
 import common.domain.Id;
 import kira.progress.application.port.in.query.shared.TestAnswersView;
