@@ -1,12 +1,11 @@
 package kira.progress.domain.testprogress;
 
+import common.domain.Id;
+import common.exception.DomainValidationException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import common.domain.Id;
-import common.exception.DomainValidationException;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.valueobject.AnswerKey;

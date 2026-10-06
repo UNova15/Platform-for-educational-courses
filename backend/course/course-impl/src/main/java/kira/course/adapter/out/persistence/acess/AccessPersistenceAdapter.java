@@ -1,6 +1,7 @@
 package kira.course.adapter.out.persistence.acess;
 
 import common.domain.Id;
+import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
@@ -9,7 +10,6 @@ import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import kira.course.application.port.out.persistance.access.CourseAccessPort;
 
 @Repository
 @RequiredArgsConstructor

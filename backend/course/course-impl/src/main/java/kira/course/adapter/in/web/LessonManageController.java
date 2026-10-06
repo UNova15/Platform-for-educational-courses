@@ -2,6 +2,12 @@ package kira.course.adapter.in.web;
 
 import common.domain.Id;
 import jakarta.validation.Valid;
+import kira.course.application.port.in.lesson.create.LessonCreateCommand;
+import kira.course.application.port.in.lesson.create.LessonCreateResult;
+import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
+import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
+import kira.course.application.port.in.lesson.update.LessonUpdateCommand;
+import kira.course.application.port.in.lesson.update.LessonUpdateUseCase;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
@@ -11,12 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import kira.course.application.port.in.lesson.create.LessonCreateCommand;
-import kira.course.application.port.in.lesson.create.LessonCreateResult;
-import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
-import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
-import kira.course.application.port.in.lesson.update.LessonUpdateCommand;
-import kira.course.application.port.in.lesson.update.LessonUpdateUseCase;
 
 @RestController
 @RequiredArgsConstructor

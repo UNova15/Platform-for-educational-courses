@@ -1,19 +1,18 @@
 package kira.course.domain.course;
 
-import java.time.LocalDateTime;
-
 import common.domain.Id;
-import common.exception.ResourceAccessException;
 import common.exception.DomainModificationException;
 import common.exception.DomainValidationException;
+import common.exception.ResourceAccessException;
+import java.time.LocalDateTime;
 import kira.course.application.exceptions.CourseExceptionCode;
 import kira.course.domain.common.Description;
 import kira.course.domain.common.Title;
+import kira.course.domain.markers.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import kira.course.domain.markers.User;
 
 @Getter
 @Accessors(fluent = true)

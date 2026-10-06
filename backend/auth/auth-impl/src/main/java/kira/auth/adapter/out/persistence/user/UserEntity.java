@@ -1,6 +1,5 @@
 package kira.auth.adapter.out.persistence.user;
 
-import kira.auth.domain.user.valueobject.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -15,5 +14,4 @@ class UserEntity {
 
     private final String login;
     private final String password;
-    private final UserRole role;
 }

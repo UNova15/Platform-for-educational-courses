@@ -2,10 +2,9 @@ package kira.course.application.exceptions;
 
 import common.domain.Id;
 import common.exception.BaseApplicationException;
+import java.util.Map;
 import kira.course.domain.markers.User;
 import kira.course.domain.test.Test;
-
-import java.util.Map;
 
 public class TestNotStartedException extends BaseApplicationException {
 

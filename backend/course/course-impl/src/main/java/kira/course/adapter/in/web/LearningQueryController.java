@@ -1,6 +1,7 @@
 package kira.course.adapter.in.web;
 
 import common.domain.Id;
+import java.util.List;
 import kira.course.application.port.in.query.learning.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
@@ -16,15 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/learning")
 @RequiredArgsConstructor
 public class LearningQueryController {
     private final LearningQueryUseCase queryUseCase;
 
-    //получение списка курсов на которые записан пользователь
+    // получение списка курсов на которые записан пользователь
     @GetMapping("/courses")
     @PreAuthorize("hasAnyRole('TEACHER','STUDENT')")
     public List<UserCourseView> findEnrolledCourses(@AuthenticationPrincipal TokenPayload token) {

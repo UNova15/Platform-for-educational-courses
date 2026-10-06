@@ -1,6 +1,8 @@
 package kira.course.adapter.out.persistence.query.structure;
 
 import common.domain.Id;
+import java.util.Optional;
+import java.util.Set;
 import kira.course.api.CourseModuleStructure;
 import kira.course.application.port.out.persistance.query.CourseStructureQueryPort;
 import kira.course.domain.course.Course;
@@ -10,9 +12,6 @@ import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor

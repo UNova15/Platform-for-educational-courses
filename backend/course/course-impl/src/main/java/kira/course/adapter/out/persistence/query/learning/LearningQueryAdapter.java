@@ -1,21 +1,20 @@
 package kira.course.adapter.out.persistence.query.learning;
 
 import common.domain.Id;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import kira.course.application.port.in.query.learning.*;
+import kira.course.application.port.out.persistance.query.LearningQueryPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import kira.course.application.port.out.persistance.query.LearningQueryPort;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-//В случае роста сложности маппинга вынести его в отдельную фабрику
+// В случае роста сложности маппинга вынести его в отдельную фабрику
 @Repository
 @RequiredArgsConstructor
 public class LearningQueryAdapter implements LearningQueryPort {

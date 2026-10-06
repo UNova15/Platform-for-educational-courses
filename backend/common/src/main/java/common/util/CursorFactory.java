@@ -1,11 +1,10 @@
 package common.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import common.wrapper.CursorResponse;
-
 import java.util.List;
 import java.util.function.Function;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CursorFactory {

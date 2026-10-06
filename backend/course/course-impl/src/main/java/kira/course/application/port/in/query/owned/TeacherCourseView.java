@@ -1,13 +1,12 @@
 package kira.course.application.port.in.query.owned;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import kira.course.domain.course.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Accessors(fluent = true)

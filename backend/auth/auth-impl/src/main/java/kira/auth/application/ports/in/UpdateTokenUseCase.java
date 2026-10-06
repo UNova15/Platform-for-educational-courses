@@ -1,10 +1,15 @@
 package kira.auth.application.ports.in;
 
-import kira.auth.domain.token.valueobject.RawRefreshToken;
+import common.domain.Result;
 import jakarta.validation.constraints.NotNull;
+import kira.auth.domain.token.valueobject.RawRefreshToken;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface UpdateTokenUseCase {
-    AuthResult updateTokens(@NotNull RawRefreshToken refreshToken);
+    enum Error {
+        INVALID_REFRESH_TOKEN
+    }
+
+    Result<AuthTokens, Error> updateTokens(@NotNull RawRefreshToken refreshToken);
 }

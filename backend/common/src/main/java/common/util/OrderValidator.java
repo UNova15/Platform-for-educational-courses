@@ -1,11 +1,10 @@
 package common.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.function.ToIntFunction;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderValidator {

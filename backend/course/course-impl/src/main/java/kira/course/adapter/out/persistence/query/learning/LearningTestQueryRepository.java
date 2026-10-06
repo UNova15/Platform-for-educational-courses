@@ -1,15 +1,14 @@
 package kira.course.adapter.out.persistence.query.learning;
 
-import kira.course.adapter.out.persistence.test.TestEntity;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import kira.course.application.port.in.query.learning.StudentsModuleView;
-import kira.course.application.port.in.query.learning.StudentsTestView;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import kira.course.adapter.out.persistence.test.TestEntity;
+import kira.course.application.port.in.query.learning.StudentsModuleView;
+import kira.course.application.port.in.query.learning.StudentsTestView;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface LearningTestQueryRepository extends CrudRepository<TestEntity, Long> {
 

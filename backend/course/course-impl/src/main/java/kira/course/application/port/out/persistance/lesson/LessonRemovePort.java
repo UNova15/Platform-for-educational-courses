@@ -1,6 +1,5 @@
 package kira.course.application.port.out.persistance.lesson;
 
-
 import common.domain.Id;
 import kira.course.domain.lesson.Lesson;
 

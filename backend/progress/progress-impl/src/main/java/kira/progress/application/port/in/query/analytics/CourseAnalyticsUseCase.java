@@ -1,13 +1,12 @@
 package kira.progress.application.port.in.query.analytics;
 
 import common.domain.Id;
+import java.util.List;
 import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
-
-import java.util.List;
 
 public interface CourseAnalyticsUseCase {
 

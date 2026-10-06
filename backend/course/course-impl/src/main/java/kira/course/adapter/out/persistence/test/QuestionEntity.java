@@ -2,7 +2,6 @@ package kira.course.adapter.out.persistence.test;
 
 import java.util.Collections;
 import java.util.Set;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

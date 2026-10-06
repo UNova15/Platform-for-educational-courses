@@ -11,6 +11,4 @@ public interface DataCourseRepository extends CrudRepository<CourseEntity, Long>
     Optional<CourseEntity> findByIdAndTeacherId(long userId, long courseId);
 
     List<CourseEntity> findCoursesByIdIn(Collection<Long> ids);
-
-
 }

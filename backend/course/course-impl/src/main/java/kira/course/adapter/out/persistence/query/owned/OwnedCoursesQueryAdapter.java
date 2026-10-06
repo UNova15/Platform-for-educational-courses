@@ -1,7 +1,12 @@
 package kira.course.adapter.out.persistence.query.owned;
 
 import common.domain.Id;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import kira.course.application.port.in.query.owned.*;
+import kira.course.application.port.out.persistance.query.OwnedCoursesQueryPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
@@ -9,12 +14,6 @@ import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import kira.course.application.port.out.persistance.query.OwnedCoursesQueryPort;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor

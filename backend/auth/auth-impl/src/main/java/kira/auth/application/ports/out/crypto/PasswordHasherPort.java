@@ -1,6 +1,5 @@
 package kira.auth.application.ports.out.crypto;
 
-
 import kira.auth.domain.user.valueobject.HashedPassword;
 import kira.auth.domain.user.valueobject.RawPassword;
 

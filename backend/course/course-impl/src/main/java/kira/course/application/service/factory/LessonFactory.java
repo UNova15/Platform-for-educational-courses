@@ -1,8 +1,7 @@
 package kira.course.application.service.factory;
 
-import java.util.List;
-
 import common.domain.Id;
+import java.util.List;
 import kira.course.application.port.in.course.create.CourseCreateCommand;
 import kira.course.domain.common.Title;
 import kira.course.domain.lesson.Content;
@@ -14,7 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class LessonFactory {
-    public List<Lesson> fromLessonCreateCommand(List<CourseCreateCommand.LessonCommand> lessons, Id<CourseModule> moduleId) {
+    public List<Lesson> fromLessonCreateCommand(
+            List<CourseCreateCommand.LessonCommand> lessons, Id<CourseModule> moduleId) {
         return lessons.stream()
                 .map(lesson -> fromLessonCreateCommand(lesson, moduleId))
                 .toList();

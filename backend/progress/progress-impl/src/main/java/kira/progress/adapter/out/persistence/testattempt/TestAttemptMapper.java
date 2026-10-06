@@ -1,6 +1,8 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
 import common.domain.Id;
+import java.util.*;
+import java.util.stream.Collectors;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import kira.progress.domain.markers.Test;
@@ -8,9 +10,6 @@ import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.TestAnswer;
 import kira.progress.domain.testprogress.TestAttempt;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class TestAttemptMapper {

@@ -14,7 +14,6 @@ public enum ProgressExceptionCode implements ExceptionCode {
     COURSE_NOT_FOUND_EXCEPTION,
     ENROLLMENT_ALREADY_EXIST_EXCEPTION;
 
-
     @Override
     public String getExceptionCode() {
         return this.name();

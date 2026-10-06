@@ -1,6 +1,7 @@
 package kira.progress.adapter.in.web;
 
 import common.domain.Id;
+import java.util.Set;
 import kira.infrastructure.api.TokenPayload;
 import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
 import kira.progress.application.port.in.testprogress.EndTestAttemptUseCase;
@@ -12,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor

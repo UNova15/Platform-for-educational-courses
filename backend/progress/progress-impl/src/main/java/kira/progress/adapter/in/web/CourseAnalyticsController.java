@@ -1,6 +1,7 @@
 package kira.progress.adapter.in.web;
 
 import common.domain.Id;
+import java.util.List;
 import kira.infrastructure.api.TokenPayload;
 import kira.progress.application.port.in.query.analytics.CompletedTestStudentsResult;
 import kira.progress.application.port.in.query.analytics.CourseAnalyticsUseCase;
@@ -15,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/owned")

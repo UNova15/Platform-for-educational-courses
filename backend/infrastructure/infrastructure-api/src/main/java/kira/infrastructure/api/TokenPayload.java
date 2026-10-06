@@ -1,3 +1,3 @@
 package kira.infrastructure.api;
 
-public record TokenPayload(long userId, String login, String role) {}
+public record TokenPayload(long userId, String login) {}

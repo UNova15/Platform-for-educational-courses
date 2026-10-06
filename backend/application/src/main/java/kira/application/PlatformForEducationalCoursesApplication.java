@@ -1,6 +1,6 @@
 package kira.application;
 
-import kira.auth.AuthModuleConfig;
+import kira.auth.ModuleConfig;
 import kira.course.CourseModuleConfig;
 import kira.infrastructure.InfrastructureModuleConfig;
 import kira.progress.ProgressModuleConfig;
@@ -9,8 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({AuthModuleConfig.class, ProgressModuleConfig.class, CourseModuleConfig.class, InfrastructureModuleConfig.class
-})
+@Import({ModuleConfig.class, ProgressModuleConfig.class, CourseModuleConfig.class, InfrastructureModuleConfig.class})
 public class PlatformForEducationalCoursesApplication {
 
     static void main(String[] args) {

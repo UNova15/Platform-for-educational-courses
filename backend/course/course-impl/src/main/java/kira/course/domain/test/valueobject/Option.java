@@ -14,8 +14,8 @@ public class Option {
 
     private final String value;
 
-    public static Option of(String option){
-        if(option == null || option.isBlank() || option.length() > MAX_LENGTH){
+    public static Option of(String option) {
+        if (option == null || option.isBlank() || option.length() > MAX_LENGTH) {
             throw new DomainValidationException("Incorrect data to create option");
         }
         return new Option(option);

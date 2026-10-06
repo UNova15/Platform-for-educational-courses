@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.persistence.query.coursestatistics;
 
 import common.domain.Id;
+import java.util.List;
 import kira.progress.application.port.in.query.analytics.CompletedTestStudentsResult;
 import kira.progress.application.port.in.query.analytics.EnrolledStudentsResult;
 import kira.progress.application.port.in.query.analytics.StudentsLessonProgressResult;
@@ -12,8 +13,6 @@ import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor

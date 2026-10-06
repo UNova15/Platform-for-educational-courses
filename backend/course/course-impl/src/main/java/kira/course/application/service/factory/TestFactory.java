@@ -1,10 +1,9 @@
 package kira.course.application.service.factory;
 
+import common.domain.Id;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import common.domain.Id;
 import kira.course.application.port.in.course.create.CourseCreateCommand;
 import kira.course.application.port.in.test.create.TestCreateCommand;
 import kira.course.application.port.in.test.update.TestUpdateCommand;

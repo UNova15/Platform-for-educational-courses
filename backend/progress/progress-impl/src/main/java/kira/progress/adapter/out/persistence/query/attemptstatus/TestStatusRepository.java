@@ -4,7 +4,7 @@ import kira.progress.adapter.out.persistence.testattempt.TestAttemptEntity;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface TestStatusRepository extends CrudRepository<TestAttemptEntity,Long> {
+public interface TestStatusRepository extends CrudRepository<TestAttemptEntity, Long> {
     @Query("""
         SELECT 1 FROM progress.test_submissions s
         WHERE s.user_id = :studentId AND s.test_id = :testId

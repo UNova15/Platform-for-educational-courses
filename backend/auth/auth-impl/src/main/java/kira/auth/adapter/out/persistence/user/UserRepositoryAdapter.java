@@ -1,14 +1,13 @@
 package kira.auth.adapter.out.persistence.user;
 
-import java.util.Optional;
-
-import kira.auth.domain.user.User;
-import kira.auth.domain.user.valueobject.Login;
 import common.domain.Id;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 import kira.auth.application.ports.out.persistance.UserLoadPort;
 import kira.auth.application.ports.out.persistance.UserSavePort;
+import kira.auth.domain.user.User;
+import kira.auth.domain.user.valueobject.Login;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor

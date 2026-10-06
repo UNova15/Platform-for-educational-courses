@@ -24,8 +24,7 @@ public class Description {
         }
 
         if (description.length() > MAX_LENGTH) {
-            throw new DomainValidationException(
-                    "Length course description more than %d symbols".formatted(MAX_LENGTH));
+            throw new DomainValidationException("Length course description more than %d symbols".formatted(MAX_LENGTH));
         }
 
         return new Description(description);

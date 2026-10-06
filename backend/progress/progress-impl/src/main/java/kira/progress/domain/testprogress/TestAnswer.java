@@ -1,10 +1,9 @@
 package kira.progress.domain.testprogress;
 
-import java.util.Collections;
-import java.util.Set;
-
 import common.domain.Id;
 import common.exception.DomainValidationException;
+import java.util.Collections;
+import java.util.Set;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import lombok.AccessLevel;

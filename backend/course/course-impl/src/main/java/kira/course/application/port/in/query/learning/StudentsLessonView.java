@@ -1,6 +1,5 @@
 package kira.course.application.port.in.query.learning;
 
-
 import kira.course.domain.lesson.ContentType;
 
 public record StudentsLessonView(

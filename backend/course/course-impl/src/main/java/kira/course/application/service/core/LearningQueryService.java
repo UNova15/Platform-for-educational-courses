@@ -3,6 +3,7 @@ package kira.course.application.service.core;
 import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
+import java.util.List;
 import kira.course.application.exceptions.CourseExceptionCode;
 import kira.course.application.exceptions.TestNotStartedException;
 import kira.course.application.port.in.query.learning.*;
@@ -17,8 +18,6 @@ import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +64,6 @@ public class LearningQueryService implements LearningQueryUseCase {
         Id<Course> courseId = Id.of(view.courseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-
             throw new ResourceAccessException(
                     CourseExceptionCode.COURSE_ACCESS_EXCEPTION, Course.class, requesterId, courseId);
         }

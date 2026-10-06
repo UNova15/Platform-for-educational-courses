@@ -1,10 +1,10 @@
 package kira.auth.adapter.in.web;
 
+import kira.auth.application.ports.in.AuthTokens;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseCookie;
-import kira.auth.application.ports.in.AuthResult;
 
 @Configuration
 @EnableConfigurationProperties(CookieProperties.class)
@@ -12,7 +12,7 @@ import kira.auth.application.ports.in.AuthResult;
 class CookieFactory {
     private final CookieProperties cookieProperties;
 
-    public ResponseCookie createDefaultRefreshCookie(AuthResult token) {
+    public ResponseCookie createDefaultRefreshCookie(AuthTokens token) {
         return ResponseCookie.from("refreshToken", token.refreshToken())
                 .httpOnly(true)
                 .path("/kira/auth/refresh")

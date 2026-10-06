@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.persistence.query.personalprogress;
 
 import common.domain.Id;
+import java.util.*;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.TestProgressSummary;
 import kira.progress.application.port.in.query.shared.TestAnswersView;
@@ -12,8 +13,6 @@ import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -57,7 +56,7 @@ public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, Te
                 .optional();
 
         if (attemptId.isEmpty()) return Optional.empty();
-
+        // TODO логика получения с маппингом склеина
         return jdbcClient.sql("""
             SELECT t.question_id, t.option_id
             FROM progress.test_answers t

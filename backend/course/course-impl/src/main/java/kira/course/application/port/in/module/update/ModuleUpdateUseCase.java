@@ -1,10 +1,10 @@
 package kira.course.application.port.in.module.update;
 
 import common.domain.Id;
-import kira.course.domain.markers.User;
-import kira.course.domain.module.CourseModule;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import kira.course.domain.markers.User;
+import kira.course.domain.module.CourseModule;
 import org.springframework.validation.annotation.Validated;
 
 @Validated

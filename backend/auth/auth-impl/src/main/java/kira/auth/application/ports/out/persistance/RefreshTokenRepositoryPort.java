@@ -1,9 +1,8 @@
 package kira.auth.application.ports.out.persistance;
 
+import java.util.Optional;
 import kira.auth.domain.token.RefreshToken;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
-
-import java.util.Optional;
 
 public interface RefreshTokenRepositoryPort {
     RefreshToken save(RefreshToken token);

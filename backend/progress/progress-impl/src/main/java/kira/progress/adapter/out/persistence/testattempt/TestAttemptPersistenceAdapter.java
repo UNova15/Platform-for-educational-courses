@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
 import common.domain.Id;
+import java.util.Optional;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptSavePort;
 import kira.progress.domain.markers.Test;
@@ -8,8 +9,6 @@ import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.TestAttempt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

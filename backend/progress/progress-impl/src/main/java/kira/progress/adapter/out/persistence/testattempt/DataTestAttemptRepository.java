@@ -1,10 +1,9 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
-public interface DataTestAttemptRepository extends CrudRepository<TestAttemptEntity,Long> {
+public interface DataTestAttemptRepository extends CrudRepository<TestAttemptEntity, Long> {
 
     Optional<TestAttemptEntity> findByTestIdAndUserId(long testId, long userId);
 

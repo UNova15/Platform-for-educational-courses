@@ -2,6 +2,9 @@ package kira.course.application.port.in.course.create;
 
 import common.exception.DomainValidationException;
 import common.util.OrderValidator;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import java.util.List;
 import kira.course.domain.common.Description;
 import kira.course.domain.common.Title;
 import kira.course.domain.course.Course;
@@ -13,11 +16,6 @@ import kira.course.domain.test.Question;
 import kira.course.domain.test.Test;
 import kira.course.domain.test.valueobject.Option;
 import kira.course.domain.test.valueobject.QuestionContent;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-
-import java.util.List;
-
 
 public record CourseCreateCommand(
         @NotBlank @Size(max = Title.MAX_LENGTH) String title,

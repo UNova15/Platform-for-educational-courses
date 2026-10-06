@@ -1,12 +1,11 @@
 package kira.auth.adapter.out.persistence.token;
 
 import java.util.Optional;
-
+import kira.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
 import kira.auth.domain.token.RefreshToken;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import kira.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
 
 @Repository
 @RequiredArgsConstructor

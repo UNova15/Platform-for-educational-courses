@@ -1,37 +1,31 @@
 package common.exception;
 
-import common.exception.codes.ExceptionCode;
-import lombok.AccessLevel;
-import lombok.Getter;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 @Getter
 public abstract class BaseApplicationException extends RuntimeException {
-    private final ExceptionCode code;
 
     @Getter(AccessLevel.NONE)
-    private final Map<String, Object> args;
+    private Map<String, Object> context;
 
-    public Map<String, Object> getArgs() {
-        return Collections.unmodifiableMap(args);
+    public Map<String, Object> context() {
+        return Collections.unmodifiableMap(context);
     }
 
-    public BaseApplicationException(ExceptionCode exceptionCode, String message) {
+    public BaseApplicationException(String message) {
         super(message);
-        this.code = exceptionCode;
-        this.args = new HashMap<>();
     }
 
-    public BaseApplicationException(ExceptionCode exceptionCode, String message, Map<String, Object> args) {
-        super(message);
-        this.code = exceptionCode;
-        this.args = args;
-    }
+    public BaseApplicationException withContext(String property, Object value) {
+        if (context == null) {
+            this.context = new HashMap<>();
+        }
 
-    protected void setProperty(String name, Object value) {
-        args.put(name, value);
+        context.put(property, value);
+        return this;
     }
 }

@@ -1,12 +1,12 @@
 package kira.course.adapter.in.web;
 
 import common.wrapper.CursorResponse;
+import kira.course.application.port.in.query.catalog.CourseCatalogQueryUseCase;
+import kira.course.application.port.in.query.catalog.CourseCursorView;
+import kira.course.application.port.in.query.catalog.CursorCourseQuery;
 import kira.course.domain.course.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import kira.course.application.port.in.query.catalog.CourseCursorView;
-import kira.course.application.port.in.query.catalog.CourseCatalogQueryUseCase;
-import kira.course.application.port.in.query.catalog.CursorCourseQuery;
 
 @RestController
 @RequestMapping("/catalog")

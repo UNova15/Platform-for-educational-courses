@@ -3,6 +3,7 @@ package kira.progress.application.service.core;
 import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
+import java.util.Optional;
 import kira.progress.application.exceptions.ProgressExceptionCode;
 import kira.progress.application.exceptions.TestAlreadyCompletedException;
 import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
@@ -21,8 +22,6 @@ import kira.progress.domain.testprogress.TestAttempt;
 import kira.progress.domain.testprogress.valueobject.AnswerKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

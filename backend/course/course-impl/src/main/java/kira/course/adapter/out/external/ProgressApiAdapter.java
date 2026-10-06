@@ -1,6 +1,7 @@
 package kira.course.adapter.out.external;
 
 import common.domain.Id;
+import java.util.List;
 import kira.course.application.port.out.external.EnrollmentCheckPort;
 import kira.course.application.port.out.external.TestCompletionCheckPort;
 import kira.course.application.port.out.external.UserEnrollmentProviderPort;
@@ -12,8 +13,6 @@ import kira.progress.api.EnrollmentStatusQuery;
 import kira.progress.api.TestStatusQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

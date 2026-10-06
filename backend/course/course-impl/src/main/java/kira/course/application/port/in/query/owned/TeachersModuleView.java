@@ -1,11 +1,10 @@
 package kira.course.application.port.in.query.owned;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
@@ -22,6 +21,7 @@ public class TeachersModuleView {
 
     @Setter
     private List<Lesson> lessons;
+
     @Setter
     private List<Test> tests;
 

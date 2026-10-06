@@ -3,6 +3,7 @@ package kira.course.application.service.core;
 import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
+import java.util.List;
 import kira.course.application.exceptions.CourseExceptionCode;
 import kira.course.application.port.in.query.owned.*;
 import kira.course.application.port.out.persistance.query.OwnedCoursesQueryPort;
@@ -13,8 +14,6 @@ import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

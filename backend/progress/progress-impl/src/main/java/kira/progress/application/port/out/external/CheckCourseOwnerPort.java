@@ -1,6 +1,5 @@
 package kira.progress.application.port.out.external;
 
-
 import common.domain.Id;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;

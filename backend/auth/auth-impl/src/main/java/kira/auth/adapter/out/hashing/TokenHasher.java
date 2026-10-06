@@ -1,10 +1,10 @@
 package kira.auth.adapter.out.hashing;
 
+import kira.auth.application.ports.out.crypto.TokenHashingPort;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
-import kira.auth.application.ports.out.crypto.TokenHashingPort;
 
 @Component
 class TokenHasher implements TokenHashingPort {

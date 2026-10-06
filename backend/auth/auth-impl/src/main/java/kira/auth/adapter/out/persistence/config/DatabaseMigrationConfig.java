@@ -1,11 +1,10 @@
 package kira.auth.adapter.out.persistence.config;
 
 import jakarta.annotation.PostConstruct;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 @Configuration("authMigration")
 @RequiredArgsConstructor

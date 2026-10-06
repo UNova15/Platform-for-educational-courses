@@ -1,14 +1,13 @@
 package kira.course.adapter.out.persistence.query.catalog;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.stereotype.Component;
-import kira.course.application.port.in.query.catalog.CourseCursorView;
-import kira.course.application.port.in.query.catalog.CursorCourseQuery;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import kira.course.application.port.in.query.catalog.CourseCursorView;
+import kira.course.application.port.in.query.catalog.CursorCourseQuery;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

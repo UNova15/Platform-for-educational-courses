@@ -1,6 +1,7 @@
 package kira.course.adapter.in.web;
 
 import common.domain.Id;
+import java.util.List;
 import kira.course.application.port.in.query.owned.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/owned")

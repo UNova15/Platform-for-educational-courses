@@ -3,12 +3,13 @@ package kira.progress.application.service.core;
 import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
+import java.util.List;
 import kira.progress.application.exceptions.ProgressExceptionCode;
-import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.PersonalProgressUseCase;
 import kira.progress.application.port.in.query.personalprogress.ProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.TestProgressSummary;
+import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.external.ModuleStructure;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
@@ -20,8 +21,6 @@ import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

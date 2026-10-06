@@ -1,13 +1,12 @@
 package kira.course.adapter.out.persistence.module;
 
 import common.domain.Id;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import kira.course.domain.common.Description;
 import kira.course.domain.common.Title;
 import kira.course.domain.module.CourseModule;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Component
 public class ModuleMapper {

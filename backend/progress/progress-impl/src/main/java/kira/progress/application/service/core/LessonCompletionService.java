@@ -4,10 +4,8 @@ import common.domain.Id;
 import common.exception.ResourceAccessException;
 import common.exception.ResourceNotFoundException;
 import kira.progress.application.exceptions.ProgressExceptionCode;
-import kira.progress.application.port.out.external.CourseStructurePort;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import kira.progress.application.port.in.lessonprogress.LessonCompletionUseCase;
+import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressSavePort;
@@ -15,6 +13,8 @@ import kira.progress.domain.lessonprogress.LessonProgress;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

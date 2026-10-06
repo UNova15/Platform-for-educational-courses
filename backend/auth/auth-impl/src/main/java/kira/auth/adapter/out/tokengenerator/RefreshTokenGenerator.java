@@ -2,10 +2,9 @@ package kira.auth.adapter.out.tokengenerator;
 
 import java.security.SecureRandom;
 import java.util.Base64;
-
+import kira.auth.application.ports.out.token.RefreshTokenGeneratePort;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
 import lombok.RequiredArgsConstructor;
-import kira.auth.application.ports.out.token.RefreshTokenGeneratePort;
 
 @RequiredArgsConstructor
 class RefreshTokenGenerator implements RefreshTokenGeneratePort {

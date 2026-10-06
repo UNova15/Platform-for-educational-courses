@@ -1,8 +1,5 @@
 package kira.infrastructure.accesstoken;
 
-import kira.infrastructure.api.AccessTokenGenerator;
-import kira.infrastructure.api.TokenPayload;
-import kira.infrastructure.exceptions.TokenDecodeException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import kira.infrastructure.api.AccessTokenGenerator;
+import kira.infrastructure.api.TokenPayload;
+import kira.infrastructure.exceptions.TokenDecodeException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -35,10 +35,7 @@ class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
                     .parseSignedClaims(token)
                     .getPayload();
 
-            return new TokenPayload(
-                    Long.parseLong(parsedToken.getSubject()),
-                    parsedToken.get("login", String.class),
-                    parsedToken.get("role", String.class));
+            return new TokenPayload(Long.parseLong(parsedToken.getSubject()), parsedToken.get("login", String.class));
 
         } catch (JwtException | IllegalArgumentException exception) {
             throw new TokenDecodeException();
@@ -46,11 +43,10 @@ class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
     }
 
     @Override
-    public String generateAccessToken(long id, String login, String role) {
+    public String generateAccessToken(long id, String login) {
         return Jwts.builder()
                 .subject(String.valueOf(id))
                 .claim("login", login)
-                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationTime.toMillis()))
                 .signWith(key, Jwts.SIG.HS256)

@@ -1,6 +1,7 @@
 package kira.progress.application.service.api;
 
 import common.domain.Id;
+import java.util.List;
 import kira.progress.api.EnrollmentProviderQuery;
 import kira.progress.api.EnrollmentStatusQuery;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
@@ -9,8 +10,6 @@ import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

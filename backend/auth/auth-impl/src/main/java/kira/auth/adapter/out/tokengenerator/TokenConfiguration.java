@@ -2,7 +2,6 @@ package kira.auth.adapter.out.tokengenerator;
 
 import java.security.SecureRandom;
 import java.util.Base64;
-
 import kira.infrastructure.api.AccessTokenGenerator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

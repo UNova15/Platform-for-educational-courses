@@ -1,14 +1,13 @@
 package kira.course.adapter.out.persistence.query.owned;
 
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import java.util.List;
+import java.util.Optional;
 import kira.course.adapter.out.persistence.module.ModuleEntity;
 import kira.course.application.port.in.query.owned.TeacherCourseView;
 import kira.course.application.port.in.query.owned.TeachersModuleView;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface OwnedModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
 

@@ -1,8 +1,7 @@
 package kira.course.application.service.factory;
 
-import java.util.List;
-
 import common.domain.Id;
+import java.util.List;
 import kira.course.application.port.in.course.create.CourseCreateCommand;
 import kira.course.domain.common.Description;
 import kira.course.domain.common.Title;

@@ -1,10 +1,10 @@
 package kira.auth.domain.token.valueobject;
 
+import common.exception.DomainValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import kira.auth.application.exceptions.InvalidTokenException;
 
 @Getter
 @Accessors(fluent = true)
@@ -14,7 +14,7 @@ public class RawRefreshToken {
 
     public static RawRefreshToken of(String token) {
         if (token == null || token.isBlank()) {
-            throw new InvalidTokenException();
+            throw new DomainValidationException("Invalid or expired token");
         }
         return new RawRefreshToken(token);
     }

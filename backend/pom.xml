@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -17,12 +16,12 @@
     <description>Platform-for-educational-courses</description>
 
     <modules>
-        <module>common</module>
-        <module>auth</module>
-        <module>course</module>
-        <module>progress</module>
         <module>application</module>
+        <module>auth</module>
+        <module>common</module>
+        <module>course</module>
         <module>infrastructure</module>
+        <module>progress</module>
     </modules>
     <scm>
         <connection/>
@@ -127,8 +126,7 @@
                     <htmlOutput>true</htmlOutput>
                     <xmlOutput>true</xmlOutput>
                     <outputDirectory>${project.reporting.outputDirectory}/spotbugs</outputDirectory>
-                    <spotbugsXmlOutputDirectory>${project.reporting.outputDirectory}/spotbugs
-                    </spotbugsXmlOutputDirectory>
+                    <spotbugsXmlOutputDirectory>${project.reporting.outputDirectory}/spotbugs</spotbugsXmlOutputDirectory>
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>

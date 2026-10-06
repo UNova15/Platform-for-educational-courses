@@ -1,11 +1,10 @@
 package kira.course.application.service.core;
 
+import common.domain.Id;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import common.domain.Id;
 import kira.course.application.port.in.course.create.CourseCreateCommand;
 import kira.course.application.port.in.course.create.CourseCreateResult;
 import kira.course.application.port.in.course.create.CourseCreateUseCase;

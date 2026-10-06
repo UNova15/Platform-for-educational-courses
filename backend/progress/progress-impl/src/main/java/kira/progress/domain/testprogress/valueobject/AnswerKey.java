@@ -2,17 +2,16 @@ package kira.progress.domain.testprogress.valueobject;
 
 import common.domain.Id;
 import common.exception.DomainValidationException;
+import java.util.Map;
+import java.util.Set;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import kira.progress.domain.markers.Test;
+import kira.progress.domain.testprogress.TestAnswer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import kira.progress.domain.testprogress.TestAnswer;
-
-import java.util.Map;
-import java.util.Set;
 
 @Getter
 @Accessors(fluent = true)
@@ -31,7 +30,7 @@ public class AnswerKey {
         return new AnswerKey(testId, keys);
     }
 
-    //в случае если будет указан id ответа от другого теста то он не будет засчитан (ошибки не будет)
+    // в случае если будет указан id ответа от другого теста то он не будет засчитан (ошибки не будет)
     public int calculateGrade(Set<TestAnswer> answers) {
         int score = 0;
 
@@ -44,10 +43,9 @@ public class AnswerKey {
             Set<Id<AnswerOption>> answersIds = answer.selectedOptionsIds();
             Set<Id<AnswerOption>> correctAnswersIds = key.get(answer.questionId());
 
-            if(correctAnswersIds.equals(answersIds)){
+            if (correctAnswersIds.equals(answersIds)) {
                 score++;
             }
-
         }
 
         return score;

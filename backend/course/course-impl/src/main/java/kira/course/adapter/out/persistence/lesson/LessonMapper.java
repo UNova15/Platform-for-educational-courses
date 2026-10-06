@@ -1,13 +1,12 @@
 package kira.course.adapter.out.persistence.lesson;
 
 import common.domain.Id;
+import java.util.List;
+import java.util.stream.StreamSupport;
 import kira.course.domain.common.Title;
 import kira.course.domain.lesson.Content;
 import kira.course.domain.lesson.Lesson;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Component
 public class LessonMapper {

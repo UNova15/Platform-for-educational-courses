@@ -1,8 +1,8 @@
 package kira.auth.adapter.out.persistence.token;
 
+import common.domain.Id;
 import kira.auth.domain.token.RefreshToken;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
-import common.domain.Id;
 import org.springframework.stereotype.Component;
 
 @Component

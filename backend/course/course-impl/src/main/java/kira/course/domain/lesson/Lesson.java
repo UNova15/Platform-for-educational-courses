@@ -4,11 +4,11 @@ import common.domain.Id;
 import common.exception.DomainModificationException;
 import common.exception.DomainValidationException;
 import kira.course.domain.common.Title;
+import kira.course.domain.module.CourseModule;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import kira.course.domain.module.CourseModule;
 
 @Getter
 @Accessors(fluent = true)

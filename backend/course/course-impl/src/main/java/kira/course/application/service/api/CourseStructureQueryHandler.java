@@ -1,6 +1,7 @@
 package kira.course.application.service.api;
 
 import common.domain.Id;
+import java.util.Optional;
 import kira.course.api.CourseExistQuery;
 import kira.course.api.CourseModuleStructure;
 import kira.course.api.CourseStructureQuery;
@@ -12,8 +13,6 @@ import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

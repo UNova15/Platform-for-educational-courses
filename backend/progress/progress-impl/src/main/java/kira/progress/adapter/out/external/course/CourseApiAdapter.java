@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.external.course;
 
 import common.domain.Id;
+import java.util.Optional;
 import kira.course.api.CheckOwnerQuery;
 import kira.course.api.CourseExistQuery;
 import kira.course.api.CourseStructureQuery;
@@ -10,8 +11,6 @@ import kira.progress.domain.markers.*;
 import kira.progress.domain.testprogress.valueobject.AnswerKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 // При разрастании класса на 200+ строк, разделить логически на меньшие адаптеры
 @Component

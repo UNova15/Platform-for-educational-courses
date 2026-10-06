@@ -1,10 +1,10 @@
 package common.domain;
 
+import common.exception.DomainModificationException;
 import lombok.*;
 import lombok.experimental.Accessors;
-import common.exception.DomainModificationException;
 
-//Id класс с фантомными типами для обеспечения типобезопасности разных Id
+// Id класс с фантомными типами для обеспечения типобезопасности разных Id
 @Getter
 @Accessors(fluent = true)
 @EqualsAndHashCode
