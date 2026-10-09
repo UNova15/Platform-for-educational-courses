@@ -1,7 +1,6 @@
 package kira.course.adapter.out.persistence.module;
 
 import common.domain.Id;
-import java.util.List;
 import java.util.Optional;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleRemovePort;
@@ -22,7 +21,7 @@ public class ModulePersistenceAdapter implements ModuleLoadPort, ModuleRemovePor
     }
 
     @Override
-    public boolean isExistModule(Id<CourseModule> moduleId) {
+    public boolean isExistsModule(Id<CourseModule> moduleId) {
         return repository.existsById(moduleId.value());
     }
 
@@ -36,12 +35,5 @@ public class ModulePersistenceAdapter implements ModuleLoadPort, ModuleRemovePor
         ModuleEntity entity = mapper.toEntity(module);
         ModuleEntity savedEntity = repository.save(entity);
         return mapper.toDomain(savedEntity);
-    }
-
-    @Override
-    public List<CourseModule> saveAll(List<CourseModule> modules) {
-        List<ModuleEntity> entities = mapper.toEntity(modules);
-        Iterable<ModuleEntity> saved = repository.saveAll(entities);
-        return mapper.toDomain(saved);
     }
 }

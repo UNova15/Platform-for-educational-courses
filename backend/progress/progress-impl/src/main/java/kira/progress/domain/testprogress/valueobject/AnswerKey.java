@@ -1,7 +1,7 @@
 package kira.progress.domain.testprogress.valueobject;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import java.util.Map;
 import java.util.Set;
 import kira.progress.domain.markers.AnswerOption;

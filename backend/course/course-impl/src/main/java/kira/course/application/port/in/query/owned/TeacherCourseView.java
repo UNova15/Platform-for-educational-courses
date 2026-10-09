@@ -2,7 +2,10 @@ package kira.course.application.port.in.query.owned;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
+import kira.course.domain.shared.Status;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,9 +21,10 @@ public class TeacherCourseView {
     private final LocalDateTime createdAt;
     private final String title;
     private final String description;
+    private final CourseStatus status;
 
     @Setter
     private List<Module> modules;
 
-    public record Module(long id, int orderIndex, String title, String description) {}
+    public record Module(long id, int orderIndex, String title, String description, Status status) {}
 }

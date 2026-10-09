@@ -1,6 +1,8 @@
 package kira.course.application.port.in.query.owned;
 
 import java.util.List;
+
+import kira.course.domain.shared.Status;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,6 +20,7 @@ public class TeachersModuleView {
     private final String title;
     private final String description;
     private final int orderIndex;
+    private final Status status;
 
     @Setter
     private List<Lesson> lessons;
@@ -25,7 +28,7 @@ public class TeachersModuleView {
     @Setter
     private List<Test> tests;
 
-    public record Lesson(long id, String title) {}
+    public record Lesson(long id, String title, Status status) {}
 
-    public record Test(long id, String title) {}
+    public record Test(long id, String title, Status status) {}
 }

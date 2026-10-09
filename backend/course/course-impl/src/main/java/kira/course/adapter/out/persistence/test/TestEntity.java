@@ -2,6 +2,8 @@ package kira.course.adapter.out.persistence.test;
 
 import java.util.Collections;
 import java.util.Set;
+
+import kira.course.domain.shared.Status;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +24,7 @@ public class TestEntity {
     private final String title;
     private final String description;
     private final int orderIndex;
+    private final Status status;
 
     @Getter(AccessLevel.NONE)
     @MappedCollection(idColumn = "test_id")

@@ -37,11 +37,9 @@ public class LearningQueryAdapter implements LearningQueryPort {
         view.ifPresent(course -> {
             List<StudentsCourseView.Module> modules =
                     moduleQueryRepository.findStudentsCourseModuleViewByCourseId(id.value());
-
             if (modules.isEmpty()) {
                 return;
             }
-
             course.modules(modules);
         });
 
@@ -74,7 +72,6 @@ public class LearningQueryAdapter implements LearningQueryPort {
 
         view.ifPresent(test -> {
             List<StudentsTestView.Question> questions = testQueryRepository.findStudentsTestQuestionsView(id.value());
-
             if (questions.isEmpty()) {
                 test.questions(List.of());
                 return;
@@ -90,7 +87,6 @@ public class LearningQueryAdapter implements LearningQueryPort {
             for (var question : questions) {
                 question.options(optionsByQuestionId.getOrDefault(question.id(), List.of()));
             }
-
             test.questions(questions);
         });
 

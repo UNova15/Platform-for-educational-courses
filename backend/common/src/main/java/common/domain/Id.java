@@ -1,6 +1,6 @@
 package common.domain;
 
-import common.exception.DomainModificationException;
+import common.exception.core.DomainValidationException;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -13,9 +13,9 @@ import lombok.experimental.Accessors;
 public class Id<T> {
     private final long value;
 
-    public static <T> Id<T> of(Long id) {
-        if (id == null || id < 0) {
-            throw new DomainModificationException("Id cannot be empty or negative");
+    public static <T> Id<T> of(long id) {
+        if (id < 0) {
+            throw new DomainValidationException("Id cannot be empty or negative").withContext("value", id);
         }
 
         return new Id<>(id);

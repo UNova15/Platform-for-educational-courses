@@ -1,6 +1,7 @@
 package kira.course.application.port.in.query.learning;
 
 import common.domain.Id;
+import common.domain.Result;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import kira.course.domain.course.Course;
@@ -12,14 +13,37 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface LearningQueryUseCase {
+    enum CourseQueryError {
+        COURSE_NOT_FOUND,
+        ACCESS_DENY
+    }
 
     List<UserCourseView> findCoursesThatUsersIsEnrolledIn(@NotNull Id<User> requesterId);
 
-    StudentsCourseView findStudentsCourse(@NotNull Id<User> requesterId, @NotNull Id<Course> courseId);
+    Result<StudentsCourseView, CourseQueryError> findStudentsCourse(
+            @NotNull Id<User> requesterId, @NotNull Id<Course> courseId);
 
-    StudentsModuleView findStudentsModule(@NotNull Id<User> requesterId, @NotNull Id<CourseModule> moduleId);
+    enum ModuleQueryError {
+        MODULE_NOT_FOUND,
+        ACCESS_DENY
+    }
 
-    StudentsLessonView findStudentsLesson(@NotNull Id<User> requesterId, @NotNull Id<Lesson> lessonId);
+    Result<StudentsModuleView, ModuleQueryError> findStudentsModule(
+            @NotNull Id<User> requesterId, @NotNull Id<CourseModule> moduleId);
 
-    StudentsTestView findStudentsTest(@NotNull Id<User> requesterId, @NotNull Id<Test> testId);
+    enum LessonQueryError {
+        LESSON_NOT_FOUND,
+        ACCESS_DENY
+    }
+
+    Result<StudentsLessonView, LessonQueryError> findStudentsLesson(
+            @NotNull Id<User> requesterId, @NotNull Id<Lesson> lessonId);
+
+    enum TestQueryError {
+        TEST_NOT_FOUND,
+        ACCESS_DENY,
+        TEST_NOT_STARTED
+    }
+
+    Result<StudentsTestView, TestQueryError> findStudentsTest(@NotNull Id<User> requesterId, @NotNull Id<Test> testId);
 }

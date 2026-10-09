@@ -6,5 +6,6 @@ CREATE TABLE course.lessons
     type        VARCHAR(30)  NOT NULL,
     content     TEXT         NOT NULL,
     order_index INT CHECK (order_index >= 0),
-    mandatory   BOOLEAN
+    mandatory   BOOLEAN,
+    status      VARCHAR(50)  NOT NULL
 )

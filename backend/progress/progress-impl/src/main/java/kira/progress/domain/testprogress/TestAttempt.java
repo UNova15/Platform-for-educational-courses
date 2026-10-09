@@ -1,7 +1,7 @@
 package kira.progress.domain.testprogress;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package kira.auth.domain.token;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import kira.auth.domain.user.User;
 import lombok.AccessLevel;

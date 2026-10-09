@@ -3,8 +3,8 @@ package kira.course.adapter.out.persistence.module;
 import common.domain.Id;
 import java.util.List;
 import java.util.stream.StreamSupport;
-import kira.course.domain.common.Description;
-import kira.course.domain.common.Title;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import kira.course.domain.module.CourseModule;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,8 @@ public class ModuleMapper {
                 Id.of(entity.courseId()),
                 Title.of(entity.title()),
                 Description.of(entity.description()),
-                entity.orderIndex());
+                entity.orderIndex(),
+                entity.status());
     }
 
     public List<CourseModule> toDomain(Iterable<ModuleEntity> entities) {
@@ -31,7 +32,8 @@ public class ModuleMapper {
                 module.courseId().value(),
                 module.title().value(),
                 module.description().value(),
-                module.orderIndex());
+                module.orderIndex(),
+                module.status());
     }
 
     public List<ModuleEntity> toEntity(List<CourseModule> modules) {

@@ -12,13 +12,13 @@ import org.springframework.data.repository.query.Param;
 public interface OwnedModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
 
     @Query("""
-            SELECT m.id, m.course_id,m.title,m.description,m.orderIndex, c.teacher_id
+            SELECT m.id, m.course_id,m.title,m.description,m.orderIndex,m.status, c.teacher_id
             FROM course.modules m
             JOIN course.courses c ON m.course_id = c.id
             WHERE m.id = :id
             """)
     Optional<TeachersModuleView> findTeacherViewById(@Param("id") Long id);
 
-    @Query("SELECT id,orderIndex,title,description FROM course.modules m WHERE m.course_id = :courseId")
+    @Query("SELECT m.id,m.orderIndex,m.title,m.description,m.status FROM course.modules m WHERE m.course_id = :courseId")
     List<TeacherCourseView.Module> findTeacherCourseModuleViewByCourseId(@Param("courseId") Long courseId);
 }

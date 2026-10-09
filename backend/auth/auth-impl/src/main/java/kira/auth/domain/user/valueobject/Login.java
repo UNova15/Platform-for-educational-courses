@@ -1,7 +1,7 @@
 package kira.auth.domain.user.valueobject;
 
-import common.exception.DomainValidationException;
-import kira.auth.application.exceptions.InvalidLoginFormatException;
+import common.exception.core.DomainValidationException;
+import common.exception.named.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,8 @@ public class Login {
         }
 
         if (login.length() < MIN_LOGIN_LENGTH || login.length() > MAX_LOGIN_LENGTH) {
-            throw new InvalidLoginFormatException(login.length(), MIN_LOGIN_LENGTH, MAX_LOGIN_LENGTH);
+            throw new LengthViolationException(
+                    "Incorrect login length", "Login", login.length(), MIN_LOGIN_LENGTH, MAX_LOGIN_LENGTH);
         }
         return new Login(login);
     }

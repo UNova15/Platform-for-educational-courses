@@ -23,25 +23,8 @@ public class LessonPersistenceAdapter implements LessonLoadPort, LessonSavePort,
     }
 
     @Override
-    public boolean isExist(Id<Lesson> lessonId) {
-        return repository.existsById(lessonId.value());
-    }
-
-    @Override
-    public int countByModuleId(Id<CourseModule> moduleId) {
-        return repository.countByModuleId(moduleId.value());
-    }
-
-    @Override
     public void removeById(Id<Lesson> lessonId) {
         repository.deleteById(lessonId.value());
-    }
-
-    @Override
-    public List<Lesson> saveAll(List<Lesson> lessons) {
-        List<LessonEntity> entities = mapper.toEntity(lessons);
-        Iterable<LessonEntity> saved = repository.saveAll(entities);
-        return mapper.toLesson(saved);
     }
 
     @Override

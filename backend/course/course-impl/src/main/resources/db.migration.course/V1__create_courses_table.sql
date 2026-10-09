@@ -5,5 +5,6 @@ CREATE TABLE course.courses
     title       VARCHAR(100) NOT NULL,
     description VARCHAR(500),
     tag         VARCHAR(50),
-    created_at  TIMESTAMP    NOT NULL
+    created_at  TIMESTAMP    NOT NULL,
+    status      VARCHAR(50)  NOT NULL
 )

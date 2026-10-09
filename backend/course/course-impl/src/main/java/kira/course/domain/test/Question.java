@@ -1,8 +1,7 @@
 package kira.course.domain.test;
 
 import common.domain.Id;
-import common.exception.DomainModificationException;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import common.exception.named.LengthViolationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -31,10 +31,12 @@ public class Question {
         return Collections.unmodifiableSet(answerOptions);
     }
 
-    public static Question createNew(QuestionContent question, Set<AnswerOption> options, int orderIndex) {
-        if (question == null || orderIndex < 0 || !isValidOptions(options)) {
-            throw new DomainValidationException("Incorrect data to create question");
+    public static Question create(QuestionContent question, Set<AnswerOption> options, int orderIndex) {
+        if (question == null || orderIndex < 0) {
+            throw new DomainValidationException("Empty or negative data to create question");
         }
+        validateOptions(options);
+
         return new Question(null, orderIndex, question, new HashSet<>(options));
     }
 
@@ -50,17 +52,22 @@ public class Question {
                 .collect(Collectors.toSet());
     }
 
-    private static boolean isValidOptions(Set<AnswerOption> options) {
-        if (options == null || options.size() > MAX_OPTION_COUNT || options.size() < MIN_OPTION_COUNT) {
-            return false;
+    private static void validateOptions(Set<AnswerOption> options) {
+        if (options == null || options.isEmpty()) {
+            throw new DomainValidationException("Empty options to create question");
         }
-        return options.stream().anyMatch(AnswerOption::isCorrect);
-    }
 
-    public void addOption(AnswerOption answerOption) {
-        if (answerOption == null || answerOptions.size() == MAX_OPTION_COUNT) {
-            throw new DomainModificationException("Incorrect data to add answer option");
+        if (options.size() > MAX_OPTION_COUNT || options.size() < MIN_OPTION_COUNT) {
+            throw new LengthViolationException(
+                    "Incorrect options count in question",
+                    "Question",
+                    options.size(),
+                    MAX_OPTION_COUNT,
+                    MIN_OPTION_COUNT);
         }
-        answerOptions.add(answerOption);
+
+        if (options.stream().anyMatch(AnswerOption::isCorrect)) {
+            throw new DomainValidationException("Invalid count corrects options in Question");
+        }
     }
 }

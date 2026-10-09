@@ -11,11 +11,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface OwnedLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
 
-    @Query("SELECT id,title FROM course.lessons l WHERE l.module_id = :moduleId ")
+    @Query("SELECT l.id,l.title,l.status FROM course.lessons l WHERE l.module_id = :moduleId ")
     List<TeachersModuleView.Lesson> findAllTeacherModuleLessonViewByModuleId(@Param("moduleId") Long moduleId);
 
     @Query("""
-            SELECT l.id,l.module_id,l.title,l.type,l.content,l.orderIndex,l.mandatory,c.teacher_id
+            SELECT l.id,l.module_id,l.title,l.type,l.content,l.orderIndex,l.mandatory,l.status,c.teacher_id
             FROM course.lessons l
             JOIN course.modules m ON l.module_id = m.id
             JOIN course.courses c ON l.course_id = c.id

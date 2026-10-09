@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import java.util.List;
-import kira.course.domain.common.Description;
-import kira.course.domain.common.Title;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import kira.course.domain.test.Question;
 import kira.course.domain.test.Test;
 import kira.course.domain.test.valueobject.Option;
@@ -24,7 +24,7 @@ public record TestUpdateCommand(
         List<@NotNull QuestionCommand> questions) {
 
     public record QuestionCommand(
-            @NotBlank @Size(max = QuestionContent.MAX_QUESTION_LENGTH)
+            @NotBlank @Size(max = QuestionContent.MAX_LENGTH)
             String question,
 
             @PositiveOrZero int orderIndex,

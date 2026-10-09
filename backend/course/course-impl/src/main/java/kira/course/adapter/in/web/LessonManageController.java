@@ -1,9 +1,10 @@
 package kira.course.adapter.in.web;
 
 import common.domain.Id;
+import common.domain.Result;
 import jakarta.validation.Valid;
 import kira.course.application.port.in.lesson.create.LessonCreateCommand;
-import kira.course.application.port.in.lesson.create.LessonCreateResult;
+import kira.course.application.port.in.lesson.create.LessonCreateResponse;
 import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
 import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
 import kira.course.application.port.in.lesson.update.LessonUpdateCommand;
@@ -14,7 +15,7 @@ import kira.course.domain.module.CourseModule;
 import kira.infrastructure.api.TokenPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,38 +27,52 @@ public class LessonManageController {
     private final LessonRemoveUseCase removeUseCase;
 
     @PostMapping("/modules/{moduleId}/lessons")
-    @PreAuthorize("hasRole('TEACHER')")
-    @ResponseStatus(HttpStatus.CREATED)
-    public LessonCreateResult createLesson(
+    public ResponseEntity<?> createLesson(
             @Valid @RequestBody LessonCreateCommand createCommand,
             @PathVariable("moduleId") Long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
-        return createUseCase.createLesson(createCommand, userId, moduleId);
+        Result<LessonCreateResponse, LessonCreateUseCase.CreateErrors> result =
+                createUseCase.createLesson(createCommand, userId, moduleId);
+
+        return result.fold(ResponseEntity::ok, error -> switch (error) {
+            case COURSE_ARCHIVED -> ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+            case MODULE_NOT_FOUND -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENY -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        });
     }
 
     @DeleteMapping("/lessons/{lessonId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeLesson(@PathVariable("lessonId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
+    public ResponseEntity<?> removeLesson(
+            @PathVariable("lessonId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
-        removeUseCase.removeLesson(userId, lessonId);
+        Result<Void, LessonRemoveUseCase.RemoveErrors> result = removeUseCase.removeLesson(userId, lessonId);
+
+        return result.fold(success -> ResponseEntity.ok().build(), error -> switch (error) {
+            case LESSON_NOT_FOUND -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENY -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+            case COURSE_ARCHIVED -> ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        });
     }
 
     @PutMapping("/lessons/{lessonId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateLesson(
+    public ResponseEntity<?> updateLesson(
             @Valid @RequestBody LessonUpdateCommand command,
             @PathVariable("lessonId") Long resourceId,
             @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
-        updateUseCase.updateLesson(command, lessonId, userId);
+        Result<Void, LessonUpdateUseCase.UpdateError> result = updateUseCase.updateLesson(command, lessonId, userId);
+
+        return result.fold(success -> ResponseEntity.ok().build(), error -> switch (error) {
+            case ACCESS_DENY -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+            case LESSON_NOT_FOUND -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case COURSE_ARCHIVED -> ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        });
     }
 }

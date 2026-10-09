@@ -1,6 +1,8 @@
 package kira.course.application.port.in.query.owned;
 
 import java.util.List;
+
+import kira.course.domain.shared.Status;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,6 +19,7 @@ public class FullTestView {
     private final String title;
     private final String description;
     private final int orderIndex;
+    private final Status status;
 
     @Setter
     private List<Question> questions;

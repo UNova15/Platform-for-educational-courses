@@ -1,7 +1,7 @@
 package kira.course.domain.test;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import kira.course.domain.test.valueobject.Option;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class AnswerOption {
 
     public static AnswerOption createNew(Option option, boolean isCorrect) {
         if (option == null) {
-            throw new DomainValidationException("Incorrect data to create question option");
+            throw new DomainValidationException("Empty data to create question option");
         }
         return new AnswerOption(null, isCorrect, option);
     }

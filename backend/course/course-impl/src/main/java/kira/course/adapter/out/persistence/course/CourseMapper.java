@@ -1,8 +1,8 @@
 package kira.course.adapter.out.persistence.course;
 
 import common.domain.Id;
-import kira.course.domain.common.Description;
-import kira.course.domain.common.Title;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import kira.course.domain.course.Course;
 import kira.course.domain.markers.User;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class CourseMapper {
         Title title = Title.of(entity.title());
         Description description = Description.of(entity.description());
 
-        return Course.restore(id, teacherId, title, description, entity.tag(), entity.createdAt());
+        return Course.restore(id, teacherId, title, description, entity.tag(), entity.createdAt(), entity.status());
     }
 
     public CourseEntity toEntity(Course course) {
@@ -28,6 +28,7 @@ public class CourseMapper {
                 course.title().value(),
                 course.description().value(),
                 course.tag(),
-                course.createdAt());
+                course.createdAt(),
+                course.status());
     }
 }

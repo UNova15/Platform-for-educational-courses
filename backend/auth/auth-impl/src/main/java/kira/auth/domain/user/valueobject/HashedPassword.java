@@ -1,6 +1,6 @@
 package kira.auth.domain.user.valueobject;
 
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

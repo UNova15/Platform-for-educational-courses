@@ -1,7 +1,6 @@
 package kira.course.adapter.out.persistence.test;
 
 import common.domain.Id;
-import java.util.List;
 import java.util.Optional;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestRemovePort;
@@ -22,20 +21,8 @@ public class TestPersistenceAdapter implements TestRemovePort, TestSavePort, Tes
     }
 
     @Override
-    public boolean isExist(Id<Test> testId) {
-        return repository.existsById(testId.value());
-    }
-
-    @Override
     public void removeTestById(Id<Test> testId) {
         repository.deleteById(testId.value());
-    }
-
-    @Override
-    public List<Test> saveAll(List<Test> tests) {
-        List<TestEntity> entities = mapper.toEntity(tests);
-        Iterable<TestEntity> saved = repository.saveAll(entities);
-        return mapper.toDomain(saved);
     }
 
     @Override

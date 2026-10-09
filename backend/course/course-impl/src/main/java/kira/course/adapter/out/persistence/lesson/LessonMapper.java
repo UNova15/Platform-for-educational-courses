@@ -3,8 +3,8 @@ package kira.course.adapter.out.persistence.lesson;
 import common.domain.Id;
 import java.util.List;
 import java.util.stream.StreamSupport;
-import kira.course.domain.common.Title;
-import kira.course.domain.lesson.Content;
+import kira.course.domain.shared.Title;
+import kira.course.domain.lesson.LessonContent;
 import kira.course.domain.lesson.Lesson;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +15,10 @@ public class LessonMapper {
                 Id.of(entity.id()),
                 Id.of(entity.moduleId()),
                 Title.of(entity.title()),
-                Content.of(entity.type(), entity.content()),
+                LessonContent.of(entity.type(), entity.content()),
                 entity.orderIndex(),
-                entity.mandatory());
+                entity.mandatory(),
+                entity.status());
     }
 
     public List<Lesson> toLesson(Iterable<LessonEntity> entities) {
@@ -34,7 +35,8 @@ public class LessonMapper {
                 lesson.content().type(),
                 lesson.content().value(),
                 lesson.orderIndex(),
-                lesson.mandatory());
+                lesson.mandatory(),
+                lesson.status());
     }
 
     public List<LessonEntity> toEntity(List<Lesson> lessons) {

@@ -1,7 +1,7 @@
 package kira.auth.domain.user;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import kira.auth.domain.user.valueobject.HashedPassword;
 import kira.auth.domain.user.valueobject.Login;
 import lombok.AccessLevel;

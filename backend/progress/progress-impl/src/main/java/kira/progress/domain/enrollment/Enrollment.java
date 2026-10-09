@@ -1,7 +1,7 @@
 package kira.progress.domain.enrollment;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import java.time.LocalDateTime;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;

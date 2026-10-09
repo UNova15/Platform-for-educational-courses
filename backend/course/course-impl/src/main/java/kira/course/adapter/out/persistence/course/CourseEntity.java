@@ -1,6 +1,8 @@
 package kira.course.adapter.out.persistence.course;
 
 import java.time.LocalDateTime;
+
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +23,5 @@ public class CourseEntity {
     private final String description;
     private final Tag tag;
     private final LocalDateTime createdAt;
+    private final CourseStatus status;
 }

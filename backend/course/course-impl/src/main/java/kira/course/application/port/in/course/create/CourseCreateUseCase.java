@@ -9,5 +9,5 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface CourseCreateUseCase {
 
-    CourseCreateResult createCourseWithContent(@Valid CourseCreateCommand command, @NotNull Id<User> userId);
+    CourseCreateResponse createCourse(@Valid CourseCreateCommand command, @NotNull Id<User> userId);
 }

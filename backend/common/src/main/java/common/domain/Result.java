@@ -23,6 +23,12 @@ public sealed interface Result<S, F> permits Result.Success, Result.Failure {
 
     <R> R fold(Function<S, R> onSuccess, Function<F, R> onFailure);
 
+    boolean isSuccess();
+
+    S getSuccess();
+
+    F getError();
+
     record Success<S, F>(S value) implements Result<S, F> {
 
         @Override
@@ -38,6 +44,21 @@ public sealed interface Result<S, F> permits Result.Success, Result.Failure {
         @Override
         public <R> R fold(Function<S, R> onSuccess, Function<F, R> onFailure) {
             return onSuccess.apply(value);
+        }
+
+        @Override
+        public boolean isSuccess() {
+            return true;
+        }
+
+        @Override
+        public S getSuccess() {
+            return value;
+        }
+
+        @Override
+        public F getError() {
+            throw new IllegalStateException("The exception is not contained in the successful branch");
         }
     }
 
@@ -55,6 +76,21 @@ public sealed interface Result<S, F> permits Result.Success, Result.Failure {
         @Override
         public <R> R fold(Function<S, R> onSuccess, Function<F, R> onFailure) {
             return onFailure.apply(error);
+        }
+
+        @Override
+        public boolean isSuccess() {
+            return false;
+        }
+
+        @Override
+        public S getSuccess() {
+            throw new IllegalStateException("The success value is not contained in the failure branch");
+        }
+
+        @Override
+        public F getError() {
+            return error;
         }
     }
 }

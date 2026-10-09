@@ -1,7 +1,7 @@
 package kira.auth.application.exceptions;
 
 import common.domain.Id;
-import common.exception.BaseApplicationException;
+import common.exception.core.BaseApplicationException;
 
 public class PersistenceConsistencyException extends BaseApplicationException {
 

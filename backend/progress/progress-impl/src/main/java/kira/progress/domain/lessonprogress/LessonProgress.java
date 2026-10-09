@@ -1,7 +1,7 @@
 package kira.progress.domain.lessonprogress;
 
 import common.domain.Id;
-import common.exception.DomainValidationException;
+import common.exception.core.DomainValidationException;
 import java.time.LocalDateTime;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;

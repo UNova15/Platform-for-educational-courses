@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import kira.course.domain.common.Description;
-import kira.course.domain.common.Title;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.AnswerOption;
 import kira.course.domain.test.Question;
@@ -28,7 +28,7 @@ public class TestMapper {
         Set<Question> questions =
                 entity.questions().stream().map(this::toDomainQuestion).collect(Collectors.toSet());
 
-        return Test.restore(id, moduleId, title, description, entity.orderIndex(), questions);
+        return Test.restore(id, moduleId, title, description, entity.orderIndex(), questions, entity.status());
     }
 
     private Question toDomainQuestion(QuestionEntity entity) {
@@ -58,6 +58,7 @@ public class TestMapper {
                 test.title().value(),
                 test.description().value(),
                 test.orderIndex(),
+                test.status(),
                 questions);
     }
 

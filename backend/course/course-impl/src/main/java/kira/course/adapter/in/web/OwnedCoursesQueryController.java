@@ -2,6 +2,8 @@ package kira.course.adapter.in.web;
 
 import common.domain.Id;
 import java.util.List;
+
+import common.domain.Result;
 import kira.course.application.port.in.query.owned.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
@@ -10,7 +12,8 @@ import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
 import kira.infrastructure.api.TokenPayload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +28,6 @@ public class OwnedCoursesQueryController {
 
     // поиск всех курсов которыми владеет учитель
     @GetMapping("/courses")
-    @PreAuthorize("hasRole('TEACHER')")
     public List<OwnedCoursesView> findTeachersCourses(@AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
 
@@ -35,45 +37,69 @@ public class OwnedCoursesQueryController {
     // поиск курса которым владеет учитель по id. Возвращает скелет курса(информация о курсе и краткая информация о
     // модулях)
     @GetMapping("/courses/{courseId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public TeacherCourseView findTeachersCourseById(
+    public ResponseEntity<?> findTeachersCourseById(
             @PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersCourseById(userId, courseId);
+        Result<TeacherCourseView, OwnedCoursesQueryUseCase.CourseQueryError> result =
+                queryUseCase.findTeachersCourseById(userId, courseId);
+
+        return result.fold(ResponseEntity::ok, error -> switch (error) {
+            case RESOURCE_NOT_FOUND ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENIED -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        });
     }
 
     // возвращает полную информацию о модуле и краткую информацию о уроках и тестах (их id и заголовки)
     @GetMapping("/modules/{moduleId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public TeachersModuleView findTeachersModuleById(
+    public ResponseEntity<?> findTeachersModuleById(
             @PathVariable("moduleId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersModuleById(userId, moduleId);
+        Result<TeachersModuleView, OwnedCoursesQueryUseCase.CourseQueryError> result =
+                queryUseCase.findTeachersModuleById(userId, moduleId);
+
+        return result.fold(ResponseEntity::ok, error -> switch (error) {
+            case RESOURCE_NOT_FOUND ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENIED -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        });
     }
 
     // возвращает полную информацию о тесте
     @GetMapping("/tests/{testId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public FullTestView findTeachersCoursesTestById(
+    public ResponseEntity<?> findTeachersCoursesTestById(
             @PathVariable("testId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
 
-        return queryUseCase.findFullTestById(userId, testId);
+        Result<FullTestView, OwnedCoursesQueryUseCase.CourseQueryError> result =
+                queryUseCase.findFullTestById(userId, testId);
+
+        return result.fold(ResponseEntity::ok, error -> switch (error) {
+            case RESOURCE_NOT_FOUND ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENIED -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        });
     }
 
     // возвращает полную информацию о уроке
     @GetMapping("/lessons/{lessonId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public TeachersLessonView findTeachersCoursesLessonById(
+    public ResponseEntity<?> findTeachersCoursesLessonById(
             @PathVariable("lessonId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersLessonById(userId, lessonId);
+        Result<TeachersLessonView, OwnedCoursesQueryUseCase.CourseQueryError> result =
+                queryUseCase.findTeachersLessonById(userId, lessonId);
+
+        return result.fold(ResponseEntity::ok, error -> switch (error) {
+            case RESOURCE_NOT_FOUND ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            case ACCESS_DENIED -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+        });
     }
 }

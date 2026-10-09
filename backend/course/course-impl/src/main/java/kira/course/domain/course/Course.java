@@ -1,13 +1,11 @@
 package kira.course.domain.course;
 
 import common.domain.Id;
-import common.exception.DomainModificationException;
-import common.exception.DomainValidationException;
-import common.exception.ResourceAccessException;
+import common.exception.core.DomainStateException;
+import common.exception.core.DomainValidationException;
 import java.time.LocalDateTime;
-import kira.course.application.exceptions.CourseExceptionCode;
-import kira.course.domain.common.Description;
-import kira.course.domain.common.Title;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import kira.course.domain.markers.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,31 +16,44 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Course {
-    public static final int MAX_MODULES_COUNT = 100;
-
     private final Id<Course> id;
     private Id<User> teacherId;
     private Tag tag;
     private LocalDateTime createdAt;
     private Title title;
     private Description description;
+    private CourseStatus status;
 
-    public static Course createNew(Id<User> teacherId, Title title, Description description, Tag tag) {
+    public static Course create(Id<User> teacherId, Title title, Description description, Tag tag) {
         if (teacherId == null || title == null) {
-            throw new DomainValidationException("Course title can not be empty");
+            throw new DomainValidationException("Empty data to create course");
         }
 
-        return new Course(null, teacherId, tag, LocalDateTime.now(), title, description);
+        return new Course(null, teacherId, tag, LocalDateTime.now(), title, description, CourseStatus.DRAFT);
     }
 
     public static Course restore(
-            Id<Course> id, Id<User> teacherId, Title title, Description description, Tag tag, LocalDateTime createdAt) {
-        return new Course(id, teacherId, tag, createdAt, title, description);
+            Id<Course> id,
+            Id<User> teacherId,
+            Title title,
+            Description description,
+            Tag tag,
+            LocalDateTime createdAt,
+            CourseStatus status) {
+        return new Course(id, teacherId, tag, createdAt, title, description, status);
+    }
+
+    public boolean isArchived() {
+        return status == CourseStatus.ARCHIVED;
     }
 
     public void updateCourseInfo(Title title, Description description, Tag tag) {
         if (title == null) {
-            throw new DomainModificationException("Course title cannot be empty");
+            throw new DomainValidationException("Course title cannot be empty");
+        }
+
+        if (isArchived()) {
+            throw new DomainStateException("Cannot update course info", id).withContext("status", status);
         }
 
         this.title = title;
@@ -50,11 +61,36 @@ public class Course {
         this.tag = tag;
     }
 
-    public void verifyOwnership(Id<User> requesterId) {
-        if (!requesterId.equals(teacherId)) {
+    public boolean isDraft() {
+        return status == CourseStatus.DRAFT;
+    }
 
-            throw new ResourceAccessException(
-                    CourseExceptionCode.COURSE_ACCESS_EXCEPTION, Course.class, requesterId, id) {};
+    public boolean canPublish() {
+        return status.canTransitionTo(CourseStatus.PUBLISHED);
+    }
+
+    public void publish() {
+        if (!canPublish()) {
+            throw new DomainStateException("It is not possible to publish the course from this state", id)
+                    .withContext("status", status);
         }
+        status = CourseStatus.PUBLISHED;
+    }
+
+    public boolean canArchive() {
+        return status.canTransitionTo(CourseStatus.ARCHIVED);
+    }
+
+    public void archive() {
+        if (!canArchive()) {
+            throw new DomainStateException(
+                            "It is not possible to move the course to the archive from the current state", id)
+                    .withContext("status", status);
+        }
+        status = CourseStatus.ARCHIVED;
+    }
+
+    public boolean isOwnedBy(Id<User> requesterId) {
+        return teacherId.equals(requesterId);
     }
 }

@@ -1,6 +1,7 @@
 package kira.course.adapter.out.persistence.lesson;
 
 import kira.course.domain.lesson.ContentType;
+import kira.course.domain.shared.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -21,4 +22,5 @@ public class LessonEntity {
     private final String content;
     private final int orderIndex;
     private final boolean mandatory;
+    private final Status status;
 }

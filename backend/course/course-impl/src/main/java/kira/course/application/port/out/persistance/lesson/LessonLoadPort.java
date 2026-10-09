@@ -8,7 +8,5 @@ import kira.course.domain.module.CourseModule;
 public interface LessonLoadPort {
     Optional<Lesson> loadLessonById(Id<Lesson> lessonId);
 
-    boolean isExist(Id<Lesson> lessonId);
-
-    int countByModuleId(Id<CourseModule> moduleId);
+    boolean isExistsInModule(Id<CourseModule> moduleId);
 }
