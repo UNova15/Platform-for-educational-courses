@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class TestStatusPersistenceAdapter implements TestAttemptStatusQueryPort {
+class TestStatusPersistenceAdapter implements TestAttemptStatusQueryPort {
     private final TestStatusRepository repository;
 
     @Override

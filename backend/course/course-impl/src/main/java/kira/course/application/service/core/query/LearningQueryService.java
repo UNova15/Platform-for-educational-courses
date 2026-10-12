@@ -16,6 +16,7 @@ import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
+import kira.course.domain.shared.Status;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsCourseView findStudentsCourse(Id<User> requesterId, Id<Course> courseId) {
         StudentsCourseView view = learningQueryPort
-                .findStudentsCourseViewById(courseId)
+                .findCourseViewByIdAndStatus(courseId, Status.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
@@ -54,7 +55,7 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsModuleView findStudentsModule(Id<User> requesterId, Id<CourseModule> moduleId) {
         StudentsModuleView view = learningQueryPort
-                .findStudentsModuleViewById(moduleId)
+                .findModuleViewByIdAndStatus(moduleId, Status.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
 
         Id<Course> courseId = Id.of(view.courseId());
@@ -68,7 +69,7 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsLessonView findStudentsLesson(Id<User> requesterId, Id<Lesson> lessonId) {
         StudentsLessonView view = learningQueryPort
-                .findStudentsLessonViewById(lessonId)
+                .findLessonViewByIdAndStatus(lessonId, Status.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
 
         Id<Course> courseId = Id.of(view.courseId());
@@ -82,7 +83,7 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsTestView findStudentsTest(Id<User> requesterId, Id<Test> testId) {
         StudentsTestView view = learningQueryPort
-                .findStudentsTestView(testId)
+                .findTestViewByIdAndStatus(testId, Status.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
 
         Id<Course> courseId = Id.of(view.courseId());

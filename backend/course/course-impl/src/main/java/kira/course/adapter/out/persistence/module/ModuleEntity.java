@@ -11,7 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
-public class ModuleEntity {
+class ModuleEntity {
     @Id
     private final Long id;
 

@@ -1,4 +1,4 @@
-package kira.progress.application.service.exception;
+package kira.progress.application.exception;
 
 import common.exception.named.ResourceName;
 

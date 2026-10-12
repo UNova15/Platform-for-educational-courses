@@ -3,35 +3,63 @@ package kira.course.adapter.out.persistence.query.learning;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import kira.course.adapter.out.persistence.test.TestEntity;
 import kira.course.application.port.in.query.learning.StudentsModuleView;
 import kira.course.application.port.in.query.learning.StudentsTestView;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
 
-interface LearningTestQueryRepository extends CrudRepository<TestEntity, Long> {
+@Repository
+@RequiredArgsConstructor
+class LearningTestQueryRepository {
+    private final JdbcClient dbClient;
 
-    @Query("""
+    List<StudentsModuleView.Test> findStudentsModuleTestView(Long moduleId, String status) {
+        return dbClient.sql("""
             SELECT id,title,module_id,order_index
             FROM course.tests t
             WHERE t.module_id = :moduleId
-            AND t.status = 'PUBLISHED'
+            AND t.status = :status
             """)
-    List<StudentsModuleView.Test> findStudentsModuleTestView(@Param("moduleId") Long moduleId);
+                .param("moduleId", moduleId)
+                .param("status", status)
+                .query(StudentsModuleView.Test.class)
+                .list();
+    }
 
-    @Query("""
+    Optional<StudentsTestView> findStudentsTestView(Long testId, String status) {
+        return dbClient.sql("""
             SELECT t.id,t.module_id,m.course_id,t.order_index,t.title,t.description
             FROM course.tests t
             JOIN course.modules m ON t.module_id = m.id
             WHERE t.id = :testId
-            AND t.status = 'PUBLISHED'
+            AND t.status = :status
             """)
-    Optional<StudentsTestView> findStudentsTestView(@Param("testId") Long testId);
+                .param("testId", testId)
+                .param("status", status)
+                .query(StudentsTestView.class)
+                .optional();
+    }
 
-    @Query("SELECT id,test_id,order_index,content FROM course.questions q WHERE  q.test_id = :testId")
-    List<StudentsTestView.Question> findStudentsTestQuestionsView(@Param("testId") Long testId);
+    List<StudentsTestView.Question> findStudentsTestQuestionsView(Long testId) {
+        return dbClient.sql("""
+            SELECT id,test_id,order_index,content
+            FROM course.questions q
+            WHERE  q.test_id = :testId
+            """)
+                .param("testId", testId)
+                .query(StudentsTestView.Question.class)
+                .list();
+    }
 
-    @Query("SELECT id,question_id,option FROM course.options o WHERE o.question_id IN :questionsIds")
-    List<StudentsTestView.AnswerOption> findStudentsTestOptionsView(@Param("questionsIds") Collection<Long> questionId);
+    List<StudentsTestView.AnswerOption> findStudentsTestOptionsView(Collection<Long> questionId) {
+        return dbClient.sql("""
+            SELECT id,question_id,option
+            FROM course.options o
+            WHERE o.question_id IN :questionsIds
+            """)
+                .param("questionsIds", questionId)
+                .query(StudentsTestView.AnswerOption.class)
+                .list();
+    }
 }

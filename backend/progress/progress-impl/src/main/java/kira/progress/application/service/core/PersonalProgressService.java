@@ -15,7 +15,7 @@ import kira.progress.application.port.out.external.ModuleStructure;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
 import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
-import kira.progress.application.service.exception.ProgressResourceName;
+import kira.progress.application.exception.ProgressResourceName;
 import kira.progress.domain.markers.CourseModule;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PersonalProgressService implements PersonalProgressUseCase {
+class PersonalProgressService implements PersonalProgressUseCase {
     private final CourseStructurePort courseStructurePort;
     private final EnrollmentLoadPort enrollmentLoadPort;
     private final PersonalProgressQueryPort personalProgressQueryPort;
@@ -49,6 +49,7 @@ public class PersonalProgressService implements PersonalProgressUseCase {
         return new ProgressSummary(lessonsProgress, testProgress);
     }
 
+    //TODO правильно ли что тут нет доп проверок?
     @Override
     public TestAnswersView findStudentsTestAttempt(Id<User> studentId, Id<Test> testId) {
         return testAnswersViewQueryPort

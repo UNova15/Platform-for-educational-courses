@@ -4,7 +4,7 @@ import kira.progress.domain.lessonprogress.LessonProgress;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LessonProgressMapper {
+class LessonProgressMapper {
 
     public LessonProgressEntity toEntity(LessonProgress progress) {
         var id = new LessonProgressEntity.LessonProgressKey(

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/owned")
 @RequiredArgsConstructor
-public class CourseAnalyticsController {
+class CourseAnalyticsController {
     private final CourseAnalyticsUseCase courseAnalyticsUseCase;
 
     @GetMapping("/tests/{testId}/results")

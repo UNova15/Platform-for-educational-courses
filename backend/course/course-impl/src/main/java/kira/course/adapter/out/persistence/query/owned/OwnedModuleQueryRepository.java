@@ -2,23 +2,34 @@ package kira.course.adapter.out.persistence.query.owned;
 
 import java.util.List;
 import java.util.Optional;
-import kira.course.adapter.out.persistence.module.ModuleEntity;
 import kira.course.application.port.in.query.owned.TeacherCourseView;
 import kira.course.application.port.in.query.owned.TeachersModuleView;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
 
-interface OwnedModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
+@Repository
+@RequiredArgsConstructor
+class OwnedModuleQueryRepository {
+    private final JdbcClient dbClient;
 
-    @Query("""
+    Optional<TeachersModuleView> findTeacherViewById(Long id) {
+        return dbClient.sql("""
             SELECT m.id, m.course_id,m.title,m.description,m.orderIndex,m.status, c.teacher_id
             FROM course.modules m
             JOIN course.courses c ON m.course_id = c.id
             WHERE m.id = :id
-            """)
-    Optional<TeachersModuleView> findTeacherViewById(@Param("id") Long id);
+            """).param("id", id).query(TeachersModuleView.class).optional();
+    }
 
-    @Query("SELECT m.id,m.orderIndex,m.title,m.description,m.status FROM course.modules m WHERE m.course_id = :courseId")
-    List<TeacherCourseView.Module> findTeacherCourseModuleViewByCourseId(@Param("courseId") Long courseId);
+    List<TeacherCourseView.Module> findTeacherCourseModuleViewByCourseId(Long courseId) {
+        return dbClient.sql("""
+            SELECT m.id,m.orderIndex,m.title,m.description,m.status
+            FROM course.modules m
+            WHERE m.course_id =:courseId
+            """)
+                .param("courseId", courseId)
+                .query(TeacherCourseView.Module.class)
+                .list();
+    }
 }

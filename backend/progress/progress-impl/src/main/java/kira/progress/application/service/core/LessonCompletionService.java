@@ -8,7 +8,7 @@ import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressSavePort;
-import kira.progress.application.service.exception.ProgressResourceName;
+import kira.progress.application.exception.ProgressResourceName;
 import kira.progress.domain.lessonprogress.LessonProgress;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
@@ -18,12 +18,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LessonCompletionService implements LessonCompletionUseCase {
+class LessonCompletionService implements LessonCompletionUseCase {
     private final CourseStructurePort courseStructurePort;
     private final EnrollmentLoadPort enrollmentLoadPort;
     private final LessonProgressLoadPort lessonProgressLoadPort;
     private final LessonProgressSavePort lessonProgressSavePort;
 
+    //TODO првоерить что урок опубликован
     @Override
     public void completeLesson(Id<User> userId, Id<Lesson> lessonId) {
         Id<Course> courseId = courseStructurePort
@@ -38,7 +39,7 @@ public class LessonCompletionService implements LessonCompletionUseCase {
             return;
         }
 
-        LessonProgress progress = LessonProgress.createNew(userId, lessonId);
+        var progress = LessonProgress.create(userId, lessonId);
         lessonProgressSavePort.save(progress);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import kira.progress.api.EnrollmentProviderQuery;
 import kira.progress.api.EnrollmentStatusQuery;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
-import kira.progress.application.port.out.persistance.query.CourseStatisticsQueryPort;
+import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EnrollmentStatisticsQueryHandler implements EnrollmentProviderQuery, EnrollmentStatusQuery {
+class EnrollmentStatisticsQueryHandler implements EnrollmentProviderQuery, EnrollmentStatusQuery {
     private final EnrollmentLoadPort loadPort;
-    private final CourseStatisticsQueryPort statisticsPort;
+    private final PersonalProgressQueryPort progressPort;
 
     @Override
     public List<Long> findCoursesIdsThatUsersIsEnrolledIn(long userId) {
         Id<User> studentId = Id.of(userId);
 
-        return statisticsPort.findCoursesIdsThatUsersIsEnrolledIn(studentId).stream()
+        return progressPort.findCoursesIdsThatUsersIsEnrolledIn(studentId).stream()
                 .map(Id::value)
                 .toList();
     }

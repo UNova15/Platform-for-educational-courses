@@ -37,7 +37,7 @@ public class TestAttempt {
         return Collections.unmodifiableSet(answers);
     }
 
-    public static TestAttempt createNew(Id<User> userId, Id<Test> testId) {
+    public static TestAttempt create(Id<User> userId, Id<Test> testId) {
         if (userId == null || testId == null) {
             throw new DomainValidationException("Incorrect data to create test submission");
         }
@@ -59,7 +59,7 @@ public class TestAttempt {
         }
 
         Set<TestAnswer> answers = usersAnswers.stream()
-                .map(answer -> TestAnswer.createNew(this.id, answer.questionId(), answer.optionsIds()))
+                .map(answer -> TestAnswer.create(this.id, answer.questionId(), answer.optionsIds()))
                 .collect(Collectors.toSet());
 
         int score = key.calculateGrade(answers);

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UserEnrollmentController {
+class UserEnrollmentController {
     private final UserEnrollmentUseCase userEnrollmentUseCase;
 
     @PostMapping("/courses/{courseId}/enrollments")

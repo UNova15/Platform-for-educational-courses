@@ -17,6 +17,4 @@ public interface CourseStatisticsQueryPort {
     List<StudentsLessonProgressResult> findWatchedLessonStudentsByLessonId(Id<Lesson> lessonId);
 
     List<CompletedTestStudentsResult> findCompletedTestStudentsByTestId(Id<Test> testId);
-
-    List<Id<Course>> findCoursesIdsThatUsersIsEnrolledIn(Id<User> userId);
 }

@@ -18,7 +18,7 @@ public class Enrollment {
     private final Id<Course> courseId;
     private final LocalDateTime createdAt;
 
-    public static Enrollment createNew(Id<User> userId, Id<Course> courseId) {
+    public static Enrollment create(Id<User> userId, Id<Course> courseId) {
         if (userId == null || courseId == null) {
             throw new DomainValidationException("Incorrect data to create enrollment");
         }

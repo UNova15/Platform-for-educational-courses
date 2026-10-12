@@ -12,7 +12,7 @@ import kira.progress.domain.testprogress.TestAttempt;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TestAttemptMapper {
+class TestAttemptMapper {
 
     public TestAttempt toDomain(TestAttemptEntity entity) {
         Id<TestAttempt> id = Id.of(entity.id());
@@ -43,6 +43,7 @@ public class TestAttemptMapper {
     }
 
     public TestAttemptEntity toEntity(TestAttempt attempt) {
+        Long id = attempt.id() == null? null : attempt.id().value();
 
         Set<TestAnswerEntity> answerEntities = attempt.answers().stream()
                 .map(this::toAnswerEntity)
@@ -50,7 +51,7 @@ public class TestAttemptMapper {
                 .collect(Collectors.toSet());
 
         return new TestAttemptEntity(
-                attempt.id().value(),
+                id,
                 attempt.userId().value(),
                 attempt.testId().value(),
                 attempt.startedAt(),

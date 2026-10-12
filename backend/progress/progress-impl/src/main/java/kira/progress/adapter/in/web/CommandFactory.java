@@ -10,9 +10,9 @@ import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.valueobject.SubmittedAnswers;
 
-public class CommandFactory {
+class CommandFactory {
 
-    public static EndTestAttemptCommand toEndTestAttemptCommand(
+    static EndTestAttemptCommand toEndTestAttemptCommand(
             Set<EndTestRequest> request, long resourceId, long userId) {
         Id<User> studentId = Id.of(userId);
         Id<Test> testId = Id.of(resourceId);

@@ -7,9 +7,9 @@ import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 
 public interface CheckCourseOwnerPort {
-    boolean isTeacherCourseOwner(Id<User> teacherId, Id<Course> courseId);
+    boolean isCourseOwner(Id<User> teacherId, Id<Course> courseId);
 
-    boolean isTeacherLessonOwner(Id<User> teacherId, Id<Lesson> lessonId);
+    boolean isLessonOwner(Id<User> teacherId, Id<Lesson> lessonId);
 
-    boolean isTeacherTestOwner(Id<User> teacherId, Id<Test> testId);
+    boolean isTestOwner(Id<User> teacherId, Id<Test> testId);
 }

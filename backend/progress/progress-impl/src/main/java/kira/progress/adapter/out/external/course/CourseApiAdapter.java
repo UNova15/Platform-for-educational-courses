@@ -25,17 +25,17 @@ public class CourseApiAdapter
     private final CourseApiMapper mapper;
 
     @Override
-    public boolean isTeacherCourseOwner(Id<User> teacherId, Id<Course> courseId) {
+    public boolean isCourseOwner(Id<User> teacherId, Id<Course> courseId) {
         return checkOwnerQuery.isTeacherCourseOwner(teacherId.value(), courseId.value());
     }
 
     @Override
-    public boolean isTeacherLessonOwner(Id<User> teacherId, Id<Lesson> lessonId) {
+    public boolean isLessonOwner(Id<User> teacherId, Id<Lesson> lessonId) {
         return checkOwnerQuery.isTeacherLessonOwner(teacherId.value(), lessonId.value());
     }
 
     @Override
-    public boolean isTeacherTestOwner(Id<User> teacherId, Id<Test> testId) {
+    public boolean isTestOwner(Id<User> teacherId, Id<Test> testId) {
         return checkOwnerQuery.isTeacherTestOwner(teacherId.value(), testId.value());
     }
 

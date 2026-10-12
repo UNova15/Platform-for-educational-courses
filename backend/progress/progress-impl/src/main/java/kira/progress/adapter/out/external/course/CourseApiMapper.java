@@ -23,7 +23,7 @@ public class CourseApiMapper {
                                 .map(Id::<AnswerOption>of)
                                 .collect(Collectors.toSet())));
 
-        return AnswerKey.createNew(mappedTestId, optionIdsByQuestionId);
+        return AnswerKey.create(mappedTestId, optionIdsByQuestionId);
     }
 
     public ModuleStructure toModuleStructure(CourseModuleStructure structure) {

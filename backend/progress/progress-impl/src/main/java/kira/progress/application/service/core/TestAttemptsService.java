@@ -3,7 +3,6 @@ package kira.progress.application.service.core;
 import common.domain.Id;
 import java.util.Optional;
 
-import common.exception.core.RuleConflictException;
 import common.exception.named.ResourceAccessDeniedException;
 import common.exception.named.ResourceNotFoundException;
 import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
@@ -15,8 +14,8 @@ import kira.progress.application.port.out.external.TestAnswerKeyProviderPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptSavePort;
-import kira.progress.application.service.exception.ProgressResourceName;
-import kira.progress.application.service.exception.TestAlreadyCompletedException;
+import kira.progress.application.exception.ProgressResourceName;
+import kira.progress.application.exception.TestAlreadyCompletedException;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -27,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAttemptUseCase {
+class TestAttemptsService implements StartTestAttemptUseCase, EndTestAttemptUseCase {
     private final CourseStructurePort courseStructurePort;
     private final EnrollmentLoadPort enrollmentLoadPort;
     private final TestAttemptLoadPort loadPort;
@@ -35,6 +34,7 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
 
     private final TestAnswerKeyProviderPort keyPort;
 
+    //TODO проверка что тест опубликован
     @Override
     public void startTestAttempt(Id<User> userId, Id<Test> testId) {
         Id<Course> courseId = courseStructurePort
@@ -55,7 +55,7 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
             return;
         }
 
-        TestAttempt attempt = TestAttempt.createNew(userId, testId);
+        TestAttempt attempt = TestAttempt.create(userId, testId);
         savePort.save(attempt);
     }
 

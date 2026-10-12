@@ -7,6 +7,7 @@ import kira.progress.application.port.in.query.personalprogress.TestProgressSumm
 import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
 import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
+import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -16,12 +17,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswersViewQueryPort {
-    private final JdbcClient jdbcClient;
+class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswersViewQueryPort {
+    private final JdbcClient dbClient;
 
     @Override
     public List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId) {
-        return jdbcClient
+        return dbClient
                 .sql("""
                     SELECT l.lesson_id,l.completed_at FROM progress.lessons_progress l
                     WHERE l.user_id = :userId AND l.lesson_id IN :lessonsIds
@@ -34,7 +35,7 @@ public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, Te
 
     @Override
     public List<TestProgressSummary> findCompletedTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId) {
-        return jdbcClient
+        return dbClient
                 .sql("""
                     SELECT t.test_id,t.started_at,t.completed_at,t.score
                     FROM progress.test_submissions t
@@ -48,7 +49,7 @@ public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, Te
 
     @Override
     public Optional<TestAnswersView> findTestAnswersViewByTestIdAndStudentId(Id<User> userId, Id<Test> testId) {
-        Optional<Long> attemptId = jdbcClient
+        Optional<Long> attemptId = dbClient
                 .sql("SELECT t.id FROM progress.test_submissions t WHERE t.user_id = :userId AND t.test_id = :testId")
                 .param("userId", userId.value())
                 .param("testId", testId.value())
@@ -57,7 +58,7 @@ public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, Te
 
         if (attemptId.isEmpty()) return Optional.empty();
         // TODO логика получения с маппингом склеина
-        return jdbcClient.sql("""
+        return dbClient.sql("""
             SELECT t.question_id, t.option_id
             FROM progress.test_answers t
             WHERE t.test_submission_id = :attemptId
@@ -81,5 +82,16 @@ public class ProgressPersistenceAdapter implements PersonalProgressQueryPort, Te
 
             return Optional.of(new TestAnswersView(testId.value(), answers));
         });
+    }
+
+    @Override
+    public List<Id<Course>> findCoursesIdsThatUsersIsEnrolledIn(Id<User> userId) {
+        List<Long> ids = dbClient
+                .sql("SELECT e.course_id FROM progress.enrollments e WHERE e.user_id = :userId")
+                .param("userId", userId.value())
+                .query(Long.class)
+                .list();
+
+        return ids.stream().map(Id::<Course>of).toList();
     }
 }

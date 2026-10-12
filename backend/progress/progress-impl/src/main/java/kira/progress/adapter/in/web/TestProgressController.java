@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class TestProgressController {
+class TestProgressController {
     private final StartTestAttemptUseCase startTestAttemptUseCase;
     private final EndTestAttemptUseCase endTestAttemptUseCase;
 

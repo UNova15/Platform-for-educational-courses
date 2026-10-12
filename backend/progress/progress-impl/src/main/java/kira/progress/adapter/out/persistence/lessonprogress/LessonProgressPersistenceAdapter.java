@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class LessonProgressPersistenceAdapter implements LessonProgressSavePort, LessonProgressLoadPort {
+class LessonProgressPersistenceAdapter implements LessonProgressSavePort, LessonProgressLoadPort {
     private final DataLessonProgressRepository repository;
     private final LessonProgressMapper mapper;
 

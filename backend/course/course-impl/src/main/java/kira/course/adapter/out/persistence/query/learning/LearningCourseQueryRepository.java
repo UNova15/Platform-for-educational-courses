@@ -2,18 +2,34 @@ package kira.course.adapter.out.persistence.query.learning;
 
 import java.util.List;
 import java.util.Optional;
-import kira.course.adapter.out.persistence.course.CourseEntity;
 import kira.course.application.port.in.query.learning.StudentsCourseView;
 import kira.course.application.port.in.query.learning.UserCourseView;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
 
-interface LearningCourseQueryRepository extends CrudRepository<CourseEntity, Long> {
+@Repository
+@RequiredArgsConstructor
+class LearningCourseQueryRepository {
+    private final JdbcClient dbClient;
 
-    @Query("SELECT id,teacher_id,tag,created_at,title,description,status FROM course.courses c WHERE c.id = :courseId")
-    Optional<StudentsCourseView> findStudentsCourseViewById(@Param("courseId") Long courseId);
+    Optional<StudentsCourseView> findStudentsCourseViewById(Long courseId) {
+        return dbClient.sql("""
+            SELECT id,teacher_id,tag,created_at,title,description,status
+            FROM course.courses c WHERE c.id = :courseId
+            """)
+                .param("courseId", courseId)
+                .query(StudentsCourseView.class)
+                .optional();
+    }
 
-    @Query("SELECT id,teacher_id,tag,created_at,title,status FROM course.courses c WHERE c.id IN :coursesIds")
-    List<UserCourseView> findEnrolledCoursesByCoursesIds(@Param("coursesIds") List<Long> coursesIds);
+    List<UserCourseView> findEnrolledCoursesByCoursesIds(List<Long> coursesIds) {
+        return dbClient.sql("""
+            SELECT id,teacher_id,tag,created_at,title,status
+            FROM course.courses c WHERE c.id IN :coursesIds
+            """)
+                .param("coursesIds", coursesIds)
+                .query(UserCourseView.class)
+                .list();
+    }
 }

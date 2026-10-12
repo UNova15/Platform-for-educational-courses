@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration("progressMigration")
 @RequiredArgsConstructor
-public class DatabaseMigrationConfig {
+class DatabaseMigrationConfig {
     private final DataSource dataSource;
 
     @PostConstruct

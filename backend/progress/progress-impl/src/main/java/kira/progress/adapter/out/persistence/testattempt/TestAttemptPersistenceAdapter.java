@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptSavePort {
+class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptSavePort {
     private final DataTestAttemptRepository repository;
     private final TestAttemptMapper mapper;
 

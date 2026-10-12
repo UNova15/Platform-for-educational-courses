@@ -20,7 +20,7 @@ public class LessonProgress {
     private Id<Lesson> lessonId;
     private final LocalDateTime completedAt;
 
-    public static LessonProgress createNew(Id<User> userId, Id<Lesson> lessonId) {
+    public static LessonProgress create(Id<User> userId, Id<Lesson> lessonId) {
         if (userId == null || lessonId == null) {
             throw new DomainValidationException("Incorrect data to create lesson progress");
         }

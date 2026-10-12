@@ -1,4 +1,4 @@
-package kira.progress.application.service.exception;
+package kira.progress.application.exception;
 
 import common.domain.Id;
 import common.exception.named.ResourceAlreadyExist;

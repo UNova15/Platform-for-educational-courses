@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class LessonProgressController {
+class LessonProgressController {
     private final LessonCompletionUseCase lessonCompletionUseCase;
 
     @PostMapping("/lessons/{lessonId}/progress")

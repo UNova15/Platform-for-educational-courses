@@ -9,11 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("progress.test_submissions")
+@Table(value = "test_submissions", schema = "progress")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
-public class TestAttemptEntity {
+class TestAttemptEntity {
 
     @Id
     private final Long id;

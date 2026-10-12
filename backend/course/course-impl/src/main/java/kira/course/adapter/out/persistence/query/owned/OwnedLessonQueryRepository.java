@@ -2,24 +2,38 @@ package kira.course.adapter.out.persistence.query.owned;
 
 import java.util.List;
 import java.util.Optional;
-import kira.course.adapter.out.persistence.lesson.LessonEntity;
 import kira.course.application.port.in.query.owned.TeachersLessonView;
 import kira.course.application.port.in.query.owned.TeachersModuleView;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
 
-interface OwnedLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
+@Repository
+@RequiredArgsConstructor
+class OwnedLessonQueryRepository {
+    private final JdbcClient dbClient;
 
-    @Query("SELECT l.id,l.title,l.status FROM course.lessons l WHERE l.module_id = :moduleId ")
-    List<TeachersModuleView.Lesson> findAllTeacherModuleLessonViewByModuleId(@Param("moduleId") Long moduleId);
-
-    @Query("""
-            SELECT l.id,l.module_id,l.title,l.type,l.content,l.orderIndex,l.mandatory,l.status,c.teacher_id
+    List<TeachersModuleView.Lesson> findAllTeacherModuleLessonViewByModuleId(Long moduleId) {
+        return dbClient.sql("""
+            SELECT l.id,l.title,l.status
             FROM course.lessons l
-            JOIN course.modules m ON l.module_id = m.id
-            JOIN course.courses c ON l.course_id = c.id
-            WHERE l.id = :lessonId
+            WHERE l.module_id = :moduleId
             """)
-    Optional<TeachersLessonView> findTeachersLessonViewById(@Param("lessonId") Long id);
+                .param("moduleId", moduleId)
+                .query(TeachersModuleView.Lesson.class)
+                .list();
+    }
+
+    Optional<TeachersLessonView> findTeachersLessonViewById(Long id) {
+        return dbClient.sql("""
+                        SELECT l.id,l.module_id,l.title,l.type,l.content,l.orderIndex,l.mandatory,l.status,c.teacher_id
+                        FROM course.lessons l
+                        JOIN course.modules m ON l.module_id = m.id
+                        JOIN course.courses c ON l.course_id = c.id
+                        WHERE l.id = :lessonId
+                        """)
+                .param("lessonId", id)
+                .query(TeachersLessonView.class)
+                .optional();
+    }
 }

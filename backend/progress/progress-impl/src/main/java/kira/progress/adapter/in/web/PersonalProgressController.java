@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/me")
 @RequiredArgsConstructor
-public class PersonalProgressController {
+class PersonalProgressController {
     private final PersonalProgressUseCase personalProgressUseCase;
 
     @GetMapping("/modules/{moduleId}/progress")

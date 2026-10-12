@@ -7,11 +7,11 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("progress.enrollments")
+@Table(value = "enrollments",schema = "progress")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
-public class EnrollmentEntity {
+class EnrollmentEntity {
 
     record EnrollmentKey(long userId, long courseId) {}
 

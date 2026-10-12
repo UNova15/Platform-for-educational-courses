@@ -4,7 +4,7 @@ import kira.progress.domain.enrollment.Enrollment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EnrollmentMapper {
+class EnrollmentMapper {
 
     public EnrollmentEntity toEntity(Enrollment enrollment) {
         var key = new EnrollmentEntity.EnrollmentKey(

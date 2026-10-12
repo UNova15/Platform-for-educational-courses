@@ -10,11 +10,10 @@ import kira.course.application.port.out.persistance.query.LearningQueryPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
+import kira.course.domain.shared.Status;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-//TODO правильно ли что маппинг находится здесь
 
 // В случае роста сложности маппинга вынести его в отдельную фабрику
 @Repository
@@ -33,12 +32,12 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsCourseView> findStudentsCourseViewById(Id<Course> id) {
+    public Optional<StudentsCourseView> findCourseViewByIdAndStatus(Id<Course> id, Status status) {
         Optional<StudentsCourseView> view = courseQueryRepository.findStudentsCourseViewById(id.value());
 
         view.ifPresent(course -> {
             List<StudentsCourseView.Module> modules =
-                    moduleQueryRepository.findStudentsCourseModuleViewByCourseId(id.value());
+                    moduleQueryRepository.findStudentsCourseModuleViewByCourseId(id.value(), status.name());
             if (modules.isEmpty()) {
                 return;
             }
@@ -49,12 +48,14 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsModuleView> findStudentsModuleViewById(Id<CourseModule> id) {
-        Optional<StudentsModuleView> view = moduleQueryRepository.findStudentsModuleView(id.value());
+    public Optional<StudentsModuleView> findModuleViewByIdAndStatus(Id<CourseModule> id, Status status) {
+        Optional<StudentsModuleView> view = moduleQueryRepository.findStudentsModuleView(id.value(), status.name());
 
         view.ifPresent(module -> {
-            List<StudentsModuleView.Lesson> lessons = lessonQueryRepository.findStudentsModuleLessonView(id.value());
-            List<StudentsModuleView.Test> tests = testQueryRepository.findStudentsModuleTestView(id.value());
+            List<StudentsModuleView.Lesson> lessons =
+                    lessonQueryRepository.findStudentsModuleLessonView(id.value(), status.name());
+            List<StudentsModuleView.Test> tests =
+                    testQueryRepository.findStudentsModuleTestView(id.value(), status.name());
 
             module.lessons(lessons.isEmpty() ? List.of() : lessons);
             module.tests(tests.isEmpty() ? List.of() : tests);
@@ -64,13 +65,13 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsLessonView> findStudentsLessonViewById(Id<Lesson> id) {
-        return lessonQueryRepository.findStudentsLessonView(id.value());
+    public Optional<StudentsLessonView> findLessonViewByIdAndStatus(Id<Lesson> id, Status status) {
+        return lessonQueryRepository.findStudentsLessonView(id.value(), status.name());
     }
 
     @Override
-    public Optional<StudentsTestView> findStudentsTestView(Id<Test> id) {
-        Optional<StudentsTestView> view = testQueryRepository.findStudentsTestView(id.value());
+    public Optional<StudentsTestView> findTestViewByIdAndStatus(Id<Test> id, Status status) {
+        Optional<StudentsTestView> view = testQueryRepository.findStudentsTestView(id.value(), status.name());
 
         view.ifPresent(test -> {
             List<StudentsTestView.Question> questions = testQueryRepository.findStudentsTestQuestionsView(id.value());

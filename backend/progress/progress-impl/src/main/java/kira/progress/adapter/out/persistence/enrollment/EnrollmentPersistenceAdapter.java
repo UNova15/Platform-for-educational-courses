@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class EnrollmentPersistenceAdapter implements EnrollmentLoadPort, EnrollmentSavePort {
+class EnrollmentPersistenceAdapter implements EnrollmentLoadPort, EnrollmentSavePort {
     private final DataEnrollmentRepository repository;
     private final EnrollmentMapper mapper;
 

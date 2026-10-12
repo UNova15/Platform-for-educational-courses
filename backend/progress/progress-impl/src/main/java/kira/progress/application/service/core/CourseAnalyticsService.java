@@ -13,7 +13,7 @@ import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.out.external.CheckCourseOwnerPort;
 import kira.progress.application.port.out.persistance.query.CourseStatisticsQueryPort;
 import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
-import kira.progress.application.service.exception.ProgressResourceName;
+import kira.progress.application.exception.ProgressResourceName;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.Test;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CourseAnalyticsService implements CourseAnalyticsUseCase {
+class CourseAnalyticsService implements CourseAnalyticsUseCase {
     private final CheckCourseOwnerPort checkCourseOwnerPort;
     private final TestAnswersViewQueryPort testAnswersViewQueryPort;
     private final CourseStatisticsQueryPort statisticsQueryPort;
 
     @Override
     public List<EnrolledStudentsResult> findEnrolledStudents(Id<User> teacherId, Id<Course> courseId) {
-        if (!checkCourseOwnerPort.isTeacherCourseOwner(teacherId, courseId)) {
+        if (!checkCourseOwnerPort.isCourseOwner(teacherId, courseId)) {
             throw new ResourceAccessDeniedException(ProgressResourceName.COURSE, teacherId, courseId);
         }
         // В данный момент возвращаются только id записанных пользователей и время их записи. В будущем будет
@@ -41,7 +41,7 @@ public class CourseAnalyticsService implements CourseAnalyticsUseCase {
 
     @Override
     public List<StudentsLessonProgressResult> findWatchedLessonStudents(Id<User> teacherId, Id<Lesson> lessonId) {
-        if (!checkCourseOwnerPort.isTeacherLessonOwner(teacherId, lessonId)) {
+        if (!checkCourseOwnerPort.isLessonOwner(teacherId, lessonId)) {
             throw new ResourceAccessDeniedException(ProgressResourceName.LESSON, teacherId, lessonId);
         }
 
@@ -50,7 +50,7 @@ public class CourseAnalyticsService implements CourseAnalyticsUseCase {
 
     @Override
     public List<CompletedTestStudentsResult> findStudentsTestResult(Id<User> teacherId, Id<Test> testId) {
-        if (!checkCourseOwnerPort.isTeacherTestOwner(teacherId, testId)) {
+        if (!checkCourseOwnerPort.isTestOwner(teacherId, testId)) {
             throw new ResourceAccessDeniedException(ProgressResourceName.TEST, teacherId, testId);
         }
 
@@ -59,7 +59,7 @@ public class CourseAnalyticsService implements CourseAnalyticsUseCase {
 
     @Override
     public TestAnswersView findStudentTestAnswers(Id<User> teacherId, Id<User> studentId, Id<Test> testId) {
-        if (!checkCourseOwnerPort.isTeacherTestOwner(teacherId, testId)) {
+        if (!checkCourseOwnerPort.isTestOwner(teacherId, testId)) {
             throw new ResourceAccessDeniedException(ProgressResourceName.TEST, teacherId, testId);
         }
 

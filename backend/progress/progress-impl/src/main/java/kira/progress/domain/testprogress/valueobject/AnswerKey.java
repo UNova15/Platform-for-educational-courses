@@ -22,7 +22,7 @@ public class AnswerKey {
     @Getter(AccessLevel.NONE)
     private final Map<Id<Question>, Set<Id<AnswerOption>>> key;
 
-    public static AnswerKey createNew(Id<Test> testId, Map<Id<Question>, Set<Id<AnswerOption>>> keys) {
+    public static AnswerKey create(Id<Test> testId, Map<Id<Question>, Set<Id<AnswerOption>>> keys) {
         if (testId == null || keys == null || keys.isEmpty()) {
             throw new DomainValidationException("Questions and Answer options cannot be empty");
         }
@@ -33,9 +33,7 @@ public class AnswerKey {
     // в случае если будет указан id ответа от другого теста то он не будет засчитан (ошибки не будет)
     public int calculateGrade(Set<TestAnswer> answers) {
         int score = 0;
-
         for (var answer : answers) {
-
             if (!key.containsKey(answer.questionId())) {
                 throw new DomainValidationException("Answer contains invalid question id");
             }

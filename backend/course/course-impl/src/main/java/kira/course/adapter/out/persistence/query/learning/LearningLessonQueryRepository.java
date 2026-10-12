@@ -2,29 +2,41 @@ package kira.course.adapter.out.persistence.query.learning;
 
 import java.util.List;
 import java.util.Optional;
-import kira.course.adapter.out.persistence.lesson.LessonEntity;
 import kira.course.application.port.in.query.learning.StudentsLessonView;
 import kira.course.application.port.in.query.learning.StudentsModuleView;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
 
-interface LearningLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
+@Repository
+@RequiredArgsConstructor
+class LearningLessonQueryRepository {
+    private final JdbcClient dbClient;
 
-    @Query("""
+    List<StudentsModuleView.Lesson> findStudentsModuleLessonView(Long moduleId, String status) {
+        return dbClient.sql("""
             SELECT id,title,module_id,order_index,mandatory
             FROM course.lessons l
             WHERE l.module_id = :moduleId
-            AND l.status = 'PUBLISHED'
+            AND l.status = :status
             """)
-    List<StudentsModuleView.Lesson> findStudentsModuleLessonView(@Param("moduleId") Long moduleId);
+                .param("moduleId", moduleId)
+                .param("status", status)
+                .query(StudentsModuleView.Lesson.class)
+                .list();
+    }
 
-    @Query("""
+    Optional<StudentsLessonView> findStudentsLessonView(Long lessonId, String status) {
+        return dbClient.sql("""
             SELECT l.id,l.module_id,m.course_id,l.order_index,l.mandatory,l.title,l.type,l.content
             FROM course.lessons l
             JOIN course.modules m ON l.module_id = m.id
             WHERE l.id = :lessonId
-            AND l.status = 'PUBLISHED'
+            AND l.status = :status
             """)
-    Optional<StudentsLessonView> findStudentsLessonView(@Param("lessonId") Long lessonId);
+                .param("lessonId", lessonId)
+                .param("status", status)
+                .query(StudentsLessonView.class)
+                .optional();
+    }
 }
