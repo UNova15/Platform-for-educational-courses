@@ -9,6 +9,10 @@ public class ResourceNotFoundException extends BaseApplicationException {
         super("Entity with name %s not found".formatted(name.value()));
         withContext("resourceName", name.value());
         withContext("id", id.value());
+    }
 
+    public ResourceNotFoundException(ResourceName name) {
+        super("Entity with name %s not found".formatted(name.value()));
+        withContext("resourceName", name.value());
     }
 }

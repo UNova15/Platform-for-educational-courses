@@ -1,10 +1,10 @@
 package kira.progress.application.service.core;
 
 import common.domain.Id;
-import common.exception.ResourceAccessException;
-import common.exception.ResourceNotFoundException;
 import java.util.List;
-import kira.progress.application.exceptions.ProgressExceptionCode;
+
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.PersonalProgressUseCase;
 import kira.progress.application.port.in.query.personalprogress.ProgressSummary;
@@ -15,7 +15,7 @@ import kira.progress.application.port.out.external.ModuleStructure;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
 import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
-import kira.progress.domain.markers.Course;
+import kira.progress.application.service.exception.ProgressResourceName;
 import kira.progress.domain.markers.CourseModule;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -33,13 +33,11 @@ public class PersonalProgressService implements PersonalProgressUseCase {
     @Override
     public ProgressSummary findStudentsProgressInModule(Id<User> studentId, Id<CourseModule> moduleId) {
         ModuleStructure moduleStructure = courseStructurePort
-                .findModuleStructureById(moduleId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        ProgressExceptionCode.MODULE_NOT_FOUND_EXCEPTION, CourseModule.class, moduleId));
+                .findStudentsModuleStructureById(moduleId)
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.MODULE, moduleId));
 
         if (!enrollmentLoadPort.isEnrollmentExist(studentId, moduleStructure.courseId())) {
-            throw new ResourceAccessException(
-                    ProgressExceptionCode.COURSE_ACCESS_EXCEPTION, Course.class, studentId, moduleStructure.courseId());
+            throw new ResourceAccessDeniedException(ProgressResourceName.COURSE, studentId, moduleStructure.courseId());
         }
 
         List<LessonProgressSummary> lessonsProgress =
@@ -55,7 +53,6 @@ public class PersonalProgressService implements PersonalProgressUseCase {
     public TestAnswersView findStudentsTestAttempt(Id<User> studentId, Id<Test> testId) {
         return testAnswersViewQueryPort
                 .findTestAnswersViewByTestIdAndStudentId(studentId, testId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        ProgressExceptionCode.TEST_ATTEMPT_NOT_FOUND_EXCEPTION, Test.class, testId));
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.TEST, testId));
     }
 }

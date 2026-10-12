@@ -1,12 +1,13 @@
 package kira.course.application.service.core.module;
 
 import common.domain.Id;
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.module.create.ModuleCreateCommand;
 import kira.course.application.port.in.module.create.ModuleCreateResult;
 import kira.course.application.port.in.module.create.ModuleCreateUseCase;
-import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
 import kira.course.domain.course.Course;
@@ -19,27 +20,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ModuleCreateService implements ModuleCreateUseCase {
+class ModuleCreateService implements ModuleCreateUseCase {
     private final CourseLoadPort courseLoadPort;
     private final ModuleSavePort savePort;
 
-    private final CourseAccessPort accessPort;
-    private final CourseStatusPort checkStatusPort;
-
     @Override
-    public Result<ModuleCreateResult, CreateError> createModule(
-            ModuleCreateCommand createCommand, Id<Course> courseId, Id<User> teacherId) {
+    public ModuleCreateResult createModule(ModuleCreateCommand createCommand, Id<Course> courseId, Id<User> teacherId) {
+        Course course = courseLoadPort
+                .loadById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
 
-        if (!courseLoadPort.isExist(courseId)) {
-            return Result.failure(CreateError.COURSE_NOT_FOUND);
+        if (!course.isOwnedBy(teacherId)) {
+            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, teacherId, courseId);
         }
 
-        if (!accessPort.isCourseOwner(teacherId, courseId)) {
-            return Result.failure(CreateError.ACCESS_DENY);
-        }
-
-        if (checkStatusPort.isArchived(courseId)) {
-            return Result.failure(CreateError.COURSE_ARCHIVED);
+        if (course.isArchived()) {
+            throw new RuleConflictException(
+                    "Cannot create module in archived course", CourseResourceName.COURSE, courseId);
         }
 
         var title = Title.of(createCommand.title());
@@ -48,9 +45,7 @@ public class ModuleCreateService implements ModuleCreateUseCase {
 
         CourseModule savedModule = savePort.save(module);
 
-        var response = new ModuleCreateResult(
+        return new ModuleCreateResult(
                 savedModule.id().value(), savedModule.title().value());
-
-        return Result.success(response);
     }
 }

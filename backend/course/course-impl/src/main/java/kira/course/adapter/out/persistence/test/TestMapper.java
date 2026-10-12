@@ -1,10 +1,8 @@
 package kira.course.adapter.out.persistence.test;
 
 import common.domain.Id;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
 import kira.course.domain.module.CourseModule;
@@ -16,7 +14,7 @@ import kira.course.domain.test.valueobject.QuestionContent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TestMapper {
+class TestMapper {
 
     public Test toDomain(TestEntity entity) {
         Id<Test> id = Id.of(entity.id());
@@ -42,18 +40,13 @@ public class TestMapper {
         return AnswerOption.restore(Id.of(entity.id()), Option.of(entity.option()), entity.isCorrect());
     }
 
-    public List<Test> toDomain(Iterable<TestEntity> entities) {
-        return StreamSupport.stream(entities.spliterator(), false)
-                .map(this::toDomain)
-                .toList();
-    }
-
     public TestEntity toEntity(Test test) {
+        Long id = test.id() == null ? null : test.id().value();
         Set<QuestionEntity> questions =
                 test.questions().stream().map(this::toQuestionEntity).collect(Collectors.toSet());
 
         return new TestEntity(
-                test.id().value(),
+                id,
                 test.moduleId().value(),
                 test.title().value(),
                 test.description().value(),
@@ -63,18 +56,16 @@ public class TestMapper {
     }
 
     private QuestionEntity toQuestionEntity(Question question) {
+        Long id = question.id() == null ? null : question.id().value();
         Set<AnswerOptionEntity> options = question.answerOptions().stream()
                 .map(this::toAnswerOptionEntity)
                 .collect(Collectors.toSet());
 
-        return new QuestionEntity(question.id().value(), question.content().value(), question.orderIndex(), options);
+        return new QuestionEntity(id, question.content().value(), question.orderIndex(), options);
     }
 
     private AnswerOptionEntity toAnswerOptionEntity(AnswerOption option) {
-        return new AnswerOptionEntity(option.id().value(), option.option().value(), option.isCorrect());
-    }
-
-    public List<TestEntity> toEntity(List<Test> tests) {
-        return tests.stream().map(this::toEntity).toList();
+        Long id = option.id() == null ? null : option.id().value();
+        return new AnswerOptionEntity(id, option.option().value(), option.isCorrect());
     }
 }

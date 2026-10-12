@@ -12,5 +12,5 @@ public interface CourseStructurePort {
 
     Optional<Id<Course>> findCourseIdByLessonId(Id<Lesson> lessonId);
 
-    Optional<ModuleStructure> findModuleStructureById(Id<CourseModule> moduleId);
+    Optional<ModuleStructure> findStudentsModuleStructureById(Id<CourseModule> moduleId);
 }

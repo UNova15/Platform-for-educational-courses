@@ -38,7 +38,7 @@ class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
             return new TokenPayload(Long.parseLong(parsedToken.getSubject()), parsedToken.get("login", String.class));
 
         } catch (JwtException | IllegalArgumentException exception) {
-            throw new TokenDecodeException();
+            throw new TokenDecodeException(token);
         }
     }
 

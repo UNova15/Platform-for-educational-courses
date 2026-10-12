@@ -14,10 +14,12 @@ import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+//TODO правильно ли что маппинг находится здесь
+
 // В случае роста сложности маппинга вынести его в отдельную фабрику
 @Repository
 @RequiredArgsConstructor
-public class LearningQueryAdapter implements LearningQueryPort {
+class LearningQueryAdapter implements LearningQueryPort {
     private final LearningCourseQueryRepository courseQueryRepository;
     private final LearningModuleQueryRepository moduleQueryRepository;
     private final LearningLessonQueryRepository lessonQueryRepository;

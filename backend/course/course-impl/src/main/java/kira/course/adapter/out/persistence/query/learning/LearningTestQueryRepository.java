@@ -10,9 +10,14 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface LearningTestQueryRepository extends CrudRepository<TestEntity, Long> {
+interface LearningTestQueryRepository extends CrudRepository<TestEntity, Long> {
 
-    @Query("SELECT id,title,module_id,order_index FROM course.tests t WHERE t.module_id = :moduleId")
+    @Query("""
+            SELECT id,title,module_id,order_index
+            FROM course.tests t
+            WHERE t.module_id = :moduleId
+            AND t.status = 'PUBLISHED'
+            """)
     List<StudentsModuleView.Test> findStudentsModuleTestView(@Param("moduleId") Long moduleId);
 
     @Query("""
@@ -20,6 +25,7 @@ public interface LearningTestQueryRepository extends CrudRepository<TestEntity, 
             FROM course.tests t
             JOIN course.modules m ON t.module_id = m.id
             WHERE t.id = :testId
+            AND t.status = 'PUBLISHED'
             """)
     Optional<StudentsTestView> findStudentsTestView(@Param("testId") Long testId);
 

@@ -16,7 +16,7 @@ public class AnswerOption {
     private boolean isCorrect;
     private Option option;
 
-    public static AnswerOption createNew(Option option, boolean isCorrect) {
+    public static AnswerOption create(Option option, boolean isCorrect) {
         if (option == null) {
             throw new DomainValidationException("Empty data to create question option");
         }

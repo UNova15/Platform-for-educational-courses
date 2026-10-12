@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -45,13 +45,6 @@ public class Question {
         return new Question(id, orderIndex, question, new HashSet<>(answerOptions));
     }
 
-    public Set<Id<AnswerOption>> calculateCorrectOptionsIds() {
-        return answerOptions.stream()
-                .filter(AnswerOption::isCorrect)
-                .map(AnswerOption::id)
-                .collect(Collectors.toSet());
-    }
-
     private static void validateOptions(Set<AnswerOption> options) {
         if (options == null || options.isEmpty()) {
             throw new DomainValidationException("Empty options to create question");
@@ -59,15 +52,11 @@ public class Question {
 
         if (options.size() > MAX_OPTION_COUNT || options.size() < MIN_OPTION_COUNT) {
             throw new LengthViolationException(
-                    "Incorrect options count in question",
-                    "Question",
-                    options.size(),
-                    MAX_OPTION_COUNT,
-                    MIN_OPTION_COUNT);
+                    "Incorrect options count in question", options.size(), MAX_OPTION_COUNT, MIN_OPTION_COUNT);
         }
 
         if (options.stream().anyMatch(AnswerOption::isCorrect)) {
-            throw new DomainValidationException("Invalid count corrects options in Question");
+            throw new DomainValidationException("The question must contain at least one correct answer");
         }
     }
 }

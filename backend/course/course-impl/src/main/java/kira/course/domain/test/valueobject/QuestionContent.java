@@ -1,7 +1,7 @@
 package kira.course.domain.test.valueobject;
 
 import common.exception.core.DomainValidationException;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class QuestionContent {
 
         if (question.length() <= MIN_LENGTH || question.length() > MAX_LENGTH) {
             throw new LengthViolationException(
-                    "Incorrect question content length", "QuestionContent", question.length(), MAX_LENGTH, MIN_LENGTH);
+                    "Incorrect question content length", question.length(), MAX_LENGTH, MIN_LENGTH);
         }
 
         return new QuestionContent(question);

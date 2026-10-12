@@ -1,7 +1,7 @@
 package kira.course.domain.lesson;
 
 import common.exception.core.DomainValidationException;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +24,7 @@ public class LessonContent {
 
         if (content.length() <= MIN_CONTENT_LENGTH || content.length() > MAX_CONTENT_LENGTH) {
             throw new LengthViolationException(
-                    "Incorrect lesson content length",
-                    "LessonContent",
-                    content.length(),
-                    MAX_CONTENT_LENGTH,
-                    MIN_CONTENT_LENGTH);
+                    "Incorrect lesson content length", content.length(), MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH);
         }
 
         return new LessonContent(type, content);

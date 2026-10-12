@@ -14,9 +14,8 @@ class RefreshTokenMapper {
     }
 
     public RefreshTokenEntity toEntity(RefreshToken refreshToken) {
+        Long id = refreshToken.id() == null ? null : refreshToken.id().value();
         return new RefreshTokenEntity(
-                refreshToken.id().value(),
-                refreshToken.userId().value(),
-                refreshToken.token().value());
+                id, refreshToken.userId().value(), refreshToken.token().value());
     }
 }

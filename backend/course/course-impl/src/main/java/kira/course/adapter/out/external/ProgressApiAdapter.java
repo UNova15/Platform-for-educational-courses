@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ProgressApiAdapter implements EnrollmentCheckPort, UserEnrollmentProviderPort, TestCompletionCheckPort {
+class ProgressApiAdapter implements EnrollmentCheckPort, UserEnrollmentProviderPort, TestCompletionCheckPort {
     private final EnrollmentStatusQuery enrollmentStatusQuery;
     private final EnrollmentProviderQuery enrollmentProviderQuery;
     private final TestStatusQuery testStatusQuery;

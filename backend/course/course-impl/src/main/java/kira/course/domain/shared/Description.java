@@ -1,6 +1,6 @@
 package kira.course.domain.shared;
 
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Description {
 
         if (description.length() > MAX_LENGTH) {
             throw new LengthViolationException(
-                    "Incorrect description length", "Description", description.length(), MAX_LENGTH, MIN_LENGTH);
+                    "Incorrect description length", description.length(), MAX_LENGTH, MIN_LENGTH);
         }
 
         return new Description(description);

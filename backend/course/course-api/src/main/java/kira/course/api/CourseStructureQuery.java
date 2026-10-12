@@ -8,5 +8,5 @@ public interface CourseStructureQuery {
 
     Optional<Long> findCourseIdByLessonId(long lessonId);
 
-    Optional<CourseModuleStructure> findModuleStructureById(long moduleId);
+    Optional<CourseModuleStructure> findStudentsModuleStructureById(long moduleId);
 }

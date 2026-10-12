@@ -4,6 +4,6 @@ import common.domain.Id;
 import kira.course.domain.course.Course;
 import kira.course.domain.markers.User;
 
-public interface ArchiveCourseUseCase {
+public interface ArchiveUseCase {
     void archive(Id<User> requesterId, Id<Course> courseId);
 }

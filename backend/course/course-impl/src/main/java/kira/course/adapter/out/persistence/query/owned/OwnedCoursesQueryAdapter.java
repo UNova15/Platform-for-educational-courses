@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class OwnedCoursesQueryAdapter implements OwnedCoursesQueryPort {
+class OwnedCoursesQueryAdapter implements OwnedCoursesQueryPort {
     private final OwnedCourseQueryRepository courseRepository;
     private final OwnedModuleQueryRepository moduleQueryRepository;
     private final OwnedLessonQueryRepository lessonQueryRepository;

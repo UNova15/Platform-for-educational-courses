@@ -2,9 +2,11 @@ package kira.course.application.service.core.query;
 
 import common.domain.Id;
 import java.util.List;
-import java.util.Optional;
 
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.query.learning.*;
 import kira.course.application.port.out.external.EnrollmentCheckPort;
 import kira.course.application.port.out.external.TestCompletionCheckPort;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LearningQueryService implements LearningQueryUseCase {
+class LearningQueryService implements LearningQueryUseCase {
     private final LearningQueryPort learningQueryPort;
     private final EnrollmentCheckPort enrollmentCheckPort;
     private final UserEnrollmentProviderPort enrollmentCoursesPort;
@@ -37,78 +39,67 @@ public class LearningQueryService implements LearningQueryUseCase {
     }
 
     @Override
-    public Result<StudentsCourseView, CourseQueryError> findStudentsCourse(Id<User> requesterId, Id<Course> courseId) {
-        Optional<StudentsCourseView> loaded = learningQueryPort.findStudentsCourseViewById(courseId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(CourseQueryError.COURSE_NOT_FOUND);
-        }
-        var view = loaded.get();
+    public StudentsCourseView findStudentsCourse(Id<User> requesterId, Id<Course> courseId) {
+        StudentsCourseView view = learningQueryPort
+                .findStudentsCourseViewById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            return Result.failure(CourseQueryError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, requesterId, courseId);
         }
 
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<StudentsModuleView, ModuleQueryError> findStudentsModule(
-            Id<User> requesterId, Id<CourseModule> moduleId) {
-        Optional<StudentsModuleView> loaded = learningQueryPort.findStudentsModuleViewById(moduleId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(ModuleQueryError.MODULE_NOT_FOUND);
-        }
-        var view = loaded.get();
+    public StudentsModuleView findStudentsModule(Id<User> requesterId, Id<CourseModule> moduleId) {
+        StudentsModuleView view = learningQueryPort
+                .findStudentsModuleViewById(moduleId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
 
         Id<Course> courseId = Id.of(view.courseId());
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            return Result.failure(ModuleQueryError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, requesterId, moduleId);
         }
 
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<StudentsLessonView, LessonQueryError> findStudentsLesson(Id<User> requesterId, Id<Lesson> lessonId) {
-        Optional<StudentsLessonView> loaded = learningQueryPort.findStudentsLessonViewById(lessonId);
+    public StudentsLessonView findStudentsLesson(Id<User> requesterId, Id<Lesson> lessonId) {
+        StudentsLessonView view = learningQueryPort
+                .findStudentsLessonViewById(lessonId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
 
-        if (loaded.isEmpty()) {
-            return Result.failure(LessonQueryError.LESSON_NOT_FOUND);
-        }
-
-        var view = loaded.get();
         Id<Course> courseId = Id.of(view.courseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            return Result.failure(LessonQueryError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.LESSON, requesterId, lessonId);
         }
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<StudentsTestView, TestQueryError> findStudentsTest(Id<User> requesterId, Id<Test> testId) {
-        Optional<StudentsTestView> loaded = learningQueryPort.findStudentsTestView(testId);
+    public StudentsTestView findStudentsTest(Id<User> requesterId, Id<Test> testId) {
+        StudentsTestView view = learningQueryPort
+                .findStudentsTestView(testId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
 
-        if (loaded.isEmpty()) {
-            return Result.failure(TestQueryError.TEST_NOT_FOUND);
-        }
-
-        var view = loaded.get();
         Id<Course> courseId = Id.of(view.courseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            return Result.failure(TestQueryError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.TEST, requesterId, testId);
         }
 
         boolean isCompleted = testCompletionCheckPort.isTestCompleted(requesterId, testId);
         boolean isSolving = testCompletionCheckPort.isStudentSolvingTest(requesterId, testId);
 
         if (!isSolving && !isCompleted) {
-            return Result.failure(TestQueryError.TEST_NOT_STARTED);
+            throw new RuleConflictException(
+                    "The test has not been completed and is not being carried out right now",
+                    CourseResourceName.TEST,
+                    testId);
         }
-
-        return Result.success(view);
+        return view;
     }
 }

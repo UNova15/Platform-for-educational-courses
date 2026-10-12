@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+
 import kira.infrastructure.accesstoken.AccessTokenDecoder;
 import kira.infrastructure.api.TokenPayload;
 import kira.infrastructure.exceptions.TokenDecodeException;
@@ -17,7 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 @RequiredArgsConstructor
-class AccessAuthenticationFilter extends OncePerRequestFilter {
+public class AccessAuthenticationFilter extends OncePerRequestFilter {
     private static final int ACCESS_TOKEN_START_INDEX = 7;
 
     private final AccessTokenDecoder accessTokenDecoder;
@@ -43,7 +45,7 @@ class AccessAuthenticationFilter extends OncePerRequestFilter {
         try {
             TokenPayload payload = accessTokenDecoder.parseAccessToken(accessToken);
 
-            var authentication = new UsernamePasswordAuthenticationToken(payload, accessToken, null);
+            var authentication = new UsernamePasswordAuthenticationToken(payload, accessToken, Collections.emptyList());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (TokenDecodeException exception) {

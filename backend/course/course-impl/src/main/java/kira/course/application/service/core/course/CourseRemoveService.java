@@ -1,7 +1,10 @@
 package kira.course.application.service.core.course;
 
 import common.domain.Id;
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.course.remove.CourseRemoveUseCase;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
 import kira.course.application.port.out.persistance.course.CourseRemovePort;
@@ -10,32 +13,27 @@ import kira.course.domain.markers.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
-public class CourseRemoveService implements CourseRemoveUseCase {
+class CourseRemoveService implements CourseRemoveUseCase {
     private final CourseLoadPort courseLoadPort;
     private final CourseRemovePort courseRemovePort;
 
     @Override
-    public Result<Void, RemoveError> removeCourse(Id<User> teacherId, Id<Course> courseId) {
-        Optional<Course> loaded = courseLoadPort.loadById(courseId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(RemoveError.COURSE_NOT_FOUND);
-        }
-        var course = loaded.get();
+    public void removeCourse(Id<User> teacherId, Id<Course> courseId) {
+        Course course = courseLoadPort
+                .loadById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
 
         if (!course.isOwnedBy(teacherId)) {
-            return Result.failure(RemoveError.ACCESS_DENIED);
+            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, teacherId, courseId);
         }
 
         if (!course.isDraft()) {
-            return Result.failure(RemoveError.COURSE_IS_NOT_IN_DRAFT);
+            throw new RuleConflictException(
+                    "Cannot remove course that status is not draft", CourseResourceName.COURSE, courseId);
         }
 
         courseRemovePort.remove(course);
-        return Result.success(null);
     }
 }

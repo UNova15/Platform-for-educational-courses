@@ -2,8 +2,8 @@ package kira.auth.adapter.out.persistence.user;
 
 import common.domain.Id;
 import java.util.Optional;
-import kira.auth.application.ports.out.persistance.UserLoadPort;
-import kira.auth.application.ports.out.persistance.UserSavePort;
+import kira.auth.application.ports.out.persistance.user.UserLoadPort;
+import kira.auth.application.ports.out.persistance.user.UserSavePort;
 import kira.auth.domain.user.User;
 import kira.auth.domain.user.valueobject.Login;
 import lombok.AllArgsConstructor;

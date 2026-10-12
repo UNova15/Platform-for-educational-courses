@@ -1,4 +1,4 @@
-package kira.auth.application.ports.out.persistance;
+package kira.auth.application.ports.out.persistance.user;
 
 import common.domain.Id;
 import java.util.Optional;

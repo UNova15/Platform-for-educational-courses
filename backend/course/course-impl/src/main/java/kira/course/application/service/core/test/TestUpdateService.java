@@ -1,17 +1,20 @@
 package kira.course.application.service.core.test;
 
 import common.domain.Id;
-import common.domain.Result;
 
-import java.util.Optional;
 import java.util.Set;
+
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.test.update.TestUpdateCommand;
 import kira.course.application.port.in.test.update.TestUpdateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
-import kira.course.application.service.factory.TestFactory;
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
 import kira.course.domain.markers.User;
@@ -23,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class TestManageService implements TestUpdateUseCase {
+class TestUpdateService implements TestUpdateUseCase {
     private final CourseAccessPort accessPort;
     private final TestSavePort savePort;
     private final TestLoadPort loadPort;
@@ -33,22 +36,18 @@ public class TestManageService implements TestUpdateUseCase {
 
     @Override
     @Transactional
-    public Result<Void, UpdateError> updateTest(TestUpdateCommand command, Id<Test> testId, Id<User> teacherId) {
-        Optional<Test> loaded = loadPort.loadById(testId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(UpdateError.TEST_NOT_FOUND);
-        }
+    public void updateTest(TestUpdateCommand command, Id<Test> testId, Id<User> teacherId) {
+        Test test = loadPort.loadById(testId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
 
         if (!accessPort.isTestOwner(teacherId, testId)) {
-            return Result.failure(UpdateError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.TEST, testId, testId);
         }
 
-        if (checkStatusPort.isArchivedByTestId(testId)) {
-            return Result.failure(UpdateError.COURSE_ARCHIVED);
+        CourseStatus status = checkStatusPort.findCourseStatusByTestId(testId);
+        if (status == CourseStatus.ARCHIVED) {
+            throw new RuleConflictException("Cannot update test in archive course", CourseResourceName.TEST, testId);
         }
-
-        var test = loaded.get();
 
         var title = Title.of(command.title());
         var description = Description.of(command.description());
@@ -61,6 +60,5 @@ public class TestManageService implements TestUpdateUseCase {
         }
 
         savePort.save(test);
-        return Result.success(null);
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TestAnswerQueryHandler implements TestAnswerKeyQuery {
+class TestAnswerQueryHandler implements TestAnswerKeyQuery {
     private final TestAnswerKeyQueryPort queryPort;
 
     @Override

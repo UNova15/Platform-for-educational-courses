@@ -3,7 +3,7 @@ package kira.auth.application.service;
 import common.domain.Id;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.out.crypto.TokenHashingPort;
-import kira.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
+import kira.auth.application.ports.out.persistance.token.RefreshTokenSavePort;
 import kira.auth.application.ports.out.token.AccessTokenGeneratePort;
 import kira.auth.application.ports.out.token.RefreshTokenGeneratePort;
 import kira.auth.domain.token.RefreshToken;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 class TokenPublisher {
-    private final RefreshTokenRepositoryPort refreshTokenRepositoryPort;
+    private final RefreshTokenSavePort savePort;
     private final TokenHashingPort hashingPort;
 
     private final AccessTokenGeneratePort accessTokenGeneratePort;
@@ -31,7 +31,7 @@ class TokenPublisher {
         HashedRefreshToken hashedToken = hashingPort.hash(refresh);
         RefreshToken refreshToken = RefreshToken.create(userId, hashedToken);
 
-        refreshTokenRepositoryPort.save(refreshToken);
+        savePort.save(refreshToken);
 
         return AuthTokens.createFrom(userId, login, access, refresh);
     }

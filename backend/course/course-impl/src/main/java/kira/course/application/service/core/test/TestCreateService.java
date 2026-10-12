@@ -1,15 +1,18 @@
 package kira.course.application.service.core.test;
 
 import common.domain.Id;
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.test.create.TestCreateCommand;
-import kira.course.application.port.in.test.create.TestCreateResult;
+import kira.course.application.port.in.test.create.TestCreateResponse;
 import kira.course.application.port.in.test.create.TestCreateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
-import kira.course.application.service.factory.TestFactory;
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
@@ -18,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class TestCreateService implements TestCreateUseCase {
+class TestCreateService implements TestCreateUseCase {
     private final TestSavePort savePort;
 
     private final CourseStatusPort checkStatusPort;
@@ -28,30 +31,28 @@ public class TestCreateService implements TestCreateUseCase {
     private final TestFactory testFactory;
 
     @Override
-    public Result<TestCreateResult, CreateError> createTest(
-            TestCreateCommand command, Id<User> teacherId, Id<CourseModule> moduleId) {
+    public TestCreateResponse createTest(TestCreateCommand command, Id<User> teacherId, Id<CourseModule> moduleId) {
         if (!moduleLoadPort.isExistsModule(moduleId)) {
-            return Result.failure(CreateError.MODULE_NOT_FOUND);
+            throw new ResourceNotFoundException(CourseResourceName.MODULE, moduleId);
         }
 
         if (!accessPort.isModuleOwner(teacherId, moduleId)) {
-            return Result.failure(CreateError.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, teacherId, moduleId);
         }
 
-        if (checkStatusPort.isArchivedByModuleId(moduleId)) {
-            return Result.failure(CreateError.COURSE_ARCHIVED);
+        CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
+        if (status == CourseStatus.ARCHIVED) {
+            throw new RuleConflictException(
+                    "Cannot create test in archived course", CourseResourceName.MODULE, moduleId);
         }
-
         Test test = testFactory.fromTestCreateCommand(command, moduleId);
 
         Test savedTest = savePort.save(test);
 
-        var response = new TestCreateResult(
+        return new TestCreateResponse(
                 savedTest.id().value(),
                 savedTest.moduleId().value(),
                 savedTest.description().value(),
                 savedTest.orderIndex());
-
-        return Result.success(response);
     }
 }

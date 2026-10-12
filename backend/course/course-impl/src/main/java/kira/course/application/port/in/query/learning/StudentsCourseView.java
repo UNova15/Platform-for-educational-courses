@@ -2,6 +2,8 @@ package kira.course.application.port.in.query.learning;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class StudentsCourseView {
     private final LocalDateTime createdAt;
     private final String title;
     private final String description;
+    private final CourseStatus status;
 
     @Setter
     private List<Module> modules;

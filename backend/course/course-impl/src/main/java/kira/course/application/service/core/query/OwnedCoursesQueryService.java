@@ -2,9 +2,10 @@ package kira.course.application.service.core.query;
 
 import common.domain.Id;
 import java.util.List;
-import java.util.Optional;
 
-import common.domain.Result;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.query.owned.*;
 import kira.course.application.port.out.persistance.query.OwnedCoursesQueryPort;
 import kira.course.domain.course.Course;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
+class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     private final OwnedCoursesQueryPort queryPort;
 
     @Override
@@ -26,72 +27,54 @@ public class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     }
 
     @Override
-    public Result<TeacherCourseView, CourseQueryError> findTeachersCourseById(Id<User> teacherId, Id<Course> courseId) {
-        Optional<TeacherCourseView> loaded = queryPort.findTeachersCourseById(courseId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(CourseQueryError.RESOURCE_NOT_FOUND);
-        }
-
-        var view = loaded.get();
+    public TeacherCourseView findTeachersCourseById(Id<User> teacherId, Id<Course> courseId) {
+        TeacherCourseView view = queryPort
+                .findTeachersCourseById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
 
         if (view.teacherId() != teacherId.value()) {
-            return Result.failure(CourseQueryError.ACCESS_DENIED);
+            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, teacherId, courseId);
         }
 
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<TeachersModuleView, CourseQueryError> findTeachersModuleById(
-            Id<User> teacherId, Id<CourseModule> moduleId) {
-        Optional<TeachersModuleView> loaded = queryPort.findTeachersModuleById(moduleId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(CourseQueryError.RESOURCE_NOT_FOUND);
-        }
-
-        var view = loaded.get();
+    public TeachersModuleView findTeachersModuleById(Id<User> teacherId, Id<CourseModule> moduleId) {
+        TeachersModuleView view = queryPort
+                .findTeachersModuleById(moduleId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
 
         if (view.teacherId() != teacherId.value()) {
-            return Result.failure(CourseQueryError.ACCESS_DENIED);
+            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, teacherId, moduleId);
         }
 
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<TeachersLessonView, CourseQueryError> findTeachersLessonById(
-            Id<User> teacherId, Id<Lesson> lessonId) {
-        Optional<TeachersLessonView> loaded = queryPort.findTeachersLessonById(lessonId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(CourseQueryError.RESOURCE_NOT_FOUND);
-        }
-
-        var view = loaded.get();
+    public TeachersLessonView findTeachersLessonById(Id<User> teacherId, Id<Lesson> lessonId) {
+        TeachersLessonView view = queryPort
+                .findTeachersLessonById(lessonId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
 
         if (view.teacherId() != teacherId.value()) {
-            return Result.failure(CourseQueryError.ACCESS_DENIED);
+            throw new ResourceAccessDeniedException(CourseResourceName.LESSON, teacherId, lessonId);
         }
 
-        return Result.success(view);
+        return view;
     }
 
     @Override
-    public Result<FullTestView, CourseQueryError> findFullTestById(Id<User> teacherId, Id<Test> testId) {
-        Optional<FullTestView> loaded = queryPort.findFullTestById(testId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(CourseQueryError.RESOURCE_NOT_FOUND);
-        }
-
-        var view = loaded.get();
+    public FullTestView findFullTestById(Id<User> teacherId, Id<Test> testId) {
+        FullTestView view = queryPort
+                .findFullTestById(testId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
 
         if (view.teacherId() != teacherId.value()) {
-            return Result.failure(CourseQueryError.ACCESS_DENIED);
+            throw new ResourceAccessDeniedException(CourseResourceName.TEST, testId, teacherId);
         }
 
-        return Result.success(view);
+        return view;
     }
 }

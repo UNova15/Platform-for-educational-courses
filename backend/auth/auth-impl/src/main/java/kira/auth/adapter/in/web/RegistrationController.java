@@ -1,6 +1,5 @@
 package kira.auth.adapter.in.web;
 
-import common.domain.Result;
 import jakarta.validation.Valid;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.RegistrationUseCase;
@@ -23,21 +22,16 @@ class RegistrationController {
     private final CookieFactory cookieFactory;
 
     @PostMapping("/registration")
-    public ResponseEntity<?> userRegistration(@RequestBody @Valid RegistrationCommand request) {
+    public ResponseEntity<AuthTokens> registration(@RequestBody @Valid RegistrationCommand request) {
         Login login = Login.of(request.login());
         RawPassword password = RawPassword.of(request.password());
 
-        Result<AuthTokens, RegistrationUseCase.Error> authTokens = registrationService.registration(login, password);
+        AuthTokens authTokens = registrationService.registration(login, password);
 
-        return authTokens.fold(
-                tokens -> ResponseEntity.status(HttpStatus.CREATED)
-                        .header(
-                                HttpHeaders.SET_COOKIE,
-                                cookieFactory.createDefaultRefreshCookie(tokens).toString())
-                        .body(tokens),
-                failure -> switch (failure) {
-                    case USER_ALREADY_EXISTS ->
-                        ResponseEntity.status(HttpStatus.CONFLICT).body(failure);
-                });
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(
+                        HttpHeaders.SET_COOKIE,
+                        cookieFactory.createDefaultRefreshCookie(authTokens).toString())
+                .body(authTokens);
     }
 }

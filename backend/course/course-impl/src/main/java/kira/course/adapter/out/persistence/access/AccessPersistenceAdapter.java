@@ -1,4 +1,4 @@
-package kira.course.adapter.out.persistence.acess;
+package kira.course.adapter.out.persistence.access;
 
 import common.domain.Id;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class AccessPersistenceAdapter implements CourseAccessPort {
+class AccessPersistenceAdapter implements CourseAccessPort {
     private final JdbcClient dbClient;
 
     @Override

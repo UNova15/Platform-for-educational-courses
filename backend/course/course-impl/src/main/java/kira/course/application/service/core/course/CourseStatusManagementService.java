@@ -5,29 +5,30 @@ import common.exception.core.RuleConflictException;
 import common.exception.named.ResourceAccessDeniedException;
 import common.exception.named.ResourceNotFoundException;
 import kira.course.application.exceptions.CourseResourceName;
-import kira.course.application.port.in.course.status.ArchiveCourseUseCase;
+import kira.course.application.port.in.course.status.ArchiveUseCase;
 import kira.course.application.port.in.course.status.PublishCourseUseCase;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
 import kira.course.application.port.out.persistance.course.CourseSavePort;
-import kira.course.application.port.out.persistance.lesson.LessonPublishPort;
+import kira.course.application.port.out.persistance.lesson.LessonChangeStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
-import kira.course.application.port.out.persistance.module.ModulePublishPort;
-import kira.course.application.port.out.persistance.test.TestPublishPort;
+import kira.course.application.port.out.persistance.module.ModuleChangeStatusPort;
+import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.markers.User;
+import kira.course.domain.shared.Status;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class CourseStatusManagementService implements PublishCourseUseCase, ArchiveCourseUseCase {
+class CourseStatusManagementService implements PublishCourseUseCase, ArchiveUseCase {
     private final CourseLoadPort loadPort;
     private final CourseSavePort savePort;
 
-    private final ModulePublishPort modulePublishPort;
-    private final LessonPublishPort lessonPublishPort;
-    private final TestPublishPort testPublishPort;
+    private final ModuleChangeStatusPort moduleChangeStatusPort;
+    private final LessonChangeStatusPort lessonChangeStatusPort;
+    private final TestChangeStatusPort testChangeStatusPort;
     private final ModuleLoadPort moduleLoadPort;
 
     @Override
@@ -52,9 +53,9 @@ public class CourseStatusManagementService implements PublishCourseUseCase, Arch
         course.publish();
         savePort.save(course);
 
-        modulePublishPort.publishAllByCourseId(courseId);
-        lessonPublishPort.publishAllInCourse(courseId);
-        testPublishPort.publishAllInCourse(courseId);
+        moduleChangeStatusPort.updateAllStatusesByCourseId(courseId, Status.PUBLISHED);
+        lessonChangeStatusPort.updateAllStatusesByCourseId(courseId, Status.PUBLISHED);
+        testChangeStatusPort.updateAllStatusesInCourse(courseId, Status.PUBLISHED);
     }
 
     @Override
@@ -67,7 +68,9 @@ public class CourseStatusManagementService implements PublishCourseUseCase, Arch
         }
 
         if (!course.canArchive()) {
-            throw new RuleConflictException("Cannot archive course", CourseResourceName.COURSE, courseId);
+            throw new RuleConflictException(
+                            "Cannot archive course in current status", CourseResourceName.COURSE, courseId)
+                    .withContext("status", course.status());
         }
         course.archive();
         savePort.save(course);

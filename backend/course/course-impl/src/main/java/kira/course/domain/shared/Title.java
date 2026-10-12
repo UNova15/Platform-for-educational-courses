@@ -1,7 +1,7 @@
 package kira.course.domain.shared;
 
 import common.exception.core.DomainValidationException;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,8 +26,7 @@ public class Title {
         }
 
         if (title.length() <= MIN_LENGTH || title.length() > MAX_LENGTH) {
-            throw new LengthViolationException(
-                    "Incorrect title length","Title", title.length(), MAX_LENGTH, MIN_LENGTH);
+            throw new LengthViolationException("Incorrect title length", title.length(), MAX_LENGTH, MIN_LENGTH);
         }
 
         return new Title(title);

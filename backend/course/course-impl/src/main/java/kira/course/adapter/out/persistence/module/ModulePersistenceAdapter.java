@@ -2,16 +2,20 @@ package kira.course.adapter.out.persistence.module;
 
 import common.domain.Id;
 import java.util.Optional;
-import kira.course.application.port.out.persistance.module.ModuleLoadPort;
-import kira.course.application.port.out.persistance.module.ModuleRemovePort;
-import kira.course.application.port.out.persistance.module.ModuleSavePort;
+
+import kira.course.application.port.out.persistance.module.*;
+import kira.course.domain.course.Course;
+import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
+import kira.course.domain.shared.Status;
+import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ModulePersistenceAdapter implements ModuleLoadPort, ModuleRemovePort, ModuleSavePort {
+class ModulePersistenceAdapter
+        implements ModuleLoadPort, ModuleRemovePort, ModuleSavePort, ModuleChangeStatusPort, ModuleStatusPort {
     private final DataModuleRepository repository;
     private final ModuleMapper mapper;
 
@@ -26,6 +30,11 @@ public class ModulePersistenceAdapter implements ModuleLoadPort, ModuleRemovePor
     }
 
     @Override
+    public boolean isExistsModulesInCourse(Id<Course> courseId) {
+        return repository.existsByCourseId(courseId.value());
+    }
+
+    @Override
     public void removeById(Id<CourseModule> moduleId) {
         repository.deleteById(moduleId.value());
     }
@@ -35,5 +44,20 @@ public class ModulePersistenceAdapter implements ModuleLoadPort, ModuleRemovePor
         ModuleEntity entity = mapper.toEntity(module);
         ModuleEntity savedEntity = repository.save(entity);
         return mapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public void updateAllStatusesByCourseId(Id<Course> courseId, Status status) {
+        repository.updateAllStatusesByCourseId(courseId.value(), status.name());
+    }
+
+    @Override
+    public Status findStatusByLessonId(Id<Lesson> lessonId) {
+        return repository.findStatusByLessonId(lessonId.value());
+    }
+
+    @Override
+    public Status findStatusByTestId(Id<Test> testId) {
+        return repository.findStatusByTestId(testId.value());
     }
 }

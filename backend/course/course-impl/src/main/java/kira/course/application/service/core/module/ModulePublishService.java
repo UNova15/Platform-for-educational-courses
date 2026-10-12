@@ -9,25 +9,27 @@ import kira.course.application.port.in.module.status.PublishModuleUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
-import kira.course.application.port.out.persistance.lesson.LessonPublishPort;
+import kira.course.application.port.out.persistance.lesson.LessonChangeStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
-import kira.course.application.port.out.persistance.test.TestPublishPort;
+import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
+import kira.course.domain.shared.Status;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ModulePublishService implements PublishModuleUseCase {
+class ModulePublishService implements PublishModuleUseCase {
     private final ModuleLoadPort loadPort;
     private final ModuleSavePort savePort;
 
     private final CourseAccessPort accessPort;
-    private final LessonPublishPort lessonPublishPort;
-    private final TestPublishPort testPublishPort;
+    private final LessonChangeStatusPort lessonChangeStatusPort;
+    private final TestChangeStatusPort testChangeStatusPort;
     private final CourseStatusPort courseStatusPort;
     private final LessonLoadPort lessonLoadPort;
     private final TestLoadPort testLoadPort;
@@ -37,7 +39,8 @@ public class ModulePublishService implements PublishModuleUseCase {
         CourseModule module = loadPort.loadById(moduleId)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
 
-        if (courseStatusPort.isPublishedByModuleId(moduleId)) {
+        CourseStatus status = courseStatusPort.findCourseStatusByModuleId(moduleId);
+        if (status != CourseStatus.PUBLISHED) {
             throw new RuleConflictException(
                     "Cannot publish module in not published course", CourseResourceName.MODULE, moduleId);
         }
@@ -56,7 +59,7 @@ public class ModulePublishService implements PublishModuleUseCase {
         module.publish();
         savePort.save(module);
 
-        lessonPublishPort.publishAllInModule(moduleId);
-        testPublishPort.publishAllInModule(moduleId);
+        lessonChangeStatusPort.updateAllStatusesByModuleId(moduleId, Status.PUBLISHED);
+        testChangeStatusPort.updateAllStatusesInModule(moduleId, Status.PUBLISHED);
     }
 }

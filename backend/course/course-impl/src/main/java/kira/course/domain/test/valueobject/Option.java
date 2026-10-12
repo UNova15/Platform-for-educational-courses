@@ -1,7 +1,7 @@
 package kira.course.domain.test.valueobject;
 
 import common.exception.core.DomainValidationException;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +22,7 @@ public class Option {
         }
 
         if (option.length() <= MIN_LENGTH || option.length() > MAX_LENGTH) {
-            throw new LengthViolationException(
-                    "Incorrect option length", "Option", option.length(), MAX_LENGTH, MIN_LENGTH);
+            throw new LengthViolationException("Incorrect option length", option.length(), MAX_LENGTH, MIN_LENGTH);
         }
         return new Option(option);
     }

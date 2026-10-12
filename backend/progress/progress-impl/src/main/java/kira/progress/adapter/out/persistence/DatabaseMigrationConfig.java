@@ -1,4 +1,4 @@
-package kira.progress.adapter.out.persistence.config;
+package kira.progress.adapter.out.persistence;
 
 import jakarta.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -16,7 +16,7 @@ public class DatabaseMigrationConfig {
         Flyway.configure()
                 .dataSource(dataSource)
                 .schemas("progress")
-                .locations("classpath:db/migrations/progress")
+                .locations("classpath:db/migration/progress")
                 .load()
                 .migrate();
     }

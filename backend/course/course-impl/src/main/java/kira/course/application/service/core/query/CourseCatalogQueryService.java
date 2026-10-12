@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CourseCatalogQueryService implements CourseCatalogQueryUseCase {
+class CourseCatalogQueryService implements CourseCatalogQueryUseCase {
     private final CourseCatalogQueryPort queryPort;
 
     @Override

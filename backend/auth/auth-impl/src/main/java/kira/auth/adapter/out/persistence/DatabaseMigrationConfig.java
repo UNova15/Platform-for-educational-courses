@@ -1,4 +1,4 @@
-package kira.auth.adapter.out.persistence.config;
+package kira.auth.adapter.out.persistence;
 
 import jakarta.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration("authMigration")
 @RequiredArgsConstructor
-public class DatabaseMigrationConfig {
+class DatabaseMigrationConfig {
     private final DataSource dataSource;
 
     @PostConstruct
@@ -16,7 +16,7 @@ public class DatabaseMigrationConfig {
         Flyway.configure()
                 .dataSource(dataSource)
                 .schemas("auth")
-                .locations("classpath:db/migrations/auth")
+                .locations("classpath:db/migration/auth")
                 .load()
                 .migrate();
     }

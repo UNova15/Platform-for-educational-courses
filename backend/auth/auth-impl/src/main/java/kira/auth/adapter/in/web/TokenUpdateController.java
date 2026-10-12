@@ -1,12 +1,10 @@
 package kira.auth.adapter.in.web;
 
-import common.domain.Result;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.UpdateTokenUseCase;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,20 +19,15 @@ class TokenUpdateController {
     private final CookieFactory cookieFactory;
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@CookieValue("refreshToken") String refreshToken) {
+    public ResponseEntity<AuthTokens> refresh(@CookieValue("refreshToken") String refreshToken) {
         RawRefreshToken token = RawRefreshToken.of(refreshToken);
 
-        Result<AuthTokens, UpdateTokenUseCase.Error> authTokens = updateTokenUseCase.updateTokens(token);
+        AuthTokens authTokens = updateTokenUseCase.updateTokens(token);
 
-        return authTokens.fold(
-                tokens -> ResponseEntity.ok()
-                        .header(
-                                HttpHeaders.SET_COOKIE,
-                                cookieFactory.createDefaultRefreshCookie(tokens).toString())
-                        .body(tokens),
-                failure -> switch (failure) {
-                    case INVALID_REFRESH_TOKEN ->
-                        ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(failure);
-                });
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.SET_COOKIE,
+                        cookieFactory.createDefaultRefreshCookie(authTokens).toString())
+                .body(authTokens);
     }
 }

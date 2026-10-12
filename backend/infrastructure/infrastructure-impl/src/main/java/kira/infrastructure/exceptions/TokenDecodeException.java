@@ -4,7 +4,8 @@ import common.exception.core.BaseApplicationException;
 
 public class TokenDecodeException extends BaseApplicationException {
 
-    public TokenDecodeException() {
+    public TokenDecodeException(String token) {
         super("Error decoding token");
+        withContext("token", token);
     }
 }

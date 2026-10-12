@@ -1,4 +1,4 @@
-package kira.course.application.service.factory;
+package kira.course.application.service.core.test;
 
 import common.domain.Id;
 import java.util.List;
@@ -17,7 +17,7 @@ import kira.course.domain.test.valueobject.QuestionContent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TestFactory {
+class TestFactory {
     public Test fromTestCreateCommand(TestCreateCommand command, Id<CourseModule> moduleId) {
         Set<Question> questions = command.questions().stream()
                 .map(this::fromQuestionCreateCommand)
@@ -31,7 +31,7 @@ public class TestFactory {
 
     private Question fromQuestionCreateCommand(TestCreateCommand.QuestionCommand command) {
         Set<AnswerOption> options = command.options().stream()
-                .map(option -> AnswerOption.createNew(Option.of(option.option()), option.isCorrect()))
+                .map(option -> AnswerOption.create(Option.of(option.option()), option.isCorrect()))
                 .collect(Collectors.toSet());
 
         var title = QuestionContent.of(command.question());
@@ -50,7 +50,7 @@ public class TestFactory {
     private Set<AnswerOption> fromAnswerOptionUpdateCommand(List<TestUpdateCommand.OptionCommand> commands) {
         return commands.stream()
                 .map(commandOption ->
-                        AnswerOption.createNew(Option.of(commandOption.option()), commandOption.isCorrect()))
+                        AnswerOption.create(Option.of(commandOption.option()), commandOption.isCorrect()))
                 .collect(Collectors.toSet());
     }
 }

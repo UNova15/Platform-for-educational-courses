@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CourseMapper {
+class CourseMapper {
 
     public Course toDomain(CourseEntity entity) {
         Id<Course> id = Id.of(entity.id());
@@ -22,8 +22,9 @@ public class CourseMapper {
     }
 
     public CourseEntity toEntity(Course course) {
+        Long id = course.id() == null ? null : course.id().value();
         return new CourseEntity(
-                course.id().value(),
+                id,
                 course.teacherId().value(),
                 course.title().value(),
                 course.description().value(),

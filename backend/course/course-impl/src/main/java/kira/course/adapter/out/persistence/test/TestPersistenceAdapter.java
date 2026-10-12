@@ -3,21 +3,30 @@ package kira.course.adapter.out.persistence.test;
 import common.domain.Id;
 import java.util.Optional;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
+import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
 import kira.course.application.port.out.persistance.test.TestRemovePort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
+import kira.course.domain.course.Course;
+import kira.course.domain.module.CourseModule;
+import kira.course.domain.shared.Status;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class TestPersistenceAdapter implements TestRemovePort, TestSavePort, TestLoadPort {
+class TestPersistenceAdapter implements TestRemovePort, TestSavePort, TestLoadPort, TestChangeStatusPort {
     private final DataTestRepository repository;
     private final TestMapper mapper;
 
     @Override
     public Optional<Test> loadById(Id<Test> testId) {
         return repository.findById(testId.value()).map(mapper::toDomain);
+    }
+
+    @Override
+    public boolean isExistsInModule(Id<CourseModule> moduleId) {
+        return repository.existsByModuleId(moduleId.value());
     }
 
     @Override
@@ -30,5 +39,15 @@ public class TestPersistenceAdapter implements TestRemovePort, TestSavePort, Tes
         TestEntity entity = mapper.toEntity(test);
         TestEntity saved = repository.save(entity);
         return mapper.toDomain(saved);
+    }
+
+    @Override
+    public void updateAllStatusesInCourse(Id<Course> courseId, Status status) {
+        repository.updateAllStatusesByCourseId(courseId.value(), status.name());
+    }
+
+    @Override
+    public void updateAllStatusesInModule(Id<CourseModule> moduleId, Status status) {
+        repository.updateAllStatusesByModuleId(moduleId.value(), status.name());
     }
 }

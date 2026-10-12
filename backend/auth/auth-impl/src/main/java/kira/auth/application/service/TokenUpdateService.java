@@ -1,14 +1,16 @@
 package kira.auth.application.service;
 
 import common.domain.Id;
-import common.domain.Result;
-import java.util.Optional;
+
+import common.exception.named.ResourceNotFoundException;
+import kira.auth.application.exceptions.AuthResourceName;
 import kira.auth.application.exceptions.PersistenceConsistencyException;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.UpdateTokenUseCase;
 import kira.auth.application.ports.out.crypto.TokenHashingPort;
-import kira.auth.application.ports.out.persistance.RefreshTokenRepositoryPort;
-import kira.auth.application.ports.out.persistance.UserLoadPort;
+import kira.auth.application.ports.out.persistance.token.RefreshTokenLoadPort;
+import kira.auth.application.ports.out.persistance.token.RefreshTokenRemovePort;
+import kira.auth.application.ports.out.persistance.user.UserLoadPort;
 import kira.auth.domain.token.RefreshToken;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
@@ -21,33 +23,31 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 class TokenUpdateService implements UpdateTokenUseCase {
     private final UserLoadPort userLoadPort;
-    private final RefreshTokenRepositoryPort refreshTokenRepositoryPort;
+    private final RefreshTokenRemovePort removePort;
+    private final RefreshTokenLoadPort loadPort;
 
     private final TokenHashingPort hashingPort;
-
     private final TokenPublisher tokenGenerator;
 
     @Transactional
-    public Result<AuthTokens, Error> updateTokens(RawRefreshToken oldRefresh) {
+    public AuthTokens updateTokens(RawRefreshToken oldRefresh) {
         HashedRefreshToken oldHashedToken = hashingPort.hash(oldRefresh);
 
-        Optional<RefreshToken> loadedToken = refreshTokenRepositoryPort.load(oldHashedToken);
-
-        if (loadedToken.isEmpty()) {
-            return Result.failure(Error.INVALID_REFRESH_TOKEN);
-        }
-        RefreshToken refreshToken = loadedToken.get();
+        RefreshToken refreshToken = loadPort.load(oldHashedToken)
+                .orElseThrow(() -> new ResourceNotFoundException(AuthResourceName.ACCESS_TOKEN)
+                        .withContext("oldToken", oldRefresh));
 
         Id<User> userId = refreshToken.userId();
 
         // невалидное состояние бд - токен в бд есть, но пользователя нет
-        User user = userLoadPort.loadUserById(userId).orElseThrow(() -> new PersistenceConsistencyException(
-                        "The user does not exist, his token exists", userId)
-                .withContext("tokenId", refreshToken.id())
-                .withContext("token", refreshToken.token()));
+        User user = userLoadPort
+                .loadUserById(userId)
+                .orElseThrow(
+                        () -> new PersistenceConsistencyException("The user does not exist, his token exists", userId)
+                                .withContext("tokenId", refreshToken.id())
+                                .withContext("token", refreshToken.token()));
 
-        refreshTokenRepositoryPort.remove(refreshToken);
-        AuthTokens tokens = tokenGenerator.issueTokens(userId, user.login());
-        return Result.success(tokens);
+        removePort.remove(refreshToken);
+        return tokenGenerator.issueTokens(userId, user.login());
     }
 }

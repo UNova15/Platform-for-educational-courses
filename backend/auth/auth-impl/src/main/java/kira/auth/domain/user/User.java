@@ -24,7 +24,7 @@ public class User {
         return new User(null, login, password);
     }
 
-    public static User restore(Id<User> id, String password, String login) {
-        return new User(id, Login.restore(login), HashedPassword.restoreFromHash(password));
+    public static User restore(Id<User> id, HashedPassword password, Login login) {
+        return new User(id, login, password);
     }
 }

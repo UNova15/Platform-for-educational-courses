@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CourseCatalogQueryAdapter implements CourseCatalogQueryPort {
+class CourseCatalogQueryAdapter implements CourseCatalogQueryPort {
     private final CourseDynamicQueryRepository dynamicQueryRepository;
 
     @Override

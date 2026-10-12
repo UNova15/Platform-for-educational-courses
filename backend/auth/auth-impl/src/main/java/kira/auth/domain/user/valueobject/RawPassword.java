@@ -1,7 +1,7 @@
 package kira.auth.domain.user.valueobject;
 
 import common.exception.core.DomainValidationException;
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +23,7 @@ public class RawPassword {
 
         if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
             throw new LengthViolationException(
-                    "Incorrect password length",
-                    "Password",
-                    password.length(),
-                    MIN_PASSWORD_LENGTH,
-                    MAX_PASSWORD_LENGTH);
+                    "Incorrect password length", password.length(), MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
         }
 
         return new RawPassword(password);

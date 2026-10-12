@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CourseCreateService implements CourseCreateUseCase {
+class CourseCreateService implements CourseCreateUseCase {
     private final CourseSavePort savePort;
 
     @Override
@@ -23,6 +23,7 @@ public class CourseCreateService implements CourseCreateUseCase {
                 Course.create(userId, Title.of(command.title()), Description.of(command.description()), command.tag());
         var savedCourse = savePort.save(course);
 
-        return new CourseCreateResponse(savedCourse.id().value(), command.title(), savedCourse.createdAt());
+        return new CourseCreateResponse(
+                savedCourse.id().value(), savedCourse.title().value(), savedCourse.createdAt());
     }
 }

@@ -1,15 +1,13 @@
 package kira.course.adapter.out.persistence.lesson;
 
 import common.domain.Id;
-import java.util.List;
-import java.util.stream.StreamSupport;
 import kira.course.domain.shared.Title;
 import kira.course.domain.lesson.LessonContent;
 import kira.course.domain.lesson.Lesson;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LessonMapper {
+class LessonMapper {
     public Lesson toLesson(LessonEntity entity) {
         return Lesson.restore(
                 Id.of(entity.id()),
@@ -21,15 +19,10 @@ public class LessonMapper {
                 entity.status());
     }
 
-    public List<Lesson> toLesson(Iterable<LessonEntity> entities) {
-        return StreamSupport.stream(entities.spliterator(), false)
-                .map(this::toLesson)
-                .toList();
-    }
-
     public LessonEntity toEntity(Lesson lesson) {
+        Long id = lesson.id() == null ? null : lesson.id().value();
         return new LessonEntity(
-                lesson.id().value(),
+                id,
                 lesson.moduleId().value(),
                 lesson.title().value(),
                 lesson.content().type(),
@@ -37,9 +30,5 @@ public class LessonMapper {
                 lesson.orderIndex(),
                 lesson.mandatory(),
                 lesson.status());
-    }
-
-    public List<LessonEntity> toEntity(List<Lesson> lessons) {
-        return lessons.stream().map(this::toEntity).toList();
     }
 }

@@ -15,7 +15,7 @@ class CookieFactory {
     public ResponseCookie createDefaultRefreshCookie(AuthTokens token) {
         return ResponseCookie.from("refreshToken", token.refreshToken())
                 .httpOnly(true)
-                .path("/kira/auth/refresh")
+                .path("/api/auth/refresh")
                 .secure(true)
                 .maxAge(cookieProperties.cookieTtl())
                 .build();

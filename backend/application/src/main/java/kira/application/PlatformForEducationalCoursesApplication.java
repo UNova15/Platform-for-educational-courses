@@ -6,9 +6,10 @@ import kira.infrastructure.InfrastructureModuleConfig;
 import kira.progress.ProgressModuleConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
 @Import({ModuleConfig.class, ProgressModuleConfig.class, CourseModuleConfig.class, InfrastructureModuleConfig.class})
 public class PlatformForEducationalCoursesApplication {
 

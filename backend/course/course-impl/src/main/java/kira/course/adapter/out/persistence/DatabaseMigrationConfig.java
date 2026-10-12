@@ -1,4 +1,4 @@
-package kira.course.adapter.out.persistence.config;
+package kira.course.adapter.out.persistence;
 
 import jakarta.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration("courseMigration")
 @RequiredArgsConstructor
-public class DatabaseMigrationConfig {
+class DatabaseMigrationConfig {
     private final DataSource dataSource;
 
     @PostConstruct
@@ -16,7 +16,7 @@ public class DatabaseMigrationConfig {
         Flyway.configure()
                 .dataSource(dataSource)
                 .schemas("course")
-                .locations("classpath:db/migrations/course")
+                .locations("classpath:db/migration/course")
                 .load()
                 .migrate();
     }

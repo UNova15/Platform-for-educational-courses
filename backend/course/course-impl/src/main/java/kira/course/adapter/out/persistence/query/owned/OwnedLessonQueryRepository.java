@@ -9,7 +9,7 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface OwnedLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
+interface OwnedLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
 
     @Query("SELECT l.id,l.title,l.status FROM course.lessons l WHERE l.module_id = :moduleId ")
     List<TeachersModuleView.Lesson> findAllTeacherModuleLessonViewByModuleId(@Param("moduleId") Long moduleId);

@@ -1,14 +1,39 @@
 package kira.course.adapter.out.persistence.course;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import kira.course.domain.course.CourseStatus;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface DataCourseRepository extends CrudRepository<CourseEntity, Long> {
-    List<CourseEntity> findAllByTeacherId(long userId);
+interface DataCourseRepository extends CrudRepository<CourseEntity, Long> {
 
-    Optional<CourseEntity> findByIdAndTeacherId(long userId, long courseId);
+    @Query("""
+        SELECT status FROM course.courses
+        WHERE id = (
+            SELECT course_id FROM course.modules
+            WHERE id = :moduleId
+        )
+        """)
+    CourseStatus findCourseStatusByModuleId(Long moduleId);
 
-    List<CourseEntity> findCoursesByIdIn(Collection<Long> ids);
+    @Query("""
+            SELECT status FROM course.courses
+            WHERE id = (
+                SELECT m.course_id FROM course.modules m
+                JOIN course.lessons l ON l.module_id = m.id
+                WHERE l.id = :lessonId
+            )
+            """)
+    CourseStatus findCourseStatusByLessonId(Long lessonId);
+
+
+    @Query("""
+            SELECT status FROM course.courses
+            WHERE id = (
+                SELECT m.course_id FROM course.modules m
+                JOIN course.tests t ON t.module_id = m.id
+                WHERE t.id = :testId
+            )
+            """)
+    CourseStatus findCourseStatusByTestId(Long testId);
+
 }

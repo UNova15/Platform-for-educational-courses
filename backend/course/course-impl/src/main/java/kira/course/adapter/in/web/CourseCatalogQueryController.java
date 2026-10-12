@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/catalog")
 @RequiredArgsConstructor
-public class CourseCatalogQueryController {
+class CourseCatalogQueryController {
     private final CourseCatalogQueryUseCase queryUseCase;
 
     // поиск всех доступных курсов для пользователя/преподавателя. Доступно всем ролям и не аунтефицированным

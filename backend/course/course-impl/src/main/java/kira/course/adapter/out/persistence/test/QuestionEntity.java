@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "course.test_questions")
+@Table(name = "test_questions", schema = "course")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor

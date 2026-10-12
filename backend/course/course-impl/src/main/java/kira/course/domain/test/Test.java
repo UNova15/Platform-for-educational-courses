@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import common.exception.named.LengthViolationException;
+import common.exception.core.LengthViolationException;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Status;
 import kira.course.domain.shared.Title;
@@ -43,11 +43,7 @@ public class Test {
 
         if (questions.size() < MIN_QUESTION_COUNT || questions.size() > MAX_QUESTION_COUNT) {
             throw new LengthViolationException(
-                    "Invalid question count to create test",
-                    "Test",
-                    questions.size(),
-                    MAX_QUESTION_COUNT,
-                    MIN_QUESTION_COUNT);
+                    "Invalid question count to create test", questions.size(), MAX_QUESTION_COUNT, MIN_QUESTION_COUNT);
         }
     }
 
@@ -84,7 +80,7 @@ public class Test {
         this.questions = questions;
     }
 
-    public boolean isDraft(){
+    public boolean isDraft() {
         return status == Status.DRAFT;
     }
 

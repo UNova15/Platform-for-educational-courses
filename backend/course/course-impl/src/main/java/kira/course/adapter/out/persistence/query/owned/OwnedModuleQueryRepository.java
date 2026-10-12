@@ -9,7 +9,7 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface OwnedModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
+interface OwnedModuleQueryRepository extends CrudRepository<ModuleEntity, Long> {
 
     @Query("""
             SELECT m.id, m.course_id,m.title,m.description,m.orderIndex,m.status, c.teacher_id

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CheckOwnerQueryHandler implements CheckOwnerQuery {
+class CheckOwnerQueryHandler implements CheckOwnerQuery {
     private final CourseAccessPort accessPort;
 
     @Override

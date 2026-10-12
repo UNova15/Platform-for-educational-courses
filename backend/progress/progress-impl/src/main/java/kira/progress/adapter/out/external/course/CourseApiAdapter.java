@@ -50,8 +50,8 @@ public class CourseApiAdapter
     }
 
     @Override
-    public Optional<ModuleStructure> findModuleStructureById(Id<CourseModule> moduleId) {
-        return providerQuery.findModuleStructureById(moduleId.value()).map(mapper::toModuleStructure);
+    public Optional<ModuleStructure> findStudentsModuleStructureById(Id<CourseModule> moduleId) {
+        return providerQuery.findStudentsModuleStructureById(moduleId.value()).map(mapper::toModuleStructure);
     }
 
     @Override

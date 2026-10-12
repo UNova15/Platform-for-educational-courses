@@ -5,39 +5,55 @@ import java.util.Optional;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
 import kira.course.application.port.out.persistance.course.CourseRemovePort;
 import kira.course.application.port.out.persistance.course.CourseSavePort;
+import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.domain.course.Course;
+import kira.course.domain.course.CourseStatus;
+import kira.course.domain.lesson.Lesson;
+import kira.course.domain.module.CourseModule;
+import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, CourseRemovePort {
-    private final DataCourseRepository courseRepository;
+class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, CourseRemovePort, CourseStatusPort {
+    private final DataCourseRepository repository;
     private final CourseMapper mapper;
 
     @Override
     public boolean isExist(Id<Course> id) {
-        return courseRepository.existsById(id.value());
+        return repository.existsById(id.value());
     }
 
     @Override
     public Optional<Course> loadById(Id<Course> id) {
-        Optional<CourseEntity> entity = courseRepository.findById(id.value());
-
-        if (entity.isEmpty()) return Optional.empty();
-
-        return entity.map(mapper::toDomain);
+        return repository.findById(id.value()).map(mapper::toDomain);
     }
 
     @Override
     public void remove(Course course) {
-        courseRepository.deleteById(course.id().value());
+        repository.deleteById(course.id().value());
     }
 
     @Override
     public Course save(Course course) {
         CourseEntity entity = mapper.toEntity(course);
-        CourseEntity saved = courseRepository.save(entity);
+        CourseEntity saved = repository.save(entity);
         return mapper.toDomain(saved);
+    }
+
+    @Override
+    public CourseStatus findCourseStatusByModuleId(Id<CourseModule> moduleId) {
+        return repository.findCourseStatusByModuleId(moduleId.value());
+    }
+
+    @Override
+    public CourseStatus findCourseStatusByLessonId(Id<Lesson> lessonId) {
+        return repository.findCourseStatusByLessonId(lessonId.value());
+    }
+
+    @Override
+    public CourseStatus findCourseStatusByTestId(Id<Test> testId) {
+        return repository.findCourseStatusByTestId(testId.value());
     }
 }

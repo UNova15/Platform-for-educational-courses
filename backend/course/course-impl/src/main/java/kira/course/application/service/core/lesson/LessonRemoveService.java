@@ -1,50 +1,48 @@
 package kira.course.application.service.core.lesson;
 
 import common.domain.Id;
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.lesson.LessonRemovePort;
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
-public class LessonRemoveService implements LessonRemoveUseCase {
+class LessonRemoveService implements LessonRemoveUseCase {
     private final CourseAccessPort accessPort;
     private final LessonLoadPort loadPort;
     private final LessonRemovePort removePort;
     private final CourseStatusPort checkStatusPort;
 
     @Override
-    public Result<Void, RemoveErrors> removeLesson(Id<User> teacherId, Id<Lesson> lessonId) {
-        Optional<Lesson> loaded = loadPort.loadLessonById(lessonId);
-
-        if (loaded.isEmpty()) {
-            return Result.failure(RemoveErrors.LESSON_NOT_FOUND);
-        }
+    public void removeLesson(Id<User> teacherId, Id<Lesson> lessonId) {
+        Lesson lesson = loadPort.loadLessonById(lessonId)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
 
         if (!accessPort.isLessonOwner(teacherId, lessonId)) {
-            return Result.failure(RemoveErrors.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.LESSON, teacherId, lessonId);
         }
 
-        if (checkStatusPort.isArchivedByLessonId(lessonId)) {
-            return Result.failure(RemoveErrors.COURSE_ARCHIVED);
+        CourseStatus status = checkStatusPort.findCourseStatusByLessonId(lessonId);
+        if (status == CourseStatus.ARCHIVED) {
+            throw new RuleConflictException(
+                    "Cannot remove lesson in archived course", CourseResourceName.LESSON, lessonId);
         }
-
-        var lesson = loaded.get();
 
         if (!lesson.isDraft()) {
             // TODO сделать каскадное удаление прогресса у студентнов через событие если урок опубликован
         }
 
         removePort.removeById(lessonId);
-        return Result.success(null);
     }
 }

@@ -1,7 +1,10 @@
 package kira.course.application.service.core.lesson;
 
 import common.domain.Id;
-import common.domain.Result;
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
+import kira.course.application.exceptions.CourseResourceName;
 import kira.course.application.port.in.lesson.create.LessonCreateCommand;
 import kira.course.application.port.in.lesson.create.LessonCreateResponse;
 import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
@@ -9,6 +12,7 @@ import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonSavePort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
+import kira.course.domain.course.CourseStatus;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.lesson.LessonContent;
 import kira.course.domain.markers.User;
@@ -19,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LessonCreateService implements LessonCreateUseCase {
+class LessonCreateService implements LessonCreateUseCase {
     private final LessonSavePort savePort;
 
     private final CourseStatusPort checkStatusPort;
@@ -27,19 +31,21 @@ public class LessonCreateService implements LessonCreateUseCase {
     private final ModuleLoadPort moduleLoadPort;
 
     @Override
-    public Result<LessonCreateResponse, CreateErrors> createLesson(
+    public LessonCreateResponse createLesson(
             LessonCreateCommand createCommand, Id<User> teacherId, Id<CourseModule> moduleId) {
 
         if (!moduleLoadPort.isExistsModule(moduleId)) {
-            return Result.failure(CreateErrors.MODULE_NOT_FOUND);
+            throw new ResourceNotFoundException(CourseResourceName.MODULE, moduleId);
         }
 
         if (!accessPort.isModuleOwner(teacherId, moduleId)) {
-            return Result.failure(CreateErrors.ACCESS_DENY);
+            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, teacherId, moduleId);
         }
 
-        if (checkStatusPort.isArchivedByModuleId(moduleId)) {
-            return Result.failure(CreateErrors.COURSE_ARCHIVED);
+        CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
+        if (status == CourseStatus.ARCHIVED) {
+            throw new RuleConflictException("Cannot create lesson in archived course")
+                    .withContext("moduleId", moduleId.value());
         }
 
         var title = Title.of(createCommand.title());
@@ -48,9 +54,7 @@ public class LessonCreateService implements LessonCreateUseCase {
 
         Lesson savedLesson = savePort.save(lesson);
 
-        var response = new LessonCreateResponse(
+        return new LessonCreateResponse(
                 savedLesson.id().value(), moduleId.value(), savedLesson.title().value());
-
-        return Result.success(response);
     }
 }

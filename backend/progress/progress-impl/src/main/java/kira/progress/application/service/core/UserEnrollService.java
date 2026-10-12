@@ -1,13 +1,13 @@
 package kira.progress.application.service.core;
 
 import common.domain.Id;
-import common.exception.ResourceNotFoundException;
-import kira.progress.application.exceptions.EnrollmentExistException;
-import kira.progress.application.exceptions.ProgressExceptionCode;
+import common.exception.named.ResourceNotFoundException;
 import kira.progress.application.port.in.enrollment.UserEnrollmentUseCase;
 import kira.progress.application.port.out.external.CourseExistCheckPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentSavePort;
+import kira.progress.application.service.exception.EnrollmentAlreadyExistException;
+import kira.progress.application.service.exception.ProgressResourceName;
 import kira.progress.domain.enrollment.Enrollment;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
@@ -23,12 +23,11 @@ public class UserEnrollService implements UserEnrollmentUseCase {
 
     public void enrollToCourse(Id<User> userId, Id<Course> courseId) {
         if (!courseCheckPort.isCourseExist(courseId)) {
-            throw new ResourceNotFoundException(
-                    ProgressExceptionCode.COURSE_NOT_FOUND_EXCEPTION, Course.class, courseId);
+            throw new ResourceNotFoundException(ProgressResourceName.COURSE, courseId);
         }
 
         if (enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
-            throw new EnrollmentExistException(userId, courseId);
+            throw new EnrollmentAlreadyExistException(userId, courseId);
         }
 
         Enrollment enrollment = Enrollment.createNew(userId, courseId);

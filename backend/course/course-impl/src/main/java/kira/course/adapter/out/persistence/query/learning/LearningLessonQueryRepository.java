@@ -9,9 +9,14 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface LearningLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
+interface LearningLessonQueryRepository extends CrudRepository<LessonEntity, Long> {
 
-    @Query("SELECT id,title,module_id,order_index,mandatory FROM course.lessons l WHERE l.module_id = :moduleId")
+    @Query("""
+            SELECT id,title,module_id,order_index,mandatory
+            FROM course.lessons l
+            WHERE l.module_id = :moduleId
+            AND l.status = 'PUBLISHED'
+            """)
     List<StudentsModuleView.Lesson> findStudentsModuleLessonView(@Param("moduleId") Long moduleId);
 
     @Query("""
@@ -19,6 +24,7 @@ public interface LearningLessonQueryRepository extends CrudRepository<LessonEnti
             FROM course.lessons l
             JOIN course.modules m ON l.module_id = m.id
             WHERE l.id = :lessonId
+            AND l.status = 'PUBLISHED'
             """)
     Optional<StudentsLessonView> findStudentsLessonView(@Param("lessonId") Long lessonId);
 }

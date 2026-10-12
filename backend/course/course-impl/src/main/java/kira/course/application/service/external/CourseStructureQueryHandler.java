@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CourseStructureQueryHandler implements CourseStructureQuery, CourseExistQuery {
+class CourseStructureQueryHandler implements CourseStructureQuery, CourseExistQuery {
     private final CourseStructureQueryPort queryPort;
     private final CourseLoadPort loadPort;
 
@@ -35,10 +35,10 @@ public class CourseStructureQueryHandler implements CourseStructureQuery, Course
     }
 
     @Override
-    public Optional<CourseModuleStructure> findModuleStructureById(long moduleId) {
+    public Optional<CourseModuleStructure> findStudentsModuleStructureById(long moduleId) {
         Id<CourseModule> mappedModuleId = Id.of(moduleId);
 
-        return queryPort.findModuleStructureById(mappedModuleId);
+        return queryPort.findStudentsModuleStructureById(mappedModuleId);
     }
 
     @Override

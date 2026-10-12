@@ -1,11 +1,11 @@
 package kira.progress.application.service.core;
 
 import common.domain.Id;
-import common.exception.ResourceAccessException;
-import common.exception.ResourceNotFoundException;
 import java.util.Optional;
-import kira.progress.application.exceptions.ProgressExceptionCode;
-import kira.progress.application.exceptions.TestAlreadyCompletedException;
+
+import common.exception.core.RuleConflictException;
+import common.exception.named.ResourceAccessDeniedException;
+import common.exception.named.ResourceNotFoundException;
 import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
 import kira.progress.application.port.in.testprogress.EndTestAttemptUseCase;
 import kira.progress.application.port.in.testprogress.StartTestAttemptUseCase;
@@ -15,6 +15,8 @@ import kira.progress.application.port.out.external.TestAnswerKeyProviderPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptSavePort;
+import kira.progress.application.service.exception.ProgressResourceName;
+import kira.progress.application.service.exception.TestAlreadyCompletedException;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -37,12 +39,10 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
     public void startTestAttempt(Id<User> userId, Id<Test> testId) {
         Id<Course> courseId = courseStructurePort
                 .findCourseIdByTestId(testId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        ProgressExceptionCode.TEST_NOT_FOUND_EXCEPTION, Test.class, testId));
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.TEST, testId));
 
         if (!enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
-            throw new ResourceAccessException(
-                    ProgressExceptionCode.COURSE_ACCESS_EXCEPTION, Course.class, userId, courseId);
+            throw new ResourceAccessDeniedException(ProgressResourceName.COURSE, userId, courseId);
         }
 
         // если попытка еще не закончена - игнорирование. Если попытка закончена - исключение
@@ -62,16 +62,14 @@ public class TestAttemptsService implements StartTestAttemptUseCase, EndTestAtte
     @Override
     public TestResult endTestAttempt(EndTestAttemptCommand command) {
         TestAttempt attempt = loadPort.loadByUserIdAndTestId(command.userId(), command.testId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        ProgressExceptionCode.TEST_ATTEMPT_NOT_FOUND_EXCEPTION, Test.class, command.testId()));
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.TEST, command.testId()));
 
         if (attempt.completedAt() != null) {
             throw new TestAlreadyCompletedException(command.testId(), command.userId());
         }
 
         AnswerKey key = keyPort.findAnswerKeyByTestId(command.testId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        ProgressExceptionCode.TEST_NOT_FOUND_EXCEPTION, Test.class, command.testId()));
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.TEST, command.testId()));
 
         attempt.submitAnswers(command.answers(), key);
         savePort.save(attempt);
