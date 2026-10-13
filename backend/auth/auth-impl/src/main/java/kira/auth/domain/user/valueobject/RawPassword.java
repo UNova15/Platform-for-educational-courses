@@ -1,7 +1,7 @@
 package kira.auth.domain.user.valueobject;
 
-import common.exception.core.DomainValidationException;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class RawPassword {
 
     public static RawPassword of(String password) {
         if (password == null || password.isBlank()) {
-            throw new DomainValidationException("Empty data to create raw password");
+            throw new ValueObjectValidationException("Empty data to create raw password");
         }
 
         if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {

@@ -6,11 +6,11 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import kira.course.domain.shared.Title;
 import kira.course.domain.lesson.LessonContent;
-import kira.course.domain.lesson.ContentType;
+import kira.course.domain.lesson.LessonContentType;
 
 public record LessonCreateCommand(
         @NotBlank @Size(max = Title.MAX_LENGTH) String title,
-        @NotNull ContentType type,
+        @NotNull LessonContentType type,
         @NotBlank @Size(max = LessonContent.MAX_CONTENT_LENGTH) String content,
         @PositiveOrZero int orderIndex,
         boolean mandatory) {}

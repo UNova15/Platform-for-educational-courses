@@ -1,6 +1,6 @@
 package kira.auth.application.ports.in;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.auth.domain.token.valueobject.AccessToken;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
 import kira.auth.domain.user.User;

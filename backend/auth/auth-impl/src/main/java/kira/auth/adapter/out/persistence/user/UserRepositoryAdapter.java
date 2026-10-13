@@ -1,6 +1,6 @@
 package kira.auth.adapter.out.persistence.user;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.auth.application.ports.out.persistance.user.UserLoadPort;
 import kira.auth.application.ports.out.persistance.user.UserSavePort;

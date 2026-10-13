@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.query.structure;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import java.util.Set;
 import kira.course.api.CourseModuleStructure;

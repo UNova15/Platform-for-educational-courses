@@ -1,6 +1,6 @@
 package kira.progress.application.port.in.lessonprogress;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import jakarta.validation.constraints.NotNull;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;

@@ -1,13 +1,13 @@
 package kira.course.adapter.out.persistence.module;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 
 import kira.course.application.port.out.persistance.module.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -47,17 +47,17 @@ class ModulePersistenceAdapter
     }
 
     @Override
-    public void updateAllStatusesByCourseId(Id<Course> courseId, Status status) {
+    public void updateAllStatusesByCourseId(Id<Course> courseId, CourseContentStatus status) {
         repository.updateAllStatusesByCourseId(courseId.value(), status.name());
     }
 
     @Override
-    public Status findStatusByLessonId(Id<Lesson> lessonId) {
+    public CourseContentStatus findStatusByLessonId(Id<Lesson> lessonId) {
         return repository.findStatusByLessonId(lessonId.value());
     }
 
     @Override
-    public Status findStatusByTestId(Id<Test> testId) {
+    public CourseContentStatus findStatusByTestId(Id<Test> testId) {
         return repository.findStatusByTestId(testId.value());
     }
 }

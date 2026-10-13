@@ -1,6 +1,6 @@
 package kira.course.application.service.core.course;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.application.port.in.course.create.CourseCreateCommand;
 import kira.course.application.port.in.course.create.CourseCreateResponse;
 import kira.course.application.port.in.course.create.CourseCreateUseCase;

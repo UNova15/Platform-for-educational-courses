@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.lessonprogress;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressSavePort;
 import kira.progress.domain.lessonprogress.LessonProgress;

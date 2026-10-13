@@ -1,6 +1,6 @@
 package kira.progress.application.port.in.query.analytics;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.domain.markers.Course;

@@ -1,10 +1,10 @@
 package kira.course.application.service.core.module;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.module.create.ModuleCreateCommand;
 import kira.course.application.port.in.module.create.ModuleCreateResult;
 import kira.course.application.port.in.module.create.ModuleCreateUseCase;
@@ -28,15 +28,15 @@ class ModuleCreateService implements ModuleCreateUseCase {
     public ModuleCreateResult createModule(ModuleCreateCommand createCommand, Id<Course> courseId, Id<User> teacherId) {
         Course course = courseLoadPort
                 .loadById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.COURSE, courseId));
 
         if (!course.isOwnedBy(teacherId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, teacherId, courseId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.COURSE, teacherId, courseId);
         }
 
         if (course.isArchived()) {
             throw new RuleConflictException(
-                    "Cannot create module in archived course", CourseResourceName.COURSE, courseId);
+                    "Cannot create module in archived course", CourseAggregateType.COURSE, courseId);
         }
 
         var title = Title.of(createCommand.title());

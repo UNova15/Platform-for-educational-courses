@@ -1,6 +1,6 @@
 package kira.infrastructure.exceptions;
 
-import common.exception.core.BaseApplicationException;
+import common.domain.exception.BaseApplicationException;
 
 public class TokenDecodeException extends BaseApplicationException {
 

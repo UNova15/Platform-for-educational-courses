@@ -1,6 +1,6 @@
 package kira.course.adapter.in.web;
 
-import common.wrapper.CursorResponse;
+import common.adapter.CursorResponse;
 import kira.course.application.port.in.query.catalog.CourseCatalogQueryUseCase;
 import kira.course.application.port.in.query.catalog.CourseCursorView;
 import kira.course.application.port.in.query.catalog.CursorCourseQuery;

@@ -1,6 +1,6 @@
 package kira.progress.application.port.out.persistance.query;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import java.util.Set;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;

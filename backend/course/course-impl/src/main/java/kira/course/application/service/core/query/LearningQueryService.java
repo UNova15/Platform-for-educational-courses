@@ -1,12 +1,12 @@
 package kira.course.application.service.core.query;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.query.learning.*;
 import kira.course.application.port.out.external.EnrollmentCheckPort;
 import kira.course.application.port.out.external.TestCompletionCheckPort;
@@ -16,7 +16,7 @@ import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,11 +42,11 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsCourseView findStudentsCourse(Id<User> requesterId, Id<Course> courseId) {
         StudentsCourseView view = learningQueryPort
-                .findCourseViewByIdAndStatus(courseId, Status.PUBLISHED)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
+                .findCourseViewByIdAndStatus(courseId, CourseContentStatus.PUBLISHED)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.COURSE, courseId));
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, requesterId, courseId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.COURSE, requesterId, courseId);
         }
 
         return view;
@@ -55,12 +55,12 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsModuleView findStudentsModule(Id<User> requesterId, Id<CourseModule> moduleId) {
         StudentsModuleView view = learningQueryPort
-                .findModuleViewByIdAndStatus(moduleId, Status.PUBLISHED)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
+                .findModuleViewByIdAndStatus(moduleId, CourseContentStatus.PUBLISHED)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.MODULE, moduleId));
 
         Id<Course> courseId = Id.of(view.courseId());
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, requesterId, moduleId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, requesterId, moduleId);
         }
 
         return view;
@@ -69,13 +69,13 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsLessonView findStudentsLesson(Id<User> requesterId, Id<Lesson> lessonId) {
         StudentsLessonView view = learningQueryPort
-                .findLessonViewByIdAndStatus(lessonId, Status.PUBLISHED)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
+                .findLessonViewByIdAndStatus(lessonId, CourseContentStatus.PUBLISHED)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.LESSON, lessonId));
 
         Id<Course> courseId = Id.of(view.courseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.LESSON, requesterId, lessonId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.LESSON, requesterId, lessonId);
         }
         return view;
     }
@@ -83,13 +83,13 @@ class LearningQueryService implements LearningQueryUseCase {
     @Override
     public StudentsTestView findStudentsTest(Id<User> requesterId, Id<Test> testId) {
         StudentsTestView view = learningQueryPort
-                .findTestViewByIdAndStatus(testId, Status.PUBLISHED)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
+                .findTestViewByIdAndStatus(testId, CourseContentStatus.PUBLISHED)
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.TEST, testId));
 
         Id<Course> courseId = Id.of(view.courseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.TEST, requesterId, testId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.TEST, requesterId, testId);
         }
 
         boolean isCompleted = testCompletionCheckPort.isTestCompleted(requesterId, testId);
@@ -98,7 +98,7 @@ class LearningQueryService implements LearningQueryUseCase {
         if (!isSolving && !isCompleted) {
             throw new RuleConflictException(
                     "The test has not been completed and is not being carried out right now",
-                    CourseResourceName.TEST,
+                    CourseAggregateType.TEST,
                     testId);
         }
         return view;

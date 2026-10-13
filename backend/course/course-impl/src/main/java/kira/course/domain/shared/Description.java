@@ -1,6 +1,6 @@
 package kira.course.domain.shared;
 
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

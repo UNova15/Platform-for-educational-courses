@@ -1,10 +1,10 @@
 package kira.course.application.service.core.lesson;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.lesson.create.LessonCreateCommand;
 import kira.course.application.port.in.lesson.create.LessonCreateResponse;
 import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
@@ -35,16 +35,16 @@ class LessonCreateService implements LessonCreateUseCase {
             LessonCreateCommand createCommand, Id<User> teacherId, Id<CourseModule> moduleId) {
 
         if (!moduleLoadPort.isExistsModule(moduleId)) {
-            throw new ResourceNotFoundException(CourseResourceName.MODULE, moduleId);
+            throw new ResourceNotFoundException(CourseAggregateType.MODULE, moduleId);
         }
 
         if (!accessPort.isModuleOwner(teacherId, moduleId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, teacherId, moduleId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
         CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
         if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException("Cannot create lesson in archived course")
+            throw new RuleConflictException("Cannot create lesson in archived course by module id", CourseAggregateType.MODULE)
                     .withContext("moduleId", moduleId.value());
         }
 

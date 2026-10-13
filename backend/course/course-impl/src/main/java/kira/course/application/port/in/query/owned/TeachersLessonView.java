@@ -1,15 +1,15 @@
 package kira.course.application.port.in.query.owned;
 
-import kira.course.domain.lesson.ContentType;
-import kira.course.domain.shared.Status;
+import kira.course.domain.lesson.LessonContentType;
+import kira.course.domain.shared.CourseContentStatus;
 
 public record TeachersLessonView(
         long id,
         long moduleId,
         long teacherId,
         String title,
-        ContentType type,
+        LessonContentType type,
         String content,
         int orderIndex,
-        Status status,
+        CourseContentStatus status,
         boolean mandatory) {}

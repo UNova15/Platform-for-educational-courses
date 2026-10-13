@@ -1,8 +1,9 @@
 package kira.progress.domain.enrollment;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
 import java.time.LocalDateTime;
+
+import common.domain.exception.ValueObjectValidationException;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.AccessLevel;
@@ -20,7 +21,7 @@ public class Enrollment {
 
     public static Enrollment create(Id<User> userId, Id<Course> courseId) {
         if (userId == null || courseId == null) {
-            throw new DomainValidationException("Incorrect data to create enrollment");
+            throw new ValueObjectValidationException("Incorrect data to create enrollment");
         }
 
         return new Enrollment(userId, courseId, LocalDateTime.now());

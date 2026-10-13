@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.query.attemptstatus;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.progress.application.port.out.persistance.query.TestAttemptStatusQueryPort;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;

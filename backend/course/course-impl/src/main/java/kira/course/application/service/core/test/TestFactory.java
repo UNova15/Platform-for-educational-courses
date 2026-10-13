@@ -1,6 +1,6 @@
 package kira.course.application.service.core.test;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

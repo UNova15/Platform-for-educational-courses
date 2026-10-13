@@ -1,7 +1,7 @@
 package kira.course.domain.shared;
 
-import common.exception.core.DomainValidationException;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class Title {
 
     public static Title of(String title) {
         if (title == null) {
-            throw new DomainValidationException("Empty data to create course title");
+            throw new ValueObjectValidationException("Empty data to create course title");
         }
 
         if (title.length() <= MIN_LENGTH || title.length() > MAX_LENGTH) {

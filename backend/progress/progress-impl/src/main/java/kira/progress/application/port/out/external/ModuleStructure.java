@@ -1,6 +1,6 @@
 package kira.progress.application.port.out.external;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Set;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;

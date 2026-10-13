@@ -1,6 +1,6 @@
 package kira.auth.domain.user.valueobject;
 
-import common.exception.core.DomainValidationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class HashedPassword {
 
     public static HashedPassword of(String hashedPassword) {
         if (hashedPassword == null || hashedPassword.isBlank()) {
-            throw new DomainValidationException("Hashed password cannot be empty");
+            throw new ValueObjectValidationException("Hashed password cannot be empty");
         }
 
         return new HashedPassword(hashedPassword);

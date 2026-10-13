@@ -1,6 +1,6 @@
 package kira.course.adapter.in.web;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 
 import kira.course.application.port.in.query.owned.*;

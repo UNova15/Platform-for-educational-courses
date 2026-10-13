@@ -1,6 +1,6 @@
 package kira.course.application.port.in.lesson.update;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import kira.course.domain.lesson.Lesson;

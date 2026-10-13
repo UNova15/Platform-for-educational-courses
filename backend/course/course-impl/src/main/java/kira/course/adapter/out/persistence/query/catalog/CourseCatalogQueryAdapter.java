@@ -1,7 +1,7 @@
 package kira.course.adapter.out.persistence.query.catalog;
 
-import common.util.CursorFactory;
-import common.wrapper.CursorResponse;
+import common.adapter.CursorFactory;
+import common.adapter.CursorResponse;
 import java.util.List;
 import kira.course.application.port.in.query.catalog.CourseCursorView;
 import kira.course.application.port.in.query.catalog.CursorCourseQuery;

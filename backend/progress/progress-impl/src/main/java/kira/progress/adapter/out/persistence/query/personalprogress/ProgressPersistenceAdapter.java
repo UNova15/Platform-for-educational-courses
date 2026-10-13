@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.query.personalprogress;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.*;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.TestProgressSummary;

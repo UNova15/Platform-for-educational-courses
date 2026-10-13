@@ -1,6 +1,6 @@
 package kira.auth.adapter.out.persistence.user;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.auth.domain.user.User;
 import kira.auth.domain.user.valueobject.HashedPassword;
 import kira.auth.domain.user.valueobject.Login;

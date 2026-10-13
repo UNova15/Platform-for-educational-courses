@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.enrollment;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentSavePort;
 import kira.progress.domain.enrollment.Enrollment;

@@ -1,6 +1,6 @@
 package kira.progress.application.port.in.testprogress;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Set;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;

@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.external.course;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;

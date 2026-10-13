@@ -1,10 +1,10 @@
 package kira.course.application.service.core.course;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.course.update.CourseUpdateCommand;
 import kira.course.application.port.in.course.update.CourseUpdateUseCase;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
@@ -25,14 +25,10 @@ class CourseUpdateService implements CourseUpdateUseCase {
     @Override
     public void updateCourse(CourseUpdateCommand updateCommand, Id<Course> courseId, Id<User> userId) {
         Course course = loadPort.loadById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.COURSE, courseId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.COURSE, courseId));
 
         if (!course.isOwnedBy(userId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.COURSE, userId, courseId);
-        }
-
-        if (course.isArchived()) {
-            throw new RuleConflictException("Cannot update archived course", CourseResourceName.COURSE, courseId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.COURSE, userId, courseId);
         }
 
         var title = Title.of(updateCommand.title());

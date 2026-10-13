@@ -1,11 +1,13 @@
 package kira.progress.domain.testprogress;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainValidationException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.valueobject.AnswerKey;
@@ -39,7 +41,8 @@ public class TestAttempt {
 
     public static TestAttempt create(Id<User> userId, Id<Test> testId) {
         if (userId == null || testId == null) {
-            throw new DomainValidationException("Incorrect data to create test submission");
+            throw new DomainValidationException(
+                    "Incorrect data to create test submission", ProgressAggregateType.ATTEMPT);
         }
 
         return new TestAttempt(null, userId, testId, LocalDateTime.now(), null, 0, Set.of());
@@ -51,11 +54,12 @@ public class TestAttempt {
 
     public void submitAnswers(Set<SubmittedAnswers> usersAnswers, AnswerKey key) {
         if (completedAt != null) {
-            throw new DomainValidationException("Attempt has already been saved");
+            throw new DomainValidationException("Attempt has already been saved", ProgressAggregateType.ATTEMPT);
         }
 
         if (usersAnswers == null || key == null || !key.testId().equals(testId)) {
-            throw new DomainValidationException("Invalid answer or key to submit test attempt");
+            throw new DomainValidationException(
+                    "Invalid answer or key to submit test attempt", ProgressAggregateType.ATTEMPT);
         }
 
         Set<TestAnswer> answers = usersAnswers.stream()

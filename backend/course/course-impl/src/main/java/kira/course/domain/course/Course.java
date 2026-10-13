@@ -1,9 +1,11 @@
 package kira.course.domain.course;
 
-import common.domain.Id;
-import common.exception.core.DomainStateException;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainStateException;
+import common.domain.exception.DomainValidationException;
 import java.time.LocalDateTime;
+
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
 import kira.course.domain.markers.User;
@@ -26,7 +28,7 @@ public class Course {
 
     public static Course create(Id<User> teacherId, Title title, Description description, Tag tag) {
         if (teacherId == null || title == null) {
-            throw new DomainValidationException("Empty data to create course");
+            throw new DomainValidationException("Empty data to create course", CourseAggregateType.COURSE);
         }
 
         return new Course(null, teacherId, tag, LocalDateTime.now(), title, description, CourseStatus.DRAFT);
@@ -49,11 +51,12 @@ public class Course {
 
     public void updateCourseInfo(Title title, Description description, Tag tag) {
         if (title == null) {
-            throw new DomainValidationException("Course title cannot be empty");
+            throw new DomainValidationException("Course title cannot be empty", CourseAggregateType.COURSE);
         }
 
         if (isArchived()) {
-            throw new DomainStateException("Cannot update course info", id).withContext("status", status);
+            throw new DomainStateException("Cannot update course info", CourseAggregateType.COURSE, id)
+                    .withContext("status", status);
         }
 
         this.title = title;
@@ -65,26 +68,29 @@ public class Course {
         return status == CourseStatus.DRAFT;
     }
 
-    public boolean canPublish() {
+    private boolean canPublish() {
         return status.canTransitionTo(CourseStatus.PUBLISHED);
     }
 
     public void publish() {
         if (!canPublish()) {
-            throw new DomainStateException("It is not possible to publish the course from this state", id)
+            throw new DomainStateException(
+                            "It is not possible to publish the course from this state", CourseAggregateType.COURSE, id)
                     .withContext("status", status);
         }
         status = CourseStatus.PUBLISHED;
     }
 
-    public boolean canArchive() {
+    private boolean canArchive() {
         return status.canTransitionTo(CourseStatus.ARCHIVED);
     }
 
     public void archive() {
         if (!canArchive()) {
             throw new DomainStateException(
-                            "It is not possible to move the course to the archive from the current state", id)
+                            "It is not possible to move the course to the archive from the current state",
+                            CourseAggregateType.COURSE,
+                            id)
                     .withContext("status", status);
         }
         status = CourseStatus.ARCHIVED;

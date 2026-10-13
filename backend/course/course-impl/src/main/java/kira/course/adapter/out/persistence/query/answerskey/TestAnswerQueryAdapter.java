@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.query.answerskey;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.*;
 import kira.course.api.CourseAnswerKey;
 import kira.course.application.port.out.persistance.query.TestAnswerKeyQueryPort;

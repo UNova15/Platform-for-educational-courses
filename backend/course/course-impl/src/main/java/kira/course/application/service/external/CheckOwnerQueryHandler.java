@@ -1,6 +1,6 @@
 package kira.course.application.service.external;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.api.CheckOwnerQuery;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.domain.course.Course;

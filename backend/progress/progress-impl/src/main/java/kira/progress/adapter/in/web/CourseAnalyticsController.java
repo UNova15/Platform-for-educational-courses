@@ -1,6 +1,6 @@
 package kira.progress.adapter.in.web;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import kira.infrastructure.api.TokenPayload;
 import kira.progress.application.port.in.query.analytics.CompletedTestStudentsResult;

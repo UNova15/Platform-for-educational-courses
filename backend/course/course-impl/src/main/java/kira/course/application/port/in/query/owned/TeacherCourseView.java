@@ -5,7 +5,7 @@ import java.util.List;
 
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,5 +26,5 @@ public class TeacherCourseView {
     @Setter
     private List<Module> modules;
 
-    public record Module(long id, int orderIndex, String title, String description, Status status) {}
+    public record Module(long id, int orderIndex, String title, String description, CourseContentStatus status) {}
 }

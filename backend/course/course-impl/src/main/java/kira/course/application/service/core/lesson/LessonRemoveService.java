@@ -1,10 +1,10 @@
 package kira.course.application.service.core.lesson;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
@@ -27,16 +27,16 @@ class LessonRemoveService implements LessonRemoveUseCase {
     @Override
     public void removeLesson(Id<User> teacherId, Id<Lesson> lessonId) {
         Lesson lesson = loadPort.loadLessonById(lessonId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.LESSON, lessonId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.LESSON, lessonId));
 
         if (!accessPort.isLessonOwner(teacherId, lessonId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.LESSON, teacherId, lessonId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.LESSON, teacherId, lessonId);
         }
 
         CourseStatus status = checkStatusPort.findCourseStatusByLessonId(lessonId);
         if (status == CourseStatus.ARCHIVED) {
             throw new RuleConflictException(
-                    "Cannot remove lesson in archived course", CourseResourceName.LESSON, lessonId);
+                    "Cannot remove lesson in archived course", CourseAggregateType.LESSON, lessonId);
         }
 
         if (!lesson.isDraft()) {

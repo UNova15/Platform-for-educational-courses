@@ -1,6 +1,6 @@
 package kira.auth.domain.token.valueobject;
 
-import common.exception.core.DomainValidationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class HashedRefreshToken {
 
     public static HashedRefreshToken of(String hashedToken) {
         if (hashedToken == null || hashedToken.isBlank()) {
-            throw new DomainValidationException("Hashed token can not be empty");
+            throw new ValueObjectValidationException("Hashed token can not be empty");
         }
         return new HashedRefreshToken(hashedToken);
     }

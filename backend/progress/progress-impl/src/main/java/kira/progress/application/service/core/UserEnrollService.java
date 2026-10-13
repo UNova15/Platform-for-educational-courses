@@ -1,13 +1,13 @@
 package kira.progress.application.service.core;
 
-import common.domain.Id;
-import common.exception.named.ResourceNotFoundException;
+import common.domain.entity.Id;
+import common.application.exception.ResourceNotFoundException;
 import kira.progress.application.port.in.enrollment.UserEnrollmentUseCase;
 import kira.progress.application.port.out.external.CourseExistCheckPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentSavePort;
 import kira.progress.application.exception.EnrollmentAlreadyExistException;
-import kira.progress.application.exception.ProgressResourceName;
+import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.enrollment.Enrollment;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
@@ -24,7 +24,7 @@ class UserEnrollService implements UserEnrollmentUseCase {
     //TODO проверить что курс опубликован (не архив и не драфт)
     public void enrollToCourse(Id<User> userId, Id<Course> courseId) {
         if (!courseCheckPort.isCourseExist(courseId)) {
-            throw new ResourceNotFoundException(ProgressResourceName.COURSE, courseId);
+            throw new ResourceNotFoundException(ProgressAggregateType.COURSE, courseId);
         }
 
         if (enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {

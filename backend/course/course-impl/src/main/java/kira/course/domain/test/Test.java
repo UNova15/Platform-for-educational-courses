@@ -1,15 +1,16 @@
 package kira.course.domain.test;
 
-import common.domain.Id;
-import common.exception.core.DomainStateException;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainStateException;
+import common.domain.exception.DomainValidationException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.shared.Description;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import kira.course.domain.shared.Title;
 import kira.course.domain.module.CourseModule;
 import lombok.AccessLevel;
@@ -30,7 +31,7 @@ public class Test {
     private Title title;
     private Description description;
     private Set<Question> questions;
-    private Status status;
+    private CourseContentStatus status;
 
     public Set<Question> questions() {
         return Collections.unmodifiableSet(questions);
@@ -38,7 +39,7 @@ public class Test {
 
     private static void validateQuestions(Set<Question> questions) {
         if (questions == null || questions.isEmpty()) {
-            throw new DomainValidationException("Empty questions to create test");
+            throw new DomainValidationException("Empty questions to create test", CourseAggregateType.TEST);
         }
 
         if (questions.size() < MIN_QUESTION_COUNT || questions.size() > MAX_QUESTION_COUNT) {
@@ -50,11 +51,11 @@ public class Test {
     public static Test create(
             Id<CourseModule> moduleId, Title title, Description description, Set<Question> questions, int orderIndex) {
         if (moduleId == null || orderIndex < 0 || title == null) {
-            throw new DomainValidationException("Empty or negative data to create test");
+            throw new DomainValidationException("Empty or negative data to create test", CourseAggregateType.TEST);
         }
         validateQuestions(questions);
 
-        return new Test(null, moduleId, orderIndex, title, description, new HashSet<>(questions), Status.DRAFT);
+        return new Test(null, moduleId, orderIndex, title, description, new HashSet<>(questions), CourseContentStatus.DRAFT);
     }
 
     public static Test restore(
@@ -64,13 +65,13 @@ public class Test {
             Description description,
             int orderIndex,
             Set<Question> questions,
-            Status status) {
+            CourseContentStatus status) {
         return new Test(id, moduleId, orderIndex, title, description, new HashSet<>(questions), status);
     }
 
     public void update(Title title, Description description, int orderIndex, Set<Question> questions) {
         if (title == null || orderIndex < 0) {
-            throw new DomainValidationException("Empty or negative data to update test");
+            throw new DomainValidationException("Empty or negative data to update test", CourseAggregateType.TEST);
         }
         validateQuestions(questions);
 
@@ -81,17 +82,18 @@ public class Test {
     }
 
     public boolean isDraft() {
-        return status == Status.DRAFT;
+        return status == CourseContentStatus.DRAFT;
     }
 
-    public boolean canPublish() {
-        return status.canTransitionTo(Status.PUBLISHED);
+    private boolean canPublish() {
+        return status.canTransitionTo(CourseContentStatus.PUBLISHED);
     }
 
     public void publish() {
         if (!canPublish()) {
-            throw new DomainStateException("Cannot publish test", id).withContext("status", status);
+            throw new DomainStateException("Cannot publish test", CourseAggregateType.TEST, id)
+                    .withContext("status", status);
         }
-        status = Status.PUBLISHED;
+        status = CourseContentStatus.PUBLISHED;
     }
 }

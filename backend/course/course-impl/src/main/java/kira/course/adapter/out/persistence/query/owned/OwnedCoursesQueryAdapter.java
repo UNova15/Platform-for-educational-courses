@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.query.owned;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package kira.auth.application.service;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.out.crypto.TokenHashingPort;
 import kira.auth.application.ports.out.persistance.token.RefreshTokenSavePort;

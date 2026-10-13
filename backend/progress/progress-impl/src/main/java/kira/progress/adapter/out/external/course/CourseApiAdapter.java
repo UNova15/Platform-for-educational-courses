@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.external.course;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.course.api.CheckOwnerQuery;
 import kira.course.api.CourseExistQuery;

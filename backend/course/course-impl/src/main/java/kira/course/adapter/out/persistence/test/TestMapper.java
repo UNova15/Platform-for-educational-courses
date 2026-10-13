@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.test;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Set;
 import java.util.stream.Collectors;
 import kira.course.domain.shared.Description;

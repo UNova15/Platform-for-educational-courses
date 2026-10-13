@@ -1,6 +1,6 @@
 package kira.course.application.port.in.query.catalog;
 
-import common.wrapper.CursorResponse;
+import common.adapter.CursorResponse;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 

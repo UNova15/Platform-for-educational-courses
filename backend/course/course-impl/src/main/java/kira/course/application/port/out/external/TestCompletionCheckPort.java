@@ -1,6 +1,6 @@
 package kira.course.application.port.out.external;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.domain.markers.User;
 import kira.course.domain.test.Test;
 

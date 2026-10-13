@@ -1,6 +1,6 @@
 package kira.course.application.port.in.lesson.status;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 

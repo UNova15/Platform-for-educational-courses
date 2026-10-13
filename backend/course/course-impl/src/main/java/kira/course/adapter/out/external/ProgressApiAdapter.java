@@ -1,6 +1,6 @@
 package kira.course.adapter.out.external;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import kira.course.application.port.out.external.EnrollmentCheckPort;
 import kira.course.application.port.out.external.TestCompletionCheckPort;

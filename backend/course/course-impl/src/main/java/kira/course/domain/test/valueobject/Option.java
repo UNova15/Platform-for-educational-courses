@@ -1,7 +1,7 @@
 package kira.course.domain.test.valueobject;
 
-import common.exception.core.DomainValidationException;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Option {
 
     public static Option of(String option) {
         if (option == null) {
-            throw new DomainValidationException("Empty data to create option");
+            throw new ValueObjectValidationException("Empty data to create option");
         }
 
         if (option.length() <= MIN_LENGTH || option.length() > MAX_LENGTH) {

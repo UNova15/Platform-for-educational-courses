@@ -1,8 +1,8 @@
 package kira.auth.application.service;
 
-import common.domain.Id;
-import common.exception.named.ResourceAlreadyExist;
-import kira.auth.application.exceptions.AuthResourceName;
+import common.domain.entity.Id;
+import common.application.exception.ResourceAlreadyExist;
+import kira.auth.domain.AuthAggregateType;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.RegistrationUseCase;
 import kira.auth.application.ports.out.crypto.PasswordHasherPort;
@@ -29,7 +29,7 @@ class RegistrationService implements RegistrationUseCase {
     @Transactional
     public AuthTokens registration(Login login, RawPassword password) {
         if (loadPort.isExistUserByLogin(login)) {
-            throw new ResourceAlreadyExist(AuthResourceName.USER).withContext("login", login.value());
+            throw new ResourceAlreadyExist(AuthAggregateType.USER).withContext("login", login.value());
         }
 
         HashedPassword hashedPassword = passwordHasher.hashPassword(password);

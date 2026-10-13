@@ -1,17 +1,18 @@
 package kira.course.domain.test;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainValidationException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.test.valueobject.QuestionContent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
 
 @Getter
 @Accessors(fluent = true)
@@ -33,7 +34,8 @@ public class Question {
 
     public static Question create(QuestionContent question, Set<AnswerOption> options, int orderIndex) {
         if (question == null || orderIndex < 0) {
-            throw new DomainValidationException("Empty or negative data to create question");
+            throw new DomainValidationException(
+                    "Empty or negative data to create question", CourseAggregateType.QUESTION);
         }
         validateOptions(options);
 
@@ -47,7 +49,7 @@ public class Question {
 
     private static void validateOptions(Set<AnswerOption> options) {
         if (options == null || options.isEmpty()) {
-            throw new DomainValidationException("Empty options to create question");
+            throw new DomainValidationException("Empty options to create question", CourseAggregateType.QUESTION);
         }
 
         if (options.size() > MAX_OPTION_COUNT || options.size() < MIN_OPTION_COUNT) {
@@ -56,7 +58,8 @@ public class Question {
         }
 
         if (options.stream().anyMatch(AnswerOption::isCorrect)) {
-            throw new DomainValidationException("The question must contain at least one correct answer");
+            throw new DomainValidationException(
+                    "The question must contain at least one correct answer", CourseAggregateType.QUESTION);
         }
     }
 }

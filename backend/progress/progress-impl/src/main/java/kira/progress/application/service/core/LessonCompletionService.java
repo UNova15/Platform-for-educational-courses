@@ -1,14 +1,14 @@
 package kira.progress.application.service.core;
 
-import common.domain.Id;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
+import common.domain.entity.Id;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
 import kira.progress.application.port.in.lessonprogress.LessonCompletionUseCase;
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressSavePort;
-import kira.progress.application.exception.ProgressResourceName;
+import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.lessonprogress.LessonProgress;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
@@ -29,10 +29,10 @@ class LessonCompletionService implements LessonCompletionUseCase {
     public void completeLesson(Id<User> userId, Id<Lesson> lessonId) {
         Id<Course> courseId = courseStructurePort
                 .findCourseIdByLessonId(lessonId)
-                .orElseThrow(() -> new ResourceNotFoundException(ProgressResourceName.LESSON, lessonId));
+                .orElseThrow(() -> new ResourceNotFoundException(ProgressAggregateType.LESSON, lessonId));
 
         if (!enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
-            throw new ResourceAccessDeniedException(ProgressResourceName.COURSE, userId, courseId);
+            throw new ResourceAccessDeniedException(ProgressAggregateType.COURSE, userId, courseId);
         }
 
         if (lessonProgressLoadPort.isLessonCompleted(userId, lessonId)) {

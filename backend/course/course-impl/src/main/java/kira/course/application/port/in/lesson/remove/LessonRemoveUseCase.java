@@ -1,6 +1,6 @@
 package kira.course.application.port.in.lesson.remove;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import jakarta.validation.constraints.NotNull;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;

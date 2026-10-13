@@ -1,10 +1,10 @@
 package kira.course.application.service.core.module;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.module.update.ModuleUpdateCommand;
 import kira.course.application.port.in.module.update.ModuleUpdateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
@@ -31,16 +31,16 @@ class ModuleUpdateService implements ModuleUpdateUseCase {
     @Override
     public void updateModule(ModuleUpdateCommand updateCommand, Id<CourseModule> moduleId, Id<User> teacherId) {
         CourseModule module = loadPort.loadById(moduleId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.MODULE, moduleId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.MODULE, moduleId));
 
         if (!accessPort.isModuleOwner(teacherId, moduleId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.MODULE, teacherId, moduleId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
         CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
         if (status == CourseStatus.ARCHIVED) {
             throw new RuleConflictException(
-                    "Cannot update module in archived course", CourseResourceName.MODULE, moduleId);
+                    "Cannot update module in archived course", CourseAggregateType.MODULE, moduleId);
         }
 
         var title = Title.of(updateCommand.title());

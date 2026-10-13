@@ -1,6 +1,6 @@
 package kira.auth.application.ports.out.persistance.user;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.auth.domain.user.User;
 import kira.auth.domain.user.valueobject.Login;

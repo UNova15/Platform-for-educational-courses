@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptSavePort;

@@ -1,6 +1,6 @@
 package kira.auth.adapter.out.tokengenerator;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.auth.application.ports.out.token.AccessTokenGeneratePort;
 import kira.auth.domain.token.valueobject.AccessToken;
 import kira.auth.domain.user.User;

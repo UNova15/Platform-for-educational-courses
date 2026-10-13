@@ -1,6 +1,6 @@
 package kira.progress.adapter.in.web;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.infrastructure.api.TokenPayload;
 import kira.progress.application.port.in.query.personalprogress.PersonalProgressUseCase;
 import kira.progress.application.port.in.query.personalprogress.ProgressSummary;

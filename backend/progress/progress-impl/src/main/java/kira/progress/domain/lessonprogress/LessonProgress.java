@@ -1,8 +1,9 @@
 package kira.progress.domain.lessonprogress;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
 import java.time.LocalDateTime;
+
+import common.domain.exception.ValueObjectValidationException;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ public class LessonProgress {
 
     public static LessonProgress create(Id<User> userId, Id<Lesson> lessonId) {
         if (userId == null || lessonId == null) {
-            throw new DomainValidationException("Incorrect data to create lesson progress");
+            throw new ValueObjectValidationException("Incorrect data to create lesson progress");
         }
         return new LessonProgress(null, userId, lessonId, LocalDateTime.now());
     }

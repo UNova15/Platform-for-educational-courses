@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.lesson;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 
 import java.util.Optional;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
@@ -10,7 +10,7 @@ import kira.course.application.port.out.persistance.lesson.LessonSavePort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -43,12 +43,12 @@ class LessonPersistenceAdapter implements LessonLoadPort, LessonSavePort, Lesson
     }
 
     @Override
-    public void updateAllStatusesByCourseId(Id<Course> courseId, Status status) {
+    public void updateAllStatusesByCourseId(Id<Course> courseId, CourseContentStatus status) {
         repository.updateAllStatusesByCourseId(courseId.value(), status.name());
     }
 
     @Override
-    public void updateAllStatusesByModuleId(Id<CourseModule> moduleId, Status status) {
+    public void updateAllStatusesByModuleId(Id<CourseModule> moduleId, CourseContentStatus status) {
         repository.updateAllStatusesByModuleId(moduleId.value(), status.name());
     }
 }

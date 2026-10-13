@@ -1,6 +1,6 @@
 package kira.progress.application.service.api;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.progress.api.TestStatusQuery;
 import kira.progress.application.port.out.persistance.query.TestAttemptStatusQueryPort;
 import kira.progress.domain.markers.Test;

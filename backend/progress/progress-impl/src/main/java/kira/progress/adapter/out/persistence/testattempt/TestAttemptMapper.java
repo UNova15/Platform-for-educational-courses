@@ -1,6 +1,6 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.*;
 import java.util.stream.Collectors;
 import kira.progress.domain.markers.AnswerOption;

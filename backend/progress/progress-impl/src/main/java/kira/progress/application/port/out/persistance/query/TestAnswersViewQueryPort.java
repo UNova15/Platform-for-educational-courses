@@ -1,6 +1,6 @@
 package kira.progress.application.port.out.persistance.query;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.domain.markers.Test;

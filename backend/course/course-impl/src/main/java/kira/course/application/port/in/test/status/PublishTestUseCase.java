@@ -1,6 +1,6 @@
 package kira.course.application.port.in.test.status;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.domain.markers.User;
 import kira.course.domain.test.Test;
 

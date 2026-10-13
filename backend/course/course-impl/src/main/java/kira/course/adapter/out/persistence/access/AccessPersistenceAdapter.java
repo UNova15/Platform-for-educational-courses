@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.access;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;

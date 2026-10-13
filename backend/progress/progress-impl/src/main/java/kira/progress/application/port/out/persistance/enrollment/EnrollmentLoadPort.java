@@ -1,6 +1,6 @@
 package kira.progress.application.port.out.persistance.enrollment;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 

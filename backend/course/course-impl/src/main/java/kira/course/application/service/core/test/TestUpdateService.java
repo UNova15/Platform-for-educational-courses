@@ -1,13 +1,13 @@
 package kira.course.application.service.core.test;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 
 import java.util.Set;
 
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.test.update.TestUpdateCommand;
 import kira.course.application.port.in.test.update.TestUpdateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
@@ -38,15 +38,15 @@ class TestUpdateService implements TestUpdateUseCase {
     @Transactional
     public void updateTest(TestUpdateCommand command, Id<Test> testId, Id<User> teacherId) {
         Test test = loadPort.loadById(testId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, testId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.TEST, testId));
 
         if (!accessPort.isTestOwner(teacherId, testId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.TEST, testId, testId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.TEST, testId, testId);
         }
 
         CourseStatus status = checkStatusPort.findCourseStatusByTestId(testId);
         if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException("Cannot update test in archive course", CourseResourceName.TEST, testId);
+            throw new RuleConflictException("Cannot update test in archive course", CourseAggregateType.TEST, testId);
         }
 
         var title = Title.of(command.title());

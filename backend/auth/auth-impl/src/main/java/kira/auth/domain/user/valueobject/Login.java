@@ -1,7 +1,7 @@
 package kira.auth.domain.user.valueobject;
 
-import common.exception.core.DomainValidationException;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Login {
 
     public static Login of(String login) {
         if (login == null || login.isBlank()) {
-            throw new DomainValidationException("Empty data to create login");
+            throw new ValueObjectValidationException("Empty data to create login");
         }
 
         if (login.length() < MIN_LOGIN_LENGTH || login.length() > MAX_LOGIN_LENGTH) {

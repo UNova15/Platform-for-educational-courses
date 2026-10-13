@@ -1,7 +1,8 @@
 package kira.auth.domain.user;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainValidationException;
+import kira.auth.domain.AuthAggregateType;
 import kira.auth.domain.user.valueobject.HashedPassword;
 import kira.auth.domain.user.valueobject.Login;
 import lombok.AccessLevel;
@@ -19,7 +20,7 @@ public class User {
 
     public static User create(Login login, HashedPassword password) {
         if (login == null || password == null) {
-            throw new DomainValidationException("Password or login cannot be empty");
+            throw new DomainValidationException("Password or login cannot be empty", AuthAggregateType.USER);
         }
         return new User(null, login, password);
     }

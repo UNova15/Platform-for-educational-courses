@@ -1,11 +1,12 @@
 package kira.auth.application.exceptions;
 
-import common.exception.core.BaseApplicationException;
+import common.domain.exception.TypedBaseApplicationException;
+import kira.auth.domain.AuthAggregateType;
 
-public class AuthenticationException extends BaseApplicationException {
+public class AuthenticationException extends TypedBaseApplicationException {
 
     public AuthenticationException(String login) {
-        super("Cannot authentication user with login: %s".formatted(login));
+        super("Cannot authentication user with login: %s".formatted(login), AuthAggregateType.USER);
         withContext("login", login);
     }
 }

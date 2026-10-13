@@ -1,6 +1,6 @@
 package kira.course.application.port.in.query.owned;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 

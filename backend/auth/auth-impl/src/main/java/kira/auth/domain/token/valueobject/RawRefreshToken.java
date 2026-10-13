@@ -1,6 +1,6 @@
 package kira.auth.domain.token.valueobject;
 
-import common.exception.core.DomainValidationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class RawRefreshToken {
 
     public static RawRefreshToken of(String token) {
         if (token == null || token.isBlank()) {
-            throw new DomainValidationException("Invalid or expired token");
+            throw new ValueObjectValidationException("Invalid or expired token");
         }
         return new RawRefreshToken(token);
     }

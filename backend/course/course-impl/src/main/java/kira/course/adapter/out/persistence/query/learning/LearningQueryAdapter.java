@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.query.learning;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import kira.course.application.port.out.persistance.query.LearningQueryPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -32,7 +32,7 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsCourseView> findCourseViewByIdAndStatus(Id<Course> id, Status status) {
+    public Optional<StudentsCourseView> findCourseViewByIdAndStatus(Id<Course> id, CourseContentStatus status) {
         Optional<StudentsCourseView> view = courseQueryRepository.findStudentsCourseViewById(id.value());
 
         view.ifPresent(course -> {
@@ -48,7 +48,7 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsModuleView> findModuleViewByIdAndStatus(Id<CourseModule> id, Status status) {
+    public Optional<StudentsModuleView> findModuleViewByIdAndStatus(Id<CourseModule> id, CourseContentStatus status) {
         Optional<StudentsModuleView> view = moduleQueryRepository.findStudentsModuleView(id.value(), status.name());
 
         view.ifPresent(module -> {
@@ -65,12 +65,12 @@ class LearningQueryAdapter implements LearningQueryPort {
     }
 
     @Override
-    public Optional<StudentsLessonView> findLessonViewByIdAndStatus(Id<Lesson> id, Status status) {
+    public Optional<StudentsLessonView> findLessonViewByIdAndStatus(Id<Lesson> id, CourseContentStatus status) {
         return lessonQueryRepository.findStudentsLessonView(id.value(), status.name());
     }
 
     @Override
-    public Optional<StudentsTestView> findTestViewByIdAndStatus(Id<Test> id, Status status) {
+    public Optional<StudentsTestView> findTestViewByIdAndStatus(Id<Test> id, CourseContentStatus status) {
         Optional<StudentsTestView> view = testQueryRepository.findStudentsTestView(id.value(), status.name());
 
         view.ifPresent(test -> {

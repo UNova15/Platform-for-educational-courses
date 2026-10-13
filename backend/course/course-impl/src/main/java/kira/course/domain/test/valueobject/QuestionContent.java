@@ -1,7 +1,7 @@
 package kira.course.domain.test.valueobject;
 
-import common.exception.core.DomainValidationException;
-import common.exception.core.LengthViolationException;
+import common.domain.exception.LengthViolationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class QuestionContent {
 
     public static QuestionContent of(String question) {
         if (question == null) {
-            throw new DomainValidationException("Empty data to create question title");
+            throw new ValueObjectValidationException("Empty data to create question title");
         }
 
         if (question.length() <= MIN_LENGTH || question.length() > MAX_LENGTH) {

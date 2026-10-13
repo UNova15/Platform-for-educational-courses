@@ -1,9 +1,10 @@
 package kira.progress.domain.testprogress.valueobject;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
 import java.util.Map;
 import java.util.Set;
+
+import common.domain.exception.ValueObjectValidationException;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import kira.progress.domain.markers.Test;
@@ -24,7 +25,7 @@ public class AnswerKey {
 
     public static AnswerKey create(Id<Test> testId, Map<Id<Question>, Set<Id<AnswerOption>>> keys) {
         if (testId == null || keys == null || keys.isEmpty()) {
-            throw new DomainValidationException("Questions and Answer options cannot be empty");
+            throw new ValueObjectValidationException("Questions and Answer options cannot be empty");
         }
 
         return new AnswerKey(testId, keys);
@@ -35,7 +36,7 @@ public class AnswerKey {
         int score = 0;
         for (var answer : answers) {
             if (!key.containsKey(answer.questionId())) {
-                throw new DomainValidationException("Answer contains invalid question id");
+                throw new ValueObjectValidationException("Answer contains invalid question id");
             }
 
             Set<Id<AnswerOption>> answersIds = answer.selectedOptionsIds();

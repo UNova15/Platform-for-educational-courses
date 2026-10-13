@@ -1,6 +1,6 @@
 package kira.auth.domain.token.valueobject;
 
-import common.exception.core.DomainValidationException;
+import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ public class AccessToken {
 
     public static AccessToken of(String token) {
         if (token == null || token.isBlank()) {
-            throw new DomainValidationException("Access token cannot be empty");
+            throw new ValueObjectValidationException("Access token cannot be empty");
         }
         return new AccessToken(token);
     }

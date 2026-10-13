@@ -1,7 +1,8 @@
 package kira.auth.domain.token;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainValidationException;
+import kira.auth.domain.AuthAggregateType;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import kira.auth.domain.user.User;
 import lombok.AccessLevel;
@@ -21,7 +22,7 @@ public class RefreshToken {
 
     public static RefreshToken create(Id<User> userId, HashedRefreshToken token) {
         if (token == null) {
-            throw new DomainValidationException("Token cannot be empty");
+            throw new DomainValidationException("Token cannot be empty", AuthAggregateType.ACCESS_TOKEN);
         }
 
         return new RefreshToken(null, userId, token);

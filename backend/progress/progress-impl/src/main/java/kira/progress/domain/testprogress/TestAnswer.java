@@ -1,9 +1,11 @@
 package kira.progress.domain.testprogress;
 
-import common.domain.Id;
-import common.exception.core.DomainValidationException;
+import common.domain.entity.Id;
+import common.domain.exception.DomainValidationException;
 import java.util.Collections;
 import java.util.Set;
+
+import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import lombok.AccessLevel;
@@ -28,7 +30,7 @@ public class TestAnswer {
     public static TestAnswer create(
             Id<TestAttempt> testSubmissionId, Id<Question> questionId, Set<Id<AnswerOption>> answerIds) {
         if (questionId == null || answerIds == null || testSubmissionId == null) {
-            throw new DomainValidationException("Incorrect data to create test answer");
+            throw new DomainValidationException("Incorrect data to create test answer", ProgressAggregateType.TEST_ANSWER);
         }
         return new TestAnswer(testSubmissionId, questionId, answerIds);
     }

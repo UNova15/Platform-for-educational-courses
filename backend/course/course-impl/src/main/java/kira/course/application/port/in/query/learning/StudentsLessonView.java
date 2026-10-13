@@ -1,6 +1,6 @@
 package kira.course.application.port.in.query.learning;
 
-import kira.course.domain.lesson.ContentType;
+import kira.course.domain.lesson.LessonContentType;
 
 public record StudentsLessonView(
         long id,
@@ -9,5 +9,5 @@ public record StudentsLessonView(
         int orderIndex,
         boolean mandatory,
         String title,
-        ContentType type,
+        LessonContentType type,
         String content) {}

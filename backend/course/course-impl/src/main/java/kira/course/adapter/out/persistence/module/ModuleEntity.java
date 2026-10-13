@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.module;
 
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -19,5 +19,5 @@ class ModuleEntity {
     private final String title;
     private final String description;
     private final int orderIndex;
-    private final Status status;
+    private final CourseContentStatus status;
 }

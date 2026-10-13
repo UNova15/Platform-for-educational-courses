@@ -50,6 +50,7 @@
         <org.postgresql.version>42.7.10</org.postgresql.version>
         <org.junit.jupiter.version>5.10.2</org.junit.jupiter.version>
         <org.mockito.version>5.11.0</org.mockito.version>
+        <logstash-logback-encoder.version>7/4</logstash-logback-encoder.version>
     </properties>
 
     <dependencyManagement>
@@ -94,7 +95,11 @@
                 <version>${org.mockito.version}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

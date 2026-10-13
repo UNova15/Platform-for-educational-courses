@@ -1,6 +1,6 @@
 package kira.course.application.port.out.persistance.course;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.course.domain.course.Course;
 

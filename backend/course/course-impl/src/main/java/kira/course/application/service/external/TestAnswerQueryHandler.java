@@ -1,6 +1,6 @@
 package kira.course.application.service.external;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.Optional;
 import kira.course.api.CourseAnswerKey;
 import kira.course.api.TestAnswerKeyQuery;

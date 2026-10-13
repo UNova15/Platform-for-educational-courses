@@ -1,6 +1,6 @@
 package kira.course.adapter.in.web;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import jakarta.validation.Valid;
 import kira.course.application.port.in.module.create.ModuleCreateCommand;
 import kira.course.application.port.in.module.create.ModuleCreateResult;

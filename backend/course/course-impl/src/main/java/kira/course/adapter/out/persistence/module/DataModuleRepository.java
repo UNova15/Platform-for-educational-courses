@@ -1,6 +1,6 @@
 package kira.course.adapter.out.persistence.module;
 
-import kira.course.domain.shared.Status;
+import kira.course.domain.shared.CourseContentStatus;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,7 +19,7 @@ interface DataModuleRepository extends CrudRepository<ModuleEntity, Long> {
                 WHERE l.id = :lessonId
             )
             """)
-    Status findStatusByLessonId(Long lessonId);
+    CourseContentStatus findStatusByLessonId(Long lessonId);
 
     @Query("""
             SELECT status FROM course.modules 
@@ -28,5 +28,5 @@ interface DataModuleRepository extends CrudRepository<ModuleEntity, Long> {
                 WHERE t.id = :testId
             )
             """)
-    Status findStatusByTestId(Long testId);
+    CourseContentStatus findStatusByTestId(Long testId);
 }

@@ -1,6 +1,6 @@
 package kira.progress.application.service.api;
 
-import common.domain.Id;
+import common.domain.entity.Id;
 import java.util.List;
 import kira.progress.api.EnrollmentProviderQuery;
 import kira.progress.api.EnrollmentStatusQuery;

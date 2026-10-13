@@ -1,10 +1,10 @@
 package kira.course.application.service.core.test;
 
-import common.domain.Id;
-import common.exception.core.RuleConflictException;
-import common.exception.named.ResourceAccessDeniedException;
-import common.exception.named.ResourceNotFoundException;
-import kira.course.application.exceptions.CourseResourceName;
+import common.domain.entity.Id;
+import common.application.exception.RuleConflictException;
+import common.application.exception.ResourceAccessDeniedException;
+import common.application.exception.ResourceNotFoundException;
+import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.test.remove.TestRemoveUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
 import kira.course.application.port.out.persistance.course.CourseStatusPort;
@@ -28,16 +28,16 @@ class TestRemoveService implements TestRemoveUseCase {
     @Override
     public void removeTest(Id<User> teacherId, Id<Test> testId) {
         Test test = loadPort.loadById(testId)
-                .orElseThrow(() -> new ResourceNotFoundException(CourseResourceName.TEST, teacherId));
+                .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.TEST, teacherId));
 
         if (!accessPort.isTestOwner(teacherId, testId)) {
-            throw new ResourceAccessDeniedException(CourseResourceName.TEST, teacherId, teacherId);
+            throw new ResourceAccessDeniedException(CourseAggregateType.TEST, teacherId, teacherId);
         }
 
         CourseStatus status = checkStatusPort.findCourseStatusByTestId(testId);
         if (status == CourseStatus.ARCHIVED) {
             throw new RuleConflictException(
-                    "Cannot remove test in archived course", CourseResourceName.TEST, teacherId);
+                    "Cannot remove test in archived course", CourseAggregateType.TEST, teacherId);
         }
 
         if (!test.isDraft()) {
