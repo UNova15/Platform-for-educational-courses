@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 class CourseDynamicQueryRepository {
     private final JdbcClient dbClient;
 
-    // в случае расширение количества условий изменить jdbc client на jooq
+    // в случае расширение количества условий изменить jdbc client на jooq/criteria api
     public List<CourseCursorView> findCoursesByCursor(CursorCourseQuery query) {
         StringBuilder sql = new StringBuilder("""
             SELECT id,teacher_id,title,description,tag,created_at
