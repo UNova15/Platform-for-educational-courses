@@ -61,6 +61,10 @@ public class Lesson {
         return status == CourseContentStatus.DRAFT;
     }
 
+    public boolean isPublish() {
+        return status == CourseContentStatus.PUBLISHED;
+    }
+
     public void publish() {
         if (!canPublish()) {
             throw new DomainStateException("Cannot publish lesson", CourseAggregateType.LESSON, id)

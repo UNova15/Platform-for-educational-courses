@@ -3,6 +3,7 @@ package kira.progress.adapter.out.persistence.testattempt;
 import common.domain.entity.Id;
 import java.util.Optional;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
+import kira.progress.application.port.out.persistance.testattempt.TestAttemptRemovePort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptSavePort;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptSavePort {
+class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptSavePort, TestAttemptRemovePort {
     private final DataTestAttemptRepository repository;
     private final TestAttemptMapper mapper;
 
@@ -30,5 +31,10 @@ class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptS
     public void save(TestAttempt attempt) {
         TestAttemptEntity entity = mapper.toEntity(attempt);
         repository.save(entity);
+    }
+
+    @Override
+    public void removeAllByTestId(Id<Test> testId) {
+        repository.removeAllByTestId(testId.value());
     }
 }

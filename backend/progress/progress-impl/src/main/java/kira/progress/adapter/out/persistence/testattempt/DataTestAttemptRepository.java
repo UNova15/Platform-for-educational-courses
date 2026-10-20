@@ -8,4 +8,6 @@ interface DataTestAttemptRepository extends CrudRepository<TestAttemptEntity, Lo
     Optional<TestAttemptEntity> findByTestIdAndUserId(long testId, long userId);
 
     boolean existsByUserIdAndTestId(long userId, long testId);
+
+    void removeAllByTestId(long testId);
 }

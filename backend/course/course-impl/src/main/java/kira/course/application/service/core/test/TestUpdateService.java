@@ -7,6 +7,7 @@ import java.util.Set;
 import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.domain.CourseAggregateType;
 import kira.course.application.port.in.test.update.TestUpdateCommand;
 import kira.course.application.port.in.test.update.TestUpdateUseCase;
@@ -20,6 +21,7 @@ import kira.course.domain.shared.Title;
 import kira.course.domain.markers.User;
 import kira.course.domain.test.Question;
 import kira.course.domain.test.Test;
+import kira.course.events.TestUpdatedEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @AllArgsConstructor
 class TestUpdateService implements TestUpdateUseCase {
-    private final CourseAccessPort accessPort;
     private final TestSavePort savePort;
     private final TestLoadPort loadPort;
-    private final CourseStatusPort checkStatusPort;
 
     private final TestFactory testFactory;
+
+    private final EventPublisherPort publisherPort;
+    private final CourseStatusPort checkStatusPort;
+    private final CourseAccessPort accessPort;
 
     @Override
     @Transactional
@@ -55,10 +59,8 @@ class TestUpdateService implements TestUpdateUseCase {
 
         test.update(title, description, command.orderIndex(), questions);
 
-        if (!test.isDraft()) {
-            // TODO удаление прогресса через событие
-        }
-
         savePort.save(test);
+
+        publisherPort.publish(new TestUpdatedEvent(test.id().value(), test.isPublish()));
     }
 }

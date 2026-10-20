@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-// TODO вынести в adr
+
 // Используется общий Value object(Vo) для title т.к. инвариант для всех доменных классов использующих данный Vo
 // одинаковый (совпадают требования к данному полю). Как только изменится требование для данного поля в каком либо
 // Domain классе произвести рефакторинг и выделить новый Vo с уникальными требованиями. На данный момент чтобы избежать

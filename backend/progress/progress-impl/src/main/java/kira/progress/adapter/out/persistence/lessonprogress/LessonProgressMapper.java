@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 class LessonProgressMapper {
 
     public LessonProgressEntity toEntity(LessonProgress progress) {
-        var id = new LessonProgressEntity.LessonProgressKey(
-                progress.userId().value(), progress.lessonId().value());
-        return new LessonProgressEntity(id, progress.completedAt());
+        Long id = progress.id() == null ? null : progress.id().value();
+        return new LessonProgressEntity(
+                id, progress.userId().value(), progress.lessonId().value(), progress.completedAt());
     }
 }

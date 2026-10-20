@@ -55,7 +55,8 @@ public class Test {
         }
         validateQuestions(questions);
 
-        return new Test(null, moduleId, orderIndex, title, description, new HashSet<>(questions), CourseContentStatus.DRAFT);
+        return new Test(
+                null, moduleId, orderIndex, title, description, new HashSet<>(questions), CourseContentStatus.DRAFT);
     }
 
     public static Test restore(
@@ -83,6 +84,10 @@ public class Test {
 
     public boolean isDraft() {
         return status == CourseContentStatus.DRAFT;
+    }
+
+    public boolean isPublish() {
+        return status == CourseContentStatus.PUBLISHED;
     }
 
     private boolean canPublish() {

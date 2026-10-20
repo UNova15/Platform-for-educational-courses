@@ -1,4 +1,4 @@
-package kira.progress.application.service.api;
+package kira.progress.application.service.external;
 
 import common.domain.entity.Id;
 import kira.progress.api.TestStatusQuery;
