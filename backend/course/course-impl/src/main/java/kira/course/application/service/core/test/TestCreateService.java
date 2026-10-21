@@ -1,17 +1,17 @@
 package kira.course.application.service.core.test;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.test.create.TestCreateCommand;
 import kira.course.application.port.in.test.create.TestCreateResponse;
 import kira.course.application.port.in.test.create.TestCreateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 class TestCreateService implements TestCreateUseCase {
     private final TestSavePort savePort;
 
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
     private final CourseAccessPort accessPort;
     private final ModuleLoadPort moduleLoadPort;
 

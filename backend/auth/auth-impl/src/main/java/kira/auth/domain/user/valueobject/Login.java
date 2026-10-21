@@ -22,7 +22,8 @@ public class Login {
         }
 
         if (login.length() < MIN_LOGIN_LENGTH || login.length() > MAX_LOGIN_LENGTH) {
-            throw new LengthViolationException("Incorrect login length", login.length(), MIN_LOGIN_LENGTH, MAX_LOGIN_LENGTH);
+            throw new LengthViolationException(
+                    "Incorrect login length", login.length(), MIN_LOGIN_LENGTH, MAX_LOGIN_LENGTH);
         }
         return new Login(login);
     }

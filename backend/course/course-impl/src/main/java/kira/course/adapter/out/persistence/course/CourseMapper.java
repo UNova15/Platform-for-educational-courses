@@ -1,10 +1,10 @@
 package kira.course.adapter.out.persistence.course;
 
 import common.domain.entity.Id;
-import kira.course.domain.shared.Description;
-import kira.course.domain.shared.Title;
 import kira.course.domain.course.Course;
 import kira.course.domain.markers.User;
+import kira.course.domain.shared.Description;
+import kira.course.domain.shared.Title;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

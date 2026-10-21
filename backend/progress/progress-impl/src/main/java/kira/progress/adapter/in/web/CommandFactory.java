@@ -12,8 +12,7 @@ import kira.progress.domain.testprogress.valueobject.SubmittedAnswers;
 
 class CommandFactory {
 
-    static EndTestAttemptCommand toEndTestAttemptCommand(
-            Set<EndTestRequest> request, long resourceId, long userId) {
+    static EndTestAttemptCommand toEndTestAttemptCommand(Set<EndTestRequest> request, long resourceId, long userId) {
         Id<User> studentId = Id.of(userId);
         Id<Test> testId = Id.of(resourceId);
 

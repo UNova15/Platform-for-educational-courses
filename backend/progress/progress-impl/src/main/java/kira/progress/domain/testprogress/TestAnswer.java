@@ -4,7 +4,6 @@ import common.domain.entity.Id;
 import common.domain.exception.DomainValidationException;
 import java.util.Collections;
 import java.util.Set;
-
 import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
@@ -17,7 +16,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestAnswer {
-    private final Id<TestAttempt> testAttemptId;
     private final Id<Question> questionId;
 
     @Getter(AccessLevel.NONE)
@@ -27,16 +25,15 @@ public class TestAnswer {
         return Collections.unmodifiableSet(selectedOptionsIds);
     }
 
-    public static TestAnswer create(
-            Id<TestAttempt> testSubmissionId, Id<Question> questionId, Set<Id<AnswerOption>> answerIds) {
-        if (questionId == null || answerIds == null || testSubmissionId == null) {
-            throw new DomainValidationException("Incorrect data to create test answer", ProgressAggregateType.TEST_ANSWER);
+    public static TestAnswer create(Id<Question> questionId, Set<Id<AnswerOption>> answerIds) {
+        if (questionId == null || answerIds == null) {
+            throw new DomainValidationException(
+                    "Incorrect data to create test answer", ProgressAggregateType.TEST_ANSWER);
         }
-        return new TestAnswer(testSubmissionId, questionId, answerIds);
+        return new TestAnswer(questionId, answerIds);
     }
 
-    public static TestAnswer restore(
-            Id<TestAttempt> testSubmissionId, Id<Question> questionId, Set<Id<AnswerOption>> selectedOptionsIds) {
-        return new TestAnswer(testSubmissionId, questionId, selectedOptionsIds);
+    public static TestAnswer restore(Id<Question> questionId, Set<Id<AnswerOption>> selectedOptionsIds) {
+        return new TestAnswer(questionId, selectedOptionsIds);
     }
 }

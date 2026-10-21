@@ -1,7 +1,7 @@
 package common.application.exception;
 
-import common.domain.entity.Id;
 import common.domain.entity.AggregateType;
+import common.domain.entity.Id;
 
 public class ResourceAlreadyExist extends RuleConflictException {
 

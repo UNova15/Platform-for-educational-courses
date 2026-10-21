@@ -1,8 +1,8 @@
 package common.application.exception;
 
+import common.domain.entity.AggregateType;
 import common.domain.entity.Id;
 import common.domain.exception.TypedBaseApplicationException;
-import common.domain.entity.AggregateType;
 
 public class ResourceNotFoundException extends TypedBaseApplicationException {
 

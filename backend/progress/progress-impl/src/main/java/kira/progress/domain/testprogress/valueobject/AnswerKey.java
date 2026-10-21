@@ -1,10 +1,9 @@
 package kira.progress.domain.testprogress.valueobject;
 
 import common.domain.entity.Id;
+import common.domain.exception.ValueObjectValidationException;
 import java.util.Map;
 import java.util.Set;
-
-import common.domain.exception.ValueObjectValidationException;
 import kira.progress.domain.markers.AnswerOption;
 import kira.progress.domain.markers.Question;
 import kira.progress.domain.markers.Test;

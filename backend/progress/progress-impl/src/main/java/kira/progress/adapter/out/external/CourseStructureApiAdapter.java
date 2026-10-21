@@ -13,14 +13,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CourseApiAdapter
-        implements CourseStructurePort, CourseExistCheckPort, TestAnswerKeyProviderPort {
+public class CourseStructureApiAdapter implements CourseStructurePort, CourseExistCheckPort, TestAnswerKeyProviderPort {
     private final CourseStructureQuery providerQuery;
     private final CourseExistQuery existQuery;
     private final TestAnswerKeyQuery testAnswerKeyQuery;
 
     private final CourseApiMapper mapper;
-
 
     @Override
     public Optional<Id<Course>> findCourseIdByTestId(Id<Test> testId) {

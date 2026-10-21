@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import kira.course.application.port.in.test.create.TestCreateCommand;
-import kira.course.application.port.in.test.update.TestUpdateCommand;
+import kira.course.application.port.in.test.shared.OptionCommand;
+import kira.course.application.port.in.test.shared.QuestionCommand;
+import kira.course.domain.module.CourseModule;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
-import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.AnswerOption;
 import kira.course.domain.test.Question;
 import kira.course.domain.test.Test;
@@ -29,7 +30,7 @@ class TestFactory {
         return Test.create(moduleId, title, description, questions, command.orderIndex());
     }
 
-    private Question fromQuestionCreateCommand(TestCreateCommand.QuestionCommand command) {
+    private Question fromQuestionCreateCommand(QuestionCommand command) {
         Set<AnswerOption> options = command.options().stream()
                 .map(option -> AnswerOption.create(Option.of(option.option()), option.isCorrect()))
                 .collect(Collectors.toSet());
@@ -38,7 +39,7 @@ class TestFactory {
         return Question.create(title, options, command.orderIndex());
     }
 
-    public Set<Question> fromQuestionUpdateCommand(List<TestUpdateCommand.QuestionCommand> commands) {
+    public Set<Question> fromQuestionUpdateCommand(List<QuestionCommand> commands) {
         return commands.stream()
                 .map(command -> Question.create(
                         QuestionContent.of(command.question()),
@@ -47,10 +48,9 @@ class TestFactory {
                 .collect(Collectors.toSet());
     }
 
-    private Set<AnswerOption> fromAnswerOptionUpdateCommand(List<TestUpdateCommand.OptionCommand> commands) {
+    private Set<AnswerOption> fromAnswerOptionUpdateCommand(List<OptionCommand> commands) {
         return commands.stream()
-                .map(commandOption ->
-                        AnswerOption.create(Option.of(commandOption.option()), commandOption.isCorrect()))
+                .map(commandOption -> AnswerOption.create(Option.of(commandOption.option()), commandOption.isCorrect()))
                 .collect(Collectors.toSet());
     }
 }

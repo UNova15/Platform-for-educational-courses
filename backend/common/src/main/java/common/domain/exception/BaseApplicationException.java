@@ -16,7 +16,7 @@ public abstract class BaseApplicationException extends RuntimeException {
     }
 
     public BaseApplicationException withContext(String property, Object value) {
-        if(context == null){
+        if (context == null) {
             context = new HashMap<>();
         }
 

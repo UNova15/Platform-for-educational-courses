@@ -1,7 +1,6 @@
 package kira.course.application.port.in.query.owned;
 
 import java.util.List;
-
 import kira.course.domain.shared.CourseContentStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

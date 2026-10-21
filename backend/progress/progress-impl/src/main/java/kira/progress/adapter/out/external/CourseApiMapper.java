@@ -1,4 +1,4 @@
-package kira.progress.adapter.out.external.course;
+package kira.progress.adapter.out.external;
 
 import common.domain.entity.Id;
 import java.util.Map;

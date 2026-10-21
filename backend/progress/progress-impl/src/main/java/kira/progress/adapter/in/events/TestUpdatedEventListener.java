@@ -13,7 +13,7 @@ public class TestUpdatedEventListener {
     private final RemoveTestAttemptUseCase removeTestAttemptUseCase;
 
     @EventListener(condition = "#event.wasPublished()")
-    public void handleTestUpdatedEvent(TestUpdatedEvent event){
+    public void handleTestUpdatedEvent(TestUpdatedEvent event) {
         removeTestAttemptUseCase.removeAttempt(Id.of(event.testId()));
     }
 }

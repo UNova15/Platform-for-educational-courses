@@ -1,16 +1,16 @@
 package kira.course.application.service.core.lesson;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.application.port.out.events.EventPublisherPort;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.lesson.remove.LessonRemoveUseCase;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.lesson.LessonRemovePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
@@ -25,7 +25,7 @@ class LessonRemoveService implements LessonRemoveUseCase {
     private final CourseAccessPort accessPort;
     private final LessonLoadPort loadPort;
     private final LessonRemovePort removePort;
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
 
     private final EventPublisherPort publisherPort;
 

@@ -1,7 +1,6 @@
 package kira.course.adapter.out.persistence.course;
 
 import java.time.LocalDateTime;
-
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "courses",schema = "course")
+@Table(name = "courses", schema = "course")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor

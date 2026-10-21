@@ -1,16 +1,16 @@
 package kira.course.application.service.core.test;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.application.port.out.events.EventPublisherPort;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.test.remove.TestRemoveUseCase;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestRemovePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.test.Test;
@@ -26,7 +26,7 @@ class TestRemoveService implements TestRemoveUseCase {
     private final TestRemovePort removePort;
 
     private final CourseAccessPort accessPort;
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
 
     private final EventPublisherPort publisherPort;
 
@@ -42,8 +42,7 @@ class TestRemoveService implements TestRemoveUseCase {
 
         CourseStatus status = checkStatusPort.findCourseStatusByTestId(testId);
         if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot remove test in archived course", CourseAggregateType.TEST, testId);
+            throw new RuleConflictException("Cannot remove test in archived course", CourseAggregateType.TEST, testId);
         }
         removePort.removeTestById(testId);
 

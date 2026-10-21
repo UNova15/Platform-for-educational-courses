@@ -1,9 +1,8 @@
 package kira.progress.domain.lessonprogress;
 
 import common.domain.entity.Id;
-import java.time.LocalDateTime;
-
 import common.domain.exception.ValueObjectValidationException;
+import java.time.LocalDateTime;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.User;
 import lombok.AccessLevel;

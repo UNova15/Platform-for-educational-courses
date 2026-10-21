@@ -19,13 +19,13 @@ class TestAttemptMapper {
         Id<User> userId = Id.of(entity.userId());
         Id<Test> testId = Id.of(entity.testId());
 
-        Set<TestAnswer> answers = answersToDomain(id, entity.answers());
+        Set<TestAnswer> answers = answersToDomain(entity.answers());
 
         return TestAttempt.restore(
                 id, userId, testId, entity.startedAt(), entity.completedAt(), entity.score(), answers);
     }
 
-    private Set<TestAnswer> answersToDomain(Id<TestAttempt> testAttemptId, Set<TestAnswerEntity> entities) {
+    private Set<TestAnswer> answersToDomain(Set<TestAnswerEntity> entities) {
         Map<Long, List<TestAnswerEntity>> answersByQuestionId =
                 entities.stream().collect(Collectors.groupingBy(TestAnswerEntity::questionId));
 
@@ -37,13 +37,13 @@ class TestAttemptMapper {
                             .map(attempt -> Id.<AnswerOption>of(attempt.optionId()))
                             .collect(Collectors.toSet());
 
-                    return TestAnswer.restore(testAttemptId, questionId, optionIds);
+                    return TestAnswer.restore(questionId, optionIds);
                 })
                 .collect(Collectors.toSet());
     }
 
     public TestAttemptEntity toEntity(TestAttempt attempt) {
-        Long id = attempt.id() == null? null : attempt.id().value();
+        Long id = attempt.id() == null ? null : attempt.id().value();
 
         Set<TestAnswerEntity> answerEntities = attempt.answers().stream()
                 .map(this::toAnswerEntity)

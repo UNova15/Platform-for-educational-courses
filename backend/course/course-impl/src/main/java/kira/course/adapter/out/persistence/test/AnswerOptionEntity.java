@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "question_options",schema = "course")
+@Table(name = "question_options", schema = "course")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor

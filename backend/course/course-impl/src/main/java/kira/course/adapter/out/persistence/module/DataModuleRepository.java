@@ -1,9 +1,11 @@
 package kira.course.adapter.out.persistence.module;
 
+import java.util.Optional;
 import kira.course.domain.shared.CourseContentStatus;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 interface DataModuleRepository extends CrudRepository<ModuleEntity, Long> {
     boolean existsByCourseId(Long courseId);
@@ -13,20 +15,23 @@ interface DataModuleRepository extends CrudRepository<ModuleEntity, Long> {
     void updateAllStatusesByCourseId(Long courseId, String status);
 
     @Query("""
-            SELECT status FROM course.modules 
-            WHERE id = (
-                SELECT module_id FROM course.lessons l 
-                WHERE l.id = :lessonId
-            )
-            """)
+        SELECT status FROM course.modules
+        WHERE id = (
+            SELECT module_id FROM course.lessons l
+            WHERE l.id = :lessonId
+        )
+        """)
     CourseContentStatus findStatusByLessonId(Long lessonId);
 
     @Query("""
-            SELECT status FROM course.modules 
-            WHERE id = (
-                SELECT module_id FROM course.tests t 
-                WHERE t.id = :testId
-            )
-            """)
+        SELECT status FROM course.modules
+        WHERE id = (
+            SELECT module_id FROM course.tests t
+            WHERE t.id = :testId
+        )
+        """)
     CourseContentStatus findStatusByTestId(Long testId);
+
+    @Query("SELECT status FROM course.modules WHERE id = :id")
+    Optional<CourseContentStatus> findStatusById(@Param("id") long id);
 }

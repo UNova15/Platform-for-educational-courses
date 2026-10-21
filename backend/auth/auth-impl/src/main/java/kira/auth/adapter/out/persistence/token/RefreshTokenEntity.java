@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "refresh_tokens",schema = "auth")
+@Table(name = "refresh_tokens", schema = "auth")
 @Getter
 @AllArgsConstructor
 class RefreshTokenEntity {

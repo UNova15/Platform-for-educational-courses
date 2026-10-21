@@ -1,7 +1,7 @@
 package kira.progress.application.exception;
 
-import common.domain.entity.Id;
 import common.application.exception.ResourceAlreadyExist;
+import common.domain.entity.Id;
 import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;

@@ -2,7 +2,6 @@ package kira.course.adapter.out.persistence.test;
 
 import java.util.Collections;
 import java.util.Set;
-
 import kira.course.domain.shared.CourseContentStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "tests",schema = "course")
+@Table(name = "tests", schema = "course")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor

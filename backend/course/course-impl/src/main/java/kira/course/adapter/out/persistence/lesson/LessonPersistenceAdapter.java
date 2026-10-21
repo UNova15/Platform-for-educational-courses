@@ -1,12 +1,8 @@
 package kira.course.adapter.out.persistence.lesson;
 
 import common.domain.entity.Id;
-
 import java.util.Optional;
-import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
-import kira.course.application.port.out.persistance.lesson.LessonChangeStatusPort;
-import kira.course.application.port.out.persistance.lesson.LessonRemovePort;
-import kira.course.application.port.out.persistance.lesson.LessonSavePort;
+import kira.course.application.port.out.persistance.lesson.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.module.CourseModule;
@@ -16,7 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class LessonPersistenceAdapter implements LessonLoadPort, LessonSavePort, LessonRemovePort, LessonChangeStatusPort {
+class LessonPersistenceAdapter
+        implements LessonLoadPort, LessonSavePort, LessonRemovePort, LessonChangeStatusPort, LessonCheckStatusPort {
     private final DataLessonRepository repository;
     private final LessonMapper mapper;
 
@@ -50,5 +47,10 @@ class LessonPersistenceAdapter implements LessonLoadPort, LessonSavePort, Lesson
     @Override
     public void updateAllStatusesByModuleId(Id<CourseModule> moduleId, CourseContentStatus status) {
         repository.updateAllStatusesByModuleId(moduleId.value(), status.name());
+    }
+
+    @Override
+    public Optional<CourseContentStatus> findLessonStatusById(Id<Lesson> lessonId) {
+        return repository.findStatusById(lessonId.value());
     }
 }

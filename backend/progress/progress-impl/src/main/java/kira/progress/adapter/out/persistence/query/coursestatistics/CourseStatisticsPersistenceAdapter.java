@@ -20,8 +20,7 @@ class CourseStatisticsPersistenceAdapter implements CourseStatisticsQueryPort {
 
     @Override
     public List<EnrolledStudentsResult> findEnrolledUsersByCourseId(Id<Course> courseId) {
-        return dbClient
-                .sql("SELECT e.user_id, e.created_at FROM progress.enrollments e WHERE e.course_id = :courseId")
+        return dbClient.sql("SELECT e.user_id, e.created_at FROM progress.enrollments e WHERE e.course_id = :courseId")
                 .param("courseId", courseId.value())
                 .query(EnrolledStudentsResult.class)
                 .list();
@@ -29,8 +28,8 @@ class CourseStatisticsPersistenceAdapter implements CourseStatisticsQueryPort {
 
     @Override
     public List<StudentsLessonProgressResult> findWatchedLessonStudentsByLessonId(Id<Lesson> lessonId) {
-        return dbClient
-                .sql("SELECT l.user_id,l.completed_at FROM progress.lessons_progress l WHERE l.lesson_id = :lessonId")
+        return dbClient.sql(
+                        "SELECT l.user_id,l.completed_at FROM progress.lessons_progress l WHERE l.lesson_id = :lessonId")
                 .param("lessonId", lessonId.value())
                 .query(StudentsLessonProgressResult.class)
                 .list();
@@ -38,8 +37,7 @@ class CourseStatisticsPersistenceAdapter implements CourseStatisticsQueryPort {
 
     @Override
     public List<CompletedTestStudentsResult> findCompletedTestStudentsByTestId(Id<Test> testId) {
-        return dbClient
-                .sql("""
+        return dbClient.sql("""
                     SELECT t.id,t.user_id,t.started_at,t.completed_at,t.score
                     FROM progress.test_submissions t
                     WHERE t.test_id = :testId

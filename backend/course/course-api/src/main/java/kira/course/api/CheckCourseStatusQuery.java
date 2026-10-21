@@ -1,4 +1,13 @@
 package kira.course.api;
 
-public interface CourseStatusQuery {
+import java.util.Optional;
+
+public interface CheckCourseStatusQuery {
+    Optional<Boolean> isTestPublished(long testId);
+
+    Optional<Boolean> isCoursePublished(long courseId);
+
+    Optional<Boolean> isLessonPublished(long lessonId);
+
+    Optional<Boolean> isModulePublished(long moduleId);
 }

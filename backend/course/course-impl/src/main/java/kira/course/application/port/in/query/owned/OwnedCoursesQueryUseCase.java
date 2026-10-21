@@ -3,7 +3,6 @@ package kira.course.application.port.in.query.owned;
 import common.domain.entity.Id;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
-
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;

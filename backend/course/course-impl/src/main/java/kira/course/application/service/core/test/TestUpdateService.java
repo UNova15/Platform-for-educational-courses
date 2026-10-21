@@ -1,24 +1,22 @@
 package kira.course.application.service.core.test;
 
-import common.domain.entity.Id;
-
-import java.util.Set;
-
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.application.port.out.events.EventPublisherPort;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
+import java.util.Set;
 import kira.course.application.port.in.test.update.TestUpdateCommand;
 import kira.course.application.port.in.test.update.TestUpdateUseCase;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
+import kira.course.domain.markers.User;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
-import kira.course.domain.markers.User;
 import kira.course.domain.test.Question;
 import kira.course.domain.test.Test;
 import kira.course.events.TestUpdatedEvent;
@@ -35,7 +33,7 @@ class TestUpdateService implements TestUpdateUseCase {
     private final TestFactory testFactory;
 
     private final EventPublisherPort publisherPort;
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
     private final CourseAccessPort accessPort;
 
     @Override

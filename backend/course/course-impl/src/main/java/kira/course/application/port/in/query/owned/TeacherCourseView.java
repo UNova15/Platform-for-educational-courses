@@ -2,7 +2,6 @@ package kira.course.application.port.in.query.owned;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
 import kira.course.domain.shared.CourseContentStatus;

@@ -2,10 +2,7 @@ package kira.course.adapter.out.persistence.test;
 
 import common.domain.entity.Id;
 import java.util.Optional;
-import kira.course.application.port.out.persistance.test.TestLoadPort;
-import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
-import kira.course.application.port.out.persistance.test.TestRemovePort;
-import kira.course.application.port.out.persistance.test.TestSavePort;
+import kira.course.application.port.out.persistance.test.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.shared.CourseContentStatus;
@@ -15,7 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class TestPersistenceAdapter implements TestRemovePort, TestSavePort, TestLoadPort, TestChangeStatusPort {
+class TestPersistenceAdapter
+        implements TestRemovePort, TestSavePort, TestLoadPort, TestChangeStatusPort, TestCheckStatusPort {
     private final DataTestRepository repository;
     private final TestMapper mapper;
 
@@ -49,5 +47,10 @@ class TestPersistenceAdapter implements TestRemovePort, TestSavePort, TestLoadPo
     @Override
     public void updateAllStatusesInModule(Id<CourseModule> moduleId, CourseContentStatus status) {
         repository.updateAllStatusesByModuleId(moduleId.value(), status.name());
+    }
+
+    @Override
+    public Optional<CourseContentStatus> findTestStatusById(Id<Test> testId) {
+        return repository.findStatusById(testId.value());
     }
 }

@@ -2,7 +2,6 @@ package kira.course.adapter.out.persistence.module;
 
 import common.domain.entity.Id;
 import java.util.Optional;
-
 import kira.course.application.port.out.persistance.module.*;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 class ModulePersistenceAdapter
-        implements ModuleLoadPort, ModuleRemovePort, ModuleSavePort, ModuleChangeStatusPort, ModuleStatusPort {
+        implements ModuleLoadPort, ModuleRemovePort, ModuleSavePort, ModuleChangeStatusPort, ModuleCheckStatusPort {
     private final DataModuleRepository repository;
     private final ModuleMapper mapper;
 
@@ -59,5 +58,10 @@ class ModulePersistenceAdapter
     @Override
     public CourseContentStatus findStatusByTestId(Id<Test> testId) {
         return repository.findStatusByTestId(testId.value());
+    }
+
+    @Override
+    public Optional<CourseContentStatus> findStatusById(Id<CourseModule> moduleId) {
+        return repository.findStatusById(moduleId.value());
     }
 }

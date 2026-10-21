@@ -1,12 +1,14 @@
 package kira.progress.application.service.core;
 
-import common.domain.entity.Id;
 import common.application.exception.ResourceNotFoundException;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
+import kira.progress.application.exception.EnrollmentAlreadyExistException;
 import kira.progress.application.port.in.enrollment.UserEnrollmentUseCase;
+import kira.progress.application.port.out.external.CheckCourseStatusPort;
 import kira.progress.application.port.out.external.CourseExistCheckPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentSavePort;
-import kira.progress.application.exception.EnrollmentAlreadyExistException;
 import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.enrollment.Enrollment;
 import kira.progress.domain.markers.Course;
@@ -21,7 +23,8 @@ class UserEnrollService implements UserEnrollmentUseCase {
     private final EnrollmentLoadPort enrollmentLoadPort;
     private final EnrollmentSavePort enrollmentSavePort;
 
-    //TODO проверить что курс опубликован (не архив и не драфт)
+    private final CheckCourseStatusPort courseStatusPort;
+
     public void enrollToCourse(Id<User> userId, Id<Course> courseId) {
         if (!courseCheckPort.isCourseExist(courseId)) {
             throw new ResourceNotFoundException(ProgressAggregateType.COURSE, courseId);
@@ -29,6 +32,11 @@ class UserEnrollService implements UserEnrollmentUseCase {
 
         if (enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
             throw new EnrollmentAlreadyExistException(userId, courseId);
+        }
+
+        if (!courseStatusPort.isCoursePublished(courseId)) {
+            throw new RuleConflictException(
+                    "Cannot enroll in an unpublished course", ProgressAggregateType.COURSE, courseId);
         }
 
         var enrollment = Enrollment.create(userId, courseId);

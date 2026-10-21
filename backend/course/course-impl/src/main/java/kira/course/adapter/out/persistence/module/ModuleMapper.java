@@ -1,9 +1,9 @@
 package kira.course.adapter.out.persistence.module;
 
 import common.domain.entity.Id;
+import kira.course.domain.module.CourseModule;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
-import kira.course.domain.module.CourseModule;
 import org.springframework.stereotype.Component;
 
 @Component

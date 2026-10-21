@@ -1,9 +1,9 @@
 package kira.infrastructure.web;
 
-import common.domain.exception.*;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
+import common.application.exception.RuleConflictException;
+import common.domain.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
 
         if (exception.context() != null) {
             for (var entry : exception.context().entrySet()) {
-                loggingEventBuilder.addKeyValue(entry.getKey(), entry.getValue());
+                loggingEventBuilder = loggingEventBuilder.addKeyValue(entry.getKey(), entry.getValue());
             }
         }
         loggingEventBuilder.log(exception.getMessage());

@@ -2,10 +2,10 @@ package kira.course.adapter.out.persistence.course;
 
 import common.domain.entity.Id;
 import java.util.Optional;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.course.CourseLoadPort;
 import kira.course.application.port.out.persistance.course.CourseRemovePort;
 import kira.course.application.port.out.persistance.course.CourseSavePort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.lesson.Lesson;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, CourseRemovePort, CourseStatusPort {
+class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, CourseRemovePort, CourseCheckStatusPort {
     private final DataCourseRepository repository;
     private final CourseMapper mapper;
 
@@ -55,5 +55,10 @@ class CoursePersistenceAdapter implements CourseLoadPort, CourseSavePort, Course
     @Override
     public CourseStatus findCourseStatusByTestId(Id<Test> testId) {
         return repository.findCourseStatusByTestId(testId.value());
+    }
+
+    @Override
+    public Optional<CourseStatus> findCourseStatusById(Id<Course> courseId) {
+        return repository.findStatusById(courseId.value());
     }
 }

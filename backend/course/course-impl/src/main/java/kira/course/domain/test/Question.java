@@ -2,17 +2,16 @@ package kira.course.domain.test;
 
 import common.domain.entity.Id;
 import common.domain.exception.DomainValidationException;
+import common.domain.exception.LengthViolationException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
 import kira.course.domain.CourseAggregateType;
 import kira.course.domain.test.valueobject.QuestionContent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import common.domain.exception.LengthViolationException;
 
 @Getter
 @Accessors(fluent = true)

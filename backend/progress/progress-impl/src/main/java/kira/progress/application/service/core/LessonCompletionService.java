@@ -1,9 +1,11 @@
 package kira.progress.application.service.core;
 
-import common.domain.entity.Id;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.progress.application.port.in.lessonprogress.LessonCompletionUseCase;
+import kira.progress.application.port.out.external.CheckCourseStatusPort;
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
@@ -24,7 +26,8 @@ class LessonCompletionService implements LessonCompletionUseCase {
     private final LessonProgressLoadPort lessonProgressLoadPort;
     private final LessonProgressSavePort lessonProgressSavePort;
 
-    //TODO првоерить что урок опубликован
+    private final CheckCourseStatusPort statusPort;
+
     @Override
     public void completeLesson(Id<User> userId, Id<Lesson> lessonId) {
         Id<Course> courseId = courseStructurePort
@@ -33,6 +36,11 @@ class LessonCompletionService implements LessonCompletionUseCase {
 
         if (!enrollmentLoadPort.isEnrollmentExist(userId, courseId)) {
             throw new ResourceAccessDeniedException(ProgressAggregateType.COURSE, userId, courseId);
+        }
+
+        if (!statusPort.isLessonPublished(lessonId)) {
+            throw new RuleConflictException(
+                    "Cannot complete an unpublished lesson", ProgressAggregateType.LESSON, lessonId);
         }
 
         if (lessonProgressLoadPort.isLessonCompleted(userId, lessonId)) {

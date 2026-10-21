@@ -1,17 +1,17 @@
 package kira.course.application.service.core.lesson;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.lesson.create.LessonCreateCommand;
 import kira.course.application.port.in.lesson.create.LessonCreateResponse;
 import kira.course.application.port.in.lesson.create.LessonCreateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonSavePort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.lesson.LessonContent;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 class LessonCreateService implements LessonCreateUseCase {
     private final LessonSavePort savePort;
 
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
     private final CourseAccessPort accessPort;
     private final ModuleLoadPort moduleLoadPort;
 
@@ -44,7 +44,8 @@ class LessonCreateService implements LessonCreateUseCase {
 
         CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
         if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException("Cannot create lesson in archived course by module id", CourseAggregateType.MODULE)
+            throw new RuleConflictException(
+                            "Cannot create lesson in archived course by module id", CourseAggregateType.MODULE)
                     .withContext("moduleId", moduleId.value());
         }
 

@@ -1,10 +1,9 @@
 package kira.progress.application.service.core;
 
-import common.domain.entity.Id;
-import java.util.List;
-
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
+import common.domain.entity.Id;
+import java.util.List;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.PersonalProgressUseCase;
 import kira.progress.application.port.in.query.personalprogress.ProgressSummary;
@@ -37,7 +36,8 @@ class PersonalProgressService implements PersonalProgressUseCase {
                 .orElseThrow(() -> new ResourceNotFoundException(ProgressAggregateType.MODULE, moduleId));
 
         if (!enrollmentLoadPort.isEnrollmentExist(studentId, moduleStructure.courseId())) {
-            throw new ResourceAccessDeniedException(ProgressAggregateType.COURSE, studentId, moduleStructure.courseId());
+            throw new ResourceAccessDeniedException(
+                    ProgressAggregateType.COURSE, studentId, moduleStructure.courseId());
         }
 
         List<LessonProgressSummary> lessonsProgress =
@@ -49,7 +49,6 @@ class PersonalProgressService implements PersonalProgressUseCase {
         return new ProgressSummary(lessonsProgress, testProgress);
     }
 
-    //TODO правильно ли что тут нет доп проверок?
     @Override
     public TestAnswersView findStudentsTestAttempt(Id<User> studentId, Id<Test> testId) {
         return testAnswersViewQueryPort

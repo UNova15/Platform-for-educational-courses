@@ -51,6 +51,9 @@ class OwnedTestQueryRepository {
                 SELECT o.id,o.question_id,o.option,o.is_correct
                 FROM course.options o
                 WHERE o.question_id IN :ids
-                """).param("ids", ids).query(FullTestView.Option.class).list();
+                """)
+                .param("ids", ids)
+                .query(FullTestView.Option.class)
+                .list();
     }
 }

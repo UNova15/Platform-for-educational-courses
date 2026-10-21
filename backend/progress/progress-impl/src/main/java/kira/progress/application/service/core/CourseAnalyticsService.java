@@ -1,10 +1,9 @@
 package kira.progress.application.service.core;
 
-import common.domain.entity.Id;
-import java.util.List;
-
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
+import common.domain.entity.Id;
+import java.util.List;
 import kira.progress.application.port.in.query.analytics.CompletedTestStudentsResult;
 import kira.progress.application.port.in.query.analytics.CourseAnalyticsUseCase;
 import kira.progress.application.port.in.query.analytics.EnrolledStudentsResult;

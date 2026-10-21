@@ -1,9 +1,7 @@
 package kira.auth.application.service;
 
-import common.domain.entity.Id;
-
 import common.application.exception.ResourceNotFoundException;
-import kira.auth.domain.AuthAggregateType;
+import common.domain.entity.Id;
 import kira.auth.application.exceptions.PersistenceConsistencyException;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.UpdateTokenUseCase;
@@ -11,6 +9,7 @@ import kira.auth.application.ports.out.crypto.TokenHashingPort;
 import kira.auth.application.ports.out.persistance.token.RefreshTokenLoadPort;
 import kira.auth.application.ports.out.persistance.token.RefreshTokenRemovePort;
 import kira.auth.application.ports.out.persistance.user.UserLoadPort;
+import kira.auth.domain.AuthAggregateType;
 import kira.auth.domain.token.RefreshToken;
 import kira.auth.domain.token.valueobject.HashedRefreshToken;
 import kira.auth.domain.token.valueobject.RawRefreshToken;
@@ -40,12 +39,10 @@ class TokenUpdateService implements UpdateTokenUseCase {
         Id<User> userId = refreshToken.userId();
 
         // невалидное состояние бд - токен в бд есть, но пользователя нет
-        User user = userLoadPort
-                .loadUserById(userId)
-                .orElseThrow(() -> new PersistenceConsistencyException(
-                                "The user does not exist, his token exists", AuthAggregateType.USER, userId)
-                        .withContext("tokenId", refreshToken.id())
-                        .withContext("token", refreshToken.token()));
+        User user = userLoadPort.loadUserById(userId).orElseThrow(() -> new PersistenceConsistencyException(
+                        "The user does not exist, his token exists", AuthAggregateType.USER, userId)
+                .withContext("tokenId", refreshToken.id())
+                .withContext("token", refreshToken.token()));
 
         removePort.remove(refreshToken);
         return tokenGenerator.issueTokens(userId, user.login());

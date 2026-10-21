@@ -1,12 +1,12 @@
 package kira.progress.domain.testprogress;
 
 import common.domain.entity.Id;
+import common.domain.exception.DomainStateException;
 import common.domain.exception.DomainValidationException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -54,7 +54,9 @@ public class TestAttempt {
 
     public void submitAnswers(Set<SubmittedAnswers> usersAnswers, AnswerKey key) {
         if (completedAt != null) {
-            throw new DomainValidationException("Attempt has already been saved", ProgressAggregateType.ATTEMPT);
+            throw new DomainStateException("Test attempt already completed", ProgressAggregateType.ATTEMPT, id)
+                    .withContext("userId", userId.value())
+                    .withContext("testId", testId.value());
         }
 
         if (usersAnswers == null || key == null || !key.testId().equals(testId)) {
@@ -63,7 +65,7 @@ public class TestAttempt {
         }
 
         Set<TestAnswer> answers = usersAnswers.stream()
-                .map(answer -> TestAnswer.create(this.id, answer.questionId(), answer.optionsIds()))
+                .map(answer -> TestAnswer.create(answer.questionId(), answer.optionsIds()))
                 .collect(Collectors.toSet());
 
         int score = key.calculateGrade(answers);

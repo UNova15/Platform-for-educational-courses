@@ -1,16 +1,16 @@
 package kira.course.application.service.core.module;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.module.update.ModuleUpdateCommand;
 import kira.course.application.port.in.module.update.ModuleUpdateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
@@ -26,7 +26,7 @@ class ModuleUpdateService implements ModuleUpdateUseCase {
     private final ModuleSavePort savePort;
 
     private final CourseAccessPort accessPort;
-    private final CourseStatusPort checkStatusPort;
+    private final CourseCheckStatusPort checkStatusPort;
 
     @Override
     public void updateModule(ModuleUpdateCommand updateCommand, Id<CourseModule> moduleId, Id<User> teacherId) {

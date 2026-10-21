@@ -1,13 +1,13 @@
 package kira.auth.application.service;
 
-import common.domain.entity.Id;
 import common.application.exception.ResourceAlreadyExist;
-import kira.auth.domain.AuthAggregateType;
+import common.domain.entity.Id;
 import kira.auth.application.ports.in.AuthTokens;
 import kira.auth.application.ports.in.RegistrationUseCase;
 import kira.auth.application.ports.out.crypto.PasswordHasherPort;
 import kira.auth.application.ports.out.persistance.user.UserLoadPort;
 import kira.auth.application.ports.out.persistance.user.UserSavePort;
+import kira.auth.domain.AuthAggregateType;
 import kira.auth.domain.user.User;
 import kira.auth.domain.user.valueobject.HashedPassword;
 import kira.auth.domain.user.valueobject.Login;

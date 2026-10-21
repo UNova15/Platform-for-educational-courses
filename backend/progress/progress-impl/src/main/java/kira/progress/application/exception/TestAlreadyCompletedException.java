@@ -1,7 +1,7 @@
-package kira.progress.domain.exceptions;
+package kira.progress.application.exception;
 
-import common.domain.entity.Id;
 import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;

@@ -8,11 +8,11 @@ public enum AuthAggregateType implements AggregateType {
 
     private final String value;
 
-    AuthAggregateType(String value){
+    AuthAggregateType(String value) {
         this.value = value;
     }
 
-    public String value(){
+    public String value() {
         return value;
     }
 }

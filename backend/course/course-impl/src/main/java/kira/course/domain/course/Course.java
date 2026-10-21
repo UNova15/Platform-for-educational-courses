@@ -4,11 +4,10 @@ import common.domain.entity.Id;
 import common.domain.exception.DomainStateException;
 import common.domain.exception.DomainValidationException;
 import java.time.LocalDateTime;
-
 import kira.course.domain.CourseAggregateType;
+import kira.course.domain.markers.User;
 import kira.course.domain.shared.Description;
 import kira.course.domain.shared.Title;
-import kira.course.domain.markers.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

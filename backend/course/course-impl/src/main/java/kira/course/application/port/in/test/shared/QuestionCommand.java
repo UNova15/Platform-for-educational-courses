@@ -1,4 +1,4 @@
-package kira.course.application.port.in.test.create;
+package kira.course.application.port.in.test.shared;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -25,7 +25,7 @@ public class AuthenticationExceptionHandler {
 
         if (exception.context() != null) {
             for (var entry : exception.context().entrySet()) {
-                logger.addKeyValue(entry.getKey(), entry.getValue());
+                logger = logger.addKeyValue(entry.getKey(), entry.getValue());
             }
         }
         logger.log("Нарушена целостность данных: {}", exception.getMessage());
@@ -38,7 +38,7 @@ public class AuthenticationExceptionHandler {
 
         if (exception.context() != null) {
             for (var entry : exception.context().entrySet()) {
-                loggingEventBuilder.addKeyValue(entry.getKey(), entry.getValue());
+                loggingEventBuilder = loggingEventBuilder.addKeyValue(entry.getKey(), entry.getValue());
             }
         }
         loggingEventBuilder.log(exception.getMessage());

@@ -1,19 +1,19 @@
 package kira.course.application.service.core.module;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.module.status.PublishModuleUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
-import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonChangeStatusPort;
+import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
-import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
+import kira.course.application.port.out.persistance.test.TestLoadPort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
@@ -30,7 +30,7 @@ class ModulePublishService implements PublishModuleUseCase {
     private final CourseAccessPort accessPort;
     private final LessonChangeStatusPort lessonChangeStatusPort;
     private final TestChangeStatusPort testChangeStatusPort;
-    private final CourseStatusPort courseStatusPort;
+    private final CourseCheckStatusPort courseStatusPort;
     private final LessonLoadPort lessonLoadPort;
     private final TestLoadPort testLoadPort;
 

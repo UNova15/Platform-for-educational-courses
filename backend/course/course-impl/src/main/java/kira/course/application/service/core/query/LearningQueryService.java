@@ -1,17 +1,16 @@
 package kira.course.application.service.core.query;
 
-import common.domain.entity.Id;
-import java.util.List;
-
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
+import java.util.List;
 import kira.course.application.port.in.query.learning.*;
 import kira.course.application.port.out.external.EnrollmentCheckPort;
 import kira.course.application.port.out.external.TestCompletionCheckPort;
 import kira.course.application.port.out.external.UserEnrollmentProviderPort;
 import kira.course.application.port.out.persistance.query.LearningQueryPort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;

@@ -1,16 +1,16 @@
 package kira.course.application.service.core.test;
 
-import common.domain.entity.Id;
-import common.application.exception.RuleConflictException;
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.application.exception.RuleConflictException;
+import common.domain.entity.Id;
 import kira.course.application.port.in.test.status.PublishTestUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseStatusPort;
-import kira.course.application.port.out.persistance.module.ModuleStatusPort;
+import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
+import kira.course.application.port.out.persistance.module.ModuleCheckStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.markers.User;
 import kira.course.domain.shared.CourseContentStatus;
@@ -25,8 +25,8 @@ class TestPublishService implements PublishTestUseCase {
     private final TestSavePort savePort;
 
     private final CourseAccessPort accessPort;
-    private final ModuleStatusPort checkModuleStatusPort;
-    private final CourseStatusPort checkCourseStatusPort;
+    private final ModuleCheckStatusPort checkModuleStatusPort;
+    private final CourseCheckStatusPort checkCourseStatusPort;
 
     @Override
     public void publish(Id<User> requesterId, Id<Test> testId) {

@@ -1,13 +1,12 @@
 package kira.course.application.service.core.query;
 
-import common.domain.entity.Id;
-import java.util.List;
-
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import kira.course.domain.CourseAggregateType;
+import common.domain.entity.Id;
+import java.util.List;
 import kira.course.application.port.in.query.owned.*;
 import kira.course.application.port.out.persistance.query.OwnedCoursesQueryPort;
+import kira.course.domain.CourseAggregateType;
 import kira.course.domain.course.Course;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;

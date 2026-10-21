@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-
 import kira.infrastructure.accesstoken.AccessTokenDecoder;
 import kira.infrastructure.api.TokenPayload;
 import kira.infrastructure.exceptions.TokenDecodeException;
