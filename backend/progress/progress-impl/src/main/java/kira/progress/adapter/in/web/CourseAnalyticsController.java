@@ -1,0 +1,68 @@
+package kira.progress.adapter.in.web;
+
+import common.domain.entity.Id;
+import java.util.List;
+import kira.infrastructure.api.TokenPayload;
+import kira.progress.application.port.in.query.analytics.CompletedTestStudentsResult;
+import kira.progress.application.port.in.query.analytics.CourseAnalyticsUseCase;
+import kira.progress.application.port.in.query.analytics.EnrolledStudentsResult;
+import kira.progress.application.port.in.query.analytics.StudentsLessonProgressResult;
+import kira.progress.application.port.in.query.shared.TestAnswersView;
+import kira.progress.domain.markers.Course;
+import kira.progress.domain.markers.Lesson;
+import kira.progress.domain.markers.Test;
+import kira.progress.domain.markers.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/owned")
+@RequiredArgsConstructor
+class CourseAnalyticsController {
+    private final CourseAnalyticsUseCase courseAnalyticsUseCase;
+
+    @GetMapping("/tests/{testId}/results")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CompletedTestStudentsResult> getStudentsTestResult(
+            @PathVariable("testId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
+        Id<User> userId = Id.of(token.userId());
+        Id<Test> testId = Id.of(resourceId);
+
+        return courseAnalyticsUseCase.findStudentsTestResult(userId, testId);
+    }
+
+    @GetMapping("/courses/{courseId}/enrollments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EnrolledStudentsResult> getEnrolledStudents(
+            @PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
+        Id<Course> courseId = Id.of(resourceId);
+        Id<User> userId = Id.of(token.userId());
+
+        return courseAnalyticsUseCase.findEnrolledStudents(userId, courseId);
+    }
+
+    @GetMapping("/lessons/{lessonId}/results")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentsLessonProgressResult> getWatchedLessonStudents(
+            @PathVariable("lessonId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
+        Id<Lesson> lessonId = Id.of(resourceId);
+        Id<User> userId = Id.of(token.userId());
+
+        return courseAnalyticsUseCase.findWatchedLessonStudents(userId, lessonId);
+    }
+
+    @GetMapping("/tests/{testId}/completed/{studentId}/answers")
+    @ResponseStatus(HttpStatus.OK)
+    public TestAnswersView getStudentTestAnswers(
+            @PathVariable("testId") Long resourceId,
+            @PathVariable("studentId") Long userId,
+            @AuthenticationPrincipal TokenPayload token) {
+        Id<User> studentId = Id.of(userId);
+        Id<User> teacherId = Id.of(token.userId());
+        Id<Test> testId = Id.of(resourceId);
+
+        return courseAnalyticsUseCase.findStudentTestAnswers(teacherId, studentId, testId);
+    }
+}

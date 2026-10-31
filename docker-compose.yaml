@@ -1,5 +1,6 @@
 services:
   backend:
+    container_name: backend
     build:
       context: ./backend
     environment:
@@ -13,16 +14,17 @@ services:
       database:
         condition: service_healthy
 
-  frontend:
-    build:
-      context: ./frontend
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
+#  frontend:
+#    build:
+#      context: ./frontend
+#    ports:
+#      - "80:80"
+#    depends_on:
+#      - backend
 
 
   database:
+    container_name: db
     image: postgres:17
     restart: always
     environment:

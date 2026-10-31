@@ -1,0 +1,7 @@
+app:
+  web:
+    cookie-ttl: 10d
+
+  tokens:
+    refresh:
+      refresh-token-length: 64
