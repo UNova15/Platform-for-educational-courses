@@ -1,7 +1,7 @@
 CREATE TABLE progress.lessons_progress
 (
-    user_id      INT,
-    lesson_id    INT,
-    completed_at TIMESTAMP,
-    PRIMARY KEY (user_id, lesson_id)
+    id           BIGSERIAL PRIMARY KEY,
+    user_id      BIGINT    NOT NULL,
+    lesson_id    BIGINT    NOT NULL,
+    completed_at TIMESTAMP NOT NULL
 );

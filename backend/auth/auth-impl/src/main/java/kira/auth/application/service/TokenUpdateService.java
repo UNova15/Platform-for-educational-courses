@@ -34,7 +34,7 @@ class TokenUpdateService implements UpdateTokenUseCase {
 
         RefreshToken refreshToken = loadPort.load(oldHashedToken)
                 .orElseThrow(() -> new ResourceNotFoundException(AuthAggregateType.ACCESS_TOKEN)
-                        .withContext("oldToken", oldRefresh));
+                        .withContext("oldToken", oldRefresh.value()));
 
         Id<User> userId = refreshToken.userId();
 

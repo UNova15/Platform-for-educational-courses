@@ -13,13 +13,13 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface OwnedCoursesQueryUseCase {
 
-    TeacherCourseView findTeachersCourseById(@NotNull Id<User> teacherId, @NotNull Id<Course> courseId);
+    TeacherCourseView getOwnedCourseUsingId(@NotNull Id<User> teacherId, @NotNull Id<Course> courseId);
 
-    TeachersModuleView findTeachersModuleById(@NotNull Id<User> teacherId, @NotNull Id<CourseModule> moduleId);
+    OwnedModuleView getOwnedModule(@NotNull Id<User> teacherId, @NotNull Id<CourseModule> moduleId);
 
-    TeachersLessonView findTeachersLessonById(@NotNull Id<User> teacherId, @NotNull Id<Lesson> lessonId);
+    TeachersLessonView getOwnedLesson(@NotNull Id<User> teacherId, @NotNull Id<Lesson> lessonId);
 
-    FullTestView findFullTestById(@NotNull Id<User> teacherId, @NotNull Id<Test> testId);
+    OwnedTestView getOwnedTest(@NotNull Id<User> teacherId, @NotNull Id<Test> testId);
 
-    List<OwnedCoursesView> findTeachersCourses(@NotNull Id<User> teacherId);
+    List<OwnedCoursesView> getOwnedCourses(@NotNull Id<User> teacherId);
 }

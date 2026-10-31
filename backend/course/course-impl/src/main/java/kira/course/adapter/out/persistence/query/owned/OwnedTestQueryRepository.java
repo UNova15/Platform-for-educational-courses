@@ -3,8 +3,8 @@ package kira.course.adapter.out.persistence.query.owned;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import kira.course.application.port.in.query.owned.FullTestView;
-import kira.course.application.port.in.query.owned.TeachersModuleView;
+import kira.course.application.port.in.query.owned.OwnedModuleView;
+import kira.course.application.port.in.query.owned.OwnedTestView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -14,46 +14,46 @@ import org.springframework.stereotype.Repository;
 class OwnedTestQueryRepository {
     private final JdbcClient dbClient;
 
-    List<TeachersModuleView.Test> findTeacherModuleTestViewByModuleId(Long moduleId) {
+    List<OwnedModuleView.Test> findTeacherModuleTestViewByModuleId(Long moduleId) {
         return dbClient.sql("""
             SELECT t.id,t.title,t.status
             FROM course.tests t
             WHERE t.module_id = :moduleId
             """)
                 .param("moduleId", moduleId)
-                .query(TeachersModuleView.Test.class)
+                .query(OwnedModuleView.Test.class)
                 .list();
     }
 
-    Optional<FullTestView> findTeachersTestViewById(Long id) {
+    Optional<OwnedTestView> findTeachersTestViewById(Long id) {
         return dbClient.sql("""
-            SELECT t.id,t.moduleId,t.title,t.description,t.order_index,t.status,c.teacher_id
+            SELECT t.id,t.module_id,t.title,t.description,t.order_index,t.status,c.teacher_id
             FROM course.tests t
             JOIN course.modules m ON m.id = t.module_id
             JOIN course.courses c ON c.id = m.course_id
             WHERE t.id = :id
-            """).param("id", id).query(FullTestView.class).optional();
+            """).param("id", id).query(OwnedTestView.class).optional();
     }
 
-    List<FullTestView.Question> findAllQuestionsInTestByTestId(Long id) {
+    List<OwnedTestView.Question> findAllQuestionsInTestByTestId(Long id) {
         return dbClient.sql("""
             SELECT q.id,q.test_id,q.question,q.order_index
-            FROM course.questions q
+            FROM course.test_questions q
             WHERE q.test_id = :id
             """)
                 .param("id", id)
-                .query(FullTestView.Question.class)
+                .query(OwnedTestView.Question.class)
                 .list();
     }
 
-    List<FullTestView.Option> findAllOptionsInTestByQuestionIds(Collection<Long> ids) {
+    List<OwnedTestView.Option> findAllOptionsInTestByQuestionIds(Collection<Long> ids) {
         return dbClient.sql("""
                 SELECT o.id,o.question_id,o.option,o.is_correct
-                FROM course.options o
-                WHERE o.question_id IN :ids
+                FROM course.question_options o
+                WHERE o.question_id IN (:ids)
                 """)
                 .param("ids", ids)
-                .query(FullTestView.Option.class)
+                .query(OwnedTestView.Option.class)
                 .list();
     }
 }

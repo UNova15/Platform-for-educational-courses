@@ -20,7 +20,7 @@ class TestAnswerQueryAdapter implements TestAnswerKeyQueryPort {
             SELECT q.id AS question_id, o.id AS option_id
             FROM course.test_questions q
             JOIN course.question_options o ON o.question_id = q.id
-            WHERE t.test_id = :testId AND o.is_correct = TRUE
+            WHERE q.test_id = :testId AND o.is_correct = TRUE
             """).param("testId", testId.value()).query(rs -> {
             if (!rs.next()) {
                 return Optional.empty();

@@ -2,5 +2,5 @@ app:
   tokens:
     access:
       access-token-generation-key: ${JWT_KEY}
-      access-token-ttl: 10h
+      access-token-ttl: 15m
       access-token-clock-skew: 100

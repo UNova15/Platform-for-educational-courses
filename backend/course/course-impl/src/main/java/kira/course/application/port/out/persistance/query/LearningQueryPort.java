@@ -12,7 +12,7 @@ import kira.course.domain.test.Test;
 
 public interface LearningQueryPort {
 
-    List<UserCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids);
+    List<StudentCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids);
 
     Optional<StudentsCourseView> findCourseViewByIdAndStatus(Id<Course> id, CourseContentStatus status);
 

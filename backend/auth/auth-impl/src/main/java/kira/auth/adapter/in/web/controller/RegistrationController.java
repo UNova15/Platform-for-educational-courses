@@ -23,8 +23,8 @@ class RegistrationController {
 
     @PostMapping("/registration")
     public ResponseEntity<AuthTokens> registration(@RequestBody @Valid RegistrationCommand request) {
-        Login login = Login.of(request.login());
-        RawPassword password = RawPassword.of(request.password());
+        var login = Login.of(request.login());
+        var password = RawPassword.of(request.password());
 
         AuthTokens authTokens = registrationService.registration(login, password);
 

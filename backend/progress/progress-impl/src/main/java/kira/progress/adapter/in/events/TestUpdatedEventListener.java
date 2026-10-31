@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TestUpdatedEventListener {
+class TestUpdatedEventListener {
     private final RemoveTestAttemptUseCase removeTestAttemptUseCase;
 
     @EventListener(condition = "#event.wasPublished()")

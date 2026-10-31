@@ -24,50 +24,50 @@ class OwnedCoursesQueryController {
 
     // поиск всех курсов которыми владеет учитель
     @GetMapping("/courses")
-    public List<OwnedCoursesView> findTeachersCourses(@AuthenticationPrincipal TokenPayload token) {
+    public List<OwnedCoursesView> getOwnedCourses(@AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
 
-        return queryUseCase.findTeachersCourses(userId);
+        return queryUseCase.getOwnedCourses(userId);
     }
 
     // поиск курса которым владеет учитель по id. Возвращает скелет курса(информация о курсе и краткая информация о
     // модулях)
     @GetMapping("/courses/{courseId}")
-    public TeacherCourseView findTeachersCourseById(
+    public TeacherCourseView getOwnedCourseById(
             @PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersCourseById(userId, courseId);
+        return queryUseCase.getOwnedCourseUsingId(userId, courseId);
     }
 
     // возвращает полную информацию о модуле и краткую информацию о уроках и тестах (их id и заголовки)
     @GetMapping("/modules/{moduleId}")
-    public TeachersModuleView findTeachersModuleById(
+    public OwnedModuleView getOwnedModule(
             @PathVariable("moduleId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersModuleById(userId, moduleId);
+        return queryUseCase.getOwnedModule(userId, moduleId);
     }
 
     // возвращает полную информацию о тесте
     @GetMapping("/tests/{testId}")
-    public FullTestView findTeachersCoursesTestById(
+    public OwnedTestView getOwnedTest(
             @PathVariable("testId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
 
-        return queryUseCase.findFullTestById(userId, testId);
+        return queryUseCase.getOwnedTest(userId, testId);
     }
 
     // возвращает полную информацию о уроке
     @GetMapping("/lessons/{lessonId}")
-    public TeachersLessonView findTeachersCoursesLessonById(
+    public TeachersLessonView getOwnedLesson(
             @PathVariable("lessonId") long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
 
-        return queryUseCase.findTeachersLessonById(userId, lessonId);
+        return queryUseCase.getOwnedLesson(userId, lessonId);
     }
 }

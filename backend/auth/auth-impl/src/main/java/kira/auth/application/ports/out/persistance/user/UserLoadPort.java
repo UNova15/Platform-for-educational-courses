@@ -6,7 +6,7 @@ import kira.auth.domain.user.User;
 import kira.auth.domain.user.valueobject.Login;
 
 public interface UserLoadPort {
-    boolean isExistUserByLogin(Login login);
+    boolean isExistsUserByLogin(Login login);
 
     Optional<User> loadUserByLogin(Login login);
 

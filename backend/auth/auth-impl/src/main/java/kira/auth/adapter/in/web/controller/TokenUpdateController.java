@@ -20,7 +20,7 @@ class TokenUpdateController {
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthTokens> refresh(@CookieValue("refreshToken") String refreshToken) {
-        RawRefreshToken token = RawRefreshToken.of(refreshToken);
+        var token = RawRefreshToken.of(refreshToken);
 
         AuthTokens authTokens = updateTokenUseCase.updateTokens(token);
 

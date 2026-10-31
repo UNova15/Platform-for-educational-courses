@@ -41,9 +41,9 @@ class ModuleCreateService implements ModuleCreateUseCase {
 
         var title = Title.of(createCommand.title());
         var description = Description.of(createCommand.description());
-        CourseModule module = CourseModule.create(courseId, title, description, createCommand.orderIndex());
+        var module = CourseModule.create(courseId, title, description, createCommand.orderIndex());
 
-        CourseModule savedModule = savePort.save(module);
+        var savedModule = savePort.save(module);
 
         return new ModuleCreateResult(
                 savedModule.id().value(), savedModule.title().value());

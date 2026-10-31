@@ -29,7 +29,7 @@ class TokenPublisher {
         RawRefreshToken refresh = refreshTokenGeneratePort.generateRefreshToken();
 
         HashedRefreshToken hashedToken = hashingPort.hash(refresh);
-        RefreshToken refreshToken = RefreshToken.create(userId, hashedToken);
+        var refreshToken = RefreshToken.create(userId, hashedToken);
 
         savePort.save(refreshToken);
 

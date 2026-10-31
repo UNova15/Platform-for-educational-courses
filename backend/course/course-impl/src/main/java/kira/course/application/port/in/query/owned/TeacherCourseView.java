@@ -8,10 +8,8 @@ import kira.course.domain.shared.CourseContentStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(fluent = true)
 @RequiredArgsConstructor
 public class TeacherCourseView {
     private final long id;

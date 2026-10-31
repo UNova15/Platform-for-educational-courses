@@ -4,10 +4,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(fluent = true)
 @RequiredArgsConstructor
 public class StudentsTestView {
     private final long id;
@@ -27,7 +25,7 @@ public class StudentsTestView {
         private final long id;
         private final long testId;
         private final int orderIndex;
-        private final String content;
+        private final String question;
 
         @Setter
         private List<AnswerOption> options;

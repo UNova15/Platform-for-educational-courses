@@ -43,8 +43,8 @@ class LearningTestQueryRepository {
 
     List<StudentsTestView.Question> findStudentsTestQuestionsView(Long testId) {
         return dbClient.sql("""
-            SELECT id,test_id,order_index,content
-            FROM course.questions q
+            SELECT q.id,q.test_id,q.order_index,q.question
+            FROM course.test_questions q
             WHERE  q.test_id = :testId
             """)
                 .param("testId", testId)
@@ -55,8 +55,8 @@ class LearningTestQueryRepository {
     List<StudentsTestView.AnswerOption> findStudentsTestOptionsView(Collection<Long> questionId) {
         return dbClient.sql("""
             SELECT id,question_id,option
-            FROM course.options o
-            WHERE o.question_id IN :questionsIds
+            FROM course.question_options o
+            WHERE o.question_id IN (:questionsIds)
             """)
                 .param("questionsIds", questionId)
                 .query(StudentsTestView.AnswerOption.class)

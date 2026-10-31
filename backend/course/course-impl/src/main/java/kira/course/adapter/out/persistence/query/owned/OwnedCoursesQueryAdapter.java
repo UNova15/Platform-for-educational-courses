@@ -29,66 +29,67 @@ class OwnedCoursesQueryAdapter implements OwnedCoursesQueryPort {
     }
 
     @Override
-    public Optional<TeacherCourseView> findTeachersCourseById(Id<Course> courseId) {
-        Optional<TeacherCourseView> view = courseRepository.findTeacherCourseViewById(courseId.value());
+    public Optional<TeacherCourseView> findOwnedCourseById(Id<Course> courseId) {
+        Optional<TeacherCourseView> view = courseRepository.findOwnedCourseViewById(courseId.value());
 
         view.ifPresent(course -> {
             List<TeacherCourseView.Module> modules =
-                    moduleQueryRepository.findTeacherCourseModuleViewByCourseId(courseId.value());
-            course.modules(modules);
+                    moduleQueryRepository.findOwnedCourseModuleViewByCourseId(courseId.value());
+            course.setModules(modules);
         });
 
         return view;
     }
 
     @Override
-    public Optional<TeachersModuleView> findTeachersModuleById(Id<CourseModule> moduleId) {
-        Optional<TeachersModuleView> view = moduleQueryRepository.findTeacherViewById(moduleId.value());
+    public Optional<OwnedModuleView> findOwnedModuleById(Id<CourseModule> moduleId) {
+        Optional<OwnedModuleView> view = moduleQueryRepository.findOwnedViewById(moduleId.value());
 
         view.ifPresent(module -> {
-            List<TeachersModuleView.Lesson> lessons =
+            List<OwnedModuleView.Lesson> lessons =
                     lessonQueryRepository.findAllTeacherModuleLessonViewByModuleId(moduleId.value());
-            List<TeachersModuleView.Test> tests =
+            List<OwnedModuleView.Test> tests =
                     testQueryRepository.findTeacherModuleTestViewByModuleId(moduleId.value());
 
-            module.lessons(lessons);
-            module.tests(tests);
+            module.setLessons(lessons);
+            module.setTests(tests);
         });
 
         return view;
     }
 
     @Override
-    public Optional<TeachersLessonView> findTeachersLessonById(Id<Lesson> lessonId) {
+    public Optional<TeachersLessonView> findOwnedLessonById(Id<Lesson> lessonId) {
         return lessonQueryRepository.findTeachersLessonViewById(lessonId.value());
     }
 
+    // вынести сборку в отдельный класс маппер. Сначала запросить данные, затем в маппере собрать
     @Override
-    public Optional<FullTestView> findFullTestById(Id<Test> testId) {
-        Optional<FullTestView> view = testQueryRepository.findTeachersTestViewById(testId.value());
+    public Optional<OwnedTestView> findOwnedTestById(Id<Test> testId) {
+        Optional<OwnedTestView> view = testQueryRepository.findTeachersTestViewById(testId.value());
 
         view.ifPresent(test -> {
-            List<FullTestView.Question> questions = testQueryRepository.findAllQuestionsInTestByTestId(test.id());
+            List<OwnedTestView.Question> questions = testQueryRepository.findAllQuestionsInTestByTestId(test.getId());
 
             if (questions.isEmpty()) {
-                test.questions(List.of());
+                test.setQuestions(List.of());
                 return;
             }
 
             List<Long> questionIds =
-                    questions.stream().map(FullTestView.Question::id).toList();
+                    questions.stream().map(OwnedTestView.Question::getId).toList();
 
-            List<FullTestView.Option> options = testQueryRepository.findAllOptionsInTestByQuestionIds(questionIds);
+            List<OwnedTestView.Option> options = testQueryRepository.findAllOptionsInTestByQuestionIds(questionIds);
 
-            Map<Long, List<FullTestView.Option>> optionsByQuestionId =
-                    options.stream().collect(Collectors.groupingBy(FullTestView.Option::questionId));
+            Map<Long, List<OwnedTestView.Option>> optionsByQuestionId =
+                    options.stream().collect(Collectors.groupingBy(OwnedTestView.Option::questionId));
 
             for (var question : questions) {
-                List<FullTestView.Option> foundOptions = optionsByQuestionId.getOrDefault(question.id(), List.of());
-                question.options(foundOptions);
+                List<OwnedTestView.Option> foundOptions = optionsByQuestionId.getOrDefault(question.getId(), List.of());
+                question.setOptions(foundOptions);
             }
 
-            test.questions(questions);
+            test.setQuestions(questions);
         });
 
         return view;

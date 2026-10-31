@@ -22,8 +22,8 @@ class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthTokens> login(@RequestBody @Valid LoginCommand request) {
-        Login login = Login.of(request.login());
-        RawPassword password = RawPassword.of(request.password());
+        var login = Login.of(request.login());
+        var password = RawPassword.of(request.password());
 
         AuthTokens authTokens = loginUseCase.login(login, password);
 

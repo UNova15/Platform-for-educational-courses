@@ -4,5 +4,5 @@ import java.time.LocalDateTime;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.Tag;
 
-public record UserCourseView(
+public record StudentCourseView(
         long id, long teacherId, Tag tag, LocalDateTime createdAt, String title, CourseStatus status) {}

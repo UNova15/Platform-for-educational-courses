@@ -12,11 +12,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @Accessors(fluent = true)
 @AllArgsConstructor
 class EnrollmentEntity {
-
-    record EnrollmentKey(long userId, long courseId) {}
-
     @Id
-    private final EnrollmentKey id;
+    private final Long id;
+
+    private final long courseId;
+    private final long userId;
 
     private final LocalDateTime createdAt;
 }

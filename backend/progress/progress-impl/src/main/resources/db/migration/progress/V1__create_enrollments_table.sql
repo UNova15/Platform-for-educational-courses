@@ -1,7 +1,8 @@
 CREATE TABLE progress.enrollments
 (
-    user_id    INT,
-    course_id  INT,
+    id         BIGSERIAL PRIMARY KEY,
+    user_id    BIGINT,
+    course_id  BIGINT,
     created_at TIMESTAMP,
-    PRIMARY KEY (user_id, course_id)
+    UNIQUE (user_id, course_id)
 );

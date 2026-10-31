@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface LearningQueryUseCase {
 
-    List<UserCourseView> findCoursesThatUsersIsEnrolledIn(@NotNull Id<User> requesterId);
+    List<StudentCourseView> findCoursesThatUsersIsEnrolledIn(@NotNull Id<User> requesterId);
 
     StudentsCourseView findStudentsCourse(@NotNull Id<User> requesterId, @NotNull Id<Course> courseId);
 

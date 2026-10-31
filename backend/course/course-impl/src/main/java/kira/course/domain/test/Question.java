@@ -56,7 +56,7 @@ public class Question {
                     "Incorrect options count in question", options.size(), MAX_OPTION_COUNT, MIN_OPTION_COUNT);
         }
 
-        if (options.stream().anyMatch(AnswerOption::isCorrect)) {
+        if (options.stream().noneMatch(AnswerOption::isCorrect)) {
             throw new DomainValidationException(
                     "The question must contain at least one correct answer", CourseAggregateType.QUESTION);
         }

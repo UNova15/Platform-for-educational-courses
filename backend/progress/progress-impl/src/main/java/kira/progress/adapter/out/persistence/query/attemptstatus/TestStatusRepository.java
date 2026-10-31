@@ -11,10 +11,12 @@ class TestStatusRepository {
 
     boolean isTestCompleted(long studentId, long testId) {
         return dbClient.sql("""
-            SELECT 1 FROM progress.test_submissions s
-            WHERE s.user_id = :studentId AND s.test_id = :testId
-            AND s.started_at IS NOT NULL AND s.completed_at IS NOT NULL
-            """)
+                        SELECT EXISTS
+                            (SELECT 1 FROM progress.test_submissions s
+                        WHERE s.user_id = :studentId AND s.test_id = :testId
+                        AND s.started_at IS NOT NULL AND s.completed_at IS NOT NULL
+                        )
+                        """)
                 .param("studentId", studentId)
                 .param("testId", testId)
                 .query(Boolean.class)
@@ -23,9 +25,11 @@ class TestStatusRepository {
 
     boolean isStudentSolvingTest(long studentId, long testId) {
         return dbClient.sql("""
-                        SELECT 1 FROM progress.test_submissions s
+                        SELECT EXISTS
+                            (SELECT 1 FROM progress.test_submissions s
                         WHERE s.user_id = :studentId AND s.test_id = :testId
                         AND s.started_at IS NOT NULL AND s.completed_at IS NULL
+                        )
                         """)
                 .param("studentId", studentId)
                 .param("testId", testId)

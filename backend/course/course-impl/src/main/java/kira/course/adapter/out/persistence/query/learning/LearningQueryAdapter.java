@@ -25,7 +25,7 @@ class LearningQueryAdapter implements LearningQueryPort {
     private final LearningTestQueryRepository testQueryRepository;
 
     @Override
-    public List<UserCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids) {
+    public List<StudentCourseView> findCoursesThatUsersIsEnrolledIn(List<Id<Course>> ids) {
         List<Long> coursesIds = ids.stream().map(Id::value).toList();
 
         return courseQueryRepository.findEnrolledCoursesByCoursesIds(coursesIds);
@@ -41,7 +41,7 @@ class LearningQueryAdapter implements LearningQueryPort {
             if (modules.isEmpty()) {
                 return;
             }
-            course.modules(modules);
+            course.setModules(modules);
         });
 
         return view;
@@ -57,8 +57,8 @@ class LearningQueryAdapter implements LearningQueryPort {
             List<StudentsModuleView.Test> tests =
                     testQueryRepository.findStudentsModuleTestView(id.value(), status.name());
 
-            module.lessons(lessons.isEmpty() ? List.of() : lessons);
-            module.tests(tests.isEmpty() ? List.of() : tests);
+            module.setLessons(lessons.isEmpty() ? List.of() : lessons);
+            module.setTests(tests.isEmpty() ? List.of() : tests);
         });
 
         return view;
@@ -76,11 +76,11 @@ class LearningQueryAdapter implements LearningQueryPort {
         view.ifPresent(test -> {
             List<StudentsTestView.Question> questions = testQueryRepository.findStudentsTestQuestionsView(id.value());
             if (questions.isEmpty()) {
-                test.questions(List.of());
+                test.setQuestions(List.of());
                 return;
             }
             List<Long> questionsIds =
-                    questions.stream().map(StudentsTestView.Question::id).toList();
+                    questions.stream().map(StudentsTestView.Question::getId).toList();
 
             List<StudentsTestView.AnswerOption> options = testQueryRepository.findStudentsTestOptionsView(questionsIds);
 
@@ -88,9 +88,9 @@ class LearningQueryAdapter implements LearningQueryPort {
                     options.stream().collect(Collectors.groupingBy(StudentsTestView.AnswerOption::questionId));
 
             for (var question : questions) {
-                question.options(optionsByQuestionId.getOrDefault(question.id(), List.of()));
+                question.setOptions(optionsByQuestionId.getOrDefault(question.getId(), List.of()));
             }
-            test.questions(questions);
+            test.setQuestions(questions);
         });
 
         return view;

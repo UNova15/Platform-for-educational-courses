@@ -2,8 +2,8 @@ package kira.course.adapter.out.persistence.query.learning;
 
 import java.util.List;
 import java.util.Optional;
+import kira.course.application.port.in.query.learning.StudentCourseView;
 import kira.course.application.port.in.query.learning.StudentsCourseView;
-import kira.course.application.port.in.query.learning.UserCourseView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -23,13 +23,13 @@ class LearningCourseQueryRepository {
                 .optional();
     }
 
-    List<UserCourseView> findEnrolledCoursesByCoursesIds(List<Long> coursesIds) {
+    List<StudentCourseView> findEnrolledCoursesByCoursesIds(List<Long> coursesIds) {
         return dbClient.sql("""
             SELECT id,teacher_id,tag,created_at,title,status
-            FROM course.courses c WHERE c.id IN :coursesIds
+            FROM course.courses c WHERE c.id IN (:coursesIds)
             """)
                 .param("coursesIds", coursesIds)
-                .query(UserCourseView.class)
+                .query(StudentCourseView.class)
                 .list();
     }
 }

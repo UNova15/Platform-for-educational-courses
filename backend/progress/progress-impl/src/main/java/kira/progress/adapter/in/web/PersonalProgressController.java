@@ -21,7 +21,7 @@ class PersonalProgressController {
 
     @GetMapping("/modules/{moduleId}/progress")
     @ResponseStatus(HttpStatus.OK)
-    public ProgressSummary findStudentsProgressInModule(
+    public ProgressSummary getMyProgressInModule(
             @PathVariable("moduleId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> studentId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
@@ -31,7 +31,7 @@ class PersonalProgressController {
 
     @GetMapping("/tests/{testId}/attempts")
     @ResponseStatus(HttpStatus.OK)
-    public TestAnswersView findStudentsTestAttempt(
+    public TestAnswersView getMyTestAttempt(
             @PathVariable("testId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<Test> testId = Id.of(resourceId);
         Id<User> studentId = Id.of(token.userId());

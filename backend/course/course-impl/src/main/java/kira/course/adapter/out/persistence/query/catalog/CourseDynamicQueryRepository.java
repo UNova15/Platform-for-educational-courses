@@ -15,11 +15,11 @@ class CourseDynamicQueryRepository {
     private final JdbcClient dbClient;
 
     // в случае расширение количества условий изменить jdbc client на jooq/criteria api
-    public List<CourseCursorView> findCoursesByCursor(CursorCourseQuery query) {
+    public List<CourseCursorView> findPublishedCoursesByCursor(CursorCourseQuery query) {
         StringBuilder sql = new StringBuilder("""
             SELECT id,teacher_id,title,description,tag,created_at
             FROM course.courses c
-            WHERE c.status NOT IN ('DRAFT', 'ARCHIVED')
+            WHERE c.status = 'PUBLISHED'
             """);
 
         Map<String, Object> params = new HashMap<>();

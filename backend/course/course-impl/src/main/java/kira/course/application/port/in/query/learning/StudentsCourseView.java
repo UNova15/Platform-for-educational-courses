@@ -7,10 +7,8 @@ import kira.course.domain.course.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(fluent = true)
 @RequiredArgsConstructor
 public class StudentsCourseView {
     private final long id;

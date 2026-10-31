@@ -29,7 +29,7 @@ class LearningQueryService implements LearningQueryUseCase {
     private final TestCompletionCheckPort testCompletionCheckPort;
 
     @Override
-    public List<UserCourseView> findCoursesThatUsersIsEnrolledIn(Id<User> requesterId) {
+    public List<StudentCourseView> findCoursesThatUsersIsEnrolledIn(Id<User> requesterId) {
         List<Id<Course>> coursesIds = enrollmentCoursesPort.findCoursesIdsThatUsersIsEnrolledIn(requesterId);
 
         if (coursesIds.isEmpty()) {
@@ -38,6 +38,7 @@ class LearningQueryService implements LearningQueryUseCase {
         return learningQueryPort.findCoursesThatUsersIsEnrolledIn(coursesIds);
     }
 
+    // нужно реализовать проверку статуса курса при запросе
     @Override
     public StudentsCourseView findStudentsCourse(Id<User> requesterId, Id<Course> courseId) {
         StudentsCourseView view = learningQueryPort
@@ -57,7 +58,7 @@ class LearningQueryService implements LearningQueryUseCase {
                 .findModuleViewByIdAndStatus(moduleId, CourseContentStatus.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.MODULE, moduleId));
 
-        Id<Course> courseId = Id.of(view.courseId());
+        Id<Course> courseId = Id.of(view.getCourseId());
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
             throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, requesterId, moduleId);
         }
@@ -85,7 +86,7 @@ class LearningQueryService implements LearningQueryUseCase {
                 .findTestViewByIdAndStatus(testId, CourseContentStatus.PUBLISHED)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.TEST, testId));
 
-        Id<Course> courseId = Id.of(view.courseId());
+        Id<Course> courseId = Id.of(view.getCourseId());
 
         if (!enrollmentCheckPort.isUserEnrolledInCourse(requesterId, courseId)) {
             throw new ResourceAccessDeniedException(CourseAggregateType.TEST, requesterId, testId);
@@ -94,6 +95,7 @@ class LearningQueryService implements LearningQueryUseCase {
         boolean isCompleted = testCompletionCheckPort.isTestCompleted(requesterId, testId);
         boolean isSolving = testCompletionCheckPort.isStudentSolvingTest(requesterId, testId);
 
+        // можно объединить в 1 запрос hasTestAttempt
         if (!isSolving && !isCompleted) {
             throw new RuleConflictException(
                     "The test has not been completed and is not being carried out right now",

@@ -24,7 +24,7 @@ class LearningQueryController {
 
     // получение списка курсов на которые записан пользователь
     @GetMapping("/courses")
-    public List<UserCourseView> findEnrolledCourses(@AuthenticationPrincipal TokenPayload token) {
+    public List<StudentCourseView> getEnrolledCourses(@AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
 
         return queryUseCase.findCoursesThatUsersIsEnrolledIn(userId);
@@ -32,7 +32,7 @@ class LearningQueryController {
 
     // поиск конкретного курса для студента/преподавателя по id. Возвращает скелет курса
     @GetMapping("/courses/{courseId}")
-    public StudentsCourseView findStudentsCourse(
+    public StudentsCourseView getStudentsCourse(
             @PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
@@ -41,7 +41,7 @@ class LearningQueryController {
     }
 
     @GetMapping("/modules/{moduleId}")
-    public StudentsModuleView findStudentsModule(
+    public StudentsModuleView getStudentsModule(
             @PathVariable("moduleId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<CourseModule> moduleId = Id.of(resourceId);
@@ -50,7 +50,7 @@ class LearningQueryController {
     }
 
     @GetMapping("/lessons/{lessonId}")
-    public StudentsLessonView findStudentsLesson(
+    public StudentsLessonView getStudentsLesson(
             @PathVariable("lessonId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Lesson> lessonId = Id.of(resourceId);
@@ -59,7 +59,7 @@ class LearningQueryController {
     }
 
     @GetMapping("/tests/{testId}")
-    public StudentsTestView findStudentsTest(
+    public StudentsTestView getStudentsTest(
             @PathVariable("testId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);

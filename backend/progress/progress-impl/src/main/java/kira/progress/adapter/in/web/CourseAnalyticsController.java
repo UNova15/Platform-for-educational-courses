@@ -25,7 +25,7 @@ class CourseAnalyticsController {
 
     @GetMapping("/tests/{testId}/results")
     @ResponseStatus(HttpStatus.OK)
-    public List<CompletedTestStudentsResult> findStudentsTestResult(
+    public List<CompletedTestStudentsResult> getStudentsTestResult(
             @PathVariable("testId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Test> testId = Id.of(resourceId);
@@ -35,7 +35,7 @@ class CourseAnalyticsController {
 
     @GetMapping("/courses/{courseId}/enrollments")
     @ResponseStatus(HttpStatus.OK)
-    public List<EnrolledStudentsResult> findEnrolledStudents(
+    public List<EnrolledStudentsResult> getEnrolledStudents(
             @PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<Course> courseId = Id.of(resourceId);
         Id<User> userId = Id.of(token.userId());
@@ -45,7 +45,7 @@ class CourseAnalyticsController {
 
     @GetMapping("/lessons/{lessonId}/results")
     @ResponseStatus(HttpStatus.OK)
-    public List<StudentsLessonProgressResult> findWatchedLessonStudents(
+    public List<StudentsLessonProgressResult> getWatchedLessonStudents(
             @PathVariable("lessonId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<Lesson> lessonId = Id.of(resourceId);
         Id<User> userId = Id.of(token.userId());
@@ -55,7 +55,7 @@ class CourseAnalyticsController {
 
     @GetMapping("/tests/{testId}/completed/{studentId}/answers")
     @ResponseStatus(HttpStatus.OK)
-    public TestAnswersView findStudentTestAnswers(
+    public TestAnswersView getStudentTestAnswers(
             @PathVariable("testId") Long resourceId,
             @PathVariable("studentId") Long userId,
             @AuthenticationPrincipal TokenPayload token) {

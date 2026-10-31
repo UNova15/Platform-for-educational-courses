@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Enrollment {
+    private final Id<Enrollment> id;
     private final Id<User> userId;
     private final Id<Course> courseId;
     private final LocalDateTime createdAt;
@@ -23,6 +24,6 @@ public class Enrollment {
             throw new ValueObjectValidationException("Incorrect data to create enrollment");
         }
 
-        return new Enrollment(userId, courseId, LocalDateTime.now());
+        return new Enrollment(null, userId, courseId, LocalDateTime.now());
     }
 }

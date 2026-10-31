@@ -13,11 +13,11 @@ import kira.course.domain.test.Test;
 public interface OwnedCoursesQueryPort {
     List<OwnedCoursesView> findTeachersCourses(Id<User> teacherId);
 
-    Optional<TeacherCourseView> findTeachersCourseById(Id<Course> courseId);
+    Optional<TeacherCourseView> findOwnedCourseById(Id<Course> courseId);
 
-    Optional<TeachersModuleView> findTeachersModuleById(Id<CourseModule> moduleId);
+    Optional<OwnedModuleView> findOwnedModuleById(Id<CourseModule> moduleId);
 
-    Optional<TeachersLessonView> findTeachersLessonById(Id<Lesson> lessonId);
+    Optional<TeachersLessonView> findOwnedLessonById(Id<Lesson> lessonId);
 
-    Optional<FullTestView> findFullTestById(Id<Test> testId);
+    Optional<OwnedTestView> findOwnedTestById(Id<Test> testId);
 }

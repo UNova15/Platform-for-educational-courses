@@ -47,7 +47,7 @@ class TestCreateService implements TestCreateUseCase {
         }
         Test test = testFactory.fromTestCreateCommand(command, moduleId);
 
-        Test savedTest = savePort.save(test);
+        var savedTest = savePort.save(test);
 
         return new TestCreateResponse(
                 savedTest.id().value(),

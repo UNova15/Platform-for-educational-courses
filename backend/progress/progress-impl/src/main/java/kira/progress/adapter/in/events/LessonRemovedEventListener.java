@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class LessonRemovedEventListener {
+class LessonRemovedEventListener {
     private final RemoveLessonProgressUseCase removeUseCase;
 
     @EventListener(condition = "#event.wasPublished()")

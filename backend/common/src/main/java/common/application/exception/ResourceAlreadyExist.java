@@ -11,6 +11,6 @@ public class ResourceAlreadyExist extends RuleConflictException {
     }
 
     public ResourceAlreadyExist(AggregateType type) {
-        super("Resource: %s already exists".formatted(type.value()), type);
+        super("Resource:%s already exists".formatted(type.value()), type);
     }
 }

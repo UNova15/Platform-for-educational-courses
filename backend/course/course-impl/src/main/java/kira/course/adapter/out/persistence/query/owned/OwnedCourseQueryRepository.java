@@ -24,11 +24,11 @@ class OwnedCourseQueryRepository {
                 .list();
     }
 
-    Optional<TeacherCourseView> findTeacherCourseViewById(Long courseId) {
+    Optional<TeacherCourseView> findOwnedCourseViewById(Long courseId) {
         return dbClient.sql("""
             SELECT c.id,c.teacher_id,c.tag,c.created_at,c.title,c.description,c.status
             FROM course.courses c
-            WHERE c.course_id = :courseId
+            WHERE c.id = :courseId
             """)
                 .param("courseId", courseId)
                 .query(TeacherCourseView.class)

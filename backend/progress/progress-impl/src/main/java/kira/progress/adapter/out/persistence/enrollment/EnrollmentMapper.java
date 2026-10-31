@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 class EnrollmentMapper {
 
     public EnrollmentEntity toEntity(Enrollment enrollment) {
-        var key = new EnrollmentEntity.EnrollmentKey(
-                enrollment.userId().value(), enrollment.courseId().value());
-
-        return new EnrollmentEntity(key, enrollment.createdAt());
+        Long id = enrollment.id() == null ? null : enrollment.id().value();
+        return new EnrollmentEntity(
+                id, enrollment.courseId().value(), enrollment.userId().value(), enrollment.createdAt());
     }
 }

@@ -23,20 +23,20 @@ class RegistrationService implements RegistrationUseCase {
     private final UserSavePort savePort;
 
     private final PasswordHasherPort passwordHasher;
-    private final TokenPublisher tokenService;
+    private final TokenPublisher tokenPublisher;
 
     @Override
     @Transactional
     public AuthTokens registration(Login login, RawPassword password) {
-        if (loadPort.isExistUserByLogin(login)) {
+        if (loadPort.isExistsUserByLogin(login)) {
             throw new ResourceAlreadyExist(AuthAggregateType.USER).withContext("login", login.value());
         }
 
         HashedPassword hashedPassword = passwordHasher.hashPassword(password);
-        User user = User.create(login, hashedPassword);
+        var user = User.create(login, hashedPassword);
 
         Id<User> userId = savePort.save(user).id();
 
-        return tokenService.issueTokens(userId, login);
+        return tokenPublisher.issueTokens(userId, login);
     }
 }

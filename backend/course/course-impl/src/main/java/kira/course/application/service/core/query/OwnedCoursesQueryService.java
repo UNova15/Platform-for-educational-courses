@@ -21,17 +21,17 @@ class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     private final OwnedCoursesQueryPort queryPort;
 
     @Override
-    public List<OwnedCoursesView> findTeachersCourses(Id<User> teacherId) {
+    public List<OwnedCoursesView> getOwnedCourses(Id<User> teacherId) {
         return queryPort.findTeachersCourses(teacherId);
     }
 
     @Override
-    public TeacherCourseView findTeachersCourseById(Id<User> teacherId, Id<Course> courseId) {
+    public TeacherCourseView getOwnedCourseUsingId(Id<User> teacherId, Id<Course> courseId) {
         TeacherCourseView view = queryPort
-                .findTeachersCourseById(courseId)
+                .findOwnedCourseById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.COURSE, courseId));
 
-        if (view.teacherId() != teacherId.value()) {
+        if (view.getTeacherId() != teacherId.value()) {
             throw new ResourceAccessDeniedException(CourseAggregateType.COURSE, teacherId, courseId);
         }
 
@@ -39,12 +39,12 @@ class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     }
 
     @Override
-    public TeachersModuleView findTeachersModuleById(Id<User> teacherId, Id<CourseModule> moduleId) {
-        TeachersModuleView view = queryPort
-                .findTeachersModuleById(moduleId)
+    public OwnedModuleView getOwnedModule(Id<User> teacherId, Id<CourseModule> moduleId) {
+        OwnedModuleView view = queryPort
+                .findOwnedModuleById(moduleId)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.MODULE, moduleId));
 
-        if (view.teacherId() != teacherId.value()) {
+        if (view.getTeacherId() != teacherId.value()) {
             throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
@@ -52,9 +52,9 @@ class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     }
 
     @Override
-    public TeachersLessonView findTeachersLessonById(Id<User> teacherId, Id<Lesson> lessonId) {
+    public TeachersLessonView getOwnedLesson(Id<User> teacherId, Id<Lesson> lessonId) {
         TeachersLessonView view = queryPort
-                .findTeachersLessonById(lessonId)
+                .findOwnedLessonById(lessonId)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.LESSON, lessonId));
 
         if (view.teacherId() != teacherId.value()) {
@@ -65,12 +65,12 @@ class OwnedCoursesQueryService implements OwnedCoursesQueryUseCase {
     }
 
     @Override
-    public FullTestView findFullTestById(Id<User> teacherId, Id<Test> testId) {
-        FullTestView view = queryPort
-                .findFullTestById(testId)
+    public OwnedTestView getOwnedTest(Id<User> teacherId, Id<Test> testId) {
+        OwnedTestView view = queryPort
+                .findOwnedTestById(testId)
                 .orElseThrow(() -> new ResourceNotFoundException(CourseAggregateType.TEST, testId));
 
-        if (view.teacherId() != teacherId.value()) {
+        if (view.getTeacherId() != teacherId.value()) {
             throw new ResourceAccessDeniedException(CourseAggregateType.TEST, testId, teacherId);
         }
 

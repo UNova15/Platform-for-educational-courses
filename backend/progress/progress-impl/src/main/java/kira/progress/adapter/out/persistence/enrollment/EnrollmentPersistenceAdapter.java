@@ -17,8 +17,7 @@ class EnrollmentPersistenceAdapter implements EnrollmentLoadPort, EnrollmentSave
 
     @Override
     public boolean isEnrollmentExist(Id<User> userId, Id<Course> courseId) {
-        var id = new EnrollmentEntity.EnrollmentKey(userId.value(), courseId.value());
-        return repository.existsById(id);
+        return repository.existsByUserIdAndCourseId(userId.value(), courseId.value());
     }
 
     @Override

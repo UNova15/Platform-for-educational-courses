@@ -41,8 +41,6 @@ class CourseStatisticsPersistenceAdapter implements CourseStatisticsQueryPort {
                     SELECT t.id,t.user_id,t.started_at,t.completed_at,t.score
                     FROM progress.test_submissions t
                     WHERE t.test_id = :testId
-                    AND t.started_at IS NOT NULL
-                    AND t.completed_at IS NOT NULL
                     """)
                 .param("testId", testId.value())
                 .query(CompletedTestStudentsResult.class)

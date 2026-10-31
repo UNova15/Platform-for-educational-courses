@@ -5,12 +5,10 @@ import kira.course.domain.shared.CourseContentStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(fluent = true)
 @RequiredArgsConstructor
-public class FullTestView {
+public class OwnedTestView {
     private final long id;
 
     private final long moduleId;
@@ -24,7 +22,6 @@ public class FullTestView {
     private List<Question> questions;
 
     @Getter
-    @Accessors(fluent = true)
     @RequiredArgsConstructor
     public static class Question {
         private final long id;

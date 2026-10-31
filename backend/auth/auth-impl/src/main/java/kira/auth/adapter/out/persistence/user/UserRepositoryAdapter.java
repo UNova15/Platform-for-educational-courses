@@ -16,7 +16,7 @@ class UserRepositoryAdapter implements UserSavePort, UserLoadPort {
     private final UserMapper mapper;
 
     @Override
-    public boolean isExistUserByLogin(Login login) {
+    public boolean isExistsUserByLogin(Login login) {
         return repository.existsByLogin(login.value());
     }
 

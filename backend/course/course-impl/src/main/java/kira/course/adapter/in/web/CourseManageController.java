@@ -32,7 +32,6 @@ class CourseManageController {
     @ResponseStatus(HttpStatus.CREATED)
     public CourseCreateResponse createCourse(
             @Valid @RequestBody CourseCreateCommand command, @AuthenticationPrincipal TokenPayload token) {
-
         Id<User> userId = Id.of(token.userId());
         return createUseCase.createCourse(command, userId);
     }
@@ -42,7 +41,6 @@ class CourseManageController {
     public void removeCourse(@PathVariable("courseId") Long resourceId, @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
-
         removeUseCase.removeCourse(userId, courseId);
     }
 
@@ -54,7 +52,6 @@ class CourseManageController {
             @AuthenticationPrincipal TokenPayload token) {
         Id<User> userId = Id.of(token.userId());
         Id<Course> courseId = Id.of(resourceId);
-
         updateUseCase.updateCourse(command, courseId, userId);
     }
 

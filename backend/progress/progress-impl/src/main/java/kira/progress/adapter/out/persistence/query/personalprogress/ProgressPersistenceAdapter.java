@@ -22,25 +22,29 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
 
     @Override
     public List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId) {
+        List<Long> ids = lessonsIds.stream().map(Id::value).toList();
+
         return dbClient.sql("""
             SELECT l.lesson_id,l.completed_at FROM progress.lessons_progress l
-            WHERE l.user_id = :userId AND l.lesson_id IN :lessonsIds
+            WHERE l.user_id = :userId AND l.lesson_id IN (:lessonsIds)
             """)
                 .param("userId", userId.value())
-                .param("lessonsIds", lessonsIds)
+                .param("lessonsIds", ids)
                 .query(LessonProgressSummary.class)
                 .list();
     }
 
     @Override
     public List<TestProgressSummary> findCompletedTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId) {
+        List<Long> ids = testsIds.stream().map(Id::value).toList();
+
         return dbClient.sql("""
             SELECT t.test_id,t.started_at,t.completed_at,t.score
             FROM progress.test_submissions t
-            WHERE t.user_id = :userId AND t.test_id IN :testsIds
+            WHERE t.user_id = :userId AND t.test_id IN (:testsIds)
             """)
                 .param("userId", userId.value())
-                .param("testsIds", testsIds)
+                .param("testsIds", ids)
                 .query(TestProgressSummary.class)
                 .list();
     }
@@ -48,7 +52,7 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
     @Override
     public Optional<TestAnswersView> findTestAnswersViewByTestIdAndStudentId(Id<User> userId, Id<Test> testId) {
         return dbClient.sql("""
-            SELECT t.question_id, t.option_id
+            SELECT a.question_id, a.option_id
             FROM progress.test_submissions t
             JOIN progress.test_answers a ON t.id = a.test_submission_id
             WHERE t.user_id = :userId AND t.test_id = :testId
