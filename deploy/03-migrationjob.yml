@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kira-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate-auth
+          image: ghcr.io/unova15/kira-migrations:v1
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-url=jdbc:postgresql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+            - "-user=$(DB_USER)"
+            - "-password=$(DB_PASSWORD)"
+            - "-schemas=auth"
+            - "-locations=filesystem:/flyway/sql/auth"
+            - "migrate"
+
+          env:
+          envFrom:
+            - configMapRef:
+                name: config
+            - secretRef:
+                name: secret-data
+
+        - name: migrate-course
+          image: ghcr.io/unova15/kira-migrations:v1
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-url=jdbc:postgresql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+            - "-user=$(DB_USER)"
+            - "-password=$(DB_PASSWORD)"
+            - "-schemas=course"
+            - "-locations=filesystem:/flyway/sql/course"
+            - "migrate"
+
+          env:
+          envFrom:
+            - configMapRef:
+                name: config
+            - secretRef:
+                name: secret-data
+
+        - name: migrate-progress
+          image: ghcr.io/unova15/kira-migrations:v1
+          imagePullPolicy: IfNotPresent
+          args:
+            - "-url=jdbc:postgresql://$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+            - "-user=$(DB_USER)"
+            - "-password=$(DB_PASSWORD)"
+            - "-schemas=progress"
+            - "-locations=filesystem:/flyway/sql/progress"
+            - "migrate"
+
+          env:
+          envFrom:
+            - configMapRef:
+                name: config
+            - secretRef:
+                name: secret-data
+
+      restartPolicy: OnFailure

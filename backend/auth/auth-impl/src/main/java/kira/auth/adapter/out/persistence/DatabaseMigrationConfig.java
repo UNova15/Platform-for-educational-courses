@@ -1,3 +1,4 @@
+/*
 package kira.auth.adapter.out.persistence;
 
 import jakarta.annotation.PostConstruct;
@@ -21,3 +22,4 @@ class DatabaseMigrationConfig {
                 .migrate();
     }
 }
+*/

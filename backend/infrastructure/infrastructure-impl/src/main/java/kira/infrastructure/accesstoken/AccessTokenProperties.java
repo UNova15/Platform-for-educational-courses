@@ -7,4 +7,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app.tokens.access")
 record AccessTokenProperties(
-        @NotBlank String accessTokenGenerationKey, @NotNull Duration accessTokenTtl, int accessTokenClockSkew) {}
+        @NotBlank String accessTokenGenerationKey, @NotNull Duration accessTokenTtl) {}

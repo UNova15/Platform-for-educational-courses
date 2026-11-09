@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kira-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kira-frontend
+  template:
+    metadata:
+      labels:
+        app: kira-frontend
+    spec:
+      containers:
+        - name: kira-frontend
+          image: ghcr.io/unova15/kira-frontend:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    type: RollingUpdate

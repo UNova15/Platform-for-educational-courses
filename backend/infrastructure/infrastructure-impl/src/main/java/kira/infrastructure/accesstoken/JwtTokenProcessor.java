@@ -17,12 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
     private final SecretKey key;
-    private final long clockSkew;
     private final Duration expirationTime;
 
-    public static JwtTokenProcessor createWithKey(String key, long clockSkew, Duration expirationTime) {
+    public static JwtTokenProcessor createWithKey(String key, Duration expirationTime) {
         return new JwtTokenProcessor(
-                Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)), clockSkew, expirationTime);
+                Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)), expirationTime);
     }
 
     @Override
@@ -30,7 +29,6 @@ class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
         try {
             Claims parsedToken = Jwts.parser()
                     .verifyWith(key)
-                    .clockSkewSeconds(clockSkew)
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
