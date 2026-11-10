@@ -5,7 +5,7 @@ frontend/.npm/
 frontend/build/
 backend/target/
 backend/.mvn/wrapper/maven-wrapper.jar
-/deploy/00-secret.yml
+/deploy/k8s/00-secret.yml
 
 ### STS ###
 .apt_generated
