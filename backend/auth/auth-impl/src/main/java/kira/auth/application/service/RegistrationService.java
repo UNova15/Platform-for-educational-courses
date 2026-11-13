@@ -1,0 +1,42 @@
+package kira.auth.application.service;
+
+import common.application.exception.ResourceAlreadyExist;
+import common.domain.entity.Id;
+import kira.auth.application.ports.in.AuthTokens;
+import kira.auth.application.ports.in.RegistrationUseCase;
+import kira.auth.application.ports.out.crypto.PasswordHasherPort;
+import kira.auth.application.ports.out.persistance.user.UserLoadPort;
+import kira.auth.application.ports.out.persistance.user.UserSavePort;
+import kira.auth.domain.AuthAggregateType;
+import kira.auth.domain.user.User;
+import kira.auth.domain.user.valueobject.HashedPassword;
+import kira.auth.domain.user.valueobject.Login;
+import kira.auth.domain.user.valueobject.RawPassword;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+class RegistrationService implements RegistrationUseCase {
+    private final UserLoadPort loadPort;
+    private final UserSavePort savePort;
+
+    private final PasswordHasherPort passwordHasher;
+    private final TokenPublisher tokenPublisher;
+
+    @Override
+    @Transactional
+    public AuthTokens registration(Login login, RawPassword password) {
+        if (loadPort.isExistsUserByLogin(login)) {
+            throw new ResourceAlreadyExist(AuthAggregateType.USER).withContext("login", login.value());
+        }
+
+        HashedPassword hashedPassword = passwordHasher.hashPassword(password);
+        var user = User.create(login, hashedPassword);
+
+        Id<User> userId = savePort.save(user).id();
+
+        return tokenPublisher.issueTokens(userId, login);
+    }
+}

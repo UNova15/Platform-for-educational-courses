@@ -1,8 +1,11 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+frontend/node_modules/
+frontend/.npm/
+frontend/build/
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+/deploy/k8s/00-secret.yml
 
 ### STS ###
 .apt_generated

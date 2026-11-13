@@ -1,0 +1,23 @@
+package kira.course.application.service.external;
+
+import common.domain.entity.Id;
+import java.util.Optional;
+import kira.course.api.CourseAnswerKey;
+import kira.course.api.TestAnswerKeyQuery;
+import kira.course.application.port.out.persistance.query.TestAnswerKeyQueryPort;
+import kira.course.domain.test.Test;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+class TestAnswerQueryHandler implements TestAnswerKeyQuery {
+    private final TestAnswerKeyQueryPort queryPort;
+
+    @Override
+    public Optional<CourseAnswerKey> findAnswerKeyByTestId(long testId) {
+        Id<Test> mappedTestId = Id.of(testId);
+
+        return queryPort.findAnswerKeyByTestId(mappedTestId);
+    }
+}
