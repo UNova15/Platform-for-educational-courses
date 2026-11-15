@@ -1,6 +1,6 @@
 @use './variables';
 @use './reset';
-
+@use './Profile.scss';
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
