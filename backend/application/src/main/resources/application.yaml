@@ -12,11 +12,15 @@ spring:
       - optional:classpath:application-infrastructure.yaml
       - optional:classpath:application-auth.yaml
 
+  threads:
+    virtual:
+      enabled: true
+
 server:
   servlet:
     context-path: /api
 
-logging:
-  structured:
-    format:
-      console: ecs
+#logging:
+#  structured:
+#    format:
+#      console: ecs

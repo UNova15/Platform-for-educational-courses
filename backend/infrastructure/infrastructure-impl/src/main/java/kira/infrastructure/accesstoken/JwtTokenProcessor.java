@@ -20,8 +20,7 @@ class JwtTokenProcessor implements AccessTokenDecoder, AccessTokenGenerator {
     private final Duration expirationTime;
 
     public static JwtTokenProcessor createWithKey(String key, Duration expirationTime) {
-        return new JwtTokenProcessor(
-                Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)), expirationTime);
+        return new JwtTokenProcessor(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)), expirationTime);
     }
 
     @Override

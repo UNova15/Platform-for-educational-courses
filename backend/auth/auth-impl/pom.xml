@@ -46,7 +46,7 @@
         </dependency>
 
         <!-- Библиотеки -->
-       <!-- <dependency>
+        <!-- <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>-->
@@ -55,7 +55,7 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-       <!-- <dependency>
+        <!-- <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>-->

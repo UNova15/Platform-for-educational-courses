@@ -10,7 +10,6 @@ class AccessTokenConfiguration {
 
     @Bean
     public JwtTokenProcessor jwtTokenDecoder(AccessTokenProperties properties) {
-        return JwtTokenProcessor.createWithKey(
-                properties.accessTokenGenerationKey(), properties.accessTokenTtl());
+        return JwtTokenProcessor.createWithKey(properties.accessTokenGenerationKey(), properties.accessTokenTtl());
     }
 }

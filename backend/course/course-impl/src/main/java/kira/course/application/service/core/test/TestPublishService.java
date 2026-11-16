@@ -5,16 +5,18 @@ import common.application.exception.ResourceNotFoundException;
 import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.test.status.PublishTestUseCase;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.module.ModuleCheckStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.markers.User;
 import kira.course.domain.shared.CourseContentStatus;
 import kira.course.domain.test.Test;
+import kira.course.events.ContentPublishEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,9 @@ class TestPublishService implements PublishTestUseCase {
 
     private final CourseAccessPort accessPort;
     private final ModuleCheckStatusPort checkModuleStatusPort;
-    private final CourseCheckStatusPort checkCourseStatusPort;
+    private final CourseDetailsProviderPort checkCourseStatusPort;
+
+    private final EventPublisherPort eventPublisherPort;
 
     @Override
     public void publish(Id<User> requesterId, Id<Test> testId) {
@@ -37,11 +41,12 @@ class TestPublishService implements PublishTestUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.TEST, requesterId, testId);
         }
 
-        CourseStatus courseStatus = checkCourseStatusPort.findCourseStatusByTestId(testId);
-        if (courseStatus != CourseStatus.PUBLISHED) {
+        CourseDetails details = checkCourseStatusPort.findCourseDetailsByTestId(testId);
+        details.verifyCanPublishContent();
+        /*if (details.status() != CourseStatus.PUBLISHED) {
             throw new RuleConflictException(
                     "Cannot publish test in not published course", CourseAggregateType.TEST, testId);
-        }
+        }*/
 
         CourseContentStatus moduleStatus = checkModuleStatusPort.findStatusByTestId(testId);
         if (moduleStatus != CourseContentStatus.PUBLISHED) {
@@ -51,5 +56,13 @@ class TestPublishService implements PublishTestUseCase {
 
         test.publish();
         savePort.save(test);
+
+        //TODO
+        IO.println("Тест опубликован");
+        eventPublisherPort.publish(new ContentPublishEvent(
+                ContentPublishEvent.ContentPublishType.TEST,
+                test.title().value(),
+                details.courseId().value(),
+                testId.value()));
     }
 }

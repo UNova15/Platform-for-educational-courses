@@ -14,6 +14,4 @@ public interface PersonalProgressQueryPort {
     List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId);
 
     List<TestProgressSummary> findCompletedTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId);
-
-    List<Id<Course>> findCoursesIdsThatUsersIsEnrolledIn(Id<User> userId);
 }

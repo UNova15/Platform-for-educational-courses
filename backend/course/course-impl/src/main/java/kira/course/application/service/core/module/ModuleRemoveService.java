@@ -6,13 +6,13 @@ import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.module.remove.ModuleRemoveUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleRemovePort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ class ModuleRemoveService implements ModuleRemoveUseCase {
     private final ModuleRemovePort removePort;
     private final ModuleLoadPort loadPort;
 
-    private final CourseCheckStatusPort checkStatusPort;
+    private final CourseDetailsProviderPort checkStatusPort;
     private final LessonLoadPort lessonLoadPort;
     private final TestLoadPort testLoadPort;
 
@@ -39,11 +39,13 @@ class ModuleRemoveService implements ModuleRemoveUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
-        CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
-        if (status == CourseStatus.ARCHIVED) {
+        CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
+        details.verifyCanChangeContent();
+       /* if (status == CourseStatus.ARCHIVED) {
             throw new RuleConflictException(
                     "Cannot remove module in archived course", CourseAggregateType.MODULE, moduleId);
-        }
+        }*/
+
         if (lessonLoadPort.isExistsInModule(moduleId) || testLoadPort.isExistsInModule(moduleId)) {
             throw new RuleConflictException("Cannot remove non empty module", CourseAggregateType.MODULE, moduleId);
         }

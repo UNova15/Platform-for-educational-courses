@@ -3,7 +3,7 @@ package kira.course.application.service.external;
 import common.domain.entity.Id;
 import java.util.Optional;
 import kira.course.api.CheckCourseStatusQuery;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.lesson.LessonCheckStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleCheckStatusPort;
 import kira.course.application.port.out.persistance.test.TestCheckStatusPort;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class CheckCourseStatusQueryHandler implements CheckCourseStatusQuery {
     private final ModuleCheckStatusPort moduleStatusPort;
-    private final CourseCheckStatusPort courseStatusPort;
+    private final CourseDetailsProviderPort courseStatusPort;
     private final TestCheckStatusPort testStatusPort;
     private final LessonCheckStatusPort lessonStatusPort;
 
@@ -27,7 +27,7 @@ class CheckCourseStatusQueryHandler implements CheckCourseStatusQuery {
 
     @Override
     public Optional<Boolean> isCoursePublished(long courseId) {
-        return courseStatusPort.findCourseStatusById(Id.of(courseId)).map(status -> status == CourseStatus.PUBLISHED);
+        return courseStatusPort.findCourseDetailsById(Id.of(courseId)).map(status -> status == CourseStatus.PUBLISHED);
     }
 
     @Override

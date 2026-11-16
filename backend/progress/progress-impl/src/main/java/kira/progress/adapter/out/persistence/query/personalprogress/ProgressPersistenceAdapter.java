@@ -7,7 +7,6 @@ import kira.progress.application.port.in.query.personalprogress.TestProgressSumm
 import kira.progress.application.port.in.query.shared.TestAnswersView;
 import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
 import kira.progress.application.port.out.persistance.query.TestAnswersViewQueryPort;
-import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
@@ -22,6 +21,10 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
 
     @Override
     public List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId) {
+        if(lessonsIds.isEmpty()){
+            return List.of();
+        }
+
         List<Long> ids = lessonsIds.stream().map(Id::value).toList();
 
         return dbClient.sql("""
@@ -36,6 +39,10 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
 
     @Override
     public List<TestProgressSummary> findCompletedTestAttemptsIn(Set<Id<Test>> testsIds, Id<User> userId) {
+        if (testsIds.isEmpty()) {
+            return List.of();
+        }
+
         List<Long> ids = testsIds.stream().map(Id::value).toList();
 
         return dbClient.sql("""
@@ -60,15 +67,5 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
                 .param("userId", userId.value())
                 .param("testId", testId.value())
                 .query(PersonalProgressMapper.extractAnswers(testId));
-    }
-
-    @Override
-    public List<Id<Course>> findCoursesIdsThatUsersIsEnrolledIn(Id<User> userId) {
-        List<Long> ids = dbClient.sql("SELECT e.course_id FROM progress.enrollments e WHERE e.user_id = :userId")
-                .param("userId", userId.value())
-                .query(Long.class)
-                .list();
-
-        return ids.stream().map(Id::<Course>of).toList();
     }
 }
