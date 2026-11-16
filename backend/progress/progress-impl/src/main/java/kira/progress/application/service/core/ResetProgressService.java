@@ -38,9 +38,6 @@ class ResetProgressService implements ResetProgressUseCase {
                 };
 
         List<Long> mappedIds = studentIds.stream().map(Id::value).toList();
-        //TODO
-        IO.println("Кто из студентов прошел: ");
-        IO.println(mappedIds);
 
         if (!mappedIds.isEmpty()) {
             eventPublisherPort.publish(new ResetProgressEvent(

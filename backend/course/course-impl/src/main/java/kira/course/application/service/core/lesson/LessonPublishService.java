@@ -42,10 +42,6 @@ class LessonPublishService implements PublishLessonUseCase {
 
         CourseDetails details = courseStatusPort.findCourseDetailsByLessonId(lessonId);
         details.verifyCanPublishContent();
-        /*if (details.status() != CourseStatus.PUBLISHED) {
-            throw new RuleConflictException(
-                    "Cannot publish lesson in not published course", CourseAggregateType.LESSON, lessonId);
-        }*/
 
         CourseContentStatus moduleStatus = moduleStatusPort.findStatusByLessonId(lessonId);
         if (moduleStatus != CourseContentStatus.PUBLISHED) {
@@ -56,8 +52,6 @@ class LessonPublishService implements PublishLessonUseCase {
         lesson.publish();
         savePort.save(lesson);
 
-        //TODO
-        IO.println("Урок опубликован");
         eventPublisherPort.publish(new ContentPublishEvent(
                 ContentPublishEvent.ContentPublishType.LESSON,
                 lesson.title().value(),

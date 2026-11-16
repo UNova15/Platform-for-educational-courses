@@ -39,11 +39,6 @@ class ModuleUpdateService implements ModuleUpdateUseCase {
         CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanChangeContent();
 
-        /*if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot update module in archived course", CourseAggregateType.MODULE, moduleId);
-        }*/
-
         var title = Title.of(updateCommand.title());
         var description = Description.of(updateCommand.description());
 

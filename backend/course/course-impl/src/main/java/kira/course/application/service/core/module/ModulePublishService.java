@@ -48,10 +48,6 @@ class ModulePublishService implements PublishModuleUseCase {
         CourseDetails details = courseStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanPublishContent();
 
-        /*if (details.status() != CourseStatus.PUBLISHED) {
-            throw new RuleConflictException(
-                    "Cannot publish module in not published course", CourseAggregateType.MODULE, moduleId);
-        }*/
 
         if (!lessonLoadPort.isExistsInModule(moduleId) && !testLoadPort.isExistsInModule(moduleId)) {
             throw new RuleConflictException("Cannot publish empty module", CourseAggregateType.MODULE, moduleId);

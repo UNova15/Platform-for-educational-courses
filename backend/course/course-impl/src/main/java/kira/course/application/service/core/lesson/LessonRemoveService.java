@@ -41,11 +41,6 @@ class LessonRemoveService implements LessonRemoveUseCase {
         CourseDetails details = checkStatusPort.findCourseDetailsByLessonId(lessonId);
         details.verifyCanChangeContent();
 
-        /*if (details.status() == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot remove lesson in archived course", CourseAggregateType.LESSON, lessonId);
-        }*/
-
         removePort.removeById(lessonId);
 
         publisherPort.publish(new ContentChangeEvent(

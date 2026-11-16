@@ -41,10 +41,7 @@ class TestCreateService implements TestCreateUseCase {
 
         CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanChangeContent();
-        /*if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot create test in archived course", CourseAggregateType.MODULE, moduleId);
-        }*/
+
         Test test = testFactory.fromTestCreateCommand(command, moduleId);
 
         var savedTest = savePort.save(test);

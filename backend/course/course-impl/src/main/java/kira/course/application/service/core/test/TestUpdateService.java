@@ -48,10 +48,6 @@ class TestUpdateService implements TestUpdateUseCase {
         CourseDetails details = checkStatusPort.findCourseDetailsByTestId(testId);
         details.verifyCanChangeContent();
 
-        /*if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException("Cannot update test in archive course", CourseAggregateType.TEST, testId);
-        }*/
-
         var title = Title.of(command.title());
         var description = Description.of(command.description());
         Set<Question> questions = testFactory.fromQuestionUpdateCommand(command.questions());

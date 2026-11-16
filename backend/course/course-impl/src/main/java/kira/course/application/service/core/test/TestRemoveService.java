@@ -42,9 +42,6 @@ class TestRemoveService implements TestRemoveUseCase {
         CourseDetails details = checkStatusPort.findCourseDetailsByTestId(testId);
         details.verifyCanChangeContent();
 
-        /*if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException("Cannot remove test in archived course", CourseAggregateType.TEST, testId);
-        }*/
         removePort.removeTestById(testId);
 
         publisherPort.publish(new ContentChangeEvent(

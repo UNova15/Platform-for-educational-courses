@@ -44,10 +44,6 @@ class LessonUpdateService implements LessonUpdateUseCase {
 
         CourseDetails details = checkStatusPort.findCourseDetailsByLessonId(lessonId);
         details.verifyCanChangeContent();
-        /* if (details.status() == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot update lesson in archived course", CourseAggregateType.LESSON, lessonId);
-        }*/
 
         var title = Title.of(updateCommand.title());
         var content = LessonContent.of(updateCommand.type(), updateCommand.content());

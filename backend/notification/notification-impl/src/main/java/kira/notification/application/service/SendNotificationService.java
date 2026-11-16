@@ -28,9 +28,6 @@ public class SendNotificationService
     @Async
     @Override
     public void sendContentPublished(ContentPublishNotification notification) {
-        // TODO
-        IO.println("Вызов метода отправки сообщения о публикации");
-
         List<Id<User>> studentsIds = progressProviderPort.findEnrolledUsers(notification.courseId());
 
         var message = formatter.renderContentPublish(notification.type(), notification.name());
@@ -41,8 +38,6 @@ public class SendNotificationService
     @Async
     @Override
     public void sendResetProgress(ResetProgressNotification notification) {
-        // TODO
-        IO.println("Вызов метода отправки сообщения о сбросе прогресса");
         var message = formatter.renderResetProgress(notification.resourceType(), notification.name());
 
         sendNotification(notification.studentIds(), message);
@@ -52,9 +47,6 @@ public class SendNotificationService
         List<String> emails = userProviderPort.getEmailByIds(studentsIds);
 
         for (var email : emails) {
-            // TODO
-            IO.println("Отправка сообщения:");
-            IO.println(notification.body());
             sender.send(email, notification.subject(), notification.body());
         }
     }

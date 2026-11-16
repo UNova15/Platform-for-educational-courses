@@ -43,10 +43,6 @@ class TestPublishService implements PublishTestUseCase {
 
         CourseDetails details = checkCourseStatusPort.findCourseDetailsByTestId(testId);
         details.verifyCanPublishContent();
-        /*if (details.status() != CourseStatus.PUBLISHED) {
-            throw new RuleConflictException(
-                    "Cannot publish test in not published course", CourseAggregateType.TEST, testId);
-        }*/
 
         CourseContentStatus moduleStatus = checkModuleStatusPort.findStatusByTestId(testId);
         if (moduleStatus != CourseContentStatus.PUBLISHED) {
@@ -57,8 +53,6 @@ class TestPublishService implements PublishTestUseCase {
         test.publish();
         savePort.save(test);
 
-        //TODO
-        IO.println("Тест опубликован");
         eventPublisherPort.publish(new ContentPublishEvent(
                 ContentPublishEvent.ContentPublishType.TEST,
                 test.title().value(),

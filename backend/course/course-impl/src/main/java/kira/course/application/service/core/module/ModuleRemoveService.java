@@ -41,10 +41,6 @@ class ModuleRemoveService implements ModuleRemoveUseCase {
 
         CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanChangeContent();
-       /* if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot remove module in archived course", CourseAggregateType.MODULE, moduleId);
-        }*/
 
         if (lessonLoadPort.isExistsInModule(moduleId) || testLoadPort.isExistsInModule(moduleId)) {
             throw new RuleConflictException("Cannot remove non empty module", CourseAggregateType.MODULE, moduleId);

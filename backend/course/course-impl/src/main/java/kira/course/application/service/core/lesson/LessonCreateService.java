@@ -43,12 +43,6 @@ class LessonCreateService implements LessonCreateUseCase {
 
         CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanChangeContent();
-        /*
-        if (details.status() == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                            "Cannot create lesson in archived course by module id", CourseAggregateType.MODULE)
-                    .withContext("moduleId", moduleId.value());
-        }*/
 
         var title = Title.of(createCommand.title());
         var content = LessonContent.of(createCommand.type(), createCommand.content());
