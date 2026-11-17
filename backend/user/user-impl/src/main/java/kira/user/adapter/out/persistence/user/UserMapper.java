@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 class UserMapper {
 
     public User toDomain(UserEntity entity) {
-        Login login = Login.restore(entity.login());
+        Login login = Login.restore(entity.username());
         HashedPassword password = HashedPassword.restoreFromHash(entity.password());
 
         return User.restore(Id.of(entity.id()), login, password);

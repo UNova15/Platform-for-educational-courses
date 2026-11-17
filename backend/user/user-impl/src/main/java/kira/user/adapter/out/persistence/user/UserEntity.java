@@ -1,19 +1,12 @@
 package kira.user.adapter.out.persistence.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(name = "users", schema = "account")
-@Getter
-@Accessors(fluent = true)
-@AllArgsConstructor
-class UserEntity {
-    @Id
-    private final Long id;
-
-    private final String login;
-    private final String password;
-}
+record UserEntity(
+        @Id @Column("id") Long id,
+        @Column("username") String username,
+        @Column("email") String email,
+        @Column("password") String password) {}

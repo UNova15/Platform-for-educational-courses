@@ -26,7 +26,7 @@ public class UserProfileProviderAdapter implements UserProfileProviderPort {
 
     @Override
     public Optional<String> getUserNameById(long userId) {
-        return dbClient.sql("SELECT login FROM account.users WHERE id = :userId")
+        return dbClient.sql("SELECT username FROM account.users WHERE id = :userId")
                 .param("userId", userId)
                 .query(String.class)
                 .optional();
