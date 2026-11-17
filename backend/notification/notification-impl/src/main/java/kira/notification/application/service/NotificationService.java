@@ -3,19 +3,21 @@ package kira.notification.application.service;
 import common.application.exception.ResourceNotFoundException;
 import common.domain.entity.Id;
 import java.util.List;
+import kira.notification.application.port.in.CompletedTestNotifyUseCase;
 import kira.notification.application.port.in.publish.ContentPublishNotification;
 import kira.notification.application.port.in.publish.ContentPublishedNotifyUseCase;
-import kira.notification.application.port.in.resetprogress.ResetProgressNotification;
 import kira.notification.application.port.in.resetprogress.ProgressResetNotifyUseCase;
-import kira.notification.application.port.in.userenroll.UserEnrolledCourseNotifyUseCase;
+import kira.notification.application.port.in.resetprogress.ResetProgressNotification;
+import kira.notification.application.port.in.userenroll.EnrolledCourseNotifyUseCase;
 import kira.notification.application.port.out.internal.CourseProviderPort;
 import kira.notification.application.port.out.internal.EnrollmentProviderPort;
 import kira.notification.application.port.out.internal.UserProviderPort;
 import kira.notification.application.port.out.notification.NotificationSender;
 import kira.notification.application.port.out.render.MessageTemplatePort;
-import kira.notification.domain.Course;
 import kira.notification.domain.NotificationAggregateType;
-import kira.notification.domain.User;
+import kira.notification.domain.marker.Course;
+import kira.notification.domain.marker.Test;
+import kira.notification.domain.marker.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NotificationService
-        implements ContentPublishedNotifyUseCase, ProgressResetNotifyUseCase, UserEnrolledCourseNotifyUseCase {
+        implements ContentPublishedNotifyUseCase,
+                ProgressResetNotifyUseCase,
+                EnrolledCourseNotifyUseCase,
+                CompletedTestNotifyUseCase {
+
     private final NotificationSender sender;
     private final MessageTemplatePort formatter;
 
@@ -60,12 +66,31 @@ public class NotificationService
                 .getNameById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException(NotificationAggregateType.USER, studentId));
 
-        var message = formatter.renderUserEnroll(details.name(), studentName);
+        var message = formatter.renderUserEnroll(details.courseTitle(), studentName);
 
         sendNotification(List.of(details.teacherId()), message);
     }
 
+    @Async
+    @Override
+    public void sendCompletedTestNotification(Id<User> studentId, Id<Test> testId, long score) {
+        CourseProviderPort.TestDetails details = courseProviderPort
+                .getTestDetails(testId)
+                .orElseThrow(() -> new ResourceNotFoundException(NotificationAggregateType.TEST, testId));
+
+        String studentName = userProviderPort
+                .getNameById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException(NotificationAggregateType.USER, studentId));
+
+        var message = formatter.renderUserCompletedTest(studentName, details.courseTitle(), details.testTitle(), score);
+        sendNotification(List.of(details.teacherId()), message);
+    }
+
     private void sendNotification(List<Id<User>> recipientIds, MessageTemplatePort.Notification notification) {
+        if (recipientIds.isEmpty()) {
+            return;
+        }
+
         List<String> emails = userProviderPort.getEmailByIds(recipientIds);
 
         for (var email : emails) {

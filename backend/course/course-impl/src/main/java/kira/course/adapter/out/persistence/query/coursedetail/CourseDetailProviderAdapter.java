@@ -1,6 +1,7 @@
 package kira.course.adapter.out.persistence.query.coursedetail;
 
 import common.domain.entity.Id;
+import java.util.Optional;
 import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.domain.course.Course;
 import kira.course.domain.course.CourseStatus;
@@ -11,8 +12,6 @@ import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

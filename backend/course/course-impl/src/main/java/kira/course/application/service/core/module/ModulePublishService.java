@@ -7,11 +7,11 @@ import common.domain.entity.Id;
 import kira.course.application.port.in.module.status.PublishModuleUseCase;
 import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.lesson.LessonChangeStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.test.TestChangeStatusPort;
 import kira.course.application.port.out.persistance.test.TestLoadPort;
 import kira.course.domain.CourseAggregateType;
@@ -47,7 +47,6 @@ class ModulePublishService implements PublishModuleUseCase {
 
         CourseDetails details = courseStatusPort.findCourseDetailsByModuleId(moduleId);
         details.verifyCanPublishContent();
-
 
         if (!lessonLoadPort.isExistsInModule(moduleId) && !testLoadPort.isExistsInModule(moduleId)) {
             throw new RuleConflictException("Cannot publish empty module", CourseAggregateType.MODULE, moduleId);

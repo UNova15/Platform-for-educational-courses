@@ -13,7 +13,7 @@ class UserMapper {
         Login login = Login.restore(entity.login());
         HashedPassword password = HashedPassword.restoreFromHash(entity.password());
 
-        return User.restore(Id.of(entity.id()), password, login);
+        return User.restore(Id.of(entity.id()), login, password);
     }
 
     public UserEntity toEntity(User user) {

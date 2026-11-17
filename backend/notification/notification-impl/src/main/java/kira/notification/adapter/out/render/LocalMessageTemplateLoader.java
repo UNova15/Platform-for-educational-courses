@@ -29,7 +29,8 @@ public class LocalMessageTemplateLoader {
     public String getTemplate(EmailType templateName) {
         var template = templates.get(templateName);
         if (template == null) {
-            throw new IllegalStateException("Email template with name: %s not found".formatted(templateName.name()));
+            throw new IllegalStateException(
+                    "Email template with courseTitle: %s not found".formatted(templateName.name()));
         }
         return template;
     }

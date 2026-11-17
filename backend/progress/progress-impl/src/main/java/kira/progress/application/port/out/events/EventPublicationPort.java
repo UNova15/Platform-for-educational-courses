@@ -2,6 +2,6 @@ package kira.progress.application.port.out.events;
 
 import common.domain.entity.DomainEvent;
 
-public interface EventPublishingPort {
+public interface EventPublicationPort {
     void publish(DomainEvent event);
 }

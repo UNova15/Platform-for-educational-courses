@@ -1,10 +1,10 @@
 package kira.application;
 
-import kira.user.ModuleConfig;
 import kira.course.CourseModuleConfig;
 import kira.infrastructure.InfrastructureModuleConfig;
 import kira.notification.NotificationModuleConfig;
 import kira.progress.ProgressModuleConfig;
+import kira.user.ModuleConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration;

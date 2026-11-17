@@ -3,10 +3,9 @@ package kira.notification.adapter.out.internal;
 import common.domain.entity.Id;
 import java.util.List;
 import java.util.Optional;
-
-import kira.user.api.UserProviderQueryPort;
 import kira.notification.application.port.out.internal.UserProviderPort;
-import kira.notification.domain.User;
+import kira.notification.domain.marker.User;
+import kira.user.api.UserProviderQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +16,7 @@ public class UserProviderAdapter implements UserProviderPort {
 
     @Override
     public List<String> getEmailByIds(List<Id<User>> ids) {
+
         return userProviderQueryPort.getUsersEmailByIds(
                 ids.stream().map(Id::value).toList());
     }

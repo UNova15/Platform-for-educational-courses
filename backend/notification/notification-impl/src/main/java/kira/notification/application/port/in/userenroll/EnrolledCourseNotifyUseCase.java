@@ -1,9 +1,9 @@
 package kira.notification.application.port.in.userenroll;
 
 import common.domain.entity.Id;
-import kira.notification.domain.Course;
-import kira.notification.domain.User;
+import kira.notification.domain.marker.Course;
+import kira.notification.domain.marker.User;
 
-public interface UserEnrolledCourseNotifyUseCase {
+public interface EnrolledCourseNotifyUseCase {
     void sendTeacherNotification(Id<User> studentId, Id<Course> courseId);
 }

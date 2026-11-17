@@ -10,5 +10,7 @@ public interface MessageTemplatePort {
 
     Notification renderUserEnroll(String courseName, String userName);
 
+    Notification renderUserCompletedTest(String studentName, String courseTitle, String testTile, long score);
+
     record Notification(String subject, String body) {}
 }

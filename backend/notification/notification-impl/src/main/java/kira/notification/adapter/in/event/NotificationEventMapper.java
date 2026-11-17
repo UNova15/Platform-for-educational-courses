@@ -7,7 +7,7 @@ import kira.notification.application.port.in.publish.ContentPublishNotification;
 import kira.notification.application.port.in.resetprogress.ResetProgressNotification;
 import kira.notification.domain.PublishType;
 import kira.notification.domain.ResetType;
-import kira.notification.domain.User;
+import kira.notification.domain.marker.User;
 import kira.progress.event.ResetProgressEvent;
 
 public class NotificationEventMapper {

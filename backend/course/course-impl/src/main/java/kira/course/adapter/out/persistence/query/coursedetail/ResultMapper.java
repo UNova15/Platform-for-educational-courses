@@ -1,14 +1,13 @@
 package kira.course.adapter.out.persistence.query.coursedetail;
 
 import common.domain.entity.Id;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import kira.course.domain.course.Course;
 import kira.course.domain.course.CourseStatus;
 import kira.course.domain.course.valueobject.CourseDetails;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Component
 public class ResultMapper implements RowMapper<CourseDetails> {

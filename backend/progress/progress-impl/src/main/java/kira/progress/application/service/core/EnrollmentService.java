@@ -5,7 +5,7 @@ import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.progress.application.exception.EnrollmentAlreadyExistException;
 import kira.progress.application.port.in.enrollment.UserEnrollmentUseCase;
-import kira.progress.application.port.out.events.EventPublishingPort;
+import kira.progress.application.port.out.events.EventPublicationPort;
 import kira.progress.application.port.out.external.CheckCourseStatusPort;
 import kira.progress.application.port.out.external.CourseExistCheckPort;
 import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
@@ -14,7 +14,7 @@ import kira.progress.domain.ProgressAggregateType;
 import kira.progress.domain.enrollment.Enrollment;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
-import kira.progress.event.UserEnrollEvent;
+import kira.progress.event.CourseEnrollEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ class EnrollmentService implements UserEnrollmentUseCase {
     private final EnrollmentSavePort enrollmentSavePort;
 
     private final CheckCourseStatusPort courseStatusPort;
-    private final EventPublishingPort eventPublishingPort;
+    private final EventPublicationPort eventPublicationPort;
 
     public void enrollToCourse(Id<User> studentId, Id<Course> courseId) {
         if (!courseCheckPort.isCourseExist(courseId)) {
@@ -45,6 +45,6 @@ class EnrollmentService implements UserEnrollmentUseCase {
         var enrollment = Enrollment.create(studentId, courseId);
         enrollmentSavePort.save(enrollment);
 
-        eventPublishingPort.publish(new UserEnrollEvent(studentId.value(), courseId.value()));
+        eventPublicationPort.publish(new CourseEnrollEvent(studentId.value(), courseId.value()));
     }
 }

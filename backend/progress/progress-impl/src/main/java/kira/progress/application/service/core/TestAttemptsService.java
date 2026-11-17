@@ -10,6 +10,7 @@ import kira.progress.application.port.in.testprogress.EndTestAttemptCommand;
 import kira.progress.application.port.in.testprogress.EndTestAttemptUseCase;
 import kira.progress.application.port.in.testprogress.StartTestAttemptUseCase;
 import kira.progress.application.port.in.testprogress.TestResult;
+import kira.progress.application.port.out.events.EventPublicationPort;
 import kira.progress.application.port.out.external.CheckCourseStatusPort;
 import kira.progress.application.port.out.external.CourseStructurePort;
 import kira.progress.application.port.out.external.TestAnswerKeyProviderPort;
@@ -22,6 +23,7 @@ import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;
 import kira.progress.domain.testprogress.TestAttempt;
 import kira.progress.domain.testprogress.valueobject.AnswerKey;
+import kira.progress.event.CompletedTestEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,7 @@ class TestAttemptsService implements StartTestAttemptUseCase, EndTestAttemptUseC
 
     private final TestAnswerKeyProviderPort keyPort;
     private final CheckCourseStatusPort courseStatusPort;
+    private final EventPublicationPort eventPublicationPort;
 
     @Override
     public void startTestAttempt(Id<User> userId, Id<Test> testId) {
@@ -78,6 +81,9 @@ class TestAttemptsService implements StartTestAttemptUseCase, EndTestAttemptUseC
 
         attempt.submitAnswers(command.answers(), key);
         savePort.save(attempt);
+
+        eventPublicationPort.publish(new CompletedTestEvent(
+                attempt.userId().value(), attempt.testId().value(), attempt.score()));
         return new TestResult(attempt.score());
     }
 }

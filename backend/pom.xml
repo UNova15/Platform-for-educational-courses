@@ -17,12 +17,12 @@
 
     <modules>
         <module>application</module>
-        <module>user</module>
         <module>common</module>
         <module>course</module>
         <module>infrastructure</module>
         <module>notification</module>
         <module>progress</module>
+        <module>user</module>
     </modules>
     <scm>
         <connection/>

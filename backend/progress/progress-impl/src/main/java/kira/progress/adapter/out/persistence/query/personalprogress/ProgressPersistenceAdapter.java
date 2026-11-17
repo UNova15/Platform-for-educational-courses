@@ -21,7 +21,7 @@ class ProgressPersistenceAdapter implements PersonalProgressQueryPort, TestAnswe
 
     @Override
     public List<LessonProgressSummary> findCompletedLessonsIn(Set<Id<Lesson>> lessonsIds, Id<User> userId) {
-        if(lessonsIds.isEmpty()){
+        if (lessonsIds.isEmpty()) {
             return List.of();
         }
 

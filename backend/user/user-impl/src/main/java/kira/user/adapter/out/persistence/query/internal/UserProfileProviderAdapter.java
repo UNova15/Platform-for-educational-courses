@@ -1,12 +1,11 @@
 package kira.user.adapter.out.persistence.query.internal;
 
+import java.util.List;
+import java.util.Optional;
 import kira.user.application.ports.out.persistance.query.internal.UserProfileProviderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

@@ -2,14 +2,8 @@ package kira.course.adapter.out.persistence.course;
 
 import common.domain.entity.Id;
 import java.util.Optional;
-
 import kira.course.application.port.out.persistance.course.*;
 import kira.course.domain.course.Course;
-import kira.course.domain.course.CourseStatus;
-import kira.course.domain.course.valueobject.CourseDetails;
-import kira.course.domain.lesson.Lesson;
-import kira.course.domain.module.CourseModule;
-import kira.course.domain.test.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

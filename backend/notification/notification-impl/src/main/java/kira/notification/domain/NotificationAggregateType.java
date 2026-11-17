@@ -4,7 +4,8 @@ import common.domain.entity.AggregateType;
 
 public enum NotificationAggregateType implements AggregateType {
     USER("user"),
-    COURSE("course");
+    COURSE("course"),
+    TEST("test");
 
     private final String value;
 

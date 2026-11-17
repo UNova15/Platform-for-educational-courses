@@ -1,12 +1,11 @@
 package kira.user.application.service.internal;
 
+import java.util.List;
+import java.util.Optional;
 import kira.user.api.UserProviderQueryPort;
 import kira.user.application.ports.out.persistance.query.internal.UserProfileProviderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

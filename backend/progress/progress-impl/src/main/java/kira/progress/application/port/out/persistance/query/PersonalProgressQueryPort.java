@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import kira.progress.application.port.in.query.personalprogress.LessonProgressSummary;
 import kira.progress.application.port.in.query.personalprogress.TestProgressSummary;
-import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.Lesson;
 import kira.progress.domain.markers.Test;
 import kira.progress.domain.markers.User;

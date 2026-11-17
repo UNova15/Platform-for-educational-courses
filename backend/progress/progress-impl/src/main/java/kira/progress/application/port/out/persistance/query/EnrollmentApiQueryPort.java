@@ -1,10 +1,9 @@
 package kira.progress.application.port.out.persistance.query;
 
 import common.domain.entity.Id;
+import java.util.List;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
-
-import java.util.List;
 
 public interface EnrollmentApiQueryPort {
     List<Id<User>> findEnrolledUsersByCourseId(Id<Course> courseId);
