@@ -17,7 +17,7 @@
 
     <modules>
         <module>application</module>
-        <module>auth</module>
+        <module>user</module>
         <module>common</module>
         <module>course</module>
         <module>infrastructure</module>

@@ -8,5 +8,7 @@ public interface MessageTemplatePort {
 
     Notification renderResetProgress(ResetType type, String name);
 
+    Notification renderUserEnroll(String courseName, String userName);
+
     record Notification(String subject, String body) {}
 }

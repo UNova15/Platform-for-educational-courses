@@ -19,12 +19,12 @@ public class EmailSender implements NotificationSender {
     }
 
     @Override
-    public void send(String recipient, String subject, String text) {
+    public void send(String recipientName, String subject, String text) {
         var message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
         try {
-            helper.setTo(recipient);
+            helper.setTo(recipientName);
             helper.setFrom(fromEMail);
             helper.setText(text, true);
             helper.setSubject(subject);

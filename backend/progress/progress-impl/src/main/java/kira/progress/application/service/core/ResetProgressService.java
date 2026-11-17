@@ -4,7 +4,7 @@ import common.domain.entity.Id;
 import java.util.List;
 import kira.progress.application.port.in.resetprogress.ResetProgressUseCase;
 import kira.progress.application.port.in.resetprogress.ResetRecord;
-import kira.progress.application.port.out.events.EventPublisherPort;
+import kira.progress.application.port.out.events.EventPublishingPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressRemovePort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptRemovePort;
 import kira.progress.domain.markers.Lesson;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 class ResetProgressService implements ResetProgressUseCase {
-    private final EventPublisherPort eventPublisherPort;
+    private final EventPublishingPort eventPublishingPort;
 
     private final LessonProgressRemovePort lessonProgressRemovePort;
     private final TestAttemptRemovePort testAttemptRemovePort;
@@ -40,7 +40,7 @@ class ResetProgressService implements ResetProgressUseCase {
         List<Long> mappedIds = studentIds.stream().map(Id::value).toList();
 
         if (!mappedIds.isEmpty()) {
-            eventPublisherPort.publish(new ResetProgressEvent(
+            eventPublishingPort.publish(new ResetProgressEvent(
                     resetRecord.resourceType(), resetRecord.action(), resetRecord.name(), mappedIds));
         }
     }

@@ -1,0 +1,20 @@
+package kira.course.application.service.external;
+
+import common.domain.entity.Id;
+import kira.course.api.CourseProviderQuery;
+import kira.course.application.port.out.persistance.query.CourseProviderPort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class CourseProviderService implements CourseProviderQuery {
+    private final CourseProviderPort courseProviderPort;
+
+    @Override
+    public Optional<CourseInfo> getCourseInfo(long courseId) {
+        return courseProviderPort.getCourseInfo(Id.of(courseId));
+    }
+}
