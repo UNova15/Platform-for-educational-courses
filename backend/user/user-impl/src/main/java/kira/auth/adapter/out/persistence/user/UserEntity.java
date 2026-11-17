@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "users", schema = "user")
+@Table(name = "users", schema = "account")
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor

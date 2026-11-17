@@ -19,7 +19,7 @@ public class UserProfileProviderAdapter implements UserProfileProviderPort {
             return List.of();
         }
 
-        return dbClient.sql("SELECT email FROM user.users WHERE id IN (:ids)")
+        return dbClient.sql("SELECT email FROM account.users WHERE id IN (:ids)")
                 .param("ids", ids)
                 .query(String.class)
                 .list();
@@ -27,7 +27,7 @@ public class UserProfileProviderAdapter implements UserProfileProviderPort {
 
     @Override
     public Optional<String> getUserNameById(long userId) {
-        return dbClient.sql("SELECT login FROM user.user WHERE id = :userId")
+        return dbClient.sql("SELECT login FROM account.users WHERE id = :userId")
                 .param("userId", userId)
                 .query(String.class)
                 .optional();

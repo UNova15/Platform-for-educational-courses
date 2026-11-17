@@ -1,4 +1,4 @@
-CREATE TABLE auth.users
+CREATE TABLE account.users
 (
     id       SERIAL PRIMARY KEY,
     login    VARCHAR(30) UNIQUE NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE auth.refresh_tokens
+CREATE TABLE account.refresh_tokens
 (
     id      SERIAL PRIMARY KEY,
     user_id INT REFERENCES users (id) ON DELETE CASCADE,
