@@ -2,16 +2,15 @@ package kira.course.application.service.core.module;
 
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.module.update.ModuleUpdateCommand;
 import kira.course.application.port.in.module.update.ModuleUpdateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
 import kira.course.application.port.out.persistance.module.ModuleSavePort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.shared.Description;
@@ -26,7 +25,7 @@ class ModuleUpdateService implements ModuleUpdateUseCase {
     private final ModuleSavePort savePort;
 
     private final CourseAccessPort accessPort;
-    private final CourseCheckStatusPort checkStatusPort;
+    private final CourseDetailsProviderPort checkStatusPort;
 
     @Override
     public void updateModule(ModuleUpdateCommand updateCommand, Id<CourseModule> moduleId, Id<User> teacherId) {
@@ -37,11 +36,8 @@ class ModuleUpdateService implements ModuleUpdateUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
-        CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
-        if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot update module in archived course", CourseAggregateType.MODULE, moduleId);
-        }
+        CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
+        details.verifyCanChangeContent();
 
         var title = Title.of(updateCommand.title());
         var description = Description.of(updateCommand.description());

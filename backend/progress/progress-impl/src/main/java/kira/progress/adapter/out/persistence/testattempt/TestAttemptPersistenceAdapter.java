@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.persistence.testattempt;
 
 import common.domain.entity.Id;
+import java.util.List;
 import java.util.Optional;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptLoadPort;
 import kira.progress.application.port.out.persistance.testattempt.TestAttemptRemovePort;
@@ -34,7 +35,8 @@ class TestAttemptPersistenceAdapter implements TestAttemptLoadPort, TestAttemptS
     }
 
     @Override
-    public void removeAllByTestId(Id<Test> testId) {
-        repository.removeAllByTestId(testId.value());
+    public List<Id<User>> removeAllByTestId(Id<Test> testId) {
+        List<Long> ids = repository.removeAllByTestIdAndReturnUserIds(testId.value());
+        return ids.stream().map(Id::<User>of).toList();
     }
 }

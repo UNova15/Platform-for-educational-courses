@@ -1,6 +1,6 @@
 FROM flyway/flyway:13-alpine
 
-COPY ./auth/auth-impl/src/main/resources/db/migration /flyway/sql/auth
+COPY ./user/user-impl/src/main/resources/db/migration /flyway/sql/account
 
 COPY ./course/course-impl/src/main/resources/db/migration /flyway/sql/course
 

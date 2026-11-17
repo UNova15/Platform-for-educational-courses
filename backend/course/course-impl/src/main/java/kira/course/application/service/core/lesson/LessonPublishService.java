@@ -5,16 +5,18 @@ import common.application.exception.ResourceNotFoundException;
 import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.lesson.status.PublishLessonUseCase;
+import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.lesson.LessonSavePort;
 import kira.course.application.port.out.persistance.module.ModuleCheckStatusPort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.markers.User;
 import kira.course.domain.shared.CourseContentStatus;
+import kira.course.events.ContentPublishEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,8 @@ class LessonPublishService implements PublishLessonUseCase {
 
     private final ModuleCheckStatusPort moduleStatusPort;
     private final CourseAccessPort accessPort;
-    private final CourseCheckStatusPort courseStatusPort;
+    private final CourseDetailsProviderPort courseStatusPort;
+    private final EventPublisherPort eventPublisherPort;
 
     @Override
     public void publish(Id<User> requesterId, Id<Lesson> lessonId) {
@@ -37,11 +40,8 @@ class LessonPublishService implements PublishLessonUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.LESSON, requesterId, lessonId);
         }
 
-        CourseStatus courseStatus = courseStatusPort.findCourseStatusByLessonId(lessonId);
-        if (courseStatus != CourseStatus.PUBLISHED) {
-            throw new RuleConflictException(
-                    "Cannot publish lesson in not published course", CourseAggregateType.LESSON, lessonId);
-        }
+        CourseDetails details = courseStatusPort.findCourseDetailsByLessonId(lessonId);
+        details.verifyCanPublishContent();
 
         CourseContentStatus moduleStatus = moduleStatusPort.findStatusByLessonId(lessonId);
         if (moduleStatus != CourseContentStatus.PUBLISHED) {
@@ -51,5 +51,11 @@ class LessonPublishService implements PublishLessonUseCase {
 
         lesson.publish();
         savePort.save(lesson);
+
+        eventPublisherPort.publish(new ContentPublishEvent(
+                ContentPublishEvent.ContentPublishType.LESSON,
+                lesson.title().value(),
+                details.courseId().value(),
+                lessonId.value()));
     }
 }

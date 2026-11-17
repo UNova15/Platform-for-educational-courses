@@ -2,22 +2,21 @@ package kira.course.application.service.core.lesson;
 
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.lesson.update.LessonUpdateCommand;
 import kira.course.application.port.in.lesson.update.LessonUpdateUseCase;
 import kira.course.application.port.out.events.EventPublisherPort;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.lesson.LessonLoadPort;
 import kira.course.application.port.out.persistance.lesson.LessonSavePort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.lesson.Lesson;
 import kira.course.domain.lesson.LessonContent;
 import kira.course.domain.markers.User;
 import kira.course.domain.shared.Title;
-import kira.course.events.LessonUpdatedEvent;
+import kira.course.events.ContentChangeEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,7 @@ class LessonUpdateService implements LessonUpdateUseCase {
     private final LessonSavePort savePort;
 
     private final CourseAccessPort accessPort;
-    private final CourseCheckStatusPort checkStatusPort;
+    private final CourseDetailsProviderPort checkStatusPort;
 
     private final EventPublisherPort publisherPort;
 
@@ -43,11 +42,8 @@ class LessonUpdateService implements LessonUpdateUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.LESSON, teacherId, lessonId);
         }
 
-        CourseStatus status = checkStatusPort.findCourseStatusByLessonId(lessonId);
-        if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot update lesson in archived course", CourseAggregateType.LESSON, lessonId);
-        }
+        CourseDetails details = checkStatusPort.findCourseDetailsByLessonId(lessonId);
+        details.verifyCanChangeContent();
 
         var title = Title.of(updateCommand.title());
         var content = LessonContent.of(updateCommand.type(), updateCommand.content());
@@ -55,6 +51,11 @@ class LessonUpdateService implements LessonUpdateUseCase {
 
         savePort.save(lesson);
 
-        publisherPort.publish(new LessonUpdatedEvent(lesson.id().value(), lesson.isPublish()));
+        publisherPort.publish(new ContentChangeEvent(
+                ContentChangeEvent.ContentChangeType.LESSON,
+                ContentChangeEvent.ChangeAction.UPDATE,
+                lesson.title().value(),
+                lesson.id().value(),
+                lesson.isPublish()));
     }
 }

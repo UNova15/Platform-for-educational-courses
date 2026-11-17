@@ -1,6 +1,7 @@
 package kira.progress.adapter.out.persistence.lessonprogress;
 
 import common.domain.entity.Id;
+import java.util.List;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressLoadPort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressRemovePort;
 import kira.progress.application.port.out.persistance.lessonprogress.LessonProgressSavePort;
@@ -29,7 +30,8 @@ class LessonProgressPersistenceAdapter
     }
 
     @Override
-    public void removeAllByLessonId(Id<Lesson> lessonId) {
-        repository.removeAllByLessonId(lessonId.value());
+    public List<Id<User>> removeAllByLessonId(Id<Lesson> lessonId) {
+        List<Long> ids = repository.removeAllByLessonIdAndReturnUserIds(lessonId.value());
+        return ids.stream().map(Id::<User>of).toList();
     }
 }

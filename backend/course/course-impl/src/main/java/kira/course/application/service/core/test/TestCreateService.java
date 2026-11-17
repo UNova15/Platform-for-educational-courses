@@ -2,17 +2,16 @@ package kira.course.application.service.core.test;
 
 import common.application.exception.ResourceAccessDeniedException;
 import common.application.exception.ResourceNotFoundException;
-import common.application.exception.RuleConflictException;
 import common.domain.entity.Id;
 import kira.course.application.port.in.test.create.TestCreateCommand;
 import kira.course.application.port.in.test.create.TestCreateResponse;
 import kira.course.application.port.in.test.create.TestCreateUseCase;
 import kira.course.application.port.out.persistance.access.CourseAccessPort;
-import kira.course.application.port.out.persistance.course.CourseCheckStatusPort;
 import kira.course.application.port.out.persistance.module.ModuleLoadPort;
+import kira.course.application.port.out.persistance.query.CourseDetailsProviderPort;
 import kira.course.application.port.out.persistance.test.TestSavePort;
 import kira.course.domain.CourseAggregateType;
-import kira.course.domain.course.CourseStatus;
+import kira.course.domain.course.valueobject.CourseDetails;
 import kira.course.domain.markers.User;
 import kira.course.domain.module.CourseModule;
 import kira.course.domain.test.Test;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Service;
 class TestCreateService implements TestCreateUseCase {
     private final TestSavePort savePort;
 
-    private final CourseCheckStatusPort checkStatusPort;
+    private final CourseDetailsProviderPort checkStatusPort;
     private final CourseAccessPort accessPort;
     private final ModuleLoadPort moduleLoadPort;
 
@@ -40,11 +39,9 @@ class TestCreateService implements TestCreateUseCase {
             throw new ResourceAccessDeniedException(CourseAggregateType.MODULE, teacherId, moduleId);
         }
 
-        CourseStatus status = checkStatusPort.findCourseStatusByModuleId(moduleId);
-        if (status == CourseStatus.ARCHIVED) {
-            throw new RuleConflictException(
-                    "Cannot create test in archived course", CourseAggregateType.MODULE, moduleId);
-        }
+        CourseDetails details = checkStatusPort.findCourseDetailsByModuleId(moduleId);
+        details.verifyCanChangeContent();
+
         Test test = testFactory.fromTestCreateCommand(command, moduleId);
 
         var savedTest = savePort.save(test);

@@ -4,8 +4,7 @@ import common.domain.entity.Id;
 import java.util.List;
 import kira.progress.api.EnrollmentProviderQuery;
 import kira.progress.api.EnrollmentStatusQuery;
-import kira.progress.application.port.out.persistance.enrollment.EnrollmentLoadPort;
-import kira.progress.application.port.out.persistance.query.PersonalProgressQueryPort;
+import kira.progress.application.port.out.persistance.query.EnrollmentApiQueryPort;
 import kira.progress.domain.markers.Course;
 import kira.progress.domain.markers.User;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +13,23 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 class EnrollmentStatisticsQueryHandler implements EnrollmentProviderQuery, EnrollmentStatusQuery {
-    private final EnrollmentLoadPort loadPort;
-    private final PersonalProgressQueryPort progressPort;
+    private final EnrollmentApiQueryPort enrollmentApiQueryPort;
 
     @Override
     public List<Long> findCoursesIdsThatUsersIsEnrolledIn(long userId) {
         Id<User> studentId = Id.of(userId);
 
-        return progressPort.findCoursesIdsThatUsersIsEnrolledIn(studentId).stream()
+        return enrollmentApiQueryPort.findCoursesIdsThatUsersIsEnrolledIn(studentId).stream()
                 .map(Id::value)
                 .toList();
+    }
+
+    @Override
+    public List<Long> findEnrolledUsers(long courseId) {
+        Id<Course> mappedId = Id.of(courseId);
+
+        List<Id<User>> studentsIds = enrollmentApiQueryPort.findEnrolledUsersByCourseId(mappedId);
+        return studentsIds.stream().map(Id::value).toList();
     }
 
     @Override
@@ -31,6 +37,6 @@ class EnrollmentStatisticsQueryHandler implements EnrollmentProviderQuery, Enrol
         Id<User> userId = Id.of(studentId);
         Id<Course> mappedCourseId = Id.of(courseId);
 
-        return loadPort.isEnrollmentExist(userId, mappedCourseId);
+        return enrollmentApiQueryPort.isEnrollmentExist(userId, mappedCourseId);
     }
 }
