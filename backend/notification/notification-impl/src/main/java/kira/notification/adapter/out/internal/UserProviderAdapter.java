@@ -4,7 +4,7 @@ import common.domain.entity.Id;
 import java.util.List;
 import java.util.Optional;
 
-import kira.auth.api.UserProviderQueryPort;
+import kira.user.api.UserProviderQueryPort;
 import kira.notification.application.port.out.internal.UserProviderPort;
 import kira.notification.domain.User;
 import lombok.RequiredArgsConstructor;

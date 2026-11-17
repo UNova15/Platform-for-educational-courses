@@ -37,13 +37,13 @@ services:
 
   migrate-auth:
     <<: *migration-base
-    container_name: kira-migrate-auth
+    container_name: kira-migrate-account
     command:
       - "-url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}"
       - "-user=${DB_USER}"
       - "-password=${DB_PASSWORD}"
-      - "-schemas=auth"
-      - "-locations=filesystem:/flyway/sql/auth"
+      - "-schemas=account"
+      - "-locations=filesystem:/flyway/sql/account"
       - "migrate"
 
   migrate-course:

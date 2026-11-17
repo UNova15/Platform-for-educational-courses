@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>org.platform</groupId>
-            <artifactId>auth-impl</artifactId>
+            <artifactId>user-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -1,6 +1,6 @@
 package kira.application;
 
-import kira.auth.ModuleConfig;
+import kira.user.ModuleConfig;
 import kira.course.CourseModuleConfig;
 import kira.infrastructure.InfrastructureModuleConfig;
 import kira.notification.NotificationModuleConfig;

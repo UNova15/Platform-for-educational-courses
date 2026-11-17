@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>org.platform</groupId>
-            <artifactId>auth-api</artifactId>
+            <artifactId>user-api</artifactId>
         </dependency>
 
         <!-- Фреймворки -->

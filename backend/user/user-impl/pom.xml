@@ -8,7 +8,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>auth-impl</artifactId>
+    <artifactId>user-impl</artifactId>
 
     <dependencies>
         <!--Внутренние модули -->
@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>org.platform</groupId>
-            <artifactId>auth-api</artifactId>
+            <artifactId>user-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.platform</groupId>
