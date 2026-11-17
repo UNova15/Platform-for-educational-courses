@@ -11,7 +11,7 @@ import kira.user.domain.token.valueobject.AccessToken;
 import kira.user.domain.token.valueobject.HashedRefreshToken;
 import kira.user.domain.token.valueobject.RawRefreshToken;
 import kira.user.domain.user.User;
-import kira.user.domain.user.valueobject.Login;
+import kira.user.domain.user.valueobject.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +24,8 @@ class TokenPublisher {
     private final AccessTokenGeneratePort accessTokenGeneratePort;
     private final RefreshTokenGeneratePort refreshTokenGeneratePort;
 
-    public AuthTokens issueTokens(Id<User> userId, Login login) {
-        AccessToken access = accessTokenGeneratePort.generateAccessToken(userId, login);
+    public AuthTokens issueTokens(Id<User> userId, Username username) {
+        AccessToken access = accessTokenGeneratePort.generateAccessToken(userId, username);
         RawRefreshToken refresh = refreshTokenGeneratePort.generateRefreshToken();
 
         HashedRefreshToken hashedToken = hashingPort.hash(refresh);
@@ -33,6 +33,6 @@ class TokenPublisher {
 
         savePort.save(refreshToken);
 
-        return AuthTokens.createFrom(userId, login, access, refresh);
+        return AuthTokens.createFrom(userId, username, access, refresh);
     }
 }

@@ -1,7 +1,7 @@
 package kira.user.adapter.in.web.controller.auth;
 
-import static kira.user.domain.user.valueobject.Login.MAX_LOGIN_LENGTH;
-import static kira.user.domain.user.valueobject.Login.MIN_LOGIN_LENGTH;
+import static kira.user.domain.user.valueobject.Username.MAX_LOGIN_LENGTH;
+import static kira.user.domain.user.valueobject.Username.MIN_LOGIN_LENGTH;
 import static kira.user.domain.user.valueobject.RawPassword.MAX_PASSWORD_LENGTH;
 import static kira.user.domain.user.valueobject.RawPassword.MIN_PASSWORD_LENGTH;
 

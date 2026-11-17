@@ -10,7 +10,7 @@ import kira.user.application.ports.out.persistance.user.UserSavePort;
 import kira.user.domain.AuthAggregateType;
 import kira.user.domain.user.User;
 import kira.user.domain.user.valueobject.HashedPassword;
-import kira.user.domain.user.valueobject.Login;
+import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,16 +27,16 @@ class RegistrationService implements RegistrationUseCase {
 
     @Override
     @Transactional
-    public AuthTokens registration(Login login, RawPassword password) {
-        if (loadPort.isExistsUserByLogin(login)) {
-            throw new ResourceAlreadyExist(AuthAggregateType.USER).withContext("login", login.value());
+    public AuthTokens registration(Username username, RawPassword password) {
+        if (loadPort.isExistsUserByLogin(username)) {
+            throw new ResourceAlreadyExist(AuthAggregateType.USER).withContext("login", username.value());
         }
 
         HashedPassword hashedPassword = passwordHasher.hashPassword(password);
-        var user = User.create(login, hashedPassword);
+        var user = User.create(username, hashedPassword);
 
         Id<User> userId = savePort.save(user).id();
 
-        return tokenPublisher.issueTokens(userId, login);
+        return tokenPublisher.issueTokens(userId, username);
     }
 }

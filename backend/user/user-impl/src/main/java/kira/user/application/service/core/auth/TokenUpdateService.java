@@ -45,6 +45,6 @@ class TokenUpdateService implements UpdateTokenUseCase {
                 .withContext("token", refreshToken.token()));
 
         removePort.remove(refreshToken);
-        return tokenGenerator.issueTokens(userId, user.login());
+        return tokenGenerator.issueTokens(userId, user.username());
     }
 }

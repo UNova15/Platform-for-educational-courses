@@ -3,7 +3,7 @@ package kira.user.adapter.in.web.controller.auth;
 import jakarta.validation.Valid;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
-import kira.user.domain.user.valueobject.Login;
+import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +23,7 @@ class RegistrationController {
 
     @PostMapping("/registration")
     public ResponseEntity<AuthTokens> registration(@RequestBody @Valid RegistrationCommand request) {
-        var login = Login.of(request.login());
+        var login = Username.of(request.login());
         var password = RawPassword.of(request.password());
 
         AuthTokens authTokens = registrationService.registration(login, password);

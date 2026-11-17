@@ -7,7 +7,7 @@ import kira.user.application.ports.out.crypto.PasswordHasherPort;
 import kira.user.application.ports.out.persistance.user.UserLoadPort;
 import kira.user.domain.user.User;
 import kira.user.domain.user.valueobject.HashedPassword;
-import kira.user.domain.user.valueobject.Login;
+import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,17 +20,17 @@ class LoginService implements LoginUseCase {
     private final TokenPublisher tokenService;
 
     @Override
-    public AuthTokens login(Login login, RawPassword password) {
-        User user = userLoadPort.loadUserByLogin(login).orElseThrow(() -> new AuthenticationException(login.value()));
+    public AuthTokens login(Username username, RawPassword password) {
+        User user = userLoadPort.loadUserByLogin(username).orElseThrow(() -> new AuthenticationException(username.value()));
 
         HashedPassword hashedPassword = user.password();
 
         boolean isCorrectPassword = passwordHasherPort.matches(password, hashedPassword);
 
         if (!isCorrectPassword) {
-            throw new AuthenticationException(login.value());
+            throw new AuthenticationException(username.value());
         }
 
-        return tokenService.issueTokens(user.id(), user.login());
+        return tokenService.issueTokens(user.id(), user.username());
     }
 }

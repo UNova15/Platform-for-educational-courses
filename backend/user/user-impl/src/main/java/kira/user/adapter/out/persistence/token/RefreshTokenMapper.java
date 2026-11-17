@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 class RefreshTokenMapper {
 
     public RefreshToken toDomain(RefreshTokenEntity entity) {
-        HashedRefreshToken token = HashedRefreshToken.restoreFromHash(entity.getToken());
-        return RefreshToken.restore(Id.of(entity.getId()), Id.of(entity.getUserId()), token);
+        HashedRefreshToken token = HashedRefreshToken.restoreFromHash(entity.token());
+        return RefreshToken.restore(Id.of(entity.id()), Id.of(entity.userId()), token);
     }
 
     public RefreshTokenEntity toEntity(RefreshToken refreshToken) {
