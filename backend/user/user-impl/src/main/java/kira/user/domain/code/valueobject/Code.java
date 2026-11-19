@@ -1,4 +1,4 @@
-package kira.user.domain.confirmsession.valueobject;
+package kira.user.domain.code.valueobject;
 
 import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
@@ -11,13 +11,15 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConfirmationCode {
+public class Code {
+    public static final int CODE_LENGTH = 6;
+
     private final String value;
 
-    public static ConfirmationCode of(String code) {
-        if (code == null || code.isBlank()) {
-            throw new ValueObjectValidationException("Cannot create empty confirmation code");
+    public static Code of(String code) {
+        if (code == null || code.isBlank() || code.length() != CODE_LENGTH) {
+            throw new ValueObjectValidationException("Cannot create confirmation code with invalid data");
         }
-        return new ConfirmationCode(code);
+        return new Code(code);
     }
 }

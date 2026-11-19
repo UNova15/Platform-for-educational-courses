@@ -1,7 +1,7 @@
 package kira.user.application.ports.out.crypto;
 
-import kira.user.domain.confirmsession.valueobject.ConfirmationCode;
+import kira.user.domain.code.valueobject.Code;
 
 public interface ConfirmCodeGenerationPort {
-    ConfirmationCode generate();
+    Code generate();
 }

@@ -5,10 +5,9 @@ import kira.user.application.exceptions.ConfirmCodeException;
 import kira.user.application.ports.out.cache.confirmationsession.ConfirmRemovePort;
 import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionLoadPort;
 import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionSavePort;
-import kira.user.application.ports.out.crypto.ConfirmCodeGenerationPort;
 import kira.user.domain.AuthAggregateType;
-import kira.user.domain.confirmsession.ConfirmationSession;
-import kira.user.domain.confirmsession.valueobject.ConfirmationCode;
+import kira.user.domain.code.ConfirmationSession;
+import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.user.valueobject.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,9 +18,8 @@ public class CodeChecker {
     private final ConfirmSessionLoadPort confirmLoadPort;
     private final ConfirmRemovePort confirmRemovePort;
     private final ConfirmSessionSavePort confirmSessionSavePort;
-    private final ConfirmCodeGenerationPort confirmCodeGenerator;
 
-    public ConfirmationSession verifyAndConsume(Email email, ConfirmationCode code) {
+    public ConfirmationSession verifyAndConsume(Email email, Code code) {
         var confirmSession = confirmLoadPort
                 .load(email)
                 .orElseThrow(() -> new ResourceNotFoundException(AuthAggregateType.CONFIRMATION_SESSION)
