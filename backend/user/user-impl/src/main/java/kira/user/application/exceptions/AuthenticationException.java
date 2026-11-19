@@ -5,8 +5,8 @@ import kira.user.domain.AuthAggregateType;
 
 public class AuthenticationException extends TypedBaseApplicationException {
 
-    public AuthenticationException(String login) {
-        super("Cannot authentication user with login: %s".formatted(login), AuthAggregateType.USER);
-        withContext("login", login);
+    public AuthenticationException(String email) {
+        super("Cannot authentication user with email: %s".formatted(email), AuthAggregateType.USER);
+        withContext("email", email);
     }
 }

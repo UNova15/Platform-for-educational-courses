@@ -2,12 +2,14 @@ package kira.user.domain.user.valueobject;
 
 import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
+@EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HashedPassword {
     private final String value;
@@ -17,10 +19,6 @@ public class HashedPassword {
             throw new ValueObjectValidationException("Hashed password cannot be empty");
         }
 
-        return new HashedPassword(hashedPassword);
-    }
-
-    public static HashedPassword restoreFromHash(String hashedPassword) {
         return new HashedPassword(hashedPassword);
     }
 }

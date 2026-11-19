@@ -3,11 +3,13 @@ package kira.user.domain.token.valueobject;
 import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
+@EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccessToken {
     private final String value;

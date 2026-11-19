@@ -3,11 +3,13 @@ package kira.user.domain.user.valueobject;
 import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
+@EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Email {
     private final String value;
@@ -17,9 +19,5 @@ public class Email {
             throw new ValueObjectValidationException("Incorrect data to create email");
         }
         return new Email(email);
-    }
-
-    public static Email restore(String value){
-        return new Email(value);
     }
 }

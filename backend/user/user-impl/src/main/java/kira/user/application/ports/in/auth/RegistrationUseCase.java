@@ -1,6 +1,8 @@
 package kira.user.application.ports.in.auth;
 
 import jakarta.validation.constraints.NotNull;
+import kira.user.domain.confirmsession.valueobject.ConfirmationCode;
+import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
 import org.springframework.validation.annotation.Validated;
@@ -8,5 +10,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface RegistrationUseCase {
 
-    AuthTokens registration(@NotNull Username username, @NotNull RawPassword password);
+    void registration(@NotNull Username username, @NotNull Email email, @NotNull RawPassword password);
+
+    AuthTokens confirmCode(@NotNull Email email, @NotNull ConfirmationCode code);
 }

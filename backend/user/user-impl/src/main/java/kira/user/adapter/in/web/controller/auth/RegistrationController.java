@@ -3,16 +3,15 @@ package kira.user.adapter.in.web.controller.auth;
 import jakarta.validation.Valid;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
+import kira.user.domain.confirmsession.valueobject.ConfirmationCode;
+import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,16 +21,27 @@ class RegistrationController {
     private final CookieFactory cookieFactory;
 
     @PostMapping("/registration")
-    public ResponseEntity<AuthTokens> registration(@RequestBody @Valid RegistrationCommand request) {
-        var login = Username.of(request.login());
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void registration(@RequestBody @Valid RegistrationCommand request) {
+        var username = Username.of(request.username());
         var password = RawPassword.of(request.password());
+        var email = Email.of(request.email());
 
-        AuthTokens authTokens = registrationService.registration(login, password);
+        registrationService.registration(username, email, password);
+    }
 
+    @PostMapping("/registration/code")
+    public ResponseEntity<AuthResponse> codeConfirmation(@RequestBody @Valid CodeConfirmationCommand command) {
+        var code = ConfirmationCode.of(command.code());
+        var email = Email.of(command.email());
+
+        AuthTokens tokens = registrationService.confirmCode(email,code);
+
+        var response = new AuthResponse(tokens.id(), tokens.login(), tokens.accessToken());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header(
                         HttpHeaders.SET_COOKIE,
-                        cookieFactory.createDefaultRefreshCookie(authTokens).toString())
-                .body(authTokens);
+                        cookieFactory.createDefaultRefreshCookie(tokens).toString())
+                .body(response);
     }
 }

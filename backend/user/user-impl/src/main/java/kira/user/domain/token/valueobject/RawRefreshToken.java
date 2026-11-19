@@ -2,12 +2,14 @@ package kira.user.domain.token.valueobject;
 
 import common.domain.exception.ValueObjectValidationException;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
+@EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class RawRefreshToken {
     private final String value;
