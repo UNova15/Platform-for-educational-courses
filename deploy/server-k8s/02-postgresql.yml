@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kira-postgresql
+spec:
+  replicas: 1
+  serviceName: database-headless
+  selector:
+    matchLabels:
+      app: kira-postgresql
+  template:
+    metadata:
+      labels:
+        app: kira-postgresql
+    spec:
+      containers:
+        - name: kira-postgresql
+          image: postgres:17
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-data
+                  key: DB_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-data
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: DB_NAME
+          envFrom:
+            - configMapRef:
+                name: config
+
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pgdata
+
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi

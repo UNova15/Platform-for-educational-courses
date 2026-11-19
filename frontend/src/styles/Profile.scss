@@ -1,0 +1,453 @@
+.profile-page {
+  padding: 40px 0;
+  font-family: var(--font-main); /* Используем ваш глобальный шрифт Roboto Slab */
+}
+
+.profile-greeting {
+  margin-bottom: 25px;
+  
+  h1 {
+    font-size: 32px;
+    color: var(--color-text-main);
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  p {
+    color: var(--color-text-muted);
+    font-size: 14px;
+  }
+}
+
+.profile-top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 50px;
+  gap: 30px;
+}
+
+/* --- Сетка статистики (4 карточки) --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 380px;
+  flex-shrink: 0;
+}
+
+.stat-card {
+  background: var(--color-bg-card);
+  padding: 20px;
+  border-radius: var(--radius-modal);
+  display: flex;
+  flex-direction: column;
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 5px;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+}
+
+/* --- Карточка пользователя (Аватар + Контакты) --- */
+.user-card {
+  background: var(--color-bg-card);
+  padding: 30px 40px;
+  border-radius: var(--radius-modal);
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-grow: 1;
+  position: relative; /* Чтобы кнопку можно было прижать вправо */
+}
+
+.profile-avatar-large {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: #A78BFA;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.profile-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  .user-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 5px;
+  }
+
+  span {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    /* Стили для ваших SVG-иконок */
+    svg {
+      color: var(--color-text-muted);
+      stroke-width: 2;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.btn-profile-action {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 12px 25px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: auto; /* Прижимаем кнопку вправо */
+  align-self: flex-end; /* Прижимаем кнопку вниз */
+  transition: 0.2s;
+
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+/* --- Общие заголовки секций --- */
+.section-title {
+  font-size: 24px;
+  color: var(--color-text-main);
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+/* --- Продолжить обучение (карточки с прогресс-барами) --- */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.course-card {
+  background: white;
+  border-radius: var(--radius-modal);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.course-image-placeholder {
+  height: 160px;
+  background-color: #CDB4F6;
+  width: 100%;
+}
+
+.course-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 20px;
+  min-height: 40px;
+}
+
+.progress-container {
+  margin-top: auto;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.btn-continue-small {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  width: fit-content;
+  transition: 0.2s;
+  
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+/* --- Ближайшие занятия --- */
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-modal);
+  padding: 15px 20px;
+  gap: 20px;
+}
+
+.lesson-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  min-width: 70px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  
+  .date-day {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+  }
+  .date-time {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+}
+
+.lesson-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-grow: 1;
+  
+  .lesson-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+  }
+  .lesson-sub {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+}
+
+.btn-outline-small {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-btn);
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+}
+
+
+.my-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.my-course-card {
+  background: white;
+  border-radius: var(--radius-modal);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  
+  .card-image {
+    height: 160px;
+    background-color: #CDB4F6;
+    width: 100%;
+  }
+  
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 15px;
+    min-height: 40px;
+  }
+  
+  .tags-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.unpublished-card {
+  width: 320px;
+  background: white;
+  border-radius: var(--radius-modal);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  
+  .card-image {
+    height: 160px;
+    background-color: #CDB4F6;
+    width: 100%;
+  }
+  
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 15px;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+  
+  .tag {
+  font-size: 11px;
+  color: var(--color-text-main);
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 4px 16px;
+  display: inline-block;
+  width: auto;
+  white-space: nowrap;
+}
+
+
+.btn-main-action {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 12px 30px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 50px;
+  transition: 0.2s;
+  display: inline-block;
+
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+.unpublished-card {
+  width: 320px;
+  background: white;
+  border-radius: var(--radius-modal);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  
+  .card-image {
+    height: 160px;
+    background-color: #CDB4F6;
+    width: 100%;
+  }
+  
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 15px;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .tag {
+    font-size: 11px;
+    
+    background: #F6F5FC;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 4px 16px;
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+  }
+}

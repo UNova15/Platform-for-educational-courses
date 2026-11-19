@@ -1,0 +1,23 @@
+package kira.user.adapter.in.web.controller.auth;
+
+import kira.user.application.ports.in.auth.AuthTokens;
+import lombok.AllArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseCookie;
+
+@Configuration
+@EnableConfigurationProperties(CookieProperties.class)
+@AllArgsConstructor
+class CookieFactory {
+    private final CookieProperties cookieProperties;
+
+    public ResponseCookie createDefaultRefreshCookie(AuthTokens token) {
+        return ResponseCookie.from("refreshToken", token.refreshToken())
+                .httpOnly(true)
+                .path("/api/auth/refresh")
+                .secure(true)
+                .maxAge(cookieProperties.cookieTtl())
+                .build();
+    }
+}

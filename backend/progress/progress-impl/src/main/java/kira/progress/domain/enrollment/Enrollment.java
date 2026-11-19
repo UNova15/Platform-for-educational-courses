@@ -1,0 +1,29 @@
+package kira.progress.domain.enrollment;
+
+import common.domain.entity.Id;
+import common.domain.exception.ValueObjectValidationException;
+import java.time.LocalDateTime;
+import kira.progress.domain.markers.Course;
+import kira.progress.domain.markers.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+@Getter
+@Accessors(fluent = true)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Enrollment {
+    private final Id<Enrollment> id;
+    private final Id<User> userId;
+    private final Id<Course> courseId;
+    private final LocalDateTime createdAt;
+
+    public static Enrollment create(Id<User> userId, Id<Course> courseId) {
+        if (userId == null || courseId == null) {
+            throw new ValueObjectValidationException("Incorrect data to create enrollment");
+        }
+
+        return new Enrollment(null, userId, courseId, LocalDateTime.now());
+    }
+}

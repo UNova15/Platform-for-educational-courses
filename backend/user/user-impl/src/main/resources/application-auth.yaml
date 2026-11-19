@@ -1,0 +1,7 @@
+app:
+  web:
+    cookie-ttl: ${COOKIE_TTL}
+
+  tokens:
+    refresh:
+      refresh-token-length: ${REFRESH_TOKEN_LENGTH}
