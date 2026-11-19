@@ -30,4 +30,11 @@ public class User {
     public static User restore(Id<User> id, Username username, Email email, HashedPassword password) {
         return new User(id, username, email, password);
     }
+
+    public void resetPassword(HashedPassword password) {
+        if (password == null) {
+            throw new DomainValidationException("Empty data to reset password", AuthAggregateType.USER);
+        }
+        this.password = password;
+    }
 }

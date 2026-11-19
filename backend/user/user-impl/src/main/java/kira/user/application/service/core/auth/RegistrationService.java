@@ -20,7 +20,7 @@ import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.HashedPassword;
 import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
-import kira.user.event.RegistrationEvent;
+import kira.user.event.CodeGeneratedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +65,7 @@ class RegistrationService implements RegistrationUseCase {
         var session = ConfirmationSession.create(username, email, code, hashedPassword);
         confirmSavePort.save(session);
 
-        eventPublisher.publish(new RegistrationEvent(email.value(), code.value()));
+        eventPublisher.publish(new CodeGeneratedEvent(email.value(), code.value()));
     }
 
     @Transactional
@@ -76,19 +76,5 @@ class RegistrationService implements RegistrationUseCase {
 
         Id<User> userId = userSavePort.save(user).id();
         return tokenPublisher.issueTokens(userId, user.username());
-    }
-
-    @Override
-    public void repeatSendingCode(Email email) {
-        var confirmSession = confirmSessionLoadPort
-                .load(email)
-                .orElseThrow(() -> new ResourceNotFoundException(AuthAggregateType.CONFIRMATION_SESSION));
-
-        var newCode = confirmCodeGenerator.generate();
-
-        confirmSession.updateCodeForResend(newCode);
-
-        confirmSavePort.save(confirmSession);
-        eventPublisher.publish(new RegistrationEvent(email.value(), newCode.value()));
     }
 }

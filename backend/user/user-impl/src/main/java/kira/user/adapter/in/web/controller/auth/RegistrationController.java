@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
+import kira.user.application.ports.in.auth.ResendCodeUseCase;
+import kira.user.application.ports.in.auth.ResetPasswordUseCase;
 import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.Username;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 class RegistrationController {
     private final RegistrationUseCase registrationService;
+    private final ResendCodeUseCase resendService;
     private final CookieFactory cookieFactory;
 
     @PostMapping("/registration")
@@ -32,6 +35,7 @@ class RegistrationController {
     }
 
     @PostMapping("/registration/code")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AuthResponse> codeConfirmation(@RequestBody @Valid CodeConfirmationCommand command) {
         var code = Code.of(command.code());
         var email = Email.of(command.email());
@@ -46,14 +50,11 @@ class RegistrationController {
                 .body(response);
     }
 
-    public record RepeatCodeCommand(
-            @NotBlank @jakarta.validation.constraints.Email String email) {}
-
-    @PostMapping("registration/code/repeat")
+    @PostMapping("registration/code/repetition")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void repeatSending(@RequestBody @Valid RepeatCodeCommand command) {
-        var email = Email.of(command.email);
+        var email = Email.of(command.email());
 
-        registrationService.repeatSendingCode(email);
+        resendService.resend(email);
     }
 }

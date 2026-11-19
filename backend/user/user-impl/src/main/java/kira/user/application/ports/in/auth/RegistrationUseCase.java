@@ -13,6 +13,4 @@ public interface RegistrationUseCase {
     void registration(@NotNull Username username, @NotNull Email email, @NotNull RawPassword password);
 
     AuthTokens confirmCode(@NotNull Email email, @NotNull Code code);
-
-    void repeatSendingCode(@NotNull Email email);
 }
