@@ -1,18 +1,6 @@
 @use './variables';
 @use './reset';
-
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column; 
-}
-
-main {
-  flex: 1;
-  width: 100%;
-}
-
-
+@use './Profile.scss';
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
