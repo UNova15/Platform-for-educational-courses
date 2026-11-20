@@ -60,4 +60,13 @@ public class EmailMessageFormatter implements MessageTemplatePort {
         var body = MessageFormat.format(template, studentName, courseTitle, testTile, score);
         return new Notification(emailType.subject(), body);
     }
+
+    @Override
+    public Notification renderConfirmationCode(String code) {
+        final var emailType = EmailType.CONFIRMATION_CODE;
+
+        String template = loader.getTemplate(emailType);
+        var body = MessageFormat.format(template,code);
+        return new Notification(emailType.subject(),body);
+    }
 }

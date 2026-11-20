@@ -12,5 +12,7 @@ public interface MessageTemplatePort {
 
     Notification renderUserCompletedTest(String studentName, String courseTitle, String testTile, long score);
 
+    Notification renderConfirmationCode(String code);
+
     record Notification(String subject, String body) {}
 }

@@ -15,7 +15,7 @@ import kira.user.domain.user.User;
 import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.HashedPassword;
 import kira.user.domain.user.valueobject.RawPassword;
-import kira.user.event.CodeGeneratedEvent;
+import kira.user.event.CodeConfirmationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class ResetPasswordService implements ResetPasswordUseCase {
         var session = ConfirmationSession.create(user.username(), user.email(), code, password);
         confirmSessionSavePort.save(session);
 
-        eventPublisher.publish(new CodeGeneratedEvent(user.email().value(), code.value()));
+        eventPublisher.publish(new CodeConfirmationEvent(user.email().value(), code.value()));
     }
 
     @Override

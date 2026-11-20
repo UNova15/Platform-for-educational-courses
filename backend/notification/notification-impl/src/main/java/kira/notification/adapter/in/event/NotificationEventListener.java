@@ -2,6 +2,7 @@ package kira.notification.adapter.in.event;
 
 import common.domain.entity.Id;
 import kira.course.events.ContentPublishEvent;
+import kira.notification.application.port.in.CodeConfirmationNotifyUsaCase;
 import kira.notification.application.port.in.CompletedTestNotifyUseCase;
 import kira.notification.application.port.in.publish.ContentPublishedNotifyUseCase;
 import kira.notification.application.port.in.resetprogress.ProgressResetNotifyUseCase;
@@ -12,6 +13,7 @@ import kira.notification.domain.marker.User;
 import kira.progress.event.CompletedTestEvent;
 import kira.progress.event.CourseEnrollEvent;
 import kira.progress.event.ResetProgressEvent;
+import kira.user.event.CodeConfirmationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,7 @@ public class NotificationEventListener {
     private final ProgressResetNotifyUseCase progressResetNotify;
     private final EnrolledCourseNotifyUseCase enrolledCourseNotify;
     private final CompletedTestNotifyUseCase completedTestNotify;
+    private final CodeConfirmationNotifyUsaCase codeConfirmationNotify;
 
     @EventListener
     public void onContentPublishEvent(ContentPublishEvent event) {
@@ -55,5 +58,10 @@ public class NotificationEventListener {
         Id<Test> testId = Id.of(event.testId());
 
         completedTestNotify.sendCompletedTestNotification(userId, testId, event.score());
+    }
+
+    @EventListener
+    public void onConfirmationCodeEvent(CodeConfirmationEvent event) {
+        codeConfirmationNotify.sendConfirmationCode(event.email(), event.code());
     }
 }

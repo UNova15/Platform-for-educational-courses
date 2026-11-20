@@ -10,7 +10,7 @@ import kira.user.domain.AuthAggregateType;
 import kira.user.domain.code.ConfirmationSession;
 import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.user.valueobject.Email;
-import kira.user.event.CodeGeneratedEvent;
+import kira.user.event.CodeConfirmationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,6 @@ public class CodeResendService implements ResendCodeUseCase {
         session.updateCodeForResend(newCode);
 
         confirmSessionSavePort.save(session);
-        eventPublisher.publish(new CodeGeneratedEvent(email.value(), newCode.value()));
+        eventPublisher.publish(new CodeConfirmationEvent(email.value(), newCode.value()));
     }
 }

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 class UserMapper {
 
     public User toDomain(UserEntity entity) {
-        var username = Username.restore(entity.username());
-        var password = HashedPassword.restoreFromHash(entity.password());
-        var email = Email.restore(entity.email());
+        var username = Username.of(entity.username());
+        var password = HashedPassword.of(entity.password());
+        var email = Email.of(entity.email());
 
         return User.restore(Id.of(entity.id()), username, email, password);
     }

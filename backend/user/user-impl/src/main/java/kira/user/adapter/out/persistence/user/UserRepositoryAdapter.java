@@ -5,6 +5,7 @@ import java.util.Optional;
 import kira.user.application.ports.out.persistance.user.UserLoadPort;
 import kira.user.application.ports.out.persistance.user.UserSavePort;
 import kira.user.domain.user.User;
+import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.Username;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,8 +22,13 @@ class UserRepositoryAdapter implements UserSavePort, UserLoadPort {
     }
 
     @Override
-    public Optional<User> loadUserByLogin(Username username) {
-        return repository.findByLogin(username.value()).map(mapper::toDomain);
+    public boolean isExistsUserByEmail(Email email) {
+        return repository.existsByEmail(email.value());
+    }
+
+    @Override
+    public Optional<User> loadUserByEmail(Email email) {
+        return Optional.empty();
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 class RefreshTokenMapper {
 
     public RefreshToken toDomain(RefreshTokenEntity entity) {
-        HashedRefreshToken token = HashedRefreshToken.restoreFromHash(entity.token());
+        HashedRefreshToken token = HashedRefreshToken.of(entity.token());
         return RefreshToken.restore(Id.of(entity.id()), Id.of(entity.userId()), token);
     }
 

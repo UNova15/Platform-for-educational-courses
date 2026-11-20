@@ -2,7 +2,10 @@ package kira.notification.application.service;
 
 import common.application.exception.ResourceNotFoundException;
 import common.domain.entity.Id;
+
 import java.util.List;
+
+import kira.notification.application.port.in.CodeConfirmationNotifyUsaCase;
 import kira.notification.application.port.in.CompletedTestNotifyUseCase;
 import kira.notification.application.port.in.publish.ContentPublishNotification;
 import kira.notification.application.port.in.publish.ContentPublishedNotifyUseCase;
@@ -22,13 +25,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+//Рефактор. Размер и кол-во портов и унификация методов
 @Service
 @RequiredArgsConstructor
 public class NotificationService
         implements ContentPublishedNotifyUseCase,
                 ProgressResetNotifyUseCase,
                 EnrolledCourseNotifyUseCase,
-                CompletedTestNotifyUseCase {
+                CompletedTestNotifyUseCase,
+                CodeConfirmationNotifyUsaCase {
 
     private final NotificationSender sender;
     private final MessageTemplatePort formatter;
@@ -84,6 +89,14 @@ public class NotificationService
 
         var message = formatter.renderUserCompletedTest(studentName, details.courseTitle(), details.testTitle(), score);
         sendNotification(List.of(details.teacherId()), message);
+    }
+
+    @Async
+    @Override
+    public void sendConfirmationCode(String email, String code) {
+        var message = formatter.renderConfirmationCode(code);
+
+        sender.send(email, message.subject(), message.body());
     }
 
     private void sendNotification(List<Id<User>> recipientIds, MessageTemplatePort.Notification notification) {

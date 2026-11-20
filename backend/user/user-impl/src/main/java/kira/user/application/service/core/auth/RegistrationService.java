@@ -1,7 +1,6 @@
 package kira.user.application.service.core.auth;
 
 import common.application.exception.ResourceAlreadyExist;
-import common.application.exception.ResourceNotFoundException;
 import common.domain.entity.Id;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
@@ -20,7 +19,7 @@ import kira.user.domain.user.valueobject.Email;
 import kira.user.domain.user.valueobject.HashedPassword;
 import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
-import kira.user.event.CodeGeneratedEvent;
+import kira.user.event.CodeConfirmationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +64,7 @@ class RegistrationService implements RegistrationUseCase {
         var session = ConfirmationSession.create(username, email, code, hashedPassword);
         confirmSavePort.save(session);
 
-        eventPublisher.publish(new CodeGeneratedEvent(email.value(), code.value()));
+        eventPublisher.publish(new CodeConfirmationEvent(email.value(), code.value()));
     }
 
     @Transactional
