@@ -26,6 +26,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 //Рефактор. Размер и кол-во портов и унификация методов
+//Методы заменить общим методом обработки: render(Object ... args)
 @Service
 @RequiredArgsConstructor
 public class NotificationService

@@ -4,8 +4,7 @@ import common.application.exception.ResourceAlreadyExist;
 import common.domain.entity.Id;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
-import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionLoadPort;
-import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionSavePort;
+import kira.user.application.ports.out.cache.confirmsession.ConfirmSessionSavePort;
 import kira.user.application.ports.out.crypto.ConfirmCodeGenerationPort;
 import kira.user.application.ports.out.crypto.PasswordHasherPort;
 import kira.user.application.ports.out.event.EventPublisher;
@@ -37,9 +36,6 @@ class RegistrationService implements RegistrationUseCase {
 
     private final ConfirmSessionSavePort confirmSavePort;
     private final CodeChecker codeChecker;
-
-    private final ConfirmSessionLoadPort confirmSessionLoadPort;
-
     /*
     При регистрации сбрасывается предыдущая попытка регистрации данного пользователя (пользователя с такой же почтой),
     если он не завершил регистрацию (В кеш перезаписываются данные новой попытки).
@@ -48,7 +44,6 @@ class RegistrationService implements RegistrationUseCase {
     разработки упрощено, в дальнейшем для исправления необходимо проверять наличие уже существующей попытки и проверять
     в ней время последней отправки сообщения.
      */
-
     @Override
     public void registration(Username username, Email email, RawPassword password) {
         if (userLoadPort.isExistsUserByUsername(username)) {

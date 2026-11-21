@@ -12,12 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfirmationSession {
+    public static final Duration TTL = Duration.ofMinutes(30);
     private static final int INITIAL_INPUT_ATTEMPT_COUNT = 5;
 
     private final Username username;
@@ -28,8 +30,10 @@ public class ConfirmationSession {
     private int numberOfInputAttempts;
 
     private DelaySteps step;
-    private Instant lastLetterSent;
+    private Instant lastUpdateTime;
 
+    private Instant expireAt;
+    // переделать на исключение и boolean?
     public enum VerificationResult {
         VERIFIED,
         INVALID_CODE,
@@ -41,8 +45,25 @@ public class ConfirmationSession {
             throw new DomainValidationException(
                     "Cannot create code attempt with empty data", AuthAggregateType.CONFIRMATION_SESSION);
         }
+
+        var now = Instant.now();
+        var expire = now.plus(TTL);
+        var step = DelaySteps.FIRST;
         return new ConfirmationSession(
-                username, email, code, hashedPassword, INITIAL_INPUT_ATTEMPT_COUNT, DelaySteps.FIRST, Instant.now());
+                username, email, code, hashedPassword, INITIAL_INPUT_ATTEMPT_COUNT, step, now, expire);
+    }
+
+    public static ConfirmationSession restore(
+            Username username,
+            Email email,
+            Code code,
+            HashedPassword hashedPassword,
+            int numberOfInputAttempts,
+            DelaySteps step,
+            Instant lastLetterSent,
+            Instant expireAt) {
+        return new ConfirmationSession(
+                username, email, code, hashedPassword, numberOfInputAttempts, step, lastLetterSent, expireAt);
     }
 
     public VerificationResult verifyCode(Code inputCode) {
@@ -59,11 +80,10 @@ public class ConfirmationSession {
 
     public void updateCodeForResend(Code code) {
         var stepTime = step.time();
-        var retryTime = lastLetterSent.plus(stepTime);
+        var retryTime = lastUpdateTime.plus(stepTime);
 
-        boolean canUpdate = Instant.now().isAfter(retryTime);
-
-        if (!canUpdate) {
+        var now = Instant.now();
+        if (now.isBefore(retryTime)) {
             throw new DomainValidationException(
                             "Cannot update the code because not enough time has passed. Repeat attempt %s"
                                     .formatted(retryTime),
@@ -73,6 +93,7 @@ public class ConfirmationSession {
         this.code = code;
         this.step = step.next();
         this.numberOfInputAttempts = INITIAL_INPUT_ATTEMPT_COUNT;
-        this.lastLetterSent = Instant.now();
+        this.lastUpdateTime = Instant.now();
+        this.expireAt = Instant.now().plus(TTL);
     }
 }

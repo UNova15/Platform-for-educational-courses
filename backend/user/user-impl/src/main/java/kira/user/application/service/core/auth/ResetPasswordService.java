@@ -2,7 +2,7 @@ package kira.user.application.service.core.auth;
 
 import common.application.exception.ResourceNotFoundException;
 import kira.user.application.ports.in.auth.ResetPasswordUseCase;
-import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionSavePort;
+import kira.user.application.ports.out.cache.confirmsession.ConfirmSessionSavePort;
 import kira.user.application.ports.out.crypto.ConfirmCodeGenerationPort;
 import kira.user.application.ports.out.crypto.PasswordHasherPort;
 import kira.user.application.ports.out.event.EventPublisher;

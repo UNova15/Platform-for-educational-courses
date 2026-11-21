@@ -5,3 +5,11 @@ app:
   tokens:
     refresh:
       refresh-token-length: ${REFRESH_TOKEN_LENGTH}
+
+spring:
+  data:
+    redis:
+      host: ${CACHE_HOST}
+      port: ${CACHE_PORT}
+      password: ${CACHE_PASSWORD}
+      timeout: 2s

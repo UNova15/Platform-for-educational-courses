@@ -24,6 +24,9 @@ services:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
+      CACHE_HOST: cache
+      CACHE_PORT: 6379
+      CACHE_PASSWORD: ${CACHE_PASSWORD}
       ACCESS_TOKEN_TTL: "20m"
       REFRESH_TOKEN_LENGTH: "64"
       COOKIE_TTL: "10d"
@@ -36,7 +39,24 @@ services:
         condition: service_completed_successfully
       migrate-progress:
         condition: service_completed_successfully
+      cache:
+        condition: service_healthy
 
+  cache:
+    container_name: kira-cache
+    image: valkey/valkey:9.2.0
+    restart: always
+
+    command: valkey-server --requirepass ${CACHE_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey_data:/data
+    healthcheck:
+      test: [ "CMD", "valkey-cli", "-a", "${CACHE_PASSWORD}", "ping" ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
 
 
   migrate-auth:
@@ -115,4 +135,5 @@ services:
 
 volumes:
   pg_data:
+  valkey_data:
 

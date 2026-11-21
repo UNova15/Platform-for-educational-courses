@@ -2,8 +2,8 @@ package kira.user.application.service.core.auth;
 
 import common.application.exception.ResourceNotFoundException;
 import kira.user.application.ports.in.auth.ResendCodeUseCase;
-import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionLoadPort;
-import kira.user.application.ports.out.cache.confirmationsession.ConfirmSessionSavePort;
+import kira.user.application.ports.out.cache.confirmsession.ConfirmSessionLoadPort;
+import kira.user.application.ports.out.cache.confirmsession.ConfirmSessionSavePort;
 import kira.user.application.ports.out.crypto.ConfirmCodeGenerationPort;
 import kira.user.application.ports.out.event.EventPublisher;
 import kira.user.domain.AuthAggregateType;

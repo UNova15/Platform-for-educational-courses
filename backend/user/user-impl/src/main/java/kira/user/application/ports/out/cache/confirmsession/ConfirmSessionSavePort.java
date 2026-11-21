@@ -1,4 +1,4 @@
-package kira.user.application.ports.out.cache.confirmationsession;
+package kira.user.application.ports.out.cache.confirmsession;
 
 import kira.user.domain.code.ConfirmationSession;
 
