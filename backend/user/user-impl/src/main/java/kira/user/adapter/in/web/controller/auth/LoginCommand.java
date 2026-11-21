@@ -8,8 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 record LoginCommand(
-        @NotBlank(message = "Login cannot be empty")
-        @Email(message = "Invalid email address")
+        @NotBlank(message = "Login cannot be empty") @Email(message = "Invalid email address")
         String email,
 
         @NotBlank(message = "Password cannot be empty")

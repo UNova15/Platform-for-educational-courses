@@ -1,15 +1,12 @@
 package kira.user.adapter.in.web.controller.auth;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import kira.user.application.ports.in.auth.AuthTokens;
 import kira.user.application.ports.in.auth.RegistrationUseCase;
-import kira.user.application.ports.in.auth.ResendCodeUseCase;
-import kira.user.application.ports.in.auth.ResetPasswordUseCase;
 import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.user.valueobject.Email;
-import kira.user.domain.user.valueobject.Username;
 import kira.user.domain.user.valueobject.RawPassword;
+import kira.user.domain.user.valueobject.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 class RegistrationController {
     private final RegistrationUseCase registrationService;
-    private final ResendCodeUseCase resendService;
     private final CookieFactory cookieFactory;
 
     @PostMapping("/registration")
@@ -42,19 +38,11 @@ class RegistrationController {
 
         AuthTokens tokens = registrationService.confirmCode(email, code);
 
-        var response = new AuthResponse(tokens.id(), tokens.login(), tokens.accessToken());
+        var response = new AuthResponse(tokens.id(), tokens.username(), tokens.accessToken());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header(
                         HttpHeaders.SET_COOKIE,
                         cookieFactory.createDefaultRefreshCookie(tokens).toString())
                 .body(response);
-    }
-
-    @PostMapping("registration/code/repetition")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void repeatSending(@RequestBody @Valid RepeatCodeCommand command) {
-        var email = Email.of(command.email());
-
-        resendService.resend(email);
     }
 }

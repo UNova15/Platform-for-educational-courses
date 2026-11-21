@@ -28,7 +28,8 @@ class UserRepositoryAdapter implements UserSavePort, UserLoadPort {
 
     @Override
     public Optional<User> loadUserByEmail(Email email) {
-        return Optional.empty();
+        Optional<UserEntity> entity = repository.findByEmail(email.value());
+        return entity.map(mapper::toDomain);
     }
 
     @Override

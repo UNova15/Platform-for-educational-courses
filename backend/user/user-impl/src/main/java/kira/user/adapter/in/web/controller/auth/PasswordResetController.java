@@ -1,7 +1,6 @@
 package kira.user.adapter.in.web.controller.auth;
 
 import jakarta.validation.Valid;
-import kira.user.application.ports.in.auth.ResendCodeUseCase;
 import kira.user.application.ports.in.auth.ResetPasswordUseCase;
 import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.user.valueobject.Email;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PasswordResetController {
     private final ResetPasswordUseCase resetPasswordService;
-    private final ResendCodeUseCase resendCodeService;
 
     @PostMapping("/password/reset")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -33,13 +31,5 @@ public class PasswordResetController {
         var code = Code.of(command.code());
 
         resetPasswordService.confirmCode(email, code);
-    }
-
-    @PostMapping("/password/reset/repetition")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void repeatSendConfirmCode(@RequestBody @Valid RepeatCodeCommand command) {
-        var email = Email.of(command.email());
-
-        resendCodeService.resend(email);
     }
 }

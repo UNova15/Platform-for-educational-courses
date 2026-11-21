@@ -1,11 +1,10 @@
 package kira.user.adapter.out.codegenerator;
 
+import java.security.SecureRandom;
 import kira.user.application.ports.out.crypto.ConfirmCodeGenerationPort;
 import kira.user.domain.code.valueobject.Code;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-
-import java.security.SecureRandom;
 
 @Configuration
 @RequiredArgsConstructor

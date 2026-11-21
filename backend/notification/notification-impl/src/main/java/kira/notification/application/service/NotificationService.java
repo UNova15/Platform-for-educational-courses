@@ -2,9 +2,7 @@ package kira.notification.application.service;
 
 import common.application.exception.ResourceNotFoundException;
 import common.domain.entity.Id;
-
 import java.util.List;
-
 import kira.notification.application.port.in.CodeConfirmationNotifyUsaCase;
 import kira.notification.application.port.in.CompletedTestNotifyUseCase;
 import kira.notification.application.port.in.publish.ContentPublishNotification;
@@ -25,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-//Рефактор. Размер и кол-во портов и унификация методов
-//Методы заменить общим методом обработки: render(Object ... args)
+// Рефактор. Размер и кол-во портов и унификация методов
+// Методы заменить общим методом обработки: render(Object ... args)
 @Service
 @RequiredArgsConstructor
 public class NotificationService

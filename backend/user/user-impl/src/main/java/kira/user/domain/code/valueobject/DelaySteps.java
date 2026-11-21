@@ -15,7 +15,7 @@ public enum DelaySteps {
         this.time = time;
     }
 
-    public Duration time(){
+    public Duration time() {
         return time;
     }
 

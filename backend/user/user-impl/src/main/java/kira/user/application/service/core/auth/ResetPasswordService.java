@@ -34,10 +34,9 @@ public class ResetPasswordService implements ResetPasswordUseCase {
 
     @Override
     public void resetPassword(Email email, RawPassword rawPassword) {
-        User user = userLoadPort
-                .loadUserByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(AuthAggregateType.USER).withContext("email", email.value()));
+        User user = userLoadPort.loadUserByEmail(email).orElseThrow(() -> new ResourceNotFoundException(
+                        AuthAggregateType.USER)
+                .withContext("email", email.value()));
 
         HashedPassword password = passwordHasherPort.hashPassword(rawPassword);
         Code code = generationPort.generate();
@@ -50,10 +49,9 @@ public class ResetPasswordService implements ResetPasswordUseCase {
 
     @Override
     public void confirmCode(Email email, Code inputCode) {
-        User user = userLoadPort
-                .loadUserByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(AuthAggregateType.USER).withContext("email", email.value()));
+        User user = userLoadPort.loadUserByEmail(email).orElseThrow(() -> new ResourceNotFoundException(
+                        AuthAggregateType.USER)
+                .withContext("email", email.value()));
 
         ConfirmationSession session = codeChecker.verifyAndConsume(email, inputCode);
 

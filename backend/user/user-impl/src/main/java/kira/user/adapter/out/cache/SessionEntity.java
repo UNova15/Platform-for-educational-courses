@@ -1,8 +1,7 @@
 package kira.user.adapter.out.cache;
 
-import kira.user.domain.code.valueobject.DelaySteps;
-
 import java.time.Instant;
+import kira.user.domain.code.valueobject.DelaySteps;
 
 public record SessionEntity(
         String username,

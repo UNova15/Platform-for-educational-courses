@@ -1,6 +1,8 @@
 package kira.user.domain.code;
 
 import common.domain.exception.DomainValidationException;
+import java.time.Duration;
+import java.time.Instant;
 import kira.user.domain.AuthAggregateType;
 import kira.user.domain.code.valueobject.Code;
 import kira.user.domain.code.valueobject.DelaySteps;
@@ -11,9 +13,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-
-import java.time.Duration;
-import java.time.Instant;
 
 @Getter
 @Accessors(fluent = true)
@@ -33,7 +32,7 @@ public class ConfirmationSession {
     private Instant lastUpdateTime;
 
     private Instant expireAt;
-    // переделать на исключение и boolean?
+
     public enum VerificationResult {
         VERIFIED,
         INVALID_CODE,
