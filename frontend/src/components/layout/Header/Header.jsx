@@ -1,7 +1,7 @@
 import styles from './Header.module.scss';
 import logoSvg from '../../../assets/icons/logo.svg';
 
-function Header({ onOpenLogin }) {
+function Header({ onLoginClick }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
@@ -10,12 +10,12 @@ function Header({ onOpenLogin }) {
         </a>
 
         <nav className={styles.nav}>
-          <a href="#courses" className={styles.navLink}>Курсы</a>
-          <a href="#reviews" className={styles.navLink}>Отзывы</a>
-          <a href="#contacts" className={styles.navLink}>Контакты</a>
+          <a href="#courses-section" className={styles.navLink}>Курсы</a>
+          <a href="#footer" className={styles.navLink}>Отзывы</a>
+          <a href="#footer" className={styles.navLink}>Контакты</a>
         </nav>
 
-        <button className={styles.loginBtn} onClick={onOpenLogin}>
+        <button type="button" className={styles.loginBtn} onClick={onLoginClick}>
           Войти
         </button>
       </div>

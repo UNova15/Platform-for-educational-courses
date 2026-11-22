@@ -3,7 +3,7 @@ import logoFooterSvg from '../../../assets/icons/logo-footer.svg';
 
 function Footer() {
   return (
-    <footer className={styles.footer} id="contacts">
+    <footer className={styles.footer} id="footer">
       <div className={styles.footerInner}>
         
         <a href="/" className={styles.logo}>
