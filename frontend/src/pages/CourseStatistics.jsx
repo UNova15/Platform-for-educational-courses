@@ -12,27 +12,43 @@ const CourseStatistics = () => {
   ];
 
   const testStats = [
-    { id: 1, name: 'Сурмалян Яна', status: 'Пройден', result: '9/10', time: '14 мин', color: '#C4B5FD' },
-    { id: 2, name: 'Сурмалян Яна', status: 'В процессе', result: '-', time: 'В процессе', color: '#C4B5FD' },
+    {
+      id: 1,
+      name: 'Сурмалян Яна',
+      status: 'Пройден',
+      result: '9/10',
+      time: '14 мин',
+      color: '#C4B5FD',
+    },
+    {
+      id: 2,
+      name: 'Сурмалян Яна',
+      status: 'В процессе',
+      result: '-',
+      time: 'В процессе',
+      color: '#C4B5FD',
+    },
     { id: 3, name: 'Сурмалян Яна', status: 'Не начат', result: '-', time: '-', color: '#C4B5FD' },
   ];
 
   return (
     <div className="stats-page">
-      
       <div className="stats-header">
         <h1>Статистика курса: название курса</h1>
         <button className="btn-back">Назад</button>
       </div>
 
       <div className="stats-tabs">
-        <button 
+        <button
           className={`tab-btn ${activeTab === 'lessons' ? 'active' : ''}`}
-          onClick={() => { setActiveTab('lessons'); setIsReportOpen(false); }}
+          onClick={() => {
+            setActiveTab('lessons');
+            setIsReportOpen(false);
+          }}
         >
           Уроки
         </button>
-        <button 
+        <button
           className={`tab-btn ${activeTab === 'tests' ? 'active' : ''}`}
           onClick={() => setActiveTab('tests')}
         >
@@ -52,7 +68,6 @@ const CourseStatistics = () => {
 
       <div className="stats-content">
         <div className={`main-stats-area ${isReportOpen ? 'with-report' : ''}`}>
-          
           <h2>Сводные данные</h2>
           <div className="summary-cards">
             {activeTab === 'tests' && (
@@ -91,7 +106,10 @@ const CourseStatistics = () => {
                 <tr key={student.id}>
                   <td>
                     <div className="student-cell">
-                      <div className="avatar-small" style={{ backgroundColor: student.color }}></div>
+                      <div
+                        className="avatar-small"
+                        style={{ backgroundColor: student.color }}
+                      ></div>
                       {student.name}
                     </div>
                   </td>
@@ -100,10 +118,7 @@ const CourseStatistics = () => {
                   <td>{student.time}</td>
                   {activeTab === 'tests' && (
                     <td>
-                      <button 
-                        className="btn-view-report" 
-                        onClick={() => setIsReportOpen(true)}
-                      >
+                      <button className="btn-view-report" onClick={() => setIsReportOpen(true)}>
                         Посмотреть отчеты
                       </button>
                     </td>
@@ -116,7 +131,11 @@ const CourseStatistics = () => {
 
         {isReportOpen && activeTab === 'tests' && (
           <div className="report-sidebar">
-            <h3>Детальный отчет:<br/>Сурмалян Яна</h3>
+            <h3>
+              Детальный отчет:
+              <br />
+              Сурмалян Яна
+            </h3>
             <p className="report-subtitle">Тест №1. Название теста</p>
             <p className="report-time">14 минут</p>
 
