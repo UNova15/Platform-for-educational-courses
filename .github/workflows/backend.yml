@@ -7,9 +7,7 @@ on:
       - '.github/workflows/backend-ci.yml'
 
   push:
-    branches:
-      - dev
-      - master
+    branches: [ dev,master ]
     paths:
       - 'backend/**'
       - '.github/workflows/backend-ci.yml'
@@ -34,19 +32,19 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'maven'
+          cache-dependency-path: "backend/pom.xml"
 
-      - name: Check formatting
-        run: mvn spotless:check
+      - name: Check linters
+        run: mvn -B clean compile -am spotless:check modernizer:modernizer spotbugs:check pmd:check pmd:cpd-check
 
       - name: Build and verify
-        run: mvn clean verify
+        run: mvn -B verify
 
       - name: Upload build artifacts
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: backend-artifacts
-          path: |
-            backend/**/target/*.jar
+          path: backend/**/target/*.jar
           retention-days: 1
           if-no-files-found: error
