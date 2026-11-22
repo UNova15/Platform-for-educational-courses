@@ -10,19 +10,16 @@ import logoImage from '../../../assets/icons/logo-modals.svg';
 import authStyles from '../shared/auth.module.scss';
 import Modal from '../../ui/Modal/Modal';
 
-
 const CODE_LENGTH = 6;
 const CODE_VALIDITY_MS = 30 * 60 * 1000;
 const MAX_CODE_ATTEMPTS = 5;
 const RESEND_INTERVALS_SECONDS = [60, 300, 600, 900, 3600];
-
 
 const STEP_SUBTITLES = {
   1: 'Восстановите свой пароль',
   2: 'Код отправлен на почту',
   3: 'Введите новый пароль',
 };
-
 
 function PasswordResetForm({ onClose, onSwitchToLogin }) {
   const [step, setStep] = useState(1);
@@ -39,30 +36,38 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
   const [resendCount, setResendCount] = useState(0);
   const { secondsLeft, start, stop } = useCountdown();
 
-
-  function handleEmailChange(event) { setEmail(event.target.value); setErrorText(''); }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+    setErrorText('');
+  }
   function handleCodeChange(event) {
     setCode(event.target.value.replace(/\D/g, '').slice(0, CODE_LENGTH));
     setErrorText('');
   }
-  function handlePasswordChange(event) { setPassword(event.target.value); setErrorText(''); }
-  function handleConfirmChange(event) { setConfirmPassword(event.target.value); setErrorText(''); }
-
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+    setErrorText('');
+  }
+  function handleConfirmChange(event) {
+    setConfirmPassword(event.target.value);
+    setErrorText('');
+  }
 
   function handleTogglePasswordVisibility() {
-    setIsPasswordVisible(function flip(prev) { return !prev; });
+    setIsPasswordVisible(function flip(prev) {
+      return !prev;
+    });
   }
-
 
   function handleToggleConfirmVisibility() {
-    setIsConfirmVisible(function flip(prev) { return !prev; });
+    setIsConfirmVisible(function flip(prev) {
+      return !prev;
+    });
   }
-
 
   function isCodeExpired() {
     return Date.now() - codeSentAt > CODE_VALIDITY_MS;
   }
-
 
   function resetToFirstStep(message) {
     setStep(1);
@@ -74,18 +79,15 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     setErrorText(message);
   }
 
-
   async function handleEmailSubmit(event) {
     event.preventDefault();
     setErrorText('');
-
 
     const trimmedEmail = email.trim();
     if (!trimmedEmail) {
       setErrorText('Заполните все поля');
       return;
     }
-
 
     setIsSubmitting(true);
     try {
@@ -103,11 +105,9 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   async function handleCodeSubmit(event) {
     event.preventDefault();
     setErrorText('');
-
 
     if (code.length < CODE_LENGTH) {
       setErrorText(`Введите ${CODE_LENGTH} цифр кода`);
@@ -118,7 +118,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
       return;
     }
 
-
     setIsSubmitting(true);
     try {
       await verifyPasswordResetCode({ email: email.trim(), code });
@@ -126,7 +125,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     } catch (error) {
       const nextAttempts = failedAttempts + 1;
       setFailedAttempts(nextAttempts);
-
 
       if (nextAttempts >= MAX_CODE_ATTEMPTS) {
         resetToFirstStep('Превышено число попыток ввода кода. Запросите код заново');
@@ -138,24 +136,19 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   async function handleResendCode() {
     if (secondsLeft > 0 || isSubmitting) {
       return;
     }
 
-
     setIsSubmitting(true);
     try {
       await sendPasswordResetCode({ email: email.trim() });
 
-
       const nextCount = resendCount + 1;
       setResendCount(nextCount);
-      const interval = RESEND_INTERVALS_SECONDS[
-        Math.min(nextCount, RESEND_INTERVALS_SECONDS.length - 1)
-      ];
-
+      const interval =
+        RESEND_INTERVALS_SECONDS[Math.min(nextCount, RESEND_INTERVALS_SECONDS.length - 1)];
 
       setCodeSentAt(Date.now());
       setCode('');
@@ -168,11 +161,9 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   async function handleNewPasswordSubmit(event) {
     event.preventDefault();
     setErrorText('');
-
 
     if (password.length < 8) {
       setErrorText('Длина пароля должна быть не менее 8 символов');
@@ -182,7 +173,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
       setErrorText('Пароли не совпадают');
       return;
     }
-
 
     setIsSubmitting(true);
     try {
@@ -196,22 +186,21 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   return (
     <>
       <div className={authStyles.logoWrapper}>
         <img src={logoImage} alt="Логотип Kira" className={authStyles.logoImage} />
       </div>
 
-
       <h2 className={authStyles.title}>Восстановление пароля</h2>
       <p className={authStyles.subtitle}>{STEP_SUBTITLES[step]}</p>
-
 
       {step === 1 && (
         <form className={authStyles.form} onSubmit={handleEmailSubmit}>
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><MailIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <MailIcon />
+            </span>
             <input
               type="text"
               placeholder="Email"
@@ -221,9 +210,7 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
             />
           </label>
 
-
           {errorText && <p className={authStyles.errorText}>{errorText}</p>}
-
 
           <button
             type="submit"
@@ -234,7 +221,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
           </button>
         </form>
       )}
-
 
       {step === 2 && (
         <form className={authStyles.form} onSubmit={handleCodeSubmit}>
@@ -249,13 +235,9 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
             />
           </label>
 
-
           {errorText && (
-            <p className={`${authStyles.errorText} ${authStyles.errorCentered}`}>
-              {errorText}
-            </p>
+            <p className={`${authStyles.errorText} ${authStyles.errorCentered}`}>{errorText}</p>
           )}
-
 
           <button
             type="button"
@@ -268,7 +250,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
               : 'Отправить код повторно'}
           </button>
 
-
           <button
             type="submit"
             className={`${authStyles.submitButton} ${authStyles.gapSmall}`}
@@ -279,11 +260,12 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
         </form>
       )}
 
-
       {step === 3 && (
         <form className={authStyles.form} onSubmit={handleNewPasswordSubmit}>
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><LockIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <LockIcon />
+            </span>
             <input
               type={isPasswordVisible ? 'text' : 'password'}
               placeholder="Пароль"
@@ -301,9 +283,10 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
             </button>
           </label>
 
-
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><LockIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <LockIcon />
+            </span>
             <input
               type={isConfirmVisible ? 'text' : 'password'}
               placeholder="Подтвердите пароль"
@@ -321,9 +304,7 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
             </button>
           </label>
 
-
           {errorText && <p className={authStyles.errorText}>{errorText}</p>}
-
 
           <button
             type="submit"
@@ -337,7 +318,6 @@ function PasswordResetForm({ onClose, onSwitchToLogin }) {
     </>
   );
 }
-
 
 export default function PasswordResetModal({ isOpen, onClose, onSwitchToLogin }) {
   return (

@@ -145,9 +145,7 @@ function HomePage() {
           <>
             <div className={styles.coursesGrid}>
               {displayedCourses.map(function renderCourseCard(course) {
-                const formattedPrice = course.price
-                  ? `${course.price} р.`
-                  : 'Бесплатно';
+                const formattedPrice = course.price ? `${course.price} р.` : 'Бесплатно';
 
                 return (
                   <article key={course.id} className={styles.courseCard}>
@@ -179,26 +177,16 @@ function HomePage() {
     <div className={styles.homePage}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>
-            Платформа для онлайн обучения все в одном.
-          </h1>
+          <h1 className={styles.heroTitle}>Платформа для онлайн обучения все в одном.</h1>
           <p className={styles.heroSubtitle}>
             Курсы, практика, и сертификаты — <br />
             всё для твоего роста.
           </p>
           <div className={styles.heroButtons}>
-            <button
-              type="button"
-              className={styles.btnPrimary}
-              onClick={handleJoinClick}
-            >
+            <button type="button" className={styles.btnPrimary} onClick={handleJoinClick}>
               Присоединиться
             </button>
-            <button
-              type="button"
-              className={styles.btnOutline}
-              onClick={handleScrollToCourses}
-            >
+            <button type="button" className={styles.btnOutline} onClick={handleScrollToCourses}>
               Смотреть курсы
             </button>
           </div>
@@ -223,9 +211,10 @@ function HomePage() {
               const categoryTag = category.tag || category.id;
               const categoryTitle = category.title || category.name;
               const isSelected = selectedCategoryTag === categoryTag;
-              const count = typeof category.count === 'number'
-                ? category.count
-                : getCoursesCountByCategory(categoryTag);
+              const count =
+                typeof category.count === 'number'
+                  ? category.count
+                  : getCoursesCountByCategory(categoryTag);
 
               const cardClassName = isSelected
                 ? `${styles.categoryCard} ${styles.categoryCardActive}`
@@ -239,9 +228,7 @@ function HomePage() {
                   onClick={handleCategoryClick}
                 >
                   <div className={styles.categoryCardTop}>
-                    <span className={styles.courseCountBadge}>
-                      {formatCourseCount(count)}
-                    </span>
+                    <span className={styles.courseCountBadge}>{formatCourseCount(count)}</span>
                     <h3 className={styles.categoryName}>{categoryTitle}</h3>
                   </div>
                 </div>
@@ -263,9 +250,7 @@ function HomePage() {
           {COURSE_CATEGORIES.map(function renderDot(category, index) {
             const categoryTag = category.tag || category.id || index;
             const dotClassName =
-              index === startIndex
-                ? `${styles.dot} ${styles.dotActive}`
-                : styles.dot;
+              index === startIndex ? `${styles.dot} ${styles.dotActive}` : styles.dot;
 
             return (
               <button
@@ -281,10 +266,7 @@ function HomePage() {
         </div>
       </section>
 
-
-      <section className={styles.coursesSection}>
-        {renderCoursesContent()}
-      </section>
+      <section className={styles.coursesSection}>{renderCoursesContent()}</section>
     </div>
   );
 }

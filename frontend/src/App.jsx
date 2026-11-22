@@ -11,44 +11,36 @@ import LoginModal from './components/modals/LoginModal/LoginModal';
 import RegistrationModal from './components/modals/RegistrationModal/RegistrationModal';
 import PasswordResetModal from './components/modals/PasswordResetModal/PasswordResetModal';
 
-
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
   const [isPasswordResetModalOpen, setIsPasswordResetModalOpen] = useState(false);
 
-
   function handleOpenLoginModal() {
     setIsLoginModalOpen(true);
   }
 
-
   function handleCloseLoginModal() {
     setIsLoginModalOpen(false);
   }
-
 
   function handleOpenRegistrationModal() {
     setIsLoginModalOpen(false);
     setIsRegistrationModalOpen(true);
   }
 
-
   function handleCloseRegistrationModal() {
     setIsRegistrationModalOpen(false);
   }
-
 
   function handleOpenPasswordResetModal() {
     setIsLoginModalOpen(false);
     setIsPasswordResetModalOpen(true);
   }
 
-
   function handleClosePasswordResetModal() {
     setIsPasswordResetModalOpen(false);
   }
-
 
   function handleSwitchToLogin() {
     setIsRegistrationModalOpen(false);
@@ -56,12 +48,10 @@ function App() {
     setIsLoginModalOpen(true);
   }
 
-
   return (
     <BrowserRouter>
       <div className="app">
         <Header onLoginClick={handleOpenLoginModal} />
-
 
         <main>
           <Routes>
@@ -73,9 +63,7 @@ function App() {
           </Routes>
         </main>
 
-
         <Footer />
-
 
         <LoginModal
           isOpen={isLoginModalOpen}
@@ -84,13 +72,11 @@ function App() {
           onSwitchToPasswordReset={handleOpenPasswordResetModal}
         />
 
-
         <RegistrationModal
           isOpen={isRegistrationModalOpen}
           onClose={handleCloseRegistrationModal}
           onSwitchToLogin={handleSwitchToLogin}
         />
-
 
         <PasswordResetModal
           isOpen={isPasswordResetModalOpen}
@@ -101,6 +87,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
 
 export default App;

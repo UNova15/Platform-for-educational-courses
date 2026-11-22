@@ -5,16 +5,16 @@
 }
 
 .headerInner {
-  position: relative; 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
   height: 80px;
   padding-top: 18px;
   padding-bottom: 18px;
-  padding-left: 80px;  
-  padding-right: 42px; 
+  padding-left: 80px;
+  padding-right: 42px;
 }
 
 .logo {
@@ -23,20 +23,20 @@
 }
 
 .logoImg {
-  height: 35px; 
+  height: 35px;
   width: auto;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 32px; 
+  gap: 32px;
 }
 
 .navLink {
-  font-size: 16px;         
+  font-size: 16px;
   color: var(--color-text-white, #ffffff);
-  text-decoration: none;   
+  text-decoration: none;
   transition: color 0.2s ease;
 
   &:hover {
@@ -45,9 +45,9 @@
 }
 
 .loginBtn {
-  width: 155px;  
-  height: 44px; 
-  
+  width: 155px;
+  height: 44px;
+
   display: flex;
   align-items: center;
   justify-content: center;

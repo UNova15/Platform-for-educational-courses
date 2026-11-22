@@ -23,7 +23,7 @@ export async function request(path, options = {}) {
       const errorData = await response.json();
       backendMessage = errorData?.message || errorData?.error || '';
     } catch {
-     //
+      //
     }
 
     const error = new Error(backendMessage || `Статус ${response.status}`);

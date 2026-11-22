@@ -20,7 +20,7 @@
 .tabs {
   display: flex;
   gap: 20px;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid #e2e8f0;
   margin-bottom: 30px;
 
   .tab-btn {
@@ -84,7 +84,7 @@
 }
 
 .lessons-list {
-  border-top: 1px solid #F1F5F9;
+  border-top: 1px solid #f1f5f9;
   padding: 10px 0;
 }
 
@@ -110,8 +110,12 @@
     height: 10px;
     border-radius: 50%;
 
-    &.dot-lesson { background: #4ADE80; }
-    &.dot-test { background: #D1D5DB; }
+    &.dot-lesson {
+      background: #4ade80;
+    }
+    &.dot-test {
+      background: #d1d5db;
+    }
   }
 
   .btn-watch {
