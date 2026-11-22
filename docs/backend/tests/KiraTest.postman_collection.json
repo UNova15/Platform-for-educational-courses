@@ -19,7 +19,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "if (pm.response.code === 201) {\n    var jsonData = pm.response.json();\n    pm.environment.set(\"owner_course_web_token\", jsonData.accessToken); \n    console.log(\"Access Токен сохранен\");\n}"
+                  ""
                 ]
               }
             }
@@ -29,7 +29,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"login\": \"kirillkrechetov\",\n    \"password\": \"kirillkrechetov\"\n}",
+              "raw": "{\n    \"username\": \"KirillKetchupov\",\n    \"email\": \"example@gmail.com\",\n    \"password\": \"kirillkrechetov\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -59,7 +59,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"login\": \"kirillkrechetov\",\n    \"password\": \"kirillkrechetov\"\n}",
+              "raw": "{\n    \"email\": \"example@gmail.com\",\n    \"password\": \"000000000\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -130,7 +130,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "if (pm.response.code === 201) {\n    var jsonData = pm.response.json();\n    pm.environment.set(\"students_web_token\", jsonData.accessToken); \n    console.log(\"Access Токен сохранен\");\n}"
+                  ""
                 ]
               }
             }
@@ -140,7 +140,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"login\": \"kirillkrechetov1\",\n    \"password\": \"kirillkrechetov\"\n}",
+              "raw": "{\n    \"email\":\"example@gmail.com\",\n    \"username\": \"kirillkrechetov1\",\n    \"password\": \"kirillkrechetov\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -158,6 +158,184 @@
                 "api",
                 "auth",
                 "registration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teacher confrimation code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {\n    var jsonData = pm.response.json();\n    pm.environment.set(\"teacher_web_token\", jsonData.accessToken); \n    console.log(\"Access Токен сохранен\");\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"example@gmail.com\",\n    \"code\":\"000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/registration/code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "registration",
+                "code"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "student confirmation code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {\n    var jsonData = pm.response.json();\n    pm.environment.set(\"students_web_token\", jsonData.accessToken); \n    console.log(\"Access Токен сохранен\");\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"example@gmail.com\",\n    \"code\":\"000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/registration/code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "registration",
+                "code"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "repeat code",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"example@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/code/repetition",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "code",
+                "repetition"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"example@gmail.com\",\n    \"password\":\"000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/password/reset",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "password",
+                "reset"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password confirmation code",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"example@gmail.com\",\n    \"code\":\"000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/password/reset/code",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "password",
+                "reset",
+                "code"
               ]
             }
           },
