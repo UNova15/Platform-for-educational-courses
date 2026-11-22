@@ -1,7 +1,7 @@
 # Структура проекта
 
-Архитектура backend приложения - [модульный монолит](../docs/adr/003-system-architecture.md)
-с [гексагональной архитектурой](../docs/adr/004-application-architecture.md)
+Архитектура backend приложения - [модульный монолит](../docs/backend/adr/003-system-architecture.md)
+с [гексагональной архитектурой](../docs/backend/adr/004-application-architecture.md)
 
 Функциональные требования: [FR](../docs/FR.md)
 
