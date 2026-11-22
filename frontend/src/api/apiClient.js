@@ -21,15 +21,17 @@ export async function request(path, options = {}) {
     let backendMessage = '';
     try {
       const errorData = await response.json();
-      backendMessage = errorData.message || errorData.error || '';
-    } catch (parseError) {
+      backendMessage = errorData?.message || errorData?.error || '';
+    } catch {
+     //
     }
 
     const error = new Error(backendMessage || `Статус ${response.status}`);
-    error.status = response.status;        
-    error.backendMessage = backendMessage;  
+    error.status = response.status;
+    error.backendMessage = backendMessage;
     throw error;
   }
+
   if (response.status === 204) {
     return null;
   }

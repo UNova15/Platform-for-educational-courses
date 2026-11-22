@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../../ui/Modal/Modal';
 import { loginUser } from '../../../api/authApi';
 import { MailIcon, LockIcon, EyeOpenIcon, EyeClosedIcon } from '../shared/icons';
-import { useCountdown } from '../../../hooks/useCountdown';
 import logoImage from '../../../assets/icons/logo-modals.svg';
 import authStyles from '../shared/auth.module.scss';
 
@@ -63,7 +62,7 @@ function LoginModal({ isOpen, onClose, onSwitchToRegistration, onSwitchToPasswor
       localStorage.setItem('accessToken', token);
       onClose();
       navigate('/profile');
-    } catch (error) {
+    } catch {
       setErrorMessage('Неверная почта или пароль');
     } finally {
       setIsSubmitting(false);

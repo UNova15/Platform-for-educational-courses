@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../ui/Modal/Modal';
 import {
@@ -11,13 +11,15 @@ import { useCountdown, formatCountdown } from '../../../hooks/useCountdown';
 import logoImage from '../../../assets/icons/logo-modals.svg';
 import authStyles from '../shared/auth.module.scss';
 
+
 const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CODE_LENGTH = 6;
-const CODE_VALIDITY_MS = 30 * 60 * 1000;                  
-const MAX_CODE_ATTEMPTS = 5;                                
-const RESEND_INTERVALS_SECONDS = [60, 300, 600, 900, 3600]; 
+const CODE_VALIDITY_MS = 30 * 60 * 1000;
+const MAX_CODE_ATTEMPTS = 5;
+const RESEND_INTERVALS_SECONDS = [60, 300, 600, 900, 3600];
 
-function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
+
+function RegistrationForm({ onClose, onSwitchToLogin }) {
   const [screen, setScreen] = useState('form'); // 'form' | 'code'
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
@@ -29,44 +31,34 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
   const [formError, setFormError] = useState('');
   const [codeError, setCodeError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [codeSentAt, setCodeSentAt] = useState(null); 
+  const [codeSentAt, setCodeSentAt] = useState(null);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [resendCount, setResendCount] = useState(0);
   const { secondsLeft, start, stop } = useCountdown();
   const navigate = useNavigate();
 
-  useEffect(function resetStateOnClose() {
-    if (!isOpen) {
-      setScreen('form');
-      setLogin('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      setCode('');
-      setFormError('');
-      setCodeError('');
-      setFailedAttempts(0);
-      setResendCount(0);
-      setCodeSentAt(null);
-      stop();
-    }
-  }, [isOpen, stop]);
 
   function handleLoginChange(event) { setLogin(event.target.value); setFormError(''); }
   function handleEmailChange(event) { setEmail(event.target.value); setFormError(''); }
   function handlePasswordChange(event) { setPassword(event.target.value); setFormError(''); }
   function handleConfirmChange(event) { setConfirmPassword(event.target.value); setFormError(''); }
 
+
   function handleTogglePasswordVisibility() {
     setIsPasswordVisible(function flip(prev) { return !prev; });
   }
 
+
   function handleToggleConfirmVisibility() {
     setIsConfirmVisible(function flip(prev) { return !prev; });
   }
+
+
   function isCodeExpired() {
     return Date.now() - codeSentAt > CODE_VALIDITY_MS;
   }
+
+
   function resetToForm(message) {
     setScreen('form');
     setCode('');
@@ -77,12 +69,15 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
     setFormError(message);
   }
 
+
   async function handleSubmit(event) {
     event.preventDefault();
     setFormError('');
 
+
     const trimmedLogin = login.trim();
     const trimmedEmail = email.trim();
+
 
     if (!trimmedLogin || !trimmedEmail || !password || !confirmPassword) {
       setFormError('Заполните все поля');
@@ -101,6 +96,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
       return;
     }
 
+
     setIsSubmitting(true);
     try {
       await registerUser({ login: trimmedLogin, email: trimmedEmail, password });
@@ -117,15 +113,18 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
     }
   }
 
+
   function handleCodeChange(event) {
     const digits = event.target.value.replace(/\D/g, '').slice(0, CODE_LENGTH);
     setCode(digits);
     setCodeError('');
   }
 
+
   async function handleCodeSubmit(event) {
     event.preventDefault();
     setCodeError('');
+
 
     if (code.length < CODE_LENGTH) {
       setCodeError(`Введите ${CODE_LENGTH} цифр кода`);
@@ -136,23 +135,26 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
       return;
     }
 
+
     setIsSubmitting(true);
     try {
       const data = await confirmRegistrationCode({ email: email.trim(), code });
       const token = data ? data.accessToken || data.token : null;
+
 
       if (token) {
         localStorage.setItem('accessToken', token);
       }
       onClose();
       if (token) {
-        navigate('/'); 
+        navigate('/');
       } else {
-        onSwitchToLogin(); 
+        onSwitchToLogin();
       }
     } catch (error) {
       const nextAttempts = failedAttempts + 1;
       setFailedAttempts(nextAttempts);
+
 
       if (nextAttempts >= MAX_CODE_ATTEMPTS) {
         resetToForm('Превышено число попыток ввода кода. Начните регистрацию заново');
@@ -164,10 +166,12 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
     }
   }
 
+
   async function handleResendCode() {
     if (secondsLeft > 0 || isSubmitting) {
-      return; 
+      return;
     }
+
 
     setIsSubmitting(true);
     try {
@@ -177,6 +181,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
       const interval = RESEND_INTERVALS_SECONDS[
         Math.min(nextCount, RESEND_INTERVALS_SECONDS.length - 1)
       ];
+
 
       setCodeSentAt(Date.now());
       setCode('');
@@ -189,16 +194,19 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
     }
   }
 
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <>
       <div className={authStyles.logoWrapper}>
         <img src={logoImage} alt="Логотип Kira" className={authStyles.logoImage} />
       </div>
+
 
       <h2 className={authStyles.title}>Добро пожаловать!</h2>
       <p className={authStyles.subtitle}>
         {screen === 'form' ? 'Создайте свой аккаунт' : `Код отправлен на ${email}`}
       </p>
+
 
       {screen === 'form' ? (
         <form className={authStyles.form} onSubmit={handleSubmit}>
@@ -213,6 +221,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
             />
           </label>
 
+
           <label className={authStyles.inputField}>
             <span className={authStyles.inputIcon}><MailIcon /></span>
             <input
@@ -223,6 +232,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
               onChange={handleEmailChange}
             />
           </label>
+
 
           <label className={authStyles.inputField}>
             <span className={authStyles.inputIcon}><LockIcon /></span>
@@ -243,6 +253,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
             </button>
           </label>
 
+
           <label className={authStyles.inputField}>
             <span className={authStyles.inputIcon}><LockIcon /></span>
             <input
@@ -262,7 +273,9 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
             </button>
           </label>
 
+
           {formError && <p className={authStyles.errorText}>{formError}</p>}
+
 
           <button
             type="submit"
@@ -285,11 +298,13 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
             />
           </label>
 
+
           {codeError && (
             <p className={`${authStyles.errorText} ${authStyles.errorCentered}`}>
               {codeError}
             </p>
           )}
+
 
           <button
             type="button"
@@ -302,6 +317,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
               : 'Отправить код повторно'}
           </button>
 
+
           <button
             type="submit"
             className={`${authStyles.submitButton} ${authStyles.gapSmall}`}
@@ -312,6 +328,7 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
         </form>
       )}
 
+
       {screen === 'form' && (
         <p className={authStyles.switchText}>
           Уже есть аккаунт?{' '}
@@ -320,8 +337,15 @@ function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
           </button>
         </p>
       )}
-    </Modal>
+    </>
   );
 }
 
-export default RegistrationModal;
+
+export default function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      {isOpen && <RegistrationForm onClose={onClose} onSwitchToLogin={onSwitchToLogin} />}
+    </Modal>
+  );
+}
