@@ -2,9 +2,6 @@ name: Backend CI
 
 on:
   pull_request:
-    paths:
-      - 'backend/**'
-      - '.github/workflows/backend-ci.yml'
 
   push:
     branches: [ dev,master ]
@@ -19,9 +16,24 @@ defaults:
     working-directory: ./backend
 
 jobs:
+  changes:
+    runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend-ci.yml'
+  
   backend-ci:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
+    needs: changes
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

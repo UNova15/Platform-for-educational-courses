@@ -2,9 +2,6 @@ name: Frontend CI
 
 on:
   pull_request:
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/frontend-ci.yml'
 
   push:
     branches: [ dev,master ]
@@ -17,8 +14,25 @@ defaults:
     working-directory: ./frontend
 
 jobs:
-  frontend-ci:
+  changes:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/frontend-ci.yml'
+
+
+  frontend-ci:
+    runs-on: ubuntu-22.04
+    needs: changes
     steps:
       - uses: actions/checkout@v4
 
