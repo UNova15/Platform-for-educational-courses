@@ -2,20 +2,23 @@ import { useCallback, useEffect, useState } from 'react';
 export function useCountdown() {
   const [secondsLeft, setSecondsLeft] = useState(0);
 
-  useEffect(function setupTimer() {
-    if (secondsLeft <= 0) {
-      return undefined; 
-    }
+  useEffect(
+    function setupTimer() {
+      if (secondsLeft <= 0) {
+        return undefined;
+      }
 
-    const timerId = setInterval(function tick() {
-      setSecondsLeft(function subtractSecond(current) {
-        return current - 1;
-      });
-    }, 1000);
-    return function cleanup() {
-      clearInterval(timerId);
-    };
-  }, [secondsLeft]);
+      const timerId = setInterval(function tick() {
+        setSecondsLeft(function subtractSecond(current) {
+          return current - 1;
+        });
+      }, 1000);
+      return function cleanup() {
+        clearInterval(timerId);
+      };
+    },
+    [secondsLeft]
+  );
 
   const start = useCallback(function startTimer(seconds) {
     setSecondsLeft(seconds);

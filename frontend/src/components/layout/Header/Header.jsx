@@ -10,9 +10,15 @@ function Header({ onLoginClick }) {
         </a>
 
         <nav className={styles.nav}>
-          <a href="#courses-section" className={styles.navLink}>Курсы</a>
-          <a href="#footer" className={styles.navLink}>Отзывы</a>
-          <a href="#footer" className={styles.navLink}>Контакты</a>
+          <a href="#courses-section" className={styles.navLink}>
+            Курсы
+          </a>
+          <a href="#footer" className={styles.navLink}>
+            Отзывы
+          </a>
+          <a href="#footer" className={styles.navLink}>
+            Контакты
+          </a>
         </nav>
 
         <button type="button" className={styles.loginBtn} onClick={onLoginClick}>

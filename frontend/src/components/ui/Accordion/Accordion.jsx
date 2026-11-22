@@ -6,21 +6,11 @@ function Accordion({ title, children }) {
 
   return (
     <div className={styles.accordion}>
-      <button 
-        type="button"
-        className={styles.header} 
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button type="button" className={styles.header} onClick={() => setIsOpen(!isOpen)}>
         <span>{title}</span>
-        <span className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ''}`}>
-          ⌄
-        </span>
+        <span className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ''}`}>⌄</span>
       </button>
-      {isOpen && (
-        <div className={styles.body}>
-          {children}
-        </div>
-      )}
+      {isOpen && <div className={styles.body}>{children}</div>}
     </div>
   );
 }

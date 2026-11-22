@@ -11,13 +11,11 @@ import { useCountdown, formatCountdown } from '../../../hooks/useCountdown';
 import logoImage from '../../../assets/icons/logo-modals.svg';
 import authStyles from '../shared/auth.module.scss';
 
-
 const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CODE_LENGTH = 6;
 const CODE_VALIDITY_MS = 30 * 60 * 1000;
 const MAX_CODE_ATTEMPTS = 5;
 const RESEND_INTERVALS_SECONDS = [60, 300, 600, 900, 3600];
-
 
 function RegistrationForm({ onClose, onSwitchToLogin }) {
   const [screen, setScreen] = useState('form'); // 'form' | 'code'
@@ -37,27 +35,38 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
   const { secondsLeft, start, stop } = useCountdown();
   const navigate = useNavigate();
 
-
-  function handleLoginChange(event) { setLogin(event.target.value); setFormError(''); }
-  function handleEmailChange(event) { setEmail(event.target.value); setFormError(''); }
-  function handlePasswordChange(event) { setPassword(event.target.value); setFormError(''); }
-  function handleConfirmChange(event) { setConfirmPassword(event.target.value); setFormError(''); }
-
+  function handleLoginChange(event) {
+    setLogin(event.target.value);
+    setFormError('');
+  }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+    setFormError('');
+  }
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+    setFormError('');
+  }
+  function handleConfirmChange(event) {
+    setConfirmPassword(event.target.value);
+    setFormError('');
+  }
 
   function handleTogglePasswordVisibility() {
-    setIsPasswordVisible(function flip(prev) { return !prev; });
+    setIsPasswordVisible(function flip(prev) {
+      return !prev;
+    });
   }
-
 
   function handleToggleConfirmVisibility() {
-    setIsConfirmVisible(function flip(prev) { return !prev; });
+    setIsConfirmVisible(function flip(prev) {
+      return !prev;
+    });
   }
-
 
   function isCodeExpired() {
     return Date.now() - codeSentAt > CODE_VALIDITY_MS;
   }
-
 
   function resetToForm(message) {
     setScreen('form');
@@ -69,15 +78,12 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
     setFormError(message);
   }
 
-
   async function handleSubmit(event) {
     event.preventDefault();
     setFormError('');
 
-
     const trimmedLogin = login.trim();
     const trimmedEmail = email.trim();
-
 
     if (!trimmedLogin || !trimmedEmail || !password || !confirmPassword) {
       setFormError('Заполните все поля');
@@ -96,7 +102,6 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
       return;
     }
 
-
     setIsSubmitting(true);
     try {
       await registerUser({ login: trimmedLogin, email: trimmedEmail, password });
@@ -113,18 +118,15 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   function handleCodeChange(event) {
     const digits = event.target.value.replace(/\D/g, '').slice(0, CODE_LENGTH);
     setCode(digits);
     setCodeError('');
   }
 
-
   async function handleCodeSubmit(event) {
     event.preventDefault();
     setCodeError('');
-
 
     if (code.length < CODE_LENGTH) {
       setCodeError(`Введите ${CODE_LENGTH} цифр кода`);
@@ -135,12 +137,10 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
       return;
     }
 
-
     setIsSubmitting(true);
     try {
       const data = await confirmRegistrationCode({ email: email.trim(), code });
       const token = data ? data.accessToken || data.token : null;
-
 
       if (token) {
         localStorage.setItem('accessToken', token);
@@ -155,7 +155,6 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
       const nextAttempts = failedAttempts + 1;
       setFailedAttempts(nextAttempts);
 
-
       if (nextAttempts >= MAX_CODE_ATTEMPTS) {
         resetToForm('Превышено число попыток ввода кода. Начните регистрацию заново');
       } else {
@@ -166,22 +165,18 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   async function handleResendCode() {
     if (secondsLeft > 0 || isSubmitting) {
       return;
     }
-
 
     setIsSubmitting(true);
     try {
       await resendRegistrationCode({ email: email.trim() });
       const nextCount = resendCount + 1;
       setResendCount(nextCount);
-      const interval = RESEND_INTERVALS_SECONDS[
-        Math.min(nextCount, RESEND_INTERVALS_SECONDS.length - 1)
-      ];
-
+      const interval =
+        RESEND_INTERVALS_SECONDS[Math.min(nextCount, RESEND_INTERVALS_SECONDS.length - 1)];
 
       setCodeSentAt(Date.now());
       setCode('');
@@ -194,24 +189,23 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
     }
   }
 
-
   return (
     <>
       <div className={authStyles.logoWrapper}>
         <img src={logoImage} alt="Логотип Kira" className={authStyles.logoImage} />
       </div>
 
-
       <h2 className={authStyles.title}>Добро пожаловать!</h2>
       <p className={authStyles.subtitle}>
         {screen === 'form' ? 'Создайте свой аккаунт' : `Код отправлен на ${email}`}
       </p>
 
-
       {screen === 'form' ? (
         <form className={authStyles.form} onSubmit={handleSubmit}>
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><UserIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <UserIcon />
+            </span>
             <input
               type="text"
               placeholder="Логин"
@@ -221,9 +215,10 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
             />
           </label>
 
-
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><MailIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <MailIcon />
+            </span>
             <input
               type="text"
               placeholder="Почта"
@@ -233,9 +228,10 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
             />
           </label>
 
-
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><LockIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <LockIcon />
+            </span>
             <input
               type={isPasswordVisible ? 'text' : 'password'}
               placeholder="Пароль"
@@ -253,9 +249,10 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
             </button>
           </label>
 
-
           <label className={authStyles.inputField}>
-            <span className={authStyles.inputIcon}><LockIcon /></span>
+            <span className={authStyles.inputIcon}>
+              <LockIcon />
+            </span>
             <input
               type={isConfirmVisible ? 'text' : 'password'}
               placeholder="Подтвердите пароль"
@@ -273,9 +270,7 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
             </button>
           </label>
 
-
           {formError && <p className={authStyles.errorText}>{formError}</p>}
-
 
           <button
             type="submit"
@@ -298,13 +293,9 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
             />
           </label>
 
-
           {codeError && (
-            <p className={`${authStyles.errorText} ${authStyles.errorCentered}`}>
-              {codeError}
-            </p>
+            <p className={`${authStyles.errorText} ${authStyles.errorCentered}`}>{codeError}</p>
           )}
-
 
           <button
             type="button"
@@ -317,7 +308,6 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
               : 'Отправить код повторно'}
           </button>
 
-
           <button
             type="submit"
             className={`${authStyles.submitButton} ${authStyles.gapSmall}`}
@@ -327,7 +317,6 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
           </button>
         </form>
       )}
-
 
       {screen === 'form' && (
         <p className={authStyles.switchText}>
@@ -340,7 +329,6 @@ function RegistrationForm({ onClose, onSwitchToLogin }) {
     </>
   );
 }
-
 
 export default function RegistrationModal({ isOpen, onClose, onSwitchToLogin }) {
   return (

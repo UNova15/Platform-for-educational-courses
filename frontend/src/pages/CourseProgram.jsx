@@ -13,7 +13,7 @@ const CourseProgram = () => {
         { id: 1, type: 'Урок', title: 'Урок 1. Что такое...' },
         { id: 2, type: 'Урок', title: 'Урок 1. Что такое...' },
         { id: 3, type: 'Тест', title: 'Тест 1. Название теста' },
-      ]
+      ],
     },
     { id: 2, title: 'Модуль 2. Название', info: '6 уроков • 1 тест', lessons: [] },
     { id: 3, title: 'Модуль 3. Название', info: '5 уроков • 1 тест', lessons: [] },
@@ -36,8 +36,8 @@ const CourseProgram = () => {
       <div className="modules-list">
         {modules.map((module) => (
           <div key={module.id} className="module-card">
-            <div 
-              className="module-header" 
+            <div
+              className="module-header"
               onClick={() => setOpenModule(openModule === module.id ? null : module.id)}
             >
               <div>
@@ -52,7 +52,9 @@ const CourseProgram = () => {
                 {module.lessons.map((lesson) => (
                   <div key={lesson.id} className="lesson-row">
                     <div className="lesson-left">
-                      <div className={`dot ${lesson.type === 'Тест' ? 'dot-test' : 'dot-lesson'}`}></div>
+                      <div
+                        className={`dot ${lesson.type === 'Тест' ? 'dot-test' : 'dot-lesson'}`}
+                      ></div>
                       <span>{lesson.title}</span>
                     </div>
                     <button className="btn-watch">Смотреть</button>

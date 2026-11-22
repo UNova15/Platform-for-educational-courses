@@ -2,15 +2,18 @@ import { useEffect } from 'react';
 import styles from './Modal.module.scss';
 
 function Modal({ isOpen, onClose, children }) {
-  useEffect(function lockBodyScroll() {
-    if (!isOpen) {
-      return undefined;
-    }
-    document.body.style.overflow = 'hidden';
-    return function restoreScroll() {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useEffect(
+    function lockBodyScroll() {
+      if (!isOpen) {
+        return undefined;
+      }
+      document.body.style.overflow = 'hidden';
+      return function restoreScroll() {
+        document.body.style.overflow = '';
+      };
+    },
+    [isOpen]
+  );
 
   if (!isOpen) {
     return null;
@@ -23,12 +26,7 @@ function Modal({ isOpen, onClose, children }) {
   }
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={handleOverlayClick}
-      role="dialog"
-      aria-modal="true"
-    >
+    <div className={styles.overlay} onClick={handleOverlayClick} role="dialog" aria-modal="true">
       <div className={styles.modalCard}>
         <button
           type="button"

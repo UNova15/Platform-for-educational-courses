@@ -80,7 +80,9 @@ function LoginModal({ isOpen, onClose, onSwitchToRegistration, onSwitchToPasswor
 
       <form className={authStyles.form} onSubmit={handleSubmit}>
         <label className={authStyles.inputField}>
-          <span className={authStyles.inputIcon}><MailIcon /></span>
+          <span className={authStyles.inputIcon}>
+            <MailIcon />
+          </span>
           <input
             type="text"
             placeholder="Почта"
@@ -91,7 +93,9 @@ function LoginModal({ isOpen, onClose, onSwitchToRegistration, onSwitchToPasswor
         </label>
 
         <label className={authStyles.inputField}>
-          <span className={authStyles.inputIcon}><LockIcon /></span>
+          <span className={authStyles.inputIcon}>
+            <LockIcon />
+          </span>
           <input
             type={isPasswordVisible ? 'text' : 'password'}
             placeholder="Пароль"
@@ -109,16 +113,10 @@ function LoginModal({ isOpen, onClose, onSwitchToRegistration, onSwitchToPasswor
           </button>
         </label>
 
-        {errorMessage && (
-          <p className={authStyles.errorText}>{errorMessage}</p>
-        )}
+        {errorMessage && <p className={authStyles.errorText}>{errorMessage}</p>}
 
         <div className={authStyles.forgotWrapper}>
-          <button
-            type="button"
-            className={authStyles.forgotLink}
-            onClick={onSwitchToPasswordReset}
-          >
+          <button type="button" className={authStyles.forgotLink} onClick={onSwitchToPasswordReset}>
             Забыли пароль?
           </button>
         </div>
@@ -130,11 +128,7 @@ function LoginModal({ isOpen, onClose, onSwitchToRegistration, onSwitchToPasswor
 
       <p className={authStyles.switchText}>
         Нет аккаунта?{' '}
-        <button
-          type="button"
-          className={authStyles.switchLink}
-          onClick={onSwitchToRegistration}
-        >
+        <button type="button" className={authStyles.switchLink} onClick={onSwitchToRegistration}>
           Зарегистрироваться
         </button>
       </p>

@@ -36,7 +36,7 @@
 .stats-tabs {
   display: flex;
   gap: 20px;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid #e2e8f0;
   margin-bottom: 20px;
 
   .tab-btn {
@@ -141,17 +141,17 @@
     padding: 10px 15px;
     color: var(--color-text-muted);
     font-weight: 400;
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 1px solid #e2e8f0;
   }
 
   td {
     padding: 15px;
     color: var(--color-text-main);
-    border-bottom: 1px solid #F1F5F9;
+    border-bottom: 1px solid #f1f5f9;
   }
 
   tr:first-child td {
-    background: #F8F6FC;
+    background: #f8f6fc;
   }
 
   .student-cell {
@@ -230,19 +230,19 @@
     font-size: 13px;
 
     &.correct {
-      background: #D1FAE5;
-      color: #065F46;
+      background: #d1fae5;
+      color: #065f46;
     }
 
     &.incorrect {
-      background: #FEE2E2;
-      color: #991B1B;
+      background: #fee2e2;
+      color: #991b1b;
     }
   }
 
   .correct-answer-text {
     font-size: 12px;
-    color: #065F46;
+    color: #065f46;
     margin-top: 5px;
   }
 }
