@@ -10,7 +10,7 @@ import HomePage from './pages/HomePage/HomePage';
 import LoginModal from './components/modals/LoginModal/LoginModal';
 import RegistrationModal from './components/modals/RegistrationModal/RegistrationModal';
 import PasswordResetModal from './components/modals/PasswordResetModal/PasswordResetModal';
-import Container from './components/layout/Container/Container'; 
+import Container from './components/layout/Container/Container';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
