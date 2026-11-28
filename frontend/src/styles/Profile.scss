@@ -1,6 +1,6 @@
 .profile-page {
   padding: 40px 0;
-  font-family: var(--font-main); /* Используем ваш глобальный шрифт Roboto Slab */
+  font-family: var(--font-main);
 }
 
 .profile-greeting {
@@ -21,12 +21,11 @@
 .profile-top-section {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   margin-bottom: 50px;
   gap: 30px;
 }
 
-/* --- Сетка статистики (4 карточки) --- */
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -41,87 +40,107 @@
   border-radius: var(--radius-modal);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--color-text-main);
+    margin-bottom: 15px;
+    order: 1;
+    font-weight: 500;
+  }
 
   .stat-value {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--color-text-main);
     margin-bottom: 5px;
+    order: 2;
+    line-height: 1;
   }
 
-  .stat-label {
+  .stat-sub {
     font-size: 12px;
     color: var(--color-text-muted);
+    order: 3;
   }
 }
 
-/* --- Карточка пользователя (Аватар + Контакты) --- */
+.profile-right-col {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .user-card {
   background: var(--color-bg-card);
   padding: 30px 40px;
   border-radius: var(--radius-modal);
   display: flex;
   align-items: center;
-  gap: 30px;
-  flex-grow: 1;
-  position: relative; /* Чтобы кнопку можно было прижать вправо */
+  gap: 40px;
+  width: 100%;
 }
 
 .profile-avatar-large {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  background-color: #a78bfa;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 46px;
-  font-weight: 400;
+  overflow: hidden;
   flex-shrink: 0;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .profile-contacts {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 
   .user-name {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 500;
     color: var(--color-text-main);
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   span {
-    font-size: 14px;
-    color: var(--color-text-muted);
+    font-size: 15px;
+    color: var(--color-text-main);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 
-    /* Стили для ваших SVG-иконок */
     svg {
       color: var(--color-text-muted);
-      stroke-width: 2;
-      width: 16px;
-      height: 16px;
+      stroke-width: 1.5;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
     }
   }
 }
 
-.btn-profile-action {
+.create-course-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-create-course {
   background: var(--color-primary);
   color: white;
   border: none;
-  border-radius: var(--radius-btn);
-  padding: 12px 25px;
+  border-radius: 20px;
+  padding: 10px 40px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  margin-left: auto; /* Прижимаем кнопку вправо */
-  align-self: flex-end; /* Прижимаем кнопку вниз */
   transition: 0.2s;
 
   &:hover {
@@ -129,7 +148,6 @@
   }
 }
 
-/* --- Общие заголовки секций --- */
 .section-title {
   font-size: 24px;
   color: var(--color-text-main);
@@ -137,7 +155,6 @@
   font-weight: 700;
 }
 
-/* --- Продолжить обучение (карточки с прогресс-барами) --- */
 .courses-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -218,7 +235,6 @@
   }
 }
 
-/* --- Ближайшие занятия --- */
 .lessons-list {
   display: flex;
   flex-direction: column;
@@ -368,6 +384,17 @@
     align-items: flex-start;
     gap: 8px;
   }
+
+  .tag {
+    font-size: 11px;
+    background: #f6f5fc;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 4px 16px;
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+  }
 }
 
 .tag {
@@ -398,53 +425,5 @@
 
   &:hover {
     background: var(--color-primary-hover);
-  }
-}
-
-.unpublished-card {
-  width: 320px;
-  background: white;
-  border-radius: var(--radius-modal);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-
-  .card-image {
-    height: 160px;
-    background-color: #cdb4f6;
-    width: 100%;
-  }
-
-  .card-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .card-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-text-main);
-    margin-bottom: 15px;
-  }
-
-  .tags-row {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .tag {
-    font-size: 11px;
-
-    background: #f6f5fc;
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    padding: 4px 16px;
-    display: inline-block;
-    width: auto;
-    white-space: nowrap;
   }
 }

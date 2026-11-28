@@ -1,0 +1,15 @@
+/* Это наши магические классы для отступов */
+.container {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;    
+  padding: 0 24px;   
+  box-sizing: border-box;
+}
+
+
+@media (min-width: 768px) {
+  .container {
+    padding-top: 40px;
+  }
+}

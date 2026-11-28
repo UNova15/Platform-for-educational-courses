@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage/HomePage';
 import LoginModal from './components/modals/LoginModal/LoginModal';
 import RegistrationModal from './components/modals/RegistrationModal/RegistrationModal';
 import PasswordResetModal from './components/modals/PasswordResetModal/PasswordResetModal';
+import Container from './components/layout/Container/Container'; 
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -50,17 +51,19 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app">
+      <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header onLoginClick={handleOpenLoginModal} />
 
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/stats" element={<CourseStatistics />} />
-            <Route path="/program" element={<CourseProgram />} />
-            <Route path="/lesson" element={<LessonPlayer />} />
-          </Routes>
+        <main style={{ flex: 1 }}>
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/stats" element={<CourseStatistics />} />
+              <Route path="/program" element={<CourseProgram />} />
+              <Route path="/lesson" element={<LessonPlayer />} />
+            </Routes>
+          </Container>
         </main>
 
         <Footer />

@@ -2,10 +2,9 @@ import React from 'react';
 import '../styles/Profile.scss';
 
 const Profile = () => {
-  // Все данные пока лежат прямо здесь для теста
   const user = {
     firstName: 'Кирилл',
-    lastName: 'Кирилл Кирилл Кирилл',
+    lastName: 'Кречетов Кирилл Евгеньевич',
     email: 'kirill@example.com',
     phone: '+7 (999) 123-45-67',
     registrationDate: '12.05.2023',
@@ -59,57 +58,67 @@ const Profile = () => {
     <div className="profile-page">
       <div className="profile-greeting">
         <h1>Привет, {user.firstName}!</h1>
-        <p>Продолжай обучение и достигай новых высот.</p>
+        <p>Продолжай учиться и добиваться новых целей!</p>
       </div>
 
       <div className="profile-top-section">
         <div className="stats-grid">
           <div className="stat-card">
+            <span className="stat-label">Мои курсы</span>
             <span className="stat-value">{stats.newCourses}</span>
-            <span className="stat-label">Новых курса</span>
+            <span className="stat-sub">Активных курса</span>
           </div>
           <div className="stat-card">
+            <span className="stat-label">Пройдено уроков</span>
             <span className="stat-value">{stats.completedCourses}</span>
-            <span className="stat-label">Пройдено курсов</span>
+            <span className="stat-sub">из 20</span>
           </div>
           <div className="stat-card">
+            <span className="stat-label">Сертификаты</span>
             <span className="stat-value">{stats.certificates}</span>
-            <span className="stat-label">Сертификат</span>
+            <span className="stat-sub">Получен</span>
           </div>
           <div className="stat-card">
-            <span className="stat-value">{stats.achievements}</span>
             <span className="stat-label">Достижения</span>
+            <span className="stat-value">{stats.achievements}</span>
+            <span className="stat-sub">Баллов</span>
           </div>
         </div>
 
-        <div className="user-card">
-          <div className="profile-avatar-large">{user.avatarInitials}</div>
-          <div className="profile-contacts">
-            <div className="user-name">{user.lastName}</div>
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              {user.email}
-            </span>
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              {user.phone}
-            </span>
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              {user.registrationDate}
-            </span>
+        <div className="profile-right-col">
+          <div className="user-card">
+            <div className="profile-avatar-large">
+              <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" />
+            </div>
+            <div className="profile-contacts">
+              <div className="user-name">{user.lastName}</div>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Email: {user.email}
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                Телефон: {user.phone}
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Дата регистрации: {user.registrationDate}
+              </span>
+            </div>
           </div>
-          <button className="btn-profile-action">Изменить профиль</button>
+          <div className="create-course-action">
+            <button className="btn-create-course">Создать курс</button>
+          </div>
         </div>
       </div>
 
